@@ -11,4 +11,4 @@ Structural Equation Modeling (SEM) is a general class of multivariate techniques
 
 This site is supposed to serve as a repository for R codes used in lab sessions of this course in Spring 2021. 
 
-* Disclaimer: Opinions are my own and not the views of my employer
+*Disclaimer: Opinions are my own and not the views of my employer

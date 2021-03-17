@@ -4,7 +4,7 @@
 
 - [ ] 2. Render locally with `bookdown::render_book("index.Rmd")`.
 
-- [ ] 3. Use `browseURL("docs/index.html")` to view your book locally (or just open `index.html` in a browser). usethis::browse_github() to browth the website. 
+- [ ] 3. Use `browseURL("docs/index.html")` to view your book locally (or just open `index.html` in a browser). usethis::browse_github() to browse the website. 
 
 - [ ] 4. If it looks good, commit and push all changed files to GitHub. 
 
