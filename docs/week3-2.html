@@ -304,8 +304,6 @@ sep =</p>
 <p>HOWEVER, NOW THAT THESE FUNCTIONS ARE INSTALLED IN R ON YOUR MACHINE, YOU MUST LOAD THE LIBRARY EVERY TIME YOU OPEN R AND WISH TO USE IT.</p>
 <p>To do this, use the library() function:</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="week3-2.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span></code></pre></div>
-<pre><code>## This is lavaan 0.6-7</code></pre>
-<pre><code>## lavaan is BETA software! Please report any bugs.</code></pre>
 <p>This is lavaan 0.6-5
 lavaan is BETA software! Please report any bugs.
 Don’t worry about the “BETA” warning, this package is awesome!</p>
@@ -313,8 +311,8 @@ Don’t worry about the “BETA” warning, this package is awesome!</p>
 <p>If you boot up R and receive error msgs like “could not find function”sem""
 IT IS PROBABLY BECAUSE YOU HAVEN’T LOADED THE lavaan PACKAGE.</p>
 <p>Check out the help page of a particular function, say sem():</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="week3-2.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">help</span>(sem)</span>
-<span id="cb27-2"><a href="week3-2.html#cb27-2" aria-hidden="true" tabindex="-1"></a>?sem</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="week3-2.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">help</span>(sem)</span>
+<span id="cb25-2"><a href="week3-2.html#cb25-2" aria-hidden="true" tabindex="-1"></a>?sem</span></code></pre></div>
 <!------------------------------>
 </div>
 <div id="using-lavaan-for-path-models" class="section level2" number="3.5">
@@ -333,18 +331,18 @@ IT IS PROBABLY BECAUSE YOU HAVEN’T LOADED THE lavaan PACKAGE.</p>
 <p>Restrictive Symptoms = BMI + Self-Esteem + Self-Efficacy + Disturbance</p>
 <p>Overall Risk = BMI + Self-Esteem + Self-Efficacy + Acculturation + Disturbance</p>
 <p>Let’s write some model syntax:</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="week3-2.html#cb28-1" aria-hidden="true" tabindex="-1"></a>ex1PathSyntax <span class="ot">&lt;-</span> <span class="st">&quot;           #opening a quote</span></span>
-<span id="cb28-2"><a href="week3-2.html#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="st">  # Tilda ~ : Regression </span></span>
-<span id="cb28-3"><a href="week3-2.html#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="st">  # M ~ X regression (X predicts M)</span></span>
-<span id="cb28-4"><a href="week3-2.html#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="st">  # Each line corresponds to an equation </span></span>
-<span id="cb28-5"><a href="week3-2.html#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="st">  # Disturbance is automatically included for each regression </span></span>
-<span id="cb28-6"><a href="week3-2.html#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="st">  # (i.e. no extra term needed)</span></span>
-<span id="cb28-7"><a href="week3-2.html#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="st">  </span></span>
-<span id="cb28-8"><a href="week3-2.html#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="st">  DietSE ~ BMI + SelfEsteem      #DietSE is predicted by BMI and SelfEsteem </span></span>
-<span id="cb28-9"><a href="week3-2.html#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="st">    Bulimia ~ DietSE + BMI + SelfEsteem</span></span>
-<span id="cb28-10"><a href="week3-2.html#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="st">    Restrictive ~ DietSE + BMI + SelfEsteem</span></span>
-<span id="cb28-11"><a href="week3-2.html#cb28-11" aria-hidden="true" tabindex="-1"></a><span class="st">    Risk ~ DietSE + BMI + SelfEsteem + Accu</span></span>
-<span id="cb28-12"><a href="week3-2.html#cb28-12" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span>  </span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="week3-2.html#cb26-1" aria-hidden="true" tabindex="-1"></a>ex1PathSyntax <span class="ot">&lt;-</span> <span class="st">&quot;           #opening a quote</span></span>
+<span id="cb26-2"><a href="week3-2.html#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="st">  # Tilda ~ : Regression </span></span>
+<span id="cb26-3"><a href="week3-2.html#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="st">  # M ~ X regression (X predicts M)</span></span>
+<span id="cb26-4"><a href="week3-2.html#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="st">  # Each line corresponds to an equation </span></span>
+<span id="cb26-5"><a href="week3-2.html#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="st">  # Disturbance is automatically included for each regression </span></span>
+<span id="cb26-6"><a href="week3-2.html#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="st">  # (i.e. no extra term needed)</span></span>
+<span id="cb26-7"><a href="week3-2.html#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="st">  </span></span>
+<span id="cb26-8"><a href="week3-2.html#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="st">  DietSE ~ BMI + SelfEsteem      #DietSE is predicted by BMI and SelfEsteem </span></span>
+<span id="cb26-9"><a href="week3-2.html#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="st">    Bulimia ~ DietSE + BMI + SelfEsteem</span></span>
+<span id="cb26-10"><a href="week3-2.html#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="st">    Restrictive ~ DietSE + BMI + SelfEsteem</span></span>
+<span id="cb26-11"><a href="week3-2.html#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="st">    Risk ~ DietSE + BMI + SelfEsteem + Accu</span></span>
+<span id="cb26-12"><a href="week3-2.html#cb26-12" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span>  </span></code></pre></div>
 <p>Things to note here:</p>
 <ul>
 <li>We are calling our saved model syntax object ex1PathSyntax</li>
@@ -364,12 +362,12 @@ IT IS PROBABLY BECAUSE YOU HAVEN’T LOADED THE lavaan PACKAGE.</p>
 <ol style="list-style-type: decimal">
 <li>The dataset, using:</li>
 </ol>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="week3-2.html#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sem</span>(<span class="at">model =</span> modelSyntax, <span class="at">data =</span> yourDataset)</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="week3-2.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sem</span>(<span class="at">model =</span> modelSyntax, <span class="at">data =</span> yourDataset)</span></code></pre></div>
 <p>example:</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="week3-2.html#cb30-1" aria-hidden="true" tabindex="-1"></a>ex1fit <span class="ot">&lt;-</span> <span class="fu">sem</span>(<span class="at">model =</span> ex1PathSyntax, <span class="at">data =</span> labData)</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="week3-2.html#cb28-1" aria-hidden="true" tabindex="-1"></a>ex1fit <span class="ot">&lt;-</span> <span class="fu">sem</span>(<span class="at">model =</span> ex1PathSyntax, <span class="at">data =</span> labData)</span></code></pre></div>
 <p>We can obtain results in several ways.
 Most obviously, we can use the summary() function.</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="week3-2.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ex1fit)</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="week3-2.html#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ex1fit)</span></code></pre></div>
 <pre><code>## lavaan 0.6-7 ended normally after 33 iterations
 ## 
 ##   Estimator                                         ML
@@ -426,11 +424,11 @@ Most obviously, we can use the summary() function.</p>
 <ol start="2" style="list-style-type: decimal">
 <li>The covariance matrix, using:</li>
 </ol>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="week3-2.html#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sem</span>(<span class="at">model =</span> modelSyntax, <span class="at">sample.cov =</span> yourCovarianceMatrix, <span class="at">sample.nobs =</span> numberOfObservationsInYourDataset)</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="week3-2.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sem</span>(<span class="at">model =</span> modelSyntax, <span class="at">sample.cov =</span> yourCovarianceMatrix, <span class="at">sample.nobs =</span> numberOfObservationsInYourDataset)</span></code></pre></div>
 <p>This is to illustrate that WITH COMPLETE DATA, you can run SEM analyses using only covariances as input and obtain the same results as with raw data .</p>
 <p>example:</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="week3-2.html#cb34-1" aria-hidden="true" tabindex="-1"></a>ex1fit_S <span class="ot">&lt;-</span> <span class="fu">sem</span>(<span class="at">model =</span> ex1PathSyntax, <span class="at">sample.cov =</span> S, <span class="at">sample.nobs =</span> n)</span>
-<span id="cb34-2"><a href="week3-2.html#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ex1fit_S)</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="week3-2.html#cb32-1" aria-hidden="true" tabindex="-1"></a>ex1fit_S <span class="ot">&lt;-</span> <span class="fu">sem</span>(<span class="at">model =</span> ex1PathSyntax, <span class="at">sample.cov =</span> S, <span class="at">sample.nobs =</span> n)</span>
+<span id="cb32-2"><a href="week3-2.html#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ex1fit_S)</span></code></pre></div>
 <pre><code>## lavaan 0.6-7 ended normally after 33 iterations
 ## 
 ##   Estimator                                         ML
@@ -489,37 +487,37 @@ Most obviously, we can use the summary() function.</p>
 <p>The . before a variable name refers to its disturbance.</p>
 <p>e.g., .Bulimia refers to the disturbance of Bulimia, not Bulimia itself</p>
 <p>The estimates of disturbance covariances are presented under “Covariances” in the output</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="week3-2.html#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Covariances:</span></span>
-<span id="cb36-2"><a href="week3-2.html#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="co">#                    Estimate  Std.Err  z-value  P(&gt;|z|)</span></span>
-<span id="cb36-3"><a href="week3-2.html#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="co"># .Bulimia ~~                                          </span></span>
-<span id="cb36-4"><a href="week3-2.html#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   .Restrictive       0.536    0.029   18.389    0.000</span></span>
-<span id="cb36-5"><a href="week3-2.html#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="co">#   .Risk              0.814    0.034   23.983    0.000</span></span>
-<span id="cb36-6"><a href="week3-2.html#cb36-6" aria-hidden="true" tabindex="-1"></a><span class="co"># .Restrictive ~~                                      </span></span>
-<span id="cb36-7"><a href="week3-2.html#cb36-7" aria-hidden="true" tabindex="-1"></a><span class="co">#   .Risk              0.785    0.034   22.996    0.000</span></span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="week3-2.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Covariances:</span></span>
+<span id="cb34-2"><a href="week3-2.html#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="co">#                    Estimate  Std.Err  z-value  P(&gt;|z|)</span></span>
+<span id="cb34-3"><a href="week3-2.html#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="co"># .Bulimia ~~                                          </span></span>
+<span id="cb34-4"><a href="week3-2.html#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   .Restrictive       0.536    0.029   18.389    0.000</span></span>
+<span id="cb34-5"><a href="week3-2.html#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="co">#   .Risk              0.814    0.034   23.983    0.000</span></span>
+<span id="cb34-6"><a href="week3-2.html#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="co"># .Restrictive ~~                                      </span></span>
+<span id="cb34-7"><a href="week3-2.html#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="co">#   .Risk              0.785    0.034   22.996    0.000</span></span></code></pre></div>
 <p>To change those defaults, one needs to explicitly fix those covariances at 0 (this is a strong assumption, I know…):</p>
 <p><a href="http://lavaan.ugent.be/tutorial/syntax2.html" class="uri">http://lavaan.ugent.be/tutorial/syntax2.html</a></p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="week3-2.html#cb37-1" aria-hidden="true" tabindex="-1"></a>ex1PathSyntax_noCov <span class="ot">&lt;-</span> <span class="st">&quot;             #opening a quote</span></span>
-<span id="cb37-2"><a href="week3-2.html#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="st">  # ~~ indicates a two-headed arrow (variance or covariance)</span></span>
-<span id="cb37-3"><a href="week3-2.html#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="st">  # 0* in front of the 2nd variable fixes the covariance at 0</span></span>
-<span id="cb37-4"><a href="week3-2.html#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="st">  </span></span>
-<span id="cb37-5"><a href="week3-2.html#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="st">  DietSE ~ BMI + SelfEsteem      #DietSE is predicted by BMI and SelfEsteem </span></span>
-<span id="cb37-6"><a href="week3-2.html#cb37-6" aria-hidden="true" tabindex="-1"></a><span class="st">    Bulimia ~ DietSE + BMI + SelfEsteem</span></span>
-<span id="cb37-7"><a href="week3-2.html#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="st">    Restrictive ~ DietSE + BMI + SelfEsteem</span></span>
-<span id="cb37-8"><a href="week3-2.html#cb37-8" aria-hidden="true" tabindex="-1"></a><span class="st">    Risk ~ DietSE + BMI + SelfEsteem + Accu</span></span>
-<span id="cb37-9"><a href="week3-2.html#cb37-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-10"><a href="week3-2.html#cb37-10" aria-hidden="true" tabindex="-1"></a><span class="st">    #Disturbance covariances (fixed at 0):</span></span>
-<span id="cb37-11"><a href="week3-2.html#cb37-11" aria-hidden="true" tabindex="-1"></a><span class="st">    DietSE ~~ 0*Bulimia  </span></span>
-<span id="cb37-12"><a href="week3-2.html#cb37-12" aria-hidden="true" tabindex="-1"></a><span class="st">    DietSE ~~ 0*Restrictive  </span></span>
-<span id="cb37-13"><a href="week3-2.html#cb37-13" aria-hidden="true" tabindex="-1"></a><span class="st">    DietSE ~~ 0*Risk     </span></span>
-<span id="cb37-14"><a href="week3-2.html#cb37-14" aria-hidden="true" tabindex="-1"></a><span class="st">    Bulimia ~~ 0*Restrictive</span></span>
-<span id="cb37-15"><a href="week3-2.html#cb37-15" aria-hidden="true" tabindex="-1"></a><span class="st">    Bulimia ~~ 0*Risk</span></span>
-<span id="cb37-16"><a href="week3-2.html#cb37-16" aria-hidden="true" tabindex="-1"></a><span class="st">    Restrictive ~~ 0*Risk</span></span>
-<span id="cb37-17"><a href="week3-2.html#cb37-17" aria-hidden="true" tabindex="-1"></a><span class="st">    </span></span>
-<span id="cb37-18"><a href="week3-2.html#cb37-18" aria-hidden="true" tabindex="-1"></a><span class="st">    # These lines above say that there is no covariance among the disturbances of all endogenous variables</span></span>
-<span id="cb37-19"><a href="week3-2.html#cb37-19" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span>  </span>
-<span id="cb37-20"><a href="week3-2.html#cb37-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-21"><a href="week3-2.html#cb37-21" aria-hidden="true" tabindex="-1"></a>ex1fit_noCov <span class="ot">&lt;-</span> <span class="fu">sem</span>(<span class="at">model =</span> ex1PathSyntax_noCov, <span class="at">sample.cov =</span> S, <span class="at">sample.nobs =</span> n)</span>
-<span id="cb37-22"><a href="week3-2.html#cb37-22" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ex1fit_noCov)</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="week3-2.html#cb35-1" aria-hidden="true" tabindex="-1"></a>ex1PathSyntax_noCov <span class="ot">&lt;-</span> <span class="st">&quot;             #opening a quote</span></span>
+<span id="cb35-2"><a href="week3-2.html#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="st">  # ~~ indicates a two-headed arrow (variance or covariance)</span></span>
+<span id="cb35-3"><a href="week3-2.html#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="st">  # 0* in front of the 2nd variable fixes the covariance at 0</span></span>
+<span id="cb35-4"><a href="week3-2.html#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="st">  </span></span>
+<span id="cb35-5"><a href="week3-2.html#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="st">  DietSE ~ BMI + SelfEsteem      #DietSE is predicted by BMI and SelfEsteem </span></span>
+<span id="cb35-6"><a href="week3-2.html#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="st">    Bulimia ~ DietSE + BMI + SelfEsteem</span></span>
+<span id="cb35-7"><a href="week3-2.html#cb35-7" aria-hidden="true" tabindex="-1"></a><span class="st">    Restrictive ~ DietSE + BMI + SelfEsteem</span></span>
+<span id="cb35-8"><a href="week3-2.html#cb35-8" aria-hidden="true" tabindex="-1"></a><span class="st">    Risk ~ DietSE + BMI + SelfEsteem + Accu</span></span>
+<span id="cb35-9"><a href="week3-2.html#cb35-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-10"><a href="week3-2.html#cb35-10" aria-hidden="true" tabindex="-1"></a><span class="st">    #Disturbance covariances (fixed at 0):</span></span>
+<span id="cb35-11"><a href="week3-2.html#cb35-11" aria-hidden="true" tabindex="-1"></a><span class="st">    DietSE ~~ 0*Bulimia  </span></span>
+<span id="cb35-12"><a href="week3-2.html#cb35-12" aria-hidden="true" tabindex="-1"></a><span class="st">    DietSE ~~ 0*Restrictive  </span></span>
+<span id="cb35-13"><a href="week3-2.html#cb35-13" aria-hidden="true" tabindex="-1"></a><span class="st">    DietSE ~~ 0*Risk     </span></span>
+<span id="cb35-14"><a href="week3-2.html#cb35-14" aria-hidden="true" tabindex="-1"></a><span class="st">    Bulimia ~~ 0*Restrictive</span></span>
+<span id="cb35-15"><a href="week3-2.html#cb35-15" aria-hidden="true" tabindex="-1"></a><span class="st">    Bulimia ~~ 0*Risk</span></span>
+<span id="cb35-16"><a href="week3-2.html#cb35-16" aria-hidden="true" tabindex="-1"></a><span class="st">    Restrictive ~~ 0*Risk</span></span>
+<span id="cb35-17"><a href="week3-2.html#cb35-17" aria-hidden="true" tabindex="-1"></a><span class="st">    </span></span>
+<span id="cb35-18"><a href="week3-2.html#cb35-18" aria-hidden="true" tabindex="-1"></a><span class="st">    # These lines above say that there is no covariance among the disturbances of all endogenous variables</span></span>
+<span id="cb35-19"><a href="week3-2.html#cb35-19" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span>  </span>
+<span id="cb35-20"><a href="week3-2.html#cb35-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-21"><a href="week3-2.html#cb35-21" aria-hidden="true" tabindex="-1"></a>ex1fit_noCov <span class="ot">&lt;-</span> <span class="fu">sem</span>(<span class="at">model =</span> ex1PathSyntax_noCov, <span class="at">sample.cov =</span> S, <span class="at">sample.nobs =</span> n)</span>
+<span id="cb35-22"><a href="week3-2.html#cb35-22" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ex1fit_noCov)</span></code></pre></div>
 <pre><code>## lavaan 0.6-7 ended normally after 10 iterations
 ## 
 ##   Estimator                                         ML
@@ -577,25 +575,25 @@ Most obviously, we can use the summary() function.</p>
 ##    .Bulimia           0.890    0.034   25.875    0.000
 ##    .Restrictive       0.955    0.037   25.875    0.000
 ##    .Risk              0.979    0.038   25.875    0.000</code></pre>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="week3-2.html#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># df = 6 and </span></span>
-<span id="cb39-2"><a href="week3-2.html#cb39-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-3"><a href="week3-2.html#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Covariances:</span></span>
-<span id="cb39-4"><a href="week3-2.html#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="co">#                   Estimate  Std.Err  z-value  P(&gt;|z|)</span></span>
-<span id="cb39-5"><a href="week3-2.html#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="co"># .DietSE ~~                                           </span></span>
-<span id="cb39-6"><a href="week3-2.html#cb39-6" aria-hidden="true" tabindex="-1"></a><span class="co">#   .Bulimia           0.000                           </span></span>
-<span id="cb39-7"><a href="week3-2.html#cb39-7" aria-hidden="true" tabindex="-1"></a><span class="co">#   .Restrictive       0.000                           </span></span>
-<span id="cb39-8"><a href="week3-2.html#cb39-8" aria-hidden="true" tabindex="-1"></a><span class="co">#   .Risk              0.000                           </span></span>
-<span id="cb39-9"><a href="week3-2.html#cb39-9" aria-hidden="true" tabindex="-1"></a><span class="co"># .Bulimia ~~                                          </span></span>
-<span id="cb39-10"><a href="week3-2.html#cb39-10" aria-hidden="true" tabindex="-1"></a><span class="co">#   .Restrictive       0.000                           </span></span>
-<span id="cb39-11"><a href="week3-2.html#cb39-11" aria-hidden="true" tabindex="-1"></a><span class="co">#   .Risk              0.000                           </span></span>
-<span id="cb39-12"><a href="week3-2.html#cb39-12" aria-hidden="true" tabindex="-1"></a><span class="co"># .Restrictive ~~                                      </span></span>
-<span id="cb39-13"><a href="week3-2.html#cb39-13" aria-hidden="true" tabindex="-1"></a><span class="co">#   .Risk              0.000                           </span></span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="week3-2.html#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># df = 6 and </span></span>
+<span id="cb37-2"><a href="week3-2.html#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-3"><a href="week3-2.html#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Covariances:</span></span>
+<span id="cb37-4"><a href="week3-2.html#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="co">#                   Estimate  Std.Err  z-value  P(&gt;|z|)</span></span>
+<span id="cb37-5"><a href="week3-2.html#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="co"># .DietSE ~~                                           </span></span>
+<span id="cb37-6"><a href="week3-2.html#cb37-6" aria-hidden="true" tabindex="-1"></a><span class="co">#   .Bulimia           0.000                           </span></span>
+<span id="cb37-7"><a href="week3-2.html#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="co">#   .Restrictive       0.000                           </span></span>
+<span id="cb37-8"><a href="week3-2.html#cb37-8" aria-hidden="true" tabindex="-1"></a><span class="co">#   .Risk              0.000                           </span></span>
+<span id="cb37-9"><a href="week3-2.html#cb37-9" aria-hidden="true" tabindex="-1"></a><span class="co"># .Bulimia ~~                                          </span></span>
+<span id="cb37-10"><a href="week3-2.html#cb37-10" aria-hidden="true" tabindex="-1"></a><span class="co">#   .Restrictive       0.000                           </span></span>
+<span id="cb37-11"><a href="week3-2.html#cb37-11" aria-hidden="true" tabindex="-1"></a><span class="co">#   .Risk              0.000                           </span></span>
+<span id="cb37-12"><a href="week3-2.html#cb37-12" aria-hidden="true" tabindex="-1"></a><span class="co"># .Restrictive ~~                                      </span></span>
+<span id="cb37-13"><a href="week3-2.html#cb37-13" aria-hidden="true" tabindex="-1"></a><span class="co">#   .Risk              0.000                           </span></span></code></pre></div>
 <p>Wait, where are the variances and covariances of exogenous variables?</p>
 <p>They are not included in the output because they are estimated PERFECTLY</p>
 <p>fixed.x=FALSE asks for the variances/covariances/means of the exogenous variables to be freely estimated instead of being fixed at the values found from the sample</p>
 <p>This usually makes no difference from ex1fit_noCov, except that it prints more lines</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="week3-2.html#cb40-1" aria-hidden="true" tabindex="-1"></a>ex1fit_noCov_freeX <span class="ot">&lt;-</span> <span class="fu">sem</span>(<span class="at">model =</span> ex1PathSyntax_noCov, <span class="at">sample.cov =</span> S, <span class="at">sample.nobs =</span> n, <span class="at">fixed.x=</span><span class="cn">FALSE</span>)</span>
-<span id="cb40-2"><a href="week3-2.html#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ex1fit_noCov_freeX)</span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="week3-2.html#cb38-1" aria-hidden="true" tabindex="-1"></a>ex1fit_noCov_freeX <span class="ot">&lt;-</span> <span class="fu">sem</span>(<span class="at">model =</span> ex1PathSyntax_noCov, <span class="at">sample.cov =</span> S, <span class="at">sample.nobs =</span> n, <span class="at">fixed.x=</span><span class="cn">FALSE</span>)</span>
+<span id="cb38-2"><a href="week3-2.html#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ex1fit_noCov_freeX)</span></code></pre></div>
 <pre><code>## lavaan 0.6-7 ended normally after 10 iterations
 ## 
 ##   Estimator                                         ML
@@ -661,35 +659,35 @@ Most obviously, we can use the summary() function.</p>
 ##     BMI               1.073    0.041   25.875    0.000
 ##     SelfEsteem        1.001    0.039   25.875    0.000
 ##     Accu              0.971    0.038   25.875    0.000</code></pre>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="week3-2.html#cb42-1" aria-hidden="true" tabindex="-1"></a>ex1PathSyntax_lavaan <span class="ot">&lt;-</span> <span class="st">&quot;            #opening a quote</span></span>
-<span id="cb42-2"><a href="week3-2.html#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="st">  # ~~ indicates a two-headed arrow (variance or covariance)</span></span>
-<span id="cb42-3"><a href="week3-2.html#cb42-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-4"><a href="week3-2.html#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="st">  #regression coefficients (12)</span></span>
-<span id="cb42-5"><a href="week3-2.html#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="st">  DietSE ~ BMI + SelfEsteem      </span></span>
-<span id="cb42-6"><a href="week3-2.html#cb42-6" aria-hidden="true" tabindex="-1"></a><span class="st">    Bulimia ~ DietSE + BMI + SelfEsteem</span></span>
-<span id="cb42-7"><a href="week3-2.html#cb42-7" aria-hidden="true" tabindex="-1"></a><span class="st">    Restrictive ~ DietSE + BMI + SelfEsteem</span></span>
-<span id="cb42-8"><a href="week3-2.html#cb42-8" aria-hidden="true" tabindex="-1"></a><span class="st">    Risk ~ DietSE + BMI + SelfEsteem + Accu</span></span>
-<span id="cb42-9"><a href="week3-2.html#cb42-9" aria-hidden="true" tabindex="-1"></a><span class="st">    </span></span>
-<span id="cb42-10"><a href="week3-2.html#cb42-10" aria-hidden="true" tabindex="-1"></a><span class="st">    #variances of exogenous variables (3)</span></span>
-<span id="cb42-11"><a href="week3-2.html#cb42-11" aria-hidden="true" tabindex="-1"></a><span class="st">    BMI ~~ BMI</span></span>
-<span id="cb42-12"><a href="week3-2.html#cb42-12" aria-hidden="true" tabindex="-1"></a><span class="st">    SelfEsteem ~~ SelfEsteem</span></span>
-<span id="cb42-13"><a href="week3-2.html#cb42-13" aria-hidden="true" tabindex="-1"></a><span class="st">    Accu ~~ Accu</span></span>
-<span id="cb42-14"><a href="week3-2.html#cb42-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-15"><a href="week3-2.html#cb42-15" aria-hidden="true" tabindex="-1"></a><span class="st">  #disturbance variances (4)</span></span>
-<span id="cb42-16"><a href="week3-2.html#cb42-16" aria-hidden="true" tabindex="-1"></a><span class="st">    DietSE ~~ DietSE</span></span>
-<span id="cb42-17"><a href="week3-2.html#cb42-17" aria-hidden="true" tabindex="-1"></a><span class="st">    Bulimia ~~ Bulimia</span></span>
-<span id="cb42-18"><a href="week3-2.html#cb42-18" aria-hidden="true" tabindex="-1"></a><span class="st">    Restrictive ~~ Restrictive</span></span>
-<span id="cb42-19"><a href="week3-2.html#cb42-19" aria-hidden="true" tabindex="-1"></a><span class="st">    Risk ~~ Risk</span></span>
-<span id="cb42-20"><a href="week3-2.html#cb42-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-21"><a href="week3-2.html#cb42-21" aria-hidden="true" tabindex="-1"></a><span class="st">    #covariances among exogenous variables (3)</span></span>
-<span id="cb42-22"><a href="week3-2.html#cb42-22" aria-hidden="true" tabindex="-1"></a><span class="st">    BMI ~~ SelfEsteem</span></span>
-<span id="cb42-23"><a href="week3-2.html#cb42-23" aria-hidden="true" tabindex="-1"></a><span class="st">    BMI ~~ Accu</span></span>
-<span id="cb42-24"><a href="week3-2.html#cb42-24" aria-hidden="true" tabindex="-1"></a><span class="st">    SelfEsteem ~~ Accu</span></span>
-<span id="cb42-25"><a href="week3-2.html#cb42-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-26"><a href="week3-2.html#cb42-26" aria-hidden="true" tabindex="-1"></a><span class="st">  #total: 22 parameters</span></span>
-<span id="cb42-27"><a href="week3-2.html#cb42-27" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span>  </span>
-<span id="cb42-28"><a href="week3-2.html#cb42-28" aria-hidden="true" tabindex="-1"></a>ex1fit_noCov_lavaan <span class="ot">&lt;-</span> <span class="fu">lavaan</span>(<span class="at">model =</span> ex1PathSyntax_lavaan, <span class="at">data =</span> labData)</span>
-<span id="cb42-29"><a href="week3-2.html#cb42-29" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ex1fit_noCov_lavaan)</span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="week3-2.html#cb40-1" aria-hidden="true" tabindex="-1"></a>ex1PathSyntax_lavaan <span class="ot">&lt;-</span> <span class="st">&quot;            #opening a quote</span></span>
+<span id="cb40-2"><a href="week3-2.html#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="st">  # ~~ indicates a two-headed arrow (variance or covariance)</span></span>
+<span id="cb40-3"><a href="week3-2.html#cb40-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-4"><a href="week3-2.html#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="st">  #regression coefficients (12)</span></span>
+<span id="cb40-5"><a href="week3-2.html#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="st">  DietSE ~ BMI + SelfEsteem      </span></span>
+<span id="cb40-6"><a href="week3-2.html#cb40-6" aria-hidden="true" tabindex="-1"></a><span class="st">    Bulimia ~ DietSE + BMI + SelfEsteem</span></span>
+<span id="cb40-7"><a href="week3-2.html#cb40-7" aria-hidden="true" tabindex="-1"></a><span class="st">    Restrictive ~ DietSE + BMI + SelfEsteem</span></span>
+<span id="cb40-8"><a href="week3-2.html#cb40-8" aria-hidden="true" tabindex="-1"></a><span class="st">    Risk ~ DietSE + BMI + SelfEsteem + Accu</span></span>
+<span id="cb40-9"><a href="week3-2.html#cb40-9" aria-hidden="true" tabindex="-1"></a><span class="st">    </span></span>
+<span id="cb40-10"><a href="week3-2.html#cb40-10" aria-hidden="true" tabindex="-1"></a><span class="st">    #variances of exogenous variables (3)</span></span>
+<span id="cb40-11"><a href="week3-2.html#cb40-11" aria-hidden="true" tabindex="-1"></a><span class="st">    BMI ~~ BMI</span></span>
+<span id="cb40-12"><a href="week3-2.html#cb40-12" aria-hidden="true" tabindex="-1"></a><span class="st">    SelfEsteem ~~ SelfEsteem</span></span>
+<span id="cb40-13"><a href="week3-2.html#cb40-13" aria-hidden="true" tabindex="-1"></a><span class="st">    Accu ~~ Accu</span></span>
+<span id="cb40-14"><a href="week3-2.html#cb40-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-15"><a href="week3-2.html#cb40-15" aria-hidden="true" tabindex="-1"></a><span class="st">  #disturbance variances (4)</span></span>
+<span id="cb40-16"><a href="week3-2.html#cb40-16" aria-hidden="true" tabindex="-1"></a><span class="st">    DietSE ~~ DietSE</span></span>
+<span id="cb40-17"><a href="week3-2.html#cb40-17" aria-hidden="true" tabindex="-1"></a><span class="st">    Bulimia ~~ Bulimia</span></span>
+<span id="cb40-18"><a href="week3-2.html#cb40-18" aria-hidden="true" tabindex="-1"></a><span class="st">    Restrictive ~~ Restrictive</span></span>
+<span id="cb40-19"><a href="week3-2.html#cb40-19" aria-hidden="true" tabindex="-1"></a><span class="st">    Risk ~~ Risk</span></span>
+<span id="cb40-20"><a href="week3-2.html#cb40-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-21"><a href="week3-2.html#cb40-21" aria-hidden="true" tabindex="-1"></a><span class="st">    #covariances among exogenous variables (3)</span></span>
+<span id="cb40-22"><a href="week3-2.html#cb40-22" aria-hidden="true" tabindex="-1"></a><span class="st">    BMI ~~ SelfEsteem</span></span>
+<span id="cb40-23"><a href="week3-2.html#cb40-23" aria-hidden="true" tabindex="-1"></a><span class="st">    BMI ~~ Accu</span></span>
+<span id="cb40-24"><a href="week3-2.html#cb40-24" aria-hidden="true" tabindex="-1"></a><span class="st">    SelfEsteem ~~ Accu</span></span>
+<span id="cb40-25"><a href="week3-2.html#cb40-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-26"><a href="week3-2.html#cb40-26" aria-hidden="true" tabindex="-1"></a><span class="st">  #total: 22 parameters</span></span>
+<span id="cb40-27"><a href="week3-2.html#cb40-27" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span>  </span>
+<span id="cb40-28"><a href="week3-2.html#cb40-28" aria-hidden="true" tabindex="-1"></a>ex1fit_noCov_lavaan <span class="ot">&lt;-</span> <span class="fu">lavaan</span>(<span class="at">model =</span> ex1PathSyntax_lavaan, <span class="at">data =</span> labData)</span>
+<span id="cb40-29"><a href="week3-2.html#cb40-29" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ex1fit_noCov_lavaan)</span></code></pre></div>
 <pre><code>## lavaan 0.6-7 ended normally after 12 iterations
 ## 
 ##   Estimator                                         ML
@@ -747,7 +745,7 @@ Most obviously, we can use the summary() function.</p>
 ##    .Restrictive       0.955    0.037   25.875    0.000
 ##    .Risk              0.979    0.038   25.875    0.000</code></pre>
 <p>Let’s have a look at the model-implied covarinace matrix and save it as Sigma:</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="week3-2.html#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fitted</span>(ex1fit_noCov_freeX)</span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="week3-2.html#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fitted</span>(ex1fit_noCov_freeX)</span></code></pre></div>
 <pre><code>## $cov
 ##             DietSE Bulimi Rstrct Risk   BMI    SlfEst Accu  
 ## DietSE       0.965                                          
@@ -757,13 +755,13 @@ Most obviously, we can use the summary() function.</p>
 ## BMI         -0.107  0.162 -0.130  0.079  1.073              
 ## SelfEsteem   0.105 -0.317 -0.120 -0.228 -0.138  1.001       
 ## Accu         0.005 -0.013 -0.002 -0.101 -0.021  0.035  0.971</code></pre>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="week3-2.html#cb46-1" aria-hidden="true" tabindex="-1"></a>Sigma <span class="ot">&lt;-</span> <span class="fu">fitted</span>(ex1fit_noCov_freeX)<span class="sc">$</span>cov</span></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="week3-2.html#cb44-1" aria-hidden="true" tabindex="-1"></a>Sigma <span class="ot">&lt;-</span> <span class="fu">fitted</span>(ex1fit_noCov_freeX)<span class="sc">$</span>cov</span></code></pre></div>
 <p>How close is Sigma to S?</p>
 <ul>
 <li>Rearrange the rows and columns of Sigma and take the difference</li>
 </ul>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="week3-2.html#cb47-1" aria-hidden="true" tabindex="-1"></a>diff <span class="ot">=</span> Sigma[<span class="fu">colnames</span>(S), <span class="fu">colnames</span>(S)] <span class="sc">-</span> S</span>
-<span id="cb47-2"><a href="week3-2.html#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(diff, <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="week3-2.html#cb45-1" aria-hidden="true" tabindex="-1"></a>diff <span class="ot">=</span> Sigma[<span class="fu">colnames</span>(S), <span class="fu">colnames</span>(S)] <span class="sc">-</span> S</span>
+<span id="cb45-2"><a href="week3-2.html#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(diff, <span class="dv">3</span>)</span></code></pre></div>
 <pre><code>##                BMI SelfEsteem   Accu DietSE Restrictive Bulimia   Risk
 ## BMI         -0.001      0.000  0.000  0.000       0.000   0.000  0.000
 ## SelfEsteem   0.000     -0.001  0.000  0.000       0.000   0.000  0.000
@@ -776,7 +774,7 @@ Most obviously, we can use the summary() function.</p>
 <div id="part-iii-summarizing-our-analysis" class="section level3" number="3.5.3">
 <h3><span class="header-section-number">3.5.3</span> PART III: Summarizing Our Analysis:</h3>
 <p>There are some useful options we can ask for with summary()</p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="week3-2.html#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ex1fit_noCov, <span class="at">fit.measures =</span> T) <span class="co">#include model fit measures</span></span></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="week3-2.html#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ex1fit_noCov, <span class="at">fit.measures =</span> T) <span class="co">#include model fit measures</span></span></code></pre></div>
 <pre><code>## lavaan 0.6-7 ended normally after 10 iterations
 ## 
 ##   Estimator                                         ML
@@ -865,7 +863,7 @@ Most obviously, we can use the summary() function.</p>
 ##    .Bulimia           0.890    0.034   25.875    0.000
 ##    .Restrictive       0.955    0.037   25.875    0.000
 ##    .Risk              0.979    0.038   25.875    0.000</code></pre>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="week3-2.html#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ex1fit_noCov, <span class="at">standardized =</span> T) <span class="co">#This includes standardized estimates. std.all contains usual regression standardization.</span></span></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="week3-2.html#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ex1fit_noCov, <span class="at">standardized =</span> T) <span class="co">#This includes standardized estimates. std.all contains usual regression standardization.</span></span></code></pre></div>
 <pre><code>## lavaan 0.6-7 ended normally after 10 iterations
 ## 
 ##   Estimator                                         ML
@@ -923,7 +921,7 @@ Most obviously, we can use the summary() function.</p>
 ##    .Bulimia           0.890    0.034   25.875    0.000    0.890    0.859
 ##    .Restrictive       0.955    0.037   25.875    0.000    0.955    0.940
 ##    .Risk              0.979    0.038   25.875    0.000    0.979    0.931</code></pre>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="week3-2.html#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ex1fit_noCov, <span class="at">ci =</span> T)  <span class="co">#Include confidence intervals</span></span></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="week3-2.html#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ex1fit_noCov, <span class="at">ci =</span> T)  <span class="co">#Include confidence intervals</span></span></code></pre></div>
 <pre><code>## lavaan 0.6-7 ended normally after 10 iterations
 ## 
 ##   Estimator                                         ML
@@ -982,7 +980,7 @@ Most obviously, we can use the summary() function.</p>
 ##    .Restrictive       0.955    0.037   25.875    0.000    0.883    1.028
 ##    .Risk              0.979    0.038   25.875    0.000    0.905    1.054</code></pre>
 <p>If we JUST want the parameter estimates:</p>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="week3-2.html#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">parameterEstimates</span>(ex1fit_noCov)</span></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="week3-2.html#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">parameterEstimates</span>(ex1fit_noCov)</span></code></pre></div>
 <pre><code>##            lhs op         rhs    est    se       z pvalue ci.lower ci.upper
 ## 1       DietSE  ~         BMI -0.088 0.026  -3.381  0.001   -0.138   -0.037
 ## 2       DietSE  ~  SelfEsteem  0.093 0.027   3.480  0.001    0.041    0.146
@@ -1012,7 +1010,7 @@ Most obviously, we can use the summary() function.</p>
 ## 26  SelfEsteem ~~  SelfEsteem  1.001 0.000      NA     NA    1.001    1.001
 ## 27  SelfEsteem ~~        Accu  0.035 0.000      NA     NA    0.035    0.035
 ## 28        Accu ~~        Accu  0.971 0.000      NA     NA    0.971    0.971</code></pre>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="week3-2.html#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">parameterEstimates</span>(ex1fit_noCov, <span class="at">standardized =</span> T) <span class="co">#include standardized solution....</span></span></code></pre></div>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="week3-2.html#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">parameterEstimates</span>(ex1fit_noCov, <span class="at">standardized =</span> T) <span class="co">#include standardized solution....</span></span></code></pre></div>
 <pre><code>##            lhs op         rhs    est    se       z pvalue ci.lower ci.upper std.lv std.all std.nox
 ## 1       DietSE  ~         BMI -0.088 0.026  -3.381  0.001   -0.138   -0.037 -0.088  -0.092  -0.089
 ## 2       DietSE  ~  SelfEsteem  0.093 0.027   3.480  0.001    0.041    0.146  0.093   0.095   0.095
@@ -1043,7 +1041,7 @@ Most obviously, we can use the summary() function.</p>
 ## 27  SelfEsteem ~~        Accu  0.035 0.000      NA     NA    0.035    0.035  0.035   0.035   0.035
 ## 28        Accu ~~        Accu  0.971 0.000      NA     NA    0.971    0.971  0.971   1.000   0.971</code></pre>
 <p>For standardized solutions, there is also this function:</p>
-<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="week3-2.html#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">standardizedSolution</span>(ex1fit_noCov, <span class="at">type =</span> <span class="st">&quot;std.all&quot;</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="week3-2.html#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">standardizedSolution</span>(ex1fit_noCov, <span class="at">type =</span> <span class="st">&quot;std.all&quot;</span>) </span></code></pre></div>
 <pre><code>##            lhs op         rhs est.std    se       z pvalue ci.lower ci.upper
 ## 1       DietSE  ~         BMI  -0.092 0.027  -3.402  0.001   -0.145   -0.039
 ## 2       DietSE  ~  SelfEsteem   0.095 0.027   3.504  0.000    0.042    0.148
@@ -1074,65 +1072,62 @@ Most obviously, we can use the summary() function.</p>
 ## 27  SelfEsteem ~~        Accu   0.035 0.000      NA     NA    0.035    0.035
 ## 28        Accu ~~        Accu   1.000 0.000      NA     NA    1.000    1.000</code></pre>
 <p>How does it work?</p>
-<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="week3-2.html#cb61-1" aria-hidden="true" tabindex="-1"></a>?standardizedSolution</span></code></pre></div>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="week3-2.html#cb59-1" aria-hidden="true" tabindex="-1"></a>?standardizedSolution</span></code></pre></div>
 <!------------------------------>
 </div>
 </div>
 <div id="optional-plotting-sem-model" class="section level2" number="3.6">
 <h2><span class="header-section-number">3.6</span> Optional: Plotting SEM model</h2>
 <!------------------------------>
-<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="week3-2.html#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(&quot;semPlot&quot;)</span></span>
-<span id="cb62-2"><a href="week3-2.html#cb62-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-3"><a href="week3-2.html#cb62-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(semPlot)</span></code></pre></div>
-<pre><code>## Registered S3 methods overwritten by &#39;huge&#39;:
-##   method    from   
-##   plot.sim  BDgraph
-##   print.sim BDgraph</code></pre>
-<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="week3-2.html#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot!</span></span>
-<span id="cb64-2"><a href="week3-2.html#cb64-2" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(ex1fit_noCov)</span></code></pre></div>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="week3-2.html#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(&quot;semPlot&quot;)</span></span>
+<span id="cb60-2"><a href="week3-2.html#cb60-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-3"><a href="week3-2.html#cb60-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(semPlot)</span>
+<span id="cb60-4"><a href="week3-2.html#cb60-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-5"><a href="week3-2.html#cb60-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot!</span></span>
+<span id="cb60-6"><a href="week3-2.html#cb60-6" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(ex1fit_noCov)</span></code></pre></div>
 <p><img src="bookdownproj_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
-<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="week3-2.html#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="co"># estimates instead of paths only</span></span>
-<span id="cb65-2"><a href="week3-2.html#cb65-2" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(ex1fit_noCov, <span class="at">what=</span><span class="st">&#39;est&#39;</span>, </span>
-<span id="cb65-3"><a href="week3-2.html#cb65-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">edge.label.cex=</span><span class="fl">1.25</span>, <span class="at">curvePivot =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb65-4"><a href="week3-2.html#cb65-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">fade=</span><span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="week3-2.html#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="co"># estimates instead of paths only</span></span>
+<span id="cb61-2"><a href="week3-2.html#cb61-2" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(ex1fit_noCov, <span class="at">what=</span><span class="st">&#39;est&#39;</span>, </span>
+<span id="cb61-3"><a href="week3-2.html#cb61-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">edge.label.cex=</span><span class="fl">1.25</span>, <span class="at">curvePivot =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb61-4"><a href="week3-2.html#cb61-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">fade=</span><span class="cn">FALSE</span>)</span></code></pre></div>
 <p><img src="bookdownproj_files/figure-html/unnamed-chunk-34-2.png" width="672" /></p>
-<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="week3-2.html#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(ex1fit_noCov, <span class="at">what=</span><span class="st">&#39;est&#39;</span>, </span>
-<span id="cb66-2"><a href="week3-2.html#cb66-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">rotation =</span> <span class="dv">2</span>, <span class="co"># default rotation = 1 with four options</span></span>
-<span id="cb66-3"><a href="week3-2.html#cb66-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">edge.label.cex=</span><span class="fl">1.25</span>, <span class="at">curvePivot =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb66-4"><a href="week3-2.html#cb66-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">fade=</span><span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="week3-2.html#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(ex1fit_noCov, <span class="at">what=</span><span class="st">&#39;est&#39;</span>, </span>
+<span id="cb62-2"><a href="week3-2.html#cb62-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">rotation =</span> <span class="dv">2</span>, <span class="co"># default rotation = 1 with four options</span></span>
+<span id="cb62-3"><a href="week3-2.html#cb62-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">edge.label.cex=</span><span class="fl">1.25</span>, <span class="at">curvePivot =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb62-4"><a href="week3-2.html#cb62-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">fade=</span><span class="cn">FALSE</span>)</span></code></pre></div>
 <p><img src="bookdownproj_files/figure-html/unnamed-chunk-34-3.png" width="672" /></p>
-<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="week3-2.html#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="co"># standardized solutions</span></span>
-<span id="cb67-2"><a href="week3-2.html#cb67-2" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(ex1fit_noCov, <span class="at">what=</span><span class="st">&#39;std&#39;</span>, </span>
-<span id="cb67-3"><a href="week3-2.html#cb67-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">edge.label.cex=</span><span class="fl">1.25</span>, <span class="at">curvePivot =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb67-4"><a href="week3-2.html#cb67-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">fade=</span><span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="week3-2.html#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="co"># standardized solutions</span></span>
+<span id="cb63-2"><a href="week3-2.html#cb63-2" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(ex1fit_noCov, <span class="at">what=</span><span class="st">&#39;std&#39;</span>, </span>
+<span id="cb63-3"><a href="week3-2.html#cb63-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">edge.label.cex=</span><span class="fl">1.25</span>, <span class="at">curvePivot =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb63-4"><a href="week3-2.html#cb63-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">fade=</span><span class="cn">FALSE</span>)</span></code></pre></div>
 <p><img src="bookdownproj_files/figure-html/unnamed-chunk-34-4.png" width="672" /></p>
-<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="week3-2.html#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="co"># customize it your way</span></span>
-<span id="cb68-2"><a href="week3-2.html#cb68-2" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(ex1fit_noCov, <span class="at">whatLabels=</span><span class="st">&quot;est&quot;</span>, <span class="co"># plot model not parm ests</span></span>
-<span id="cb68-3"><a href="week3-2.html#cb68-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">rotation =</span> <span class="dv">2</span>, <span class="co"># default rotation = 1 with four options</span></span>
-<span id="cb68-4"><a href="week3-2.html#cb68-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">asize =</span> <span class="dv">5</span>, <span class="co"># arrows&#39; size</span></span>
-<span id="cb68-5"><a href="week3-2.html#cb68-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">esize =</span> <span class="dv">2</span>, <span class="co"># width of paths&#39; lines / curves</span></span>
-<span id="cb68-6"><a href="week3-2.html#cb68-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">edge.label.cex =</span> <span class="fl">0.8</span>, <span class="co"># font size of regr&#39;n coeffs</span></span>
-<span id="cb68-7"><a href="week3-2.html#cb68-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">sizeMan =</span> <span class="dv">10</span>, <span class="co"># font size of manifest variable names</span></span>
-<span id="cb68-8"><a href="week3-2.html#cb68-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">nCharNodes =</span> <span class="dv">0</span>,</span>
-<span id="cb68-9"><a href="week3-2.html#cb68-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">nCharEdges =</span> <span class="dv">0</span>, <span class="co"># don&#39;t limit variable name lengths</span></span>
-<span id="cb68-10"><a href="week3-2.html#cb68-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">fade =</span> <span class="cn">FALSE</span>, <span class="co"># don&#39;t weight path width to reflect strength</span></span>
-<span id="cb68-11"><a href="week3-2.html#cb68-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">curvePivot =</span> <span class="cn">TRUE</span>, <span class="co"># make straight edges instead of round ones</span></span>
-<span id="cb68-12"><a href="week3-2.html#cb68-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">curve =</span> <span class="dv">2</span>, <span class="co"># pull covariances&#39; curves out a little</span></span>
-<span id="cb68-13"><a href="week3-2.html#cb68-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">style =</span> <span class="st">&quot;lisrel&quot;</span>, <span class="co"># single-headed arrows vs. # &quot;ram&quot;&#39;s 2-headed for variances</span></span>
-<span id="cb68-14"><a href="week3-2.html#cb68-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">color =</span> <span class="st">&quot;green&quot;</span>, <span class="co"># color of variables</span></span>
-<span id="cb68-15"><a href="week3-2.html#cb68-15" aria-hidden="true" tabindex="-1"></a>         <span class="at">edge.color =</span> <span class="st">&quot;black&quot;</span>, <span class="co"># color of edges/paths</span></span>
-<span id="cb68-16"><a href="week3-2.html#cb68-16" aria-hidden="true" tabindex="-1"></a>         <span class="at">layout =</span> <span class="st">&quot;tree2&quot;</span>, <span class="co"># tree, spring, circle, circle2</span></span>
-<span id="cb68-17"><a href="week3-2.html#cb68-17" aria-hidden="true" tabindex="-1"></a>         <span class="at">residuals =</span> <span class="cn">TRUE</span>) <span class="co"># residuals variances included in the path diagram</span></span></code></pre></div>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="week3-2.html#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="co"># customize it your way</span></span>
+<span id="cb64-2"><a href="week3-2.html#cb64-2" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(ex1fit_noCov, <span class="at">whatLabels=</span><span class="st">&quot;est&quot;</span>, <span class="co"># plot model not parm ests</span></span>
+<span id="cb64-3"><a href="week3-2.html#cb64-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">rotation =</span> <span class="dv">2</span>, <span class="co"># default rotation = 1 with four options</span></span>
+<span id="cb64-4"><a href="week3-2.html#cb64-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">asize =</span> <span class="dv">5</span>, <span class="co"># arrows&#39; size</span></span>
+<span id="cb64-5"><a href="week3-2.html#cb64-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">esize =</span> <span class="dv">2</span>, <span class="co"># width of paths&#39; lines / curves</span></span>
+<span id="cb64-6"><a href="week3-2.html#cb64-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">edge.label.cex =</span> <span class="fl">0.8</span>, <span class="co"># font size of regr&#39;n coeffs</span></span>
+<span id="cb64-7"><a href="week3-2.html#cb64-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">sizeMan =</span> <span class="dv">10</span>, <span class="co"># font size of manifest variable names</span></span>
+<span id="cb64-8"><a href="week3-2.html#cb64-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">nCharNodes =</span> <span class="dv">0</span>,</span>
+<span id="cb64-9"><a href="week3-2.html#cb64-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">nCharEdges =</span> <span class="dv">0</span>, <span class="co"># don&#39;t limit variable name lengths</span></span>
+<span id="cb64-10"><a href="week3-2.html#cb64-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">fade =</span> <span class="cn">FALSE</span>, <span class="co"># don&#39;t weight path width to reflect strength</span></span>
+<span id="cb64-11"><a href="week3-2.html#cb64-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">curvePivot =</span> <span class="cn">TRUE</span>, <span class="co"># make straight edges instead of round ones</span></span>
+<span id="cb64-12"><a href="week3-2.html#cb64-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">curve =</span> <span class="dv">2</span>, <span class="co"># pull covariances&#39; curves out a little</span></span>
+<span id="cb64-13"><a href="week3-2.html#cb64-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">style =</span> <span class="st">&quot;lisrel&quot;</span>, <span class="co"># single-headed arrows vs. # &quot;ram&quot;&#39;s 2-headed for variances</span></span>
+<span id="cb64-14"><a href="week3-2.html#cb64-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">color =</span> <span class="st">&quot;green&quot;</span>, <span class="co"># color of variables</span></span>
+<span id="cb64-15"><a href="week3-2.html#cb64-15" aria-hidden="true" tabindex="-1"></a>         <span class="at">edge.color =</span> <span class="st">&quot;black&quot;</span>, <span class="co"># color of edges/paths</span></span>
+<span id="cb64-16"><a href="week3-2.html#cb64-16" aria-hidden="true" tabindex="-1"></a>         <span class="at">layout =</span> <span class="st">&quot;tree2&quot;</span>, <span class="co"># tree, spring, circle, circle2</span></span>
+<span id="cb64-17"><a href="week3-2.html#cb64-17" aria-hidden="true" tabindex="-1"></a>         <span class="at">residuals =</span> <span class="cn">TRUE</span>) <span class="co"># residuals variances included in the path diagram</span></span></code></pre></div>
 <p><img src="bookdownproj_files/figure-html/unnamed-chunk-34-5.png" width="672" /></p>
-<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="week3-2.html#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(ex1fit_noCov, <span class="at">what=</span><span class="st">&#39;est&#39;</span>, </span>
-<span id="cb69-2"><a href="week3-2.html#cb69-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">rotation =</span> <span class="dv">2</span>, <span class="co"># default rotation = 1 with four options</span></span>
-<span id="cb69-3"><a href="week3-2.html#cb69-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">curve =</span> <span class="dv">2</span>, <span class="co"># pull covariances&#39; curves out a little</span></span>
-<span id="cb69-4"><a href="week3-2.html#cb69-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">nCharNodes =</span> <span class="dv">0</span>,</span>
-<span id="cb69-5"><a href="week3-2.html#cb69-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">nCharEdges =</span> <span class="dv">0</span>, <span class="co"># don&#39;t limit variable name lengths</span></span>
-<span id="cb69-6"><a href="week3-2.html#cb69-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">sizeMan =</span> <span class="dv">8</span>, <span class="co"># font size of manifest variable names</span></span>
-<span id="cb69-7"><a href="week3-2.html#cb69-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">style =</span> <span class="st">&quot;lisrel&quot;</span>, <span class="co"># single-headed arrows vs. # &quot;ram&quot;&#39;s 2-headed for variances</span></span>
-<span id="cb69-8"><a href="week3-2.html#cb69-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">edge.label.cex=</span><span class="fl">1.2</span>, <span class="at">curvePivot =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb69-9"><a href="week3-2.html#cb69-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">fade=</span><span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="week3-2.html#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(ex1fit_noCov, <span class="at">what=</span><span class="st">&#39;est&#39;</span>, </span>
+<span id="cb65-2"><a href="week3-2.html#cb65-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">rotation =</span> <span class="dv">2</span>, <span class="co"># default rotation = 1 with four options</span></span>
+<span id="cb65-3"><a href="week3-2.html#cb65-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">curve =</span> <span class="dv">2</span>, <span class="co"># pull covariances&#39; curves out a little</span></span>
+<span id="cb65-4"><a href="week3-2.html#cb65-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">nCharNodes =</span> <span class="dv">0</span>,</span>
+<span id="cb65-5"><a href="week3-2.html#cb65-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">nCharEdges =</span> <span class="dv">0</span>, <span class="co"># don&#39;t limit variable name lengths</span></span>
+<span id="cb65-6"><a href="week3-2.html#cb65-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">sizeMan =</span> <span class="dv">8</span>, <span class="co"># font size of manifest variable names</span></span>
+<span id="cb65-7"><a href="week3-2.html#cb65-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">style =</span> <span class="st">&quot;lisrel&quot;</span>, <span class="co"># single-headed arrows vs. # &quot;ram&quot;&#39;s 2-headed for variances</span></span>
+<span id="cb65-8"><a href="week3-2.html#cb65-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">edge.label.cex=</span><span class="fl">1.2</span>, <span class="at">curvePivot =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb65-9"><a href="week3-2.html#cb65-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">fade=</span><span class="cn">FALSE</span>)</span></code></pre></div>
 <p><img src="bookdownproj_files/figure-html/unnamed-chunk-34-6.png" width="672" /></p>
 
 </div>
