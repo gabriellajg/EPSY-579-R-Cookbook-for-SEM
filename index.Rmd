@@ -1,6 +1,6 @@
 --- 
-title: "YOUR TITLE HERE"
-author: "YOUR NAME HERE"
+title: "EPSY:579 R Cookbook for SEM"
+author: "Gabriella Jiang"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 ---
