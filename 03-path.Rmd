@@ -1,19 +1,16 @@
-# Week3_2 
+# Week4_1: Lavaan Lab 1 Path Analysis Model
 
 ```{r set-options, echo=FALSE, cache=FALSE, message=FALSE}
 library(knitr)
 options(width = 1800)
-#knitr::opts_chunk$set(tidy.opts=list(width.cutoff=40), tidy=TRUE)
 ```
-
-Lavaan Lab 1 Path Analysis Model
 
 In this lab, we will learn how to: 
 
 + install a package called lavaan in R
 + perform path analysis using the lavaan package
 
-## Reading-in and working with realistic datasets in R
+## Reading-In and Working With Realistic Datasets In R
 
 #### To begin, we will read the file that we will use for our SEM lab (eatingDisorderSimData.csv).
 
@@ -32,14 +29,13 @@ This should produce a file path like this (note: below is a Mac version):
 /Your/File/Path/eatingDisorderSimData.csv
 ```
 
-You can copy this path into the read.csv and put it in the file = argument of the function.
+You can copy this path into the read.csv and put it in the file = argument of the function: 
 
-#### You may also use getwd() to get the current working directory and copy that in the file = argument of the function.
++ read.csv() is a function for reading in .csv files.
++ Assign the name labData to the dataset in R using <-
 
 ```{r, eval = FALSE}
-getwd()
-
-labData <- read.csv(file = "/Users/gejiang/Box Sync/MacSync/Teaching/590SEM/Spring 2021/Week 3/R/eatingDisorderSimData.csv", header = T)
+labData <- read.csv(file = "/Users/gejiang/Box Sync/MacSync/Teaching/590SEM/Spring 2022/Week 4/R/eatingDisorderSimData.csv", header = TRUE)
 ```
 
 Important Argument:
@@ -56,7 +52,7 @@ labData <- read.csv(file = file.choose(), header = T)
 
 Because file.choose() returns the file path, putting this inside the read.csv function is the same as writing the path inside the function!
 
-Pros and Cons of writing the full file path vs. using read.csv(file = file.choose(), header = T)
+#### Pros and Cons of writing the full file path vs. using read.csv(file = file.choose(), header = T)
 
 If you write down the full file path and put it in the function, then the next time you run this R script you can easily read in your data without searching through your directories and folders.
 
@@ -70,19 +66,17 @@ However, it is slightly more effortful to go in and select your folder each time
 
 #### Gabriella recommends:
 
-If your data is stored in you current working directory, then simply load your data by typing the name of the .csv file: 
+Set your working directory to the directory that contains the dataset, and simply load your data by typing the name of the .csv file: 
 
 ```{r, eval = T}
+setwd("~/Box Sync/MacSync/Teaching/590SEM/Spring 2022/Week 4/R")
+
 labData <- read.csv(file = "eatingDisorderSimData.csv", header = T, sep = ",")
 ```
 
-read.csv() is a function for reading in .csv files.
+This serves to save all your future analyses in your working directory. 
 
-It is related to a broader function called read.table.
-
-```{r, eval = F}
-labData <- read.table(file = "/Your/Directory/eatingDisorderSimData.csv", header = T, sep = ",")
-```
+read.csv() is related to a broader function called read.table.
 
 The read.table function has a sep = argument
 sep = 
@@ -91,6 +85,13 @@ sep =
 + If sep = " " this indicates a tab-delimited ("white space" delimited) file, such as a .txt
 
 #### Finally, point and click always works...
+
+```{r, eval = FALSE}
+library(readr)
+eatingDisorderSimData <- read_csv("eatingDisorderSimData.csv")
+View(eatingDisorderSimData)
+```
+
 
 <!------------------------------>
 ## Sample Covariance Matrices using the cov() function 
@@ -141,6 +142,12 @@ If only two variables:
 cov(labData$BMI, labData$SelfEsteem)
 ```
 
+If only one variable (variance):
+
+```{r, eval = T}
+cov(labData$BMI, labData$BMI)
+```
+
 <!------------------------------>
 ## Installing Packages 
 <!------------------------------>
@@ -171,8 +178,9 @@ To do this, use the library() function:
 library(lavaan)
 ```
 
-This is lavaan 0.6-5
-lavaan is BETA software! Please report any bugs.
+This is lavaan 0.6-9
+lavaan is FREE software! Please report any bugs.
+
 Don't worry about the "BETA" warning, this package is awesome! 
 
 This may seem like a pain, but roll with it. The good news is that once you do it, you have access to a whole library of SEM functions.
@@ -188,7 +196,7 @@ help(sem)
 ```
 
 <!------------------------------>
-## USING LAVAAN FOR PATH MODELS
+## Using Lavaan For Path Models
 <!------------------------------>
 
 Every analysis in lavaan has three main parts.
@@ -232,7 +240,9 @@ Things to note here:
 + Then we open a quotation "
 + Then we write each part of the model on separate lines.
 + Then we close the quotation "
-+ The variables names need to match those in the dataset
++ The variables names need to match those in the dataset (case matters!)
++ Add comments inside the model syntax using hashtag
+
 
 ### PART II Let's run our model!
 
@@ -242,9 +252,13 @@ Sensible defaults for estimating CFA models like assumptions of linear regressio
 
 Alternatively, one can use lavaan() function [with the fewest default settings] or cfa() function [with similar defaults as sem() function]
 
+To use lavaan(), you have to specify all 22 parameters in the model. 
+
+#### ex1fit
+
 You can run the sem() function using two different sources of data:
 
-1. The dataset, using:
+1. The raw dataset, using:
 
 ```{r, eval = F}
 sem(model = modelSyntax, data = yourDataset)
@@ -252,12 +266,24 @@ sem(model = modelSyntax, data = yourDataset)
 
 example:
 
-```{r}
+```{r, eval = F}
 ex1fit <- sem(model = ex1PathSyntax, data = labData)
 ```
 
-We can obtain results in several ways.
-Most obviously, we can use the summary() function.
+If you encounter errors like: 
+
+Error in if ((!is.matrix(model)) | ncol(model) != 3) stop("model argument must be a 3-column matrix") : 
+  argument is of length zero
+
+IT IS PROBABLY BECAUSE YOU HAVEN'T LOADED THE lavaan PACKAGE. 
+
+To make sure you are using the sem() function from the lavaan package, add PackageName:: before a function: 
+
+```{r, eval = T}
+ex1fit <- lavaan::sem(model = ex1PathSyntax, data = labData)
+```
+
+Then we can obtain complete results using the summary() function:
 
 ```{r}
 summary(ex1fit)
@@ -269,37 +295,43 @@ summary(ex1fit)
 sem(model = modelSyntax, sample.cov = yourCovarianceMatrix, sample.nobs = numberOfObservationsInYourDataset)
 ```
 
-This is to illustrate that WITH COMPLETE DATA, you can run SEM analyses using only covariances as input and obtain the same results as with raw data .
+This is to illustrate that WITH COMPLETE DATA, you can run SEM analyses using only covariances as input and obtain the same results as with raw data! 
+
+This positions SEM for meta-analysis and replication studies. 
 
 example:
 
 ```{r}
-ex1fit_S <- sem(model = ex1PathSyntax, sample.cov = S, sample.nobs = n)
+ex1fit_S <- lavaan::sem(model = ex1PathSyntax, sample.cov = S, sample.nobs = n)
 summary(ex1fit_S)
 ```
-
-Wait, Gabriella, the df is not 6....
-
-This is because sem() by default assumes that disturbances covary among themselves (which, in our model, are not correlated at all)
 
 The . before a variable name refers to its disturbance.
 
 e.g., .Bulimia refers to the disturbance of Bulimia, not Bulimia itself
 
-The estimates of disturbance covariances are presented under "Covariances" in the output
+You should get exactly the same output in ex1fit and ex1fit_S. 
 
-```{r}
-# Covariances:
-#                    Estimate  Std.Err  z-value  P(>|z|)
-# .Bulimia ~~                                          
-#   .Restrictive       0.536    0.029   18.389    0.000
-#   .Risk              0.814    0.034   23.983    0.000
-# .Restrictive ~~                                      
-#   .Risk              0.785    0.034   22.996    0.000
+Wait, Gabriella, the df is not 6....
+
+This is because sem() by default assumes that disturbances of endogenous variables covary among themselves (which, in our model, are not correlated at all!)
+
+The estimates of disturbance covariances are presented under "Covariances" in the output:
+
+```{r, eval=FALSE}
+Covariances:
+                   Estimate  Std.Err  z-value  P(>|z|)
+.Bulimia ~~                                          
+  .Restrictive       0.536    0.029   18.389    0.000
+  .Risk              0.814    0.034   23.983    0.000
+.Restrictive ~~                                      
+  .Risk              0.785    0.034   22.996    0.000
 ```
 
 
-To change those defaults, one needs to explicitly fix those covariances at 0 (this is a strong assumption, I know...): 
+#### ex1PathSyntax_noCov
+
+To change those defaults, one needs to explicitly fix those disturbance covariances at 0 (this is a strong assumption, I know...): 
 
 http://lavaan.ugent.be/tutorial/syntax2.html
 
@@ -324,39 +356,44 @@ ex1PathSyntax_noCov <- " 			 #opening a quote
 	# These lines above say that there is no covariance among the disturbances of all endogenous variables
 "  
 
-ex1fit_noCov <- sem(model = ex1PathSyntax_noCov, sample.cov = S, sample.nobs = n)
+ex1fit_noCov <- lavaan::sem(model = ex1PathSyntax_noCov, data = labData)
 summary(ex1fit_noCov)
 ```
 
-```{r}
-# df = 6 and 
+```{r, eval=FALSE}
+df = 6 and 
 
-# Covariances:
-#                   Estimate  Std.Err  z-value  P(>|z|)
-# .DietSE ~~                                           
-#   .Bulimia           0.000                           
-#   .Restrictive       0.000                           
-#   .Risk              0.000                           
-# .Bulimia ~~                                          
-#   .Restrictive       0.000                           
-#   .Risk              0.000                           
-# .Restrictive ~~                                      
-#   .Risk              0.000                           
+Covariances:
+                  Estimate  Std.Err  z-value  P(>|z|)
+.DietSE ~~                                           
+  .Bulimia           0.000                           
+  .Restrictive       0.000                           
+  .Risk              0.000                           
+.Bulimia ~~                                          
+  .Restrictive       0.000                           
+  .Risk              0.000                           
+.Restrictive ~~                                      
+  .Risk              0.000                           
 ```
 
 Wait, where are the variances and covariances of exogenous variables?
 
 They are not included in the output because they are estimated PERFECTLY
 
+#### ex1fit_noCov_freeX
+
 fixed.x=FALSE asks for the variances/covariances/means of the exogenous variables to be freely estimated instead of being fixed at the values found from the sample
 
 This usually makes no difference from ex1fit_noCov, except that it prints more lines
 
-
 ```{r}
-ex1fit_noCov_freeX <- sem(model = ex1PathSyntax_noCov, sample.cov = S, sample.nobs = n, fixed.x=FALSE)
+ex1fit_noCov_freeX <- lavaan::sem(model = ex1PathSyntax_noCov, data = labData, fixed.x = FALSE)
 summary(ex1fit_noCov_freeX)
 ```
+
+#### ex1fit_noCov_lavaan
+
+As a bonus, here is how you would write the model syntax if you use lavaan() instead of sem()...
 
 ```{r}
 ex1PathSyntax_lavaan <- " 			 #opening a quote
@@ -390,7 +427,11 @@ ex1fit_noCov_lavaan <- lavaan(model = ex1PathSyntax_lavaan, data = labData)
 summary(ex1fit_noCov_lavaan)
 ```
 
-Let's have a look at the model-implied covarinace matrix and save it as Sigma: 
+which yields the same output as ex1fit_noCov_freeX. 
+
+### Sigma Matrices
+
+Let's have a look at the model-implied covarinace matrix from our final model ex1fit_noCov_freeX and save it as Sigma: 
 
 ```{r}
 fitted(ex1fit_noCov_freeX)
@@ -399,32 +440,48 @@ Sigma <- fitted(ex1fit_noCov_freeX)$cov
 
 How close is Sigma to S? 
 
-+ Rearrange the rows and columns of Sigma and take the difference
++ Rearrange the rows and columns of Sigma (important!) and take the difference
 
 ```{r}
 diff = Sigma[colnames(S), colnames(S)] - S
 round(diff, 3)
 ```
 
-### PART III: Summarizing Our Analysis:
-
-There are some useful options we can ask for with summary()
+How about the default model that include disturbance covariances?
 
 ```{r}
-summary(ex1fit_noCov, fit.measures = T) #include model fit measures
-summary(ex1fit_noCov, standardized = T) #This includes standardized estimates. std.all contains usual regression standardization.
-summary(ex1fit_noCov, ci = T)  #Include confidence intervals
+Sigma0 <- fitted(ex1fit)$cov
+diff0 = Sigma0[colnames(S), colnames(S)] - S
+round(diff0, 3)
+```
+
+#### Gabriella's Practical Tips:
+
++ To begin with, constraint the disturbance covariances to be 0 ; 
++ Keep the model if the model fits the data well;
++ Relax the constraints the disturbance covariances if the initial model did not fit well. 
+
+### PART III: Summarizing Our Analysis:
+
+There are some useful options we can ask for with summary():
+
+```{r, eval = FALSE}
+summary(ex1fit_noCov_freeX, fit.measures = T) #include model fit measures
+summary(ex1fit_noCov_freeX, standardized = T) #This includes standardized estimates. std.all contains usual regression standardization.
+summary(ex1fit_noCov_freeX, ci = T)  #Include confidence intervals
+
+# Add them all!
 ```
 
 If we JUST want the parameter estimates:
 ```{r}
-parameterEstimates(ex1fit_noCov)
-parameterEstimates(ex1fit_noCov, standardized = T) #include standardized solution....
+parameterEstimates(ex1fit_noCov_freeX)
+parameterEstimates(ex1fit_noCov_freeX, standardized = T) #include standardized solution....
 ```
 
 For standardized solutions, there is also this function:
 ```{r}
-standardizedSolution(ex1fit_noCov, type = "std.all") 
+standardizedSolution(ex1fit_noCov_freeX, type = "std.all") 
 ```
 
 How does it work?
@@ -434,34 +491,43 @@ How does it work?
 
 
 <!------------------------------>
-## Optional: Plotting SEM model
+## Plotting SEM model
 <!------------------------------>
 
 ```{r}
 # install.packages("semPlot")
-
 library(semPlot)
 
 # Plot!
-semPaths(ex1fit_noCov)
+semPaths(ex1fit_noCov_freeX)
+```
 
+```{r}
 # estimates instead of paths only
-semPaths(ex1fit_noCov, what='est', 
+semPaths(ex1fit_noCov_freeX, what='est', 
          edge.label.cex=1.25, curvePivot = TRUE, 
          fade=FALSE)
+```
 
-semPaths(ex1fit_noCov, what='est', 
+```{r}
+# standardized solutions
+semPaths(ex1fit_noCov_freeX, what='std', 
+         edge.label.cex=1.25, curvePivot = TRUE, 
+         fade=FALSE)
+```
+
+
+```{r}
+semPaths(ex1fit_noCov_freeX, what='est', 
          rotation = 2, # default rotation = 1 with four options
          edge.label.cex=1.25, curvePivot = TRUE, 
          fade=FALSE)
+```
 
-# standardized solutions
-semPaths(ex1fit_noCov, what='std', 
-         edge.label.cex=1.25, curvePivot = TRUE, 
-         fade=FALSE)
+### customize it your way
 
-# customize it your way
-semPaths(ex1fit_noCov, whatLabels="est", # plot model not parm ests
+```{r}
+semPaths(ex1fit_noCov_freeX, whatLabels="est", # plot model not parm ests
          rotation = 2, # default rotation = 1 with four options
          asize = 5, # arrows' size
          esize = 2, # width of paths' lines / curves
@@ -472,13 +538,15 @@ semPaths(ex1fit_noCov, whatLabels="est", # plot model not parm ests
          fade = FALSE, # don't weight path width to reflect strength
          curvePivot = TRUE, # make straight edges instead of round ones
          curve = 2, # pull covariances' curves out a little
-         style = "lisrel", # single-headed arrows vs. # "ram"'s 2-headed for variances
+         style = "lisrel", # no variances vs. # "ram"'s 2-headed for variances
          color = "green", # color of variables
          edge.color = "black", # color of edges/paths
          layout = "tree2", # tree, spring, circle, circle2
          residuals = TRUE) # residuals variances included in the path diagram
+```
 
-semPaths(ex1fit_noCov, what='est', 
+```{r}
+semPaths(ex1fit_noCov_freeX, what='est', 
          rotation = 2, # default rotation = 1 with four options
          curve = 2, # pull covariances' curves out a little
          nCharNodes = 0,
@@ -489,4 +557,7 @@ semPaths(ex1fit_noCov, what='est',
          fade=FALSE)
 ```
 
+<!------------------------------>
+## Exercise: How would you fit the model in Saunders et al. (2016)?
+<!------------------------------>
 
