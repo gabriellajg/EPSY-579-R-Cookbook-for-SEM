@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 3 Week4_1: Lavaan Lab 1 Path Analysis Model | EPSY:579 R Cookbook for SEM</title>
+  <meta name="description" content="Chapter 3 Week4_1: Lavaan Lab 1 Path Analysis Model | EPSY:579 R Cookbook for SEM" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 3 Week4_1: Lavaan Lab 1 Path Analysis Model | EPSY:579 R Cookbook for SEM" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 3 Week4_1: Lavaan Lab 1 Path Analysis Model | EPSY:579 R Cookbook for SEM" />
+  
+  
+  
+
+<meta name="author" content="Gabriella Jiang" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="r-exercises.html"/>
+
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">EPSY:579 R Cookbook for SEM</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Course</a></li>
+<li class="chapter" data-level="2" data-path="r-exercises.html"><a href="r-exercises.html"><i class="fa fa-check"></i><b>2</b> R Exercises</a></li>
+<li class="chapter" data-level="3" data-path="week4_1-lavaan-lab-1-path-analysis-model.html"><a href="week4_1-lavaan-lab-1-path-analysis-model.html"><i class="fa fa-check"></i><b>3</b> Week4_1: Lavaan Lab 1 Path Analysis Model</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="week4_1-lavaan-lab-1-path-analysis-model.html"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#reading-in-and-working-with-realistic-datasets-in-r"><i class="fa fa-check"></i><b>3.1</b> Reading-In and Working With Realistic Datasets In R</a></li>
+<li class="chapter" data-level="3.2" data-path="week4_1-lavaan-lab-1-path-analysis-model.html"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#sample-covariance-matrices-using-the-cov-function"><i class="fa fa-check"></i><b>3.2</b> Sample Covariance Matrices using the cov() function</a></li>
+<li class="chapter" data-level="3.3" data-path="week4_1-lavaan-lab-1-path-analysis-model.html"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#installing-packages"><i class="fa fa-check"></i><b>3.3</b> Installing Packages</a></li>
+<li class="chapter" data-level="3.4" data-path="week4_1-lavaan-lab-1-path-analysis-model.html"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#loading-packages-libraries-that-you-have-installed"><i class="fa fa-check"></i><b>3.4</b> Loading Packages (Libraries) That You Have Installed</a></li>
+<li class="chapter" data-level="3.5" data-path="week4_1-lavaan-lab-1-path-analysis-model.html"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#using-lavaan-for-path-models"><i class="fa fa-check"></i><b>3.5</b> Using Lavaan For Path Models</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="week4_1-lavaan-lab-1-path-analysis-model.html"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#part-i-follow-the-set-of-equations-we-wrote-in-class"><i class="fa fa-check"></i><b>3.5.1</b> PART I: Follow the set of equations we wrote in class:</a></li>
+<li class="chapter" data-level="3.5.2" data-path="week4_1-lavaan-lab-1-path-analysis-model.html"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#part-ii-lets-run-our-model"><i class="fa fa-check"></i><b>3.5.2</b> PART II Let’s run our model!</a></li>
+<li class="chapter" data-level="3.5.3" data-path="week4_1-lavaan-lab-1-path-analysis-model.html"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#sigma-matrices"><i class="fa fa-check"></i><b>3.5.3</b> Sigma Matrices</a></li>
+<li class="chapter" data-level="3.5.4" data-path="week4_1-lavaan-lab-1-path-analysis-model.html"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#part-iii-summarizing-our-analysis"><i class="fa fa-check"></i><b>3.5.4</b> PART III: Summarizing Our Analysis:</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="week4_1-lavaan-lab-1-path-analysis-model.html"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#plotting-sem-model"><i class="fa fa-check"></i><b>3.6</b> Plotting SEM model</a>
+<ul>
+<li class="chapter" data-level="3.6.1" data-path="week4_1-lavaan-lab-1-path-analysis-model.html"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#customize-it-your-way"><i class="fa fa-check"></i><b>3.6.1</b> customize it your way</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="week4_1-lavaan-lab-1-path-analysis-model.html"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#exercise-how-would-you-fit-the-model-in-saunders-et-al.-2016"><i class="fa fa-check"></i><b>3.7</b> Exercise: How would you fit the model in Saunders et al. (2016)?</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">EPSY:579 R Cookbook for SEM</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="week4_1-lavaan-lab-1-path-analysis-model" class="section level1" number="3">
+<h1><span class="header-section-number">Chapter 3</span> Week4_1: Lavaan Lab 1 Path Analysis Model</h1>
+<p>In this lab, we will learn how to:</p>
+<ul>
+<li>install a package called lavaan in R</li>
+<li>perform path analysis using the lavaan package</li>
+</ul>
+<div id="reading-in-and-working-with-realistic-datasets-in-r" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> Reading-In and Working With Realistic Datasets In R</h2>
+<div id="to-begin-we-will-read-the-file-that-we-will-use-for-our-sem-lab-eatingdisordersimdata.csv." class="section level4" number="3.1.0.1">
+<h4><span class="header-section-number">3.1.0.1</span> To begin, we will read the file that we will use for our SEM lab (eatingDisorderSimData.csv).</h4>
+<p>Try running this function, as written:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">file.choose</span>()</span></code></pre></div>
+<p>Using the GUI (graphical user interface) window that pops up,
+select the file eatingDisorderSimData.csv</p>
+<p>This should produce a file path like this (note: below is a Mac version):</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="sc">/</span>Your<span class="sc">/</span>File<span class="sc">/</span>Path<span class="sc">/</span>eatingDisorderSimData.csv</span></code></pre></div>
+<p>You can copy this path into the read.csv and put it in the file = argument of the function:</p>
+<ul>
+<li>read.csv() is a function for reading in .csv files.</li>
+<li>Assign the name labData to the dataset in R using &lt;-</li>
+</ul>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb3-1" aria-hidden="true" tabindex="-1"></a>labData <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">&quot;/Users/gejiang/Box Sync/MacSync/Teaching/590SEM/Spring 2022/Week 4/R/eatingDisorderSimData.csv&quot;</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p>Important Argument:
+header =</p>
+<ul>
+<li>if header = TRUE, indicates that your dataset has column names that are to be read in separate from the data.</li>
+<li>if header = FALSE, indicates that your dataset does NOT have column names, and therefore the first row of the dataset should be read as data.</li>
+</ul>
+</div>
+<div id="or-you-could-nest-the-file.choose-function-inside-the-read.csv-function" class="section level4" number="3.1.0.2">
+<h4><span class="header-section-number">3.1.0.2</span> Or you could NEST the file.choose() function inside the read.csv function</h4>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb4-1" aria-hidden="true" tabindex="-1"></a>labData <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="fu">file.choose</span>(), <span class="at">header =</span> T)</span></code></pre></div>
+<p>Because file.choose() returns the file path, putting this inside the read.csv function is the same as writing the path inside the function!</p>
+</div>
+<div id="pros-and-cons-of-writing-the-full-file-path-vs.-using-read.csvfile-file.choose-header-t" class="section level4" number="3.1.0.3">
+<h4><span class="header-section-number">3.1.0.3</span> Pros and Cons of writing the full file path vs. using read.csv(file = file.choose(), header = T)</h4>
+<p>If you write down the full file path and put it in the function, then the next time you run this R script you can easily read in your data without searching through your directories and folders.</p>
+<p>However, if you move your file to a different folder in the future, you’ll need to change the directory path in your R script.</p>
+<p>file.choose() is very easy and user-friendly.</p>
+<p>Using this method allows you to find your datafile even if you’ve moved it to a different folder.</p>
+<p>However, it is slightly more effortful to go in and select your folder each time.</p>
+</div>
+<div id="gabriella-recommends" class="section level4" number="3.1.0.4">
+<h4><span class="header-section-number">3.1.0.4</span> Gabriella recommends:</h4>
+<p>Set your working directory to the directory that contains the dataset, and simply load your data by typing the name of the .csv file:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&quot;~/Box Sync/MacSync/Teaching/590SEM/Spring 2022/Week 4/R&quot;</span>)</span>
+<span id="cb5-2"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb5-3" aria-hidden="true" tabindex="-1"></a>labData <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">&quot;eatingDisorderSimData.csv&quot;</span>, <span class="at">header =</span> T, <span class="at">sep =</span> <span class="st">&quot;,&quot;</span>)</span></code></pre></div>
+<p>This serves to save all your future analyses in your working directory.</p>
+<p>read.csv() is related to a broader function called read.table.</p>
+<p>The read.table function has a sep = argument
+sep =</p>
+<ul>
+<li>If sep = “,” this indicates a comma-separated (.csv) file</li>
+<li>If sep = ” ” this indicates a tab-delimited (“white space” delimited) file, such as a .txt</li>
+</ul>
+</div>
+<div id="finally-point-and-click-always-works" class="section level4" number="3.1.0.5">
+<h4><span class="header-section-number">3.1.0.5</span> Finally, point and click always works…</h4>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb6-2"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb6-2" aria-hidden="true" tabindex="-1"></a>eatingDisorderSimData <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;eatingDisorderSimData.csv&quot;</span>)</span>
+<span id="cb6-3"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(eatingDisorderSimData)</span></code></pre></div>
+<!------------------------------>
+</div>
+</div>
+<div id="sample-covariance-matrices-using-the-cov-function" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> Sample Covariance Matrices using the cov() function</h2>
+<!------------------------------>
+<div id="quick-review" class="section level4" number="3.2.0.1">
+<h4><span class="header-section-number">3.2.0.1</span> Quick review:</h4>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(labData) <span class="co">#structure</span></span></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    1339 obs. of  7 variables:
+##  $ BMI        : num  0.377 0.302 -1.098 -1.13 -2.797 ...
+##  $ SelfEsteem : num  0.0685 -0.3059 1.4755 -0.1329 1.3538 ...
+##  $ Accu       : num  1.782 0.491 -0.682 2.224 0.892 ...
+##  $ DietSE     : num  -0.0544 -2.3957 0.168 1.1851 0.5131 ...
+##  $ Restrictive: num  -0.525 2.067 0.364 -1.656 0.743 ...
+##  $ Bulimia    : num  0.432 0.196 -1.434 -0.675 -0.858 ...
+##  $ Risk       : num  0.508 0.91 -0.777 -0.554 -0.314 ...</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(labData) <span class="co">#first few lines</span></span></code></pre></div>
+<pre><code>##          BMI SelfEsteem       Accu      DietSE Restrictive    Bulimia        Risk
+## 1  0.3769721  0.0685226  1.7822103 -0.05436952  -0.5251424  0.4322272  0.50794715
+## 2  0.3015484 -0.3058876  0.4909857 -2.39569010   2.0671867  0.1959765  0.90996098
+## 3 -1.0980232  1.4754543 -0.6819827  0.16801384   0.3638750 -1.4337656 -0.77678045
+## 4 -1.1304059 -0.1329290  2.2235223  1.18505959  -1.6557519 -0.6748446 -0.55411733
+## 5 -2.7965343  1.3537804  0.8922687  0.51311551   0.7431860 -0.8575733 -0.31385631
+## 6  0.7205735 -1.9361462 -1.0307704  0.79749119  -1.8609143  0.3290163  0.08012833</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(labData) <span class="co">#column names</span></span></code></pre></div>
+<pre><code>## [1] &quot;BMI&quot;         &quot;SelfEsteem&quot;  &quot;Accu&quot;        &quot;DietSE&quot;      &quot;Restrictive&quot; &quot;Bulimia&quot;     &quot;Risk&quot;</code></pre>
+<ul>
+<li>How many observations are in this dataset?</li>
+<li>Number of observations = number of rows, with 1 person per row</li>
+</ul>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(labData) <span class="co">#1339</span></span></code></pre></div>
+<pre><code>## [1] 1339</code></pre>
+<p>let’s save this number as n</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb15-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(labData)</span></code></pre></div>
+<p>Let’s look at the sample covariance matrix of these variables using the cov() function:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cov</span>(labData)</span></code></pre></div>
+<pre><code>##                     BMI SelfEsteem        Accu      DietSE Restrictive     Bulimia        Risk
+## BMI          1.07399214 -0.1380786 -0.02076620 -0.10688665 -0.13056197  0.16177119  0.07938074
+## SelfEsteem  -0.13807862  1.0021547  0.03501750  0.10557111 -0.11991676 -0.31717764 -0.22864713
+## Accu        -0.02076620  0.0350175  0.97176431 -0.02069863 -0.09050653 -0.09549788 -0.10327073
+## DietSE      -0.10688665  0.1055711 -0.02069863  0.96607293 -0.15678475 -0.21922044  0.07119772
+## Restrictive -0.13056197 -0.1199168 -0.09050653 -0.15678475  1.01695732  0.58684522  0.78960193
+## Bulimia      0.16177119 -0.3171776 -0.09549788 -0.21922044  0.58684522  1.03637890  0.87337921
+## Risk         0.07938074 -0.2286471 -0.10327073  0.07119772  0.78960193  0.87337921  1.05356717</code></pre>
+<p>let’s save this sample cov as capital S:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb18-1" aria-hidden="true" tabindex="-1"></a>S <span class="ot">=</span> <span class="fu">cov</span>(labData)</span></code></pre></div>
+<p>If we wanted, we could look at a subset of the dataset, e.g.,:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cov</span>(labData[,<span class="fu">c</span>(<span class="st">&quot;BMI&quot;</span>, <span class="st">&quot;SelfEsteem&quot;</span>, <span class="st">&quot;Accu&quot;</span>)])</span></code></pre></div>
+<pre><code>##                   BMI SelfEsteem       Accu
+## BMI         1.0739921 -0.1380786 -0.0207662
+## SelfEsteem -0.1380786  1.0021547  0.0350175
+## Accu       -0.0207662  0.0350175  0.9717643</code></pre>
+<p>This is often useful if our analysis will only contain certain variables.</p>
+<p>If only two variables:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cov</span>(labData<span class="sc">$</span>BMI, labData<span class="sc">$</span>SelfEsteem)</span></code></pre></div>
+<pre><code>## [1] -0.1380786</code></pre>
+<p>If only one variable (variance):</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cov</span>(labData<span class="sc">$</span>BMI, labData<span class="sc">$</span>BMI)</span></code></pre></div>
+<pre><code>## [1] 1.073992</code></pre>
+<!------------------------------>
+</div>
+</div>
+<div id="installing-packages" class="section level2" number="3.3">
+<h2><span class="header-section-number">3.3</span> Installing Packages</h2>
+<!------------------------------>
+<p>We will mostly be using the lavaan package to perform SEM analyses, so let’s use the install.packages() function to install it first</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;lavaan&quot;</span>)</span></code></pre></div>
+<p>lavaan stands for LAtent VAriable ANalysis using R.</p>
+<p>lavaan website: <a href="http://lavaan.ugent.be" class="uri">http://lavaan.ugent.be</a></p>
+<p>Check out the tutorials and examples!</p>
+<!------------------------------>
+</div>
+<div id="loading-packages-libraries-that-you-have-installed" class="section level2" number="3.4">
+<h2><span class="header-section-number">3.4</span> Loading Packages (Libraries) That You Have Installed</h2>
+<!------------------------------>
+<p>AFTER YOU’VE INSTALLED A PACKAGE ONE TIME, YOU DON’T HAVE TO EVER INSTALL IT AGAIN, UNLESS YOU DELETE AND REINSTALL R FOR SOME REASON.</p>
+<p>HOWEVER, NOW THAT THESE FUNCTIONS ARE INSTALLED IN R ON YOUR MACHINE, YOU MUST LOAD THE LIBRARY EVERY TIME YOU OPEN R AND WISH TO USE IT.</p>
+<p>To do this, use the library() function:</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span></code></pre></div>
+<pre><code>## This is lavaan 0.6-9
+## lavaan is FREE software! Please report any bugs.</code></pre>
+<p>This is lavaan 0.6-9
+lavaan is FREE software! Please report any bugs.</p>
+<p>Don’t worry about the “BETA” warning, this package is awesome!</p>
+<p>This may seem like a pain, but roll with it. The good news is that once you do it, you have access to a whole library of SEM functions.</p>
+<p>If you boot up R and receive error msgs like “could not find function”sem””
+IT IS PROBABLY BECAUSE YOU HAVEN’T LOADED THE lavaan PACKAGE.</p>
+<p>Check out the help page of a particular function, say sem():</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">help</span>(sem)</span>
+<span id="cb28-2"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb28-2" aria-hidden="true" tabindex="-1"></a>?sem</span></code></pre></div>
+<!------------------------------>
+</div>
+<div id="using-lavaan-for-path-models" class="section level2" number="3.5">
+<h2><span class="header-section-number">3.5</span> Using Lavaan For Path Models</h2>
+<!------------------------------>
+<p>Every analysis in lavaan has three main parts.</p>
+<ul>
+<li>Part I: Writing the Model Syntax</li>
+<li>Part II: Analyzing the Model Using Your Dataset</li>
+<li>Part III: Examining the results.</li>
+</ul>
+<div id="part-i-follow-the-set-of-equations-we-wrote-in-class" class="section level3" number="3.5.1">
+<h3><span class="header-section-number">3.5.1</span> PART I: Follow the set of equations we wrote in class:</h3>
+<p>Self-Efficacy = BMI + Self-Esteem + Disturbance</p>
+<p>Bulimic Symptoms = BMI + Self-Esteem + Self-Efficacy + Disturbance</p>
+<p>Restrictive Symptoms = BMI + Self-Esteem + Self-Efficacy + Disturbance</p>
+<p>Overall Risk = BMI + Self-Esteem + Self-Efficacy + Acculturation + Disturbance</p>
+<p>Let’s write some model syntax:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb29-1" aria-hidden="true" tabindex="-1"></a>ex1PathSyntax <span class="ot">&lt;-</span> <span class="st">&quot;           #opening a quote</span></span>
+<span id="cb29-2"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="st">  # Tilda ~ : Regression </span></span>
+<span id="cb29-3"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="st">  # M ~ X regression (X predicts M)</span></span>
+<span id="cb29-4"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="st">  # Each line corresponds to an equation </span></span>
+<span id="cb29-5"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="st">  # Disturbance is automatically included for each regression </span></span>
+<span id="cb29-6"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="st">  # (i.e. no extra term needed)</span></span>
+<span id="cb29-7"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb29-7" aria-hidden="true" tabindex="-1"></a><span class="st">  </span></span>
+<span id="cb29-8"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb29-8" aria-hidden="true" tabindex="-1"></a><span class="st">  DietSE ~ BMI + SelfEsteem      #DietSE is predicted by BMI and SelfEsteem </span></span>
+<span id="cb29-9"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb29-9" aria-hidden="true" tabindex="-1"></a><span class="st">    Bulimia ~ DietSE + BMI + SelfEsteem</span></span>
+<span id="cb29-10"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb29-10" aria-hidden="true" tabindex="-1"></a><span class="st">    Restrictive ~ DietSE + BMI + SelfEsteem</span></span>
+<span id="cb29-11"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb29-11" aria-hidden="true" tabindex="-1"></a><span class="st">    Risk ~ DietSE + BMI + SelfEsteem + Accu</span></span>
+<span id="cb29-12"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb29-12" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span>  </span></code></pre></div>
+<p>Things to note here:</p>
+<ul>
+<li>We are calling our saved model syntax object ex1PathSyntax</li>
+<li>We assign it using &lt;- as usual</li>
+<li>Then we open a quotation ”</li>
+<li>Then we write each part of the model on separate lines.</li>
+<li>Then we close the quotation ”</li>
+<li>The variables names need to match those in the dataset (case matters!)</li>
+<li>Add comments inside the model syntax using hashtag</li>
+</ul>
+</div>
+<div id="part-ii-lets-run-our-model" class="section level3" number="3.5.2">
+<h3><span class="header-section-number">3.5.2</span> PART II Let’s run our model!</h3>
+<p>To run this model, we will start by using the sem() function.</p>
+<p>Sensible defaults for estimating CFA models like assumptions of linear regression, so we don’t actually have to write some constraints into the model above</p>
+<p>Alternatively, one can use lavaan() function [with the fewest default settings] or cfa() function [with similar defaults as sem() function]</p>
+<p>To use lavaan(), you have to specify all 22 parameters in the model.</p>
+<div id="ex1fit" class="section level4" number="3.5.2.1">
+<h4><span class="header-section-number">3.5.2.1</span> ex1fit</h4>
+<p>You can run the sem() function using two different sources of data:</p>
+<ol style="list-style-type: decimal">
+<li>The raw dataset, using:</li>
+</ol>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sem</span>(<span class="at">model =</span> modelSyntax, <span class="at">data =</span> yourDataset)</span></code></pre></div>
+<p>example:</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb31-1" aria-hidden="true" tabindex="-1"></a>ex1fit <span class="ot">&lt;-</span> <span class="fu">sem</span>(<span class="at">model =</span> ex1PathSyntax, <span class="at">data =</span> labData)</span></code></pre></div>
+<p>If you encounter errors like:</p>
+<p>Error in if ((!is.matrix(model)) | ncol(model) != 3) stop(“model argument must be a 3-column matrix”) :
+argument is of length zero</p>
+<p>IT IS PROBABLY BECAUSE YOU HAVEN’T LOADED THE lavaan PACKAGE.</p>
+<p>To make sure you are using the sem() function from the lavaan package, add PackageName:: before a function:</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb32-1" aria-hidden="true" tabindex="-1"></a>ex1fit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> ex1PathSyntax, <span class="at">data =</span> labData)</span></code></pre></div>
+<p>Then we can obtain complete results using the summary() function:</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ex1fit)</span></code></pre></div>
+<pre><code>## lavaan 0.6-9 ended normally after 33 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                        19
+##                                                       
+##   Number of observations                          1339
+##                                                       
+## Model Test User Model:
+##                                                       
+##   Test statistic                                16.429
+##   Degrees of freedom                                 3
+##   P-value (Chi-square)                           0.001
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Expected
+##   Information saturated (h1) model          Structured
+## 
+## Regressions:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##   DietSE ~                                            
+##     BMI              -0.088    0.026   -3.381    0.001
+##     SelfEsteem        0.093    0.027    3.480    0.001
+##   Bulimia ~                                           
+##     DietSE           -0.185    0.026   -6.994    0.000
+##     BMI               0.096    0.025    3.796    0.000
+##     SelfEsteem       -0.284    0.026  -10.871    0.000
+##   Restrictive ~                                       
+##     DietSE           -0.166    0.027   -6.039    0.000
+##     BMI              -0.154    0.026   -5.892    0.000
+##     SelfEsteem       -0.123    0.027   -4.561    0.000
+##   Risk ~                                              
+##     DietSE            0.105    0.028    3.766    0.000
+##     BMI               0.055    0.027    2.057    0.040
+##     SelfEsteem       -0.232    0.028   -8.425    0.000
+##     Accu              0.007    0.009    0.783    0.434
+## 
+## Covariances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##  .Bulimia ~~                                          
+##    .Restrictive       0.536    0.029   18.389    0.000
+##    .Risk              0.814    0.034   23.983    0.000
+##  .Restrictive ~~                                      
+##    .Risk              0.785    0.034   22.996    0.000
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##    .DietSE            0.946    0.037   25.875    0.000
+##    .Bulimia           0.890    0.034   25.875    0.000
+##    .Restrictive       0.955    0.037   25.875    0.000
+##    .Risk              0.989    0.038   25.875    0.000</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>The covariance matrix, using:</li>
+</ol>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sem</span>(<span class="at">model =</span> modelSyntax, <span class="at">sample.cov =</span> yourCovarianceMatrix, <span class="at">sample.nobs =</span> numberOfObservationsInYourDataset)</span></code></pre></div>
+<p>This is to illustrate that WITH COMPLETE DATA, you can run SEM analyses using only covariances as input and obtain the same results as with raw data!</p>
+<p>This positions SEM for meta-analysis and replication studies.</p>
+<p>example:</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb36-1" aria-hidden="true" tabindex="-1"></a>ex1fit_S <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> ex1PathSyntax, <span class="at">sample.cov =</span> S, <span class="at">sample.nobs =</span> n)</span>
+<span id="cb36-2"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ex1fit_S)</span></code></pre></div>
+<pre><code>## lavaan 0.6-9 ended normally after 33 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                        19
+##                                                       
+##   Number of observations                          1339
+##                                                       
+## Model Test User Model:
+##                                                       
+##   Test statistic                                16.429
+##   Degrees of freedom                                 3
+##   P-value (Chi-square)                           0.001
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Expected
+##   Information saturated (h1) model          Structured
+## 
+## Regressions:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##   DietSE ~                                            
+##     BMI              -0.088    0.026   -3.381    0.001
+##     SelfEsteem        0.093    0.027    3.480    0.001
+##   Bulimia ~                                           
+##     DietSE           -0.185    0.026   -6.994    0.000
+##     BMI               0.096    0.025    3.796    0.000
+##     SelfEsteem       -0.284    0.026  -10.871    0.000
+##   Restrictive ~                                       
+##     DietSE           -0.166    0.027   -6.039    0.000
+##     BMI              -0.154    0.026   -5.892    0.000
+##     SelfEsteem       -0.123    0.027   -4.561    0.000
+##   Risk ~                                              
+##     DietSE            0.105    0.028    3.766    0.000
+##     BMI               0.055    0.027    2.057    0.040
+##     SelfEsteem       -0.232    0.028   -8.425    0.000
+##     Accu              0.007    0.009    0.783    0.434
+## 
+## Covariances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##  .Bulimia ~~                                          
+##    .Restrictive       0.536    0.029   18.389    0.000
+##    .Risk              0.814    0.034   23.983    0.000
+##  .Restrictive ~~                                      
+##    .Risk              0.785    0.034   22.996    0.000
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##    .DietSE            0.946    0.037   25.875    0.000
+##    .Bulimia           0.890    0.034   25.875    0.000
+##    .Restrictive       0.955    0.037   25.875    0.000
+##    .Risk              0.989    0.038   25.875    0.000</code></pre>
+<p>The . before a variable name refers to its disturbance.</p>
+<p>e.g., .Bulimia refers to the disturbance of Bulimia, not Bulimia itself</p>
+<p>You should get exactly the same output in ex1fit and ex1fit_S.</p>
+<p>Wait, Gabriella, the df is not 6….</p>
+<p>This is because sem() by default assumes that disturbances of endogenous variables covary among themselves (which, in our model, are not correlated at all!)</p>
+<p>The estimates of disturbance covariances are presented under “Covariances” in the output:</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb38-1" aria-hidden="true" tabindex="-1"></a>Covariances<span class="sc">:</span></span>
+<span id="cb38-2"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb38-2" aria-hidden="true" tabindex="-1"></a>                   Estimate  Std.Err  z<span class="sc">-</span>value  <span class="fu">P</span>(<span class="sc">&gt;</span><span class="er">|</span>z<span class="sc">|</span>)</span>
+<span id="cb38-3"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb38-3" aria-hidden="true" tabindex="-1"></a>.Bulimia <span class="sc">~</span><span class="er">~</span>                                          </span>
+<span id="cb38-4"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb38-4" aria-hidden="true" tabindex="-1"></a>  .Restrictive       <span class="fl">0.536</span>    <span class="fl">0.029</span>   <span class="fl">18.389</span>    <span class="fl">0.000</span></span>
+<span id="cb38-5"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb38-5" aria-hidden="true" tabindex="-1"></a>  .Risk              <span class="fl">0.814</span>    <span class="fl">0.034</span>   <span class="fl">23.983</span>    <span class="fl">0.000</span></span>
+<span id="cb38-6"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb38-6" aria-hidden="true" tabindex="-1"></a>.Restrictive <span class="sc">~</span><span class="er">~</span>                                      </span>
+<span id="cb38-7"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb38-7" aria-hidden="true" tabindex="-1"></a>  .Risk              <span class="fl">0.785</span>    <span class="fl">0.034</span>   <span class="fl">22.996</span>    <span class="fl">0.000</span></span></code></pre></div>
+</div>
+<div id="ex1pathsyntax_nocov" class="section level4" number="3.5.2.2">
+<h4><span class="header-section-number">3.5.2.2</span> ex1PathSyntax_noCov</h4>
+<p>To change those defaults, one needs to explicitly fix those disturbance covariances at 0 (this is a strong assumption, I know…):</p>
+<p><a href="http://lavaan.ugent.be/tutorial/syntax2.html" class="uri">http://lavaan.ugent.be/tutorial/syntax2.html</a></p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb39-1" aria-hidden="true" tabindex="-1"></a>ex1PathSyntax_noCov <span class="ot">&lt;-</span> <span class="st">&quot;             #opening a quote</span></span>
+<span id="cb39-2"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="st">  # ~~ indicates a two-headed arrow (variance or covariance)</span></span>
+<span id="cb39-3"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="st">  # 0* in front of the 2nd variable fixes the covariance at 0</span></span>
+<span id="cb39-4"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="st">  </span></span>
+<span id="cb39-5"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="st">  DietSE ~ BMI + SelfEsteem      #DietSE is predicted by BMI and SelfEsteem </span></span>
+<span id="cb39-6"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb39-6" aria-hidden="true" tabindex="-1"></a><span class="st">    Bulimia ~ DietSE + BMI + SelfEsteem</span></span>
+<span id="cb39-7"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb39-7" aria-hidden="true" tabindex="-1"></a><span class="st">    Restrictive ~ DietSE + BMI + SelfEsteem</span></span>
+<span id="cb39-8"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb39-8" aria-hidden="true" tabindex="-1"></a><span class="st">    Risk ~ DietSE + BMI + SelfEsteem + Accu</span></span>
+<span id="cb39-9"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb39-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-10"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb39-10" aria-hidden="true" tabindex="-1"></a><span class="st">    #Disturbance covariances (fixed at 0):</span></span>
+<span id="cb39-11"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb39-11" aria-hidden="true" tabindex="-1"></a><span class="st">    DietSE ~~ 0*Bulimia  </span></span>
+<span id="cb39-12"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb39-12" aria-hidden="true" tabindex="-1"></a><span class="st">    DietSE ~~ 0*Restrictive  </span></span>
+<span id="cb39-13"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb39-13" aria-hidden="true" tabindex="-1"></a><span class="st">    DietSE ~~ 0*Risk     </span></span>
+<span id="cb39-14"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb39-14" aria-hidden="true" tabindex="-1"></a><span class="st">    Bulimia ~~ 0*Restrictive</span></span>
+<span id="cb39-15"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb39-15" aria-hidden="true" tabindex="-1"></a><span class="st">    Bulimia ~~ 0*Risk</span></span>
+<span id="cb39-16"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb39-16" aria-hidden="true" tabindex="-1"></a><span class="st">    Restrictive ~~ 0*Risk</span></span>
+<span id="cb39-17"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb39-17" aria-hidden="true" tabindex="-1"></a><span class="st">    </span></span>
+<span id="cb39-18"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb39-18" aria-hidden="true" tabindex="-1"></a><span class="st">    # These lines above say that there is no covariance among the disturbances of all endogenous variables</span></span>
+<span id="cb39-19"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb39-19" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span>  </span>
+<span id="cb39-20"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb39-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-21"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb39-21" aria-hidden="true" tabindex="-1"></a>ex1fit_noCov <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> ex1PathSyntax_noCov, <span class="at">data =</span> labData)</span>
+<span id="cb39-22"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb39-22" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ex1fit_noCov)</span></code></pre></div>
+<pre><code>## lavaan 0.6-9 ended normally after 10 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                        16
+##                                                       
+##   Number of observations                          1339
+##                                                       
+## Model Test User Model:
+##                                                       
+##   Test statistic                              3536.813
+##   Degrees of freedom                                 6
+##   P-value (Chi-square)                           0.000
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Expected
+##   Information saturated (h1) model          Structured
+## 
+## Regressions:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##   DietSE ~                                            
+##     BMI              -0.088    0.026   -3.381    0.001
+##     SelfEsteem        0.093    0.027    3.480    0.001
+##   Bulimia ~                                           
+##     DietSE           -0.185    0.026   -6.994    0.000
+##     BMI               0.096    0.025    3.796    0.000
+##     SelfEsteem       -0.284    0.026  -10.871    0.000
+##   Restrictive ~                                       
+##     DietSE           -0.166    0.027   -6.039    0.000
+##     BMI              -0.154    0.026   -5.892    0.000
+##     SelfEsteem       -0.123    0.027   -4.561    0.000
+##   Risk ~                                              
+##     DietSE            0.102    0.028    3.686    0.000
+##     BMI               0.053    0.026    2.000    0.045
+##     SelfEsteem       -0.228    0.027   -8.332    0.000
+##     Accu             -0.095    0.027   -3.449    0.001
+## 
+## Covariances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##  .DietSE ~~                                           
+##    .Bulimia           0.000                           
+##    .Restrictive       0.000                           
+##    .Risk              0.000                           
+##  .Bulimia ~~                                          
+##    .Restrictive       0.000                           
+##    .Risk              0.000                           
+##  .Restrictive ~~                                      
+##    .Risk              0.000                           
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##    .DietSE            0.946    0.037   25.875    0.000
+##    .Bulimia           0.890    0.034   25.875    0.000
+##    .Restrictive       0.955    0.037   25.875    0.000
+##    .Risk              0.979    0.038   25.875    0.000</code></pre>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb41-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">=</span> <span class="dv">6</span> and </span>
+<span id="cb41-2"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb41-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-3"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb41-3" aria-hidden="true" tabindex="-1"></a>Covariances<span class="sc">:</span></span>
+<span id="cb41-4"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb41-4" aria-hidden="true" tabindex="-1"></a>                  Estimate  Std.Err  z<span class="sc">-</span>value  <span class="fu">P</span>(<span class="sc">&gt;</span><span class="er">|</span>z<span class="sc">|</span>)</span>
+<span id="cb41-5"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb41-5" aria-hidden="true" tabindex="-1"></a>.DietSE <span class="sc">~</span><span class="er">~</span>                                           </span>
+<span id="cb41-6"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb41-6" aria-hidden="true" tabindex="-1"></a>  .Bulimia           <span class="fl">0.000</span>                           </span>
+<span id="cb41-7"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb41-7" aria-hidden="true" tabindex="-1"></a>  .Restrictive       <span class="fl">0.000</span>                           </span>
+<span id="cb41-8"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb41-8" aria-hidden="true" tabindex="-1"></a>  .Risk              <span class="fl">0.000</span>                           </span>
+<span id="cb41-9"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb41-9" aria-hidden="true" tabindex="-1"></a>.Bulimia <span class="sc">~</span><span class="er">~</span>                                          </span>
+<span id="cb41-10"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb41-10" aria-hidden="true" tabindex="-1"></a>  .Restrictive       <span class="fl">0.000</span>                           </span>
+<span id="cb41-11"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb41-11" aria-hidden="true" tabindex="-1"></a>  .Risk              <span class="fl">0.000</span>                           </span>
+<span id="cb41-12"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb41-12" aria-hidden="true" tabindex="-1"></a>.Restrictive <span class="sc">~</span><span class="er">~</span>                                      </span>
+<span id="cb41-13"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb41-13" aria-hidden="true" tabindex="-1"></a>  .Risk              <span class="fl">0.000</span>                           </span></code></pre></div>
+<p>Wait, where are the variances and covariances of exogenous variables?</p>
+<p>They are not included in the output because they are estimated PERFECTLY</p>
+</div>
+<div id="ex1fit_nocov_freex" class="section level4" number="3.5.2.3">
+<h4><span class="header-section-number">3.5.2.3</span> ex1fit_noCov_freeX</h4>
+<p>fixed.x=FALSE asks for the variances/covariances/means of the exogenous variables to be freely estimated instead of being fixed at the values found from the sample</p>
+<p>This usually makes no difference from ex1fit_noCov, except that it prints more lines</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb42-1" aria-hidden="true" tabindex="-1"></a>ex1fit_noCov_freeX <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> ex1PathSyntax_noCov, <span class="at">data =</span> labData, <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb42-2"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ex1fit_noCov_freeX)</span></code></pre></div>
+<pre><code>## lavaan 0.6-9 ended normally after 10 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                        22
+##                                                       
+##   Number of observations                          1339
+##                                                       
+## Model Test User Model:
+##                                                       
+##   Test statistic                              3536.813
+##   Degrees of freedom                                 6
+##   P-value (Chi-square)                           0.000
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Expected
+##   Information saturated (h1) model          Structured
+## 
+## Regressions:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##   DietSE ~                                            
+##     BMI              -0.088    0.026   -3.381    0.001
+##     SelfEsteem        0.093    0.027    3.480    0.001
+##   Bulimia ~                                           
+##     DietSE           -0.185    0.026   -6.994    0.000
+##     BMI               0.096    0.025    3.796    0.000
+##     SelfEsteem       -0.284    0.026  -10.871    0.000
+##   Restrictive ~                                       
+##     DietSE           -0.166    0.027   -6.039    0.000
+##     BMI              -0.154    0.026   -5.892    0.000
+##     SelfEsteem       -0.123    0.027   -4.561    0.000
+##   Risk ~                                              
+##     DietSE            0.102    0.028    3.686    0.000
+##     BMI               0.053    0.026    2.000    0.045
+##     SelfEsteem       -0.228    0.027   -8.332    0.000
+##     Accu             -0.095    0.027   -3.449    0.001
+## 
+## Covariances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##  .DietSE ~~                                           
+##    .Bulimia           0.000                           
+##    .Restrictive       0.000                           
+##    .Risk              0.000                           
+##  .Bulimia ~~                                          
+##    .Restrictive       0.000                           
+##    .Risk              0.000                           
+##  .Restrictive ~~                                      
+##    .Risk              0.000                           
+##   BMI ~~                                              
+##     SelfEsteem       -0.138    0.029   -4.828    0.000
+##     Accu             -0.021    0.028   -0.744    0.457
+##   SelfEsteem ~~                                       
+##     Accu              0.035    0.027    1.298    0.194
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##    .DietSE            0.946    0.037   25.875    0.000
+##    .Bulimia           0.890    0.034   25.875    0.000
+##    .Restrictive       0.955    0.037   25.875    0.000
+##    .Risk              0.979    0.038   25.875    0.000
+##     BMI               1.073    0.041   25.875    0.000
+##     SelfEsteem        1.001    0.039   25.875    0.000
+##     Accu              0.971    0.038   25.875    0.000</code></pre>
+</div>
+<div id="ex1fit_nocov_lavaan" class="section level4" number="3.5.2.4">
+<h4><span class="header-section-number">3.5.2.4</span> ex1fit_noCov_lavaan</h4>
+<p>As a bonus, here is how you would write the model syntax if you use lavaan() instead of sem()…</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb44-1" aria-hidden="true" tabindex="-1"></a>ex1PathSyntax_lavaan <span class="ot">&lt;-</span> <span class="st">&quot;            #opening a quote</span></span>
+<span id="cb44-2"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="st">  # ~~ indicates a two-headed arrow (variance or covariance)</span></span>
+<span id="cb44-3"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb44-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-4"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="st">  #regression coefficients (12)</span></span>
+<span id="cb44-5"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb44-5" aria-hidden="true" tabindex="-1"></a><span class="st">  DietSE ~ BMI + SelfEsteem      </span></span>
+<span id="cb44-6"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb44-6" aria-hidden="true" tabindex="-1"></a><span class="st">    Bulimia ~ DietSE + BMI + SelfEsteem</span></span>
+<span id="cb44-7"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb44-7" aria-hidden="true" tabindex="-1"></a><span class="st">    Restrictive ~ DietSE + BMI + SelfEsteem</span></span>
+<span id="cb44-8"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb44-8" aria-hidden="true" tabindex="-1"></a><span class="st">    Risk ~ DietSE + BMI + SelfEsteem + Accu</span></span>
+<span id="cb44-9"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb44-9" aria-hidden="true" tabindex="-1"></a><span class="st">    </span></span>
+<span id="cb44-10"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb44-10" aria-hidden="true" tabindex="-1"></a><span class="st">    #variances of exogenous variables (3)</span></span>
+<span id="cb44-11"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb44-11" aria-hidden="true" tabindex="-1"></a><span class="st">    BMI ~~ BMI</span></span>
+<span id="cb44-12"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb44-12" aria-hidden="true" tabindex="-1"></a><span class="st">    SelfEsteem ~~ SelfEsteem</span></span>
+<span id="cb44-13"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb44-13" aria-hidden="true" tabindex="-1"></a><span class="st">    Accu ~~ Accu</span></span>
+<span id="cb44-14"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb44-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-15"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb44-15" aria-hidden="true" tabindex="-1"></a><span class="st">  #disturbance variances (4)</span></span>
+<span id="cb44-16"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb44-16" aria-hidden="true" tabindex="-1"></a><span class="st">    DietSE ~~ DietSE</span></span>
+<span id="cb44-17"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb44-17" aria-hidden="true" tabindex="-1"></a><span class="st">    Bulimia ~~ Bulimia</span></span>
+<span id="cb44-18"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb44-18" aria-hidden="true" tabindex="-1"></a><span class="st">    Restrictive ~~ Restrictive</span></span>
+<span id="cb44-19"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb44-19" aria-hidden="true" tabindex="-1"></a><span class="st">    Risk ~~ Risk</span></span>
+<span id="cb44-20"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb44-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-21"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb44-21" aria-hidden="true" tabindex="-1"></a><span class="st">    #covariances among exogenous variables (3)</span></span>
+<span id="cb44-22"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb44-22" aria-hidden="true" tabindex="-1"></a><span class="st">    BMI ~~ SelfEsteem</span></span>
+<span id="cb44-23"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb44-23" aria-hidden="true" tabindex="-1"></a><span class="st">    BMI ~~ Accu</span></span>
+<span id="cb44-24"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb44-24" aria-hidden="true" tabindex="-1"></a><span class="st">    SelfEsteem ~~ Accu</span></span>
+<span id="cb44-25"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb44-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-26"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb44-26" aria-hidden="true" tabindex="-1"></a><span class="st">  #total: 22 parameters</span></span>
+<span id="cb44-27"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb44-27" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span>  </span>
+<span id="cb44-28"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb44-28" aria-hidden="true" tabindex="-1"></a>ex1fit_noCov_lavaan <span class="ot">&lt;-</span> <span class="fu">lavaan</span>(<span class="at">model =</span> ex1PathSyntax_lavaan, <span class="at">data =</span> labData)</span>
+<span id="cb44-29"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb44-29" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ex1fit_noCov_lavaan)</span></code></pre></div>
+<pre><code>## lavaan 0.6-9 ended normally after 12 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                        22
+##                                                       
+##   Number of observations                          1339
+##                                                       
+## Model Test User Model:
+##                                                       
+##   Test statistic                              3536.813
+##   Degrees of freedom                                 6
+##   P-value (Chi-square)                           0.000
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Expected
+##   Information saturated (h1) model          Structured
+## 
+## Regressions:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##   DietSE ~                                            
+##     BMI              -0.088    0.026   -3.381    0.001
+##     SelfEsteem        0.093    0.027    3.480    0.001
+##   Bulimia ~                                           
+##     DietSE           -0.185    0.026   -6.994    0.000
+##     BMI               0.096    0.025    3.796    0.000
+##     SelfEsteem       -0.284    0.026  -10.871    0.000
+##   Restrictive ~                                       
+##     DietSE           -0.166    0.027   -6.039    0.000
+##     BMI              -0.154    0.026   -5.892    0.000
+##     SelfEsteem       -0.123    0.027   -4.561    0.000
+##   Risk ~                                              
+##     DietSE            0.102    0.028    3.686    0.000
+##     BMI               0.053    0.026    2.000    0.045
+##     SelfEsteem       -0.228    0.027   -8.332    0.000
+##     Accu             -0.095    0.027   -3.449    0.001
+## 
+## Covariances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##   BMI ~~                                              
+##     SelfEsteem       -0.138    0.029   -4.828    0.000
+##     Accu             -0.021    0.028   -0.744    0.457
+##   SelfEsteem ~~                                       
+##     Accu              0.035    0.027    1.298    0.194
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##     BMI               1.073    0.041   25.875    0.000
+##     SelfEsteem        1.001    0.039   25.875    0.000
+##     Accu              0.971    0.038   25.875    0.000
+##    .DietSE            0.946    0.037   25.875    0.000
+##    .Bulimia           0.890    0.034   25.875    0.000
+##    .Restrictive       0.955    0.037   25.875    0.000
+##    .Risk              0.979    0.038   25.875    0.000</code></pre>
+<p>which yields the same output as ex1fit_noCov_freeX.</p>
+</div>
+</div>
+<div id="sigma-matrices" class="section level3" number="3.5.3">
+<h3><span class="header-section-number">3.5.3</span> Sigma Matrices</h3>
+<p>Let’s have a look at the model-implied covarinace matrix from our final model ex1fit_noCov_freeX and save it as Sigma:</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fitted</span>(ex1fit_noCov_freeX)</span></code></pre></div>
+<pre><code>## $cov
+##             DietSE Bulimi Rstrct Risk   BMI    SlfEst Accu  
+## DietSE       0.965                                          
+## Bulimia     -0.219  1.036                                   
+## Restrictive -0.157  0.051  1.016                            
+## Risk         0.069  0.060  0.005  1.052                     
+## BMI         -0.107  0.162 -0.130  0.079  1.073              
+## SelfEsteem   0.105 -0.317 -0.120 -0.228 -0.138  1.001       
+## Accu         0.005 -0.013 -0.002 -0.101 -0.021  0.035  0.971</code></pre>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb48-1" aria-hidden="true" tabindex="-1"></a>Sigma <span class="ot">&lt;-</span> <span class="fu">fitted</span>(ex1fit_noCov_freeX)<span class="sc">$</span>cov</span></code></pre></div>
+<p>How close is Sigma to S?</p>
+<ul>
+<li>Rearrange the rows and columns of Sigma (important!) and take the difference</li>
+</ul>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb49-1" aria-hidden="true" tabindex="-1"></a>diff <span class="ot">=</span> Sigma[<span class="fu">colnames</span>(S), <span class="fu">colnames</span>(S)] <span class="sc">-</span> S</span>
+<span id="cb49-2"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(diff, <span class="dv">3</span>)</span></code></pre></div>
+<pre><code>##                BMI SelfEsteem   Accu DietSE Restrictive Bulimia   Risk
+## BMI         -0.001      0.000  0.000  0.000       0.000   0.000  0.000
+## SelfEsteem   0.000     -0.001  0.000  0.000       0.000   0.000  0.000
+## Accu         0.000      0.000 -0.001  0.026       0.089   0.083  0.003
+## DietSE       0.000      0.000  0.026 -0.001       0.000   0.000 -0.002
+## Restrictive  0.000      0.000  0.089  0.000      -0.001  -0.536 -0.785
+## Bulimia      0.000      0.000  0.083  0.000      -0.536  -0.001 -0.814
+## Risk         0.000      0.000  0.003 -0.002      -0.785  -0.814 -0.001</code></pre>
+<p>How about the default model that include disturbance covariances?</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb51-1" aria-hidden="true" tabindex="-1"></a>Sigma0 <span class="ot">&lt;-</span> <span class="fu">fitted</span>(ex1fit)<span class="sc">$</span>cov</span>
+<span id="cb51-2"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb51-2" aria-hidden="true" tabindex="-1"></a>diff0 <span class="ot">=</span> Sigma0[<span class="fu">colnames</span>(S), <span class="fu">colnames</span>(S)] <span class="sc">-</span> S</span>
+<span id="cb51-3"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb51-3" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(diff0, <span class="dv">3</span>)</span></code></pre></div>
+<pre><code>##                BMI SelfEsteem   Accu DietSE Restrictive Bulimia  Risk
+## BMI         -0.001      0.000  0.000  0.000       0.000   0.000 0.000
+## SelfEsteem   0.000     -0.001  0.000  0.000       0.000   0.000 0.000
+## Accu         0.000      0.000 -0.001  0.026       0.089   0.083 0.101
+## DietSE       0.000      0.000  0.026 -0.001       0.000   0.000 0.000
+## Restrictive  0.000      0.000  0.089  0.000      -0.001   0.000 0.000
+## Bulimia      0.000      0.000  0.083  0.000       0.000  -0.001 0.000
+## Risk         0.000      0.000  0.101  0.000       0.000   0.000 0.001</code></pre>
+<div id="gabriellas-practical-tips" class="section level4" number="3.5.3.1">
+<h4><span class="header-section-number">3.5.3.1</span> Gabriella’s Practical Tips:</h4>
+<ul>
+<li>To begin with, constraint the disturbance covariances to be 0 ;</li>
+<li>Keep the model if the model fits the data well;</li>
+<li>Relax the constraints the disturbance covariances if the initial model did not fit well.</li>
+</ul>
+</div>
+</div>
+<div id="part-iii-summarizing-our-analysis" class="section level3" number="3.5.4">
+<h3><span class="header-section-number">3.5.4</span> PART III: Summarizing Our Analysis:</h3>
+<p>There are some useful options we can ask for with summary():</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ex1fit_noCov_freeX, <span class="at">fit.measures =</span> T) <span class="co">#include model fit measures</span></span>
+<span id="cb53-2"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ex1fit_noCov_freeX, <span class="at">standardized =</span> T) <span class="co">#This includes standardized estimates. std.all contains usual regression standardization.</span></span>
+<span id="cb53-3"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb53-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ex1fit_noCov_freeX, <span class="at">ci =</span> T)  <span class="co">#Include confidence intervals</span></span>
+<span id="cb53-4"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb53-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-5"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb53-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Add them all!</span></span></code></pre></div>
+<p>If we JUST want the parameter estimates:</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">parameterEstimates</span>(ex1fit_noCov_freeX)</span></code></pre></div>
+<pre><code>##            lhs op         rhs    est    se       z pvalue ci.lower ci.upper
+## 1       DietSE  ~         BMI -0.088 0.026  -3.381  0.001   -0.138   -0.037
+## 2       DietSE  ~  SelfEsteem  0.093 0.027   3.480  0.001    0.041    0.146
+## 3      Bulimia  ~      DietSE -0.185 0.026  -6.994  0.000   -0.237   -0.133
+## 4      Bulimia  ~         BMI  0.096 0.025   3.796  0.000    0.046    0.145
+## 5      Bulimia  ~  SelfEsteem -0.284 0.026 -10.871  0.000   -0.335   -0.233
+## 6  Restrictive  ~      DietSE -0.166 0.027  -6.039  0.000   -0.220   -0.112
+## 7  Restrictive  ~         BMI -0.154 0.026  -5.892  0.000   -0.205   -0.103
+## 8  Restrictive  ~  SelfEsteem -0.123 0.027  -4.561  0.000   -0.176   -0.070
+## 9         Risk  ~      DietSE  0.102 0.028   3.686  0.000    0.048    0.157
+## 10        Risk  ~         BMI  0.053 0.026   2.000  0.045    0.001    0.105
+## 11        Risk  ~  SelfEsteem -0.228 0.027  -8.332  0.000   -0.282   -0.175
+## 12        Risk  ~        Accu -0.095 0.027  -3.449  0.001   -0.149   -0.041
+## 13      DietSE ~~     Bulimia  0.000 0.000      NA     NA    0.000    0.000
+## 14      DietSE ~~ Restrictive  0.000 0.000      NA     NA    0.000    0.000
+## 15      DietSE ~~        Risk  0.000 0.000      NA     NA    0.000    0.000
+## 16     Bulimia ~~ Restrictive  0.000 0.000      NA     NA    0.000    0.000
+## 17     Bulimia ~~        Risk  0.000 0.000      NA     NA    0.000    0.000
+## 18 Restrictive ~~        Risk  0.000 0.000      NA     NA    0.000    0.000
+## 19      DietSE ~~      DietSE  0.946 0.037  25.875  0.000    0.874    1.018
+## 20     Bulimia ~~     Bulimia  0.890 0.034  25.875  0.000    0.822    0.957
+## 21 Restrictive ~~ Restrictive  0.955 0.037  25.875  0.000    0.883    1.028
+## 22        Risk ~~        Risk  0.979 0.038  25.875  0.000    0.905    1.054
+## 23         BMI ~~         BMI  1.073 0.041  25.875  0.000    0.992    1.154
+## 24         BMI ~~  SelfEsteem -0.138 0.029  -4.828  0.000   -0.194   -0.082
+## 25         BMI ~~        Accu -0.021 0.028  -0.744  0.457   -0.075    0.034
+## 26  SelfEsteem ~~  SelfEsteem  1.001 0.039  25.875  0.000    0.926    1.077
+## 27  SelfEsteem ~~        Accu  0.035 0.027   1.298  0.194   -0.018    0.088
+## 28        Accu ~~        Accu  0.971 0.038  25.875  0.000    0.897    1.045</code></pre>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">parameterEstimates</span>(ex1fit_noCov_freeX, <span class="at">standardized =</span> T) <span class="co">#include standardized solution....</span></span></code></pre></div>
+<pre><code>##            lhs op         rhs    est    se       z pvalue ci.lower ci.upper std.lv std.all std.nox
+## 1       DietSE  ~         BMI -0.088 0.026  -3.381  0.001   -0.138   -0.037 -0.088  -0.092  -0.089
+## 2       DietSE  ~  SelfEsteem  0.093 0.027   3.480  0.001    0.041    0.146  0.093   0.095   0.095
+## 3      Bulimia  ~      DietSE -0.185 0.026  -6.994  0.000   -0.237   -0.133 -0.185  -0.179  -0.179
+## 4      Bulimia  ~         BMI  0.096 0.025   3.796  0.000    0.046    0.145  0.096   0.097   0.094
+## 5      Bulimia  ~  SelfEsteem -0.284 0.026 -10.871  0.000   -0.335   -0.233 -0.284  -0.279  -0.279
+## 6  Restrictive  ~      DietSE -0.166 0.027  -6.039  0.000   -0.220   -0.112 -0.166  -0.162  -0.162
+## 7  Restrictive  ~         BMI -0.154 0.026  -5.892  0.000   -0.205   -0.103 -0.154  -0.158  -0.153
+## 8  Restrictive  ~  SelfEsteem -0.123 0.027  -4.561  0.000   -0.176   -0.070 -0.123  -0.122  -0.122
+## 9         Risk  ~      DietSE  0.102 0.028   3.686  0.000    0.048    0.157  0.102   0.098   0.098
+## 10        Risk  ~         BMI  0.053 0.026   2.000  0.045    0.001    0.105  0.053   0.053   0.052
+## 11        Risk  ~  SelfEsteem -0.228 0.027  -8.332  0.000   -0.282   -0.175 -0.228  -0.223  -0.223
+## 12        Risk  ~        Accu -0.095 0.027  -3.449  0.001   -0.149   -0.041 -0.095  -0.091  -0.092
+## 13      DietSE ~~     Bulimia  0.000 0.000      NA     NA    0.000    0.000  0.000   0.000   0.000
+## 14      DietSE ~~ Restrictive  0.000 0.000      NA     NA    0.000    0.000  0.000   0.000   0.000
+## 15      DietSE ~~        Risk  0.000 0.000      NA     NA    0.000    0.000  0.000   0.000   0.000
+## 16     Bulimia ~~ Restrictive  0.000 0.000      NA     NA    0.000    0.000  0.000   0.000   0.000
+## 17     Bulimia ~~        Risk  0.000 0.000      NA     NA    0.000    0.000  0.000   0.000   0.000
+## 18 Restrictive ~~        Risk  0.000 0.000      NA     NA    0.000    0.000  0.000   0.000   0.000
+## 19      DietSE ~~      DietSE  0.946 0.037  25.875  0.000    0.874    1.018  0.946   0.980   0.980
+## 20     Bulimia ~~     Bulimia  0.890 0.034  25.875  0.000    0.822    0.957  0.890   0.859   0.859
+## 21 Restrictive ~~ Restrictive  0.955 0.037  25.875  0.000    0.883    1.028  0.955   0.940   0.940
+## 22        Risk ~~        Risk  0.979 0.038  25.875  0.000    0.905    1.054  0.979   0.931   0.931
+## 23         BMI ~~         BMI  1.073 0.041  25.875  0.000    0.992    1.154  1.073   1.000   1.073
+## 24         BMI ~~  SelfEsteem -0.138 0.029  -4.828  0.000   -0.194   -0.082 -0.138  -0.133  -0.138
+## 25         BMI ~~        Accu -0.021 0.028  -0.744  0.457   -0.075    0.034 -0.021  -0.020  -0.021
+## 26  SelfEsteem ~~  SelfEsteem  1.001 0.039  25.875  0.000    0.926    1.077  1.001   1.000   1.001
+## 27  SelfEsteem ~~        Accu  0.035 0.027   1.298  0.194   -0.018    0.088  0.035   0.035   0.035
+## 28        Accu ~~        Accu  0.971 0.038  25.875  0.000    0.897    1.045  0.971   1.000   0.971</code></pre>
+<p>For standardized solutions, there is also this function:</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">standardizedSolution</span>(ex1fit_noCov_freeX, <span class="at">type =</span> <span class="st">&quot;std.all&quot;</span>) </span></code></pre></div>
+<pre><code>##            lhs op         rhs est.std    se       z pvalue ci.lower ci.upper
+## 1       DietSE  ~         BMI  -0.092 0.027  -3.395  0.001   -0.146   -0.039
+## 2       DietSE  ~  SelfEsteem   0.095 0.027   3.496  0.000    0.042    0.148
+## 3      Bulimia  ~      DietSE  -0.179 0.025  -7.093  0.000   -0.228   -0.129
+## 4      Bulimia  ~         BMI   0.097 0.026   3.811  0.000    0.047    0.148
+## 5      Bulimia  ~  SelfEsteem  -0.279 0.025 -11.284  0.000   -0.328   -0.231
+## 6  Restrictive  ~      DietSE  -0.162 0.026  -6.115  0.000   -0.213   -0.110
+## 7  Restrictive  ~         BMI  -0.158 0.027  -5.962  0.000   -0.210   -0.106
+## 8  Restrictive  ~  SelfEsteem  -0.122 0.027  -4.593  0.000   -0.175   -0.070
+## 9         Risk  ~      DietSE   0.098 0.027   3.702  0.000    0.046    0.150
+## 10        Risk  ~         BMI   0.053 0.027   2.003  0.045    0.001    0.106
+## 11        Risk  ~  SelfEsteem  -0.223 0.026  -8.536  0.000   -0.274   -0.172
+## 12        Risk  ~        Accu  -0.091 0.026  -3.462  0.001   -0.143   -0.039
+## 13      DietSE ~~     Bulimia   0.000 0.000      NA     NA    0.000    0.000
+## 14      DietSE ~~ Restrictive   0.000 0.000      NA     NA    0.000    0.000
+## 15      DietSE ~~        Risk   0.000 0.000      NA     NA    0.000    0.000
+## 16     Bulimia ~~ Restrictive   0.000 0.000      NA     NA    0.000    0.000
+## 17     Bulimia ~~        Risk   0.000 0.000      NA     NA    0.000    0.000
+## 18 Restrictive ~~        Risk   0.000 0.000      NA     NA    0.000    0.000
+## 19      DietSE ~~      DietSE   0.980 0.008 129.769  0.000    0.965    0.995
+## 20     Bulimia ~~     Bulimia   0.859 0.018  48.727  0.000    0.824    0.894
+## 21 Restrictive ~~ Restrictive   0.940 0.013  74.768  0.000    0.915    0.965
+## 22        Risk ~~        Risk   0.931 0.013  69.534  0.000    0.904    0.957
+## 23         BMI ~~         BMI   1.000 0.000      NA     NA    1.000    1.000
+## 24         BMI ~~  SelfEsteem  -0.133 0.027  -4.958  0.000   -0.186   -0.080
+## 25         BMI ~~        Accu  -0.020 0.027  -0.744  0.457   -0.074    0.033
+## 26  SelfEsteem ~~  SelfEsteem   1.000 0.000      NA     NA    1.000    1.000
+## 27  SelfEsteem ~~        Accu   0.035 0.027   1.300  0.194   -0.018    0.089
+## 28        Accu ~~        Accu   1.000 0.000      NA     NA    1.000    1.000</code></pre>
+<p>How does it work?</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb60-1" aria-hidden="true" tabindex="-1"></a>?standardizedSolution</span></code></pre></div>
+<!------------------------------>
+</div>
+</div>
+<div id="plotting-sem-model" class="section level2" number="3.6">
+<h2><span class="header-section-number">3.6</span> Plotting SEM model</h2>
+<!------------------------------>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(&quot;semPlot&quot;)</span></span>
+<span id="cb61-2"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb61-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(semPlot)</span>
+<span id="cb61-3"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb61-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-4"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb61-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot!</span></span>
+<span id="cb61-5"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb61-5" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(ex1fit_noCov_freeX)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># estimates instead of paths only</span></span>
+<span id="cb62-2"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(ex1fit_noCov_freeX, <span class="at">what=</span><span class="st">&#39;est&#39;</span>, </span>
+<span id="cb62-3"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb62-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">edge.label.cex=</span><span class="fl">1.25</span>, <span class="at">curvePivot =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb62-4"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb62-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">fade=</span><span class="cn">FALSE</span>)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="co"># standardized solutions</span></span>
+<span id="cb63-2"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb63-2" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(ex1fit_noCov_freeX, <span class="at">what=</span><span class="st">&#39;std&#39;</span>, </span>
+<span id="cb63-3"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb63-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">edge.label.cex=</span><span class="fl">1.25</span>, <span class="at">curvePivot =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb63-4"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb63-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">fade=</span><span class="cn">FALSE</span>)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-39-1.png" width="672" /></p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(ex1fit_noCov_freeX, <span class="at">what=</span><span class="st">&#39;est&#39;</span>, </span>
+<span id="cb64-2"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb64-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">rotation =</span> <span class="dv">2</span>, <span class="co"># default rotation = 1 with four options</span></span>
+<span id="cb64-3"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb64-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">edge.label.cex=</span><span class="fl">1.25</span>, <span class="at">curvePivot =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb64-4"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb64-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">fade=</span><span class="cn">FALSE</span>)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-40-1.png" width="672" /></p>
+<div id="customize-it-your-way" class="section level3" number="3.6.1">
+<h3><span class="header-section-number">3.6.1</span> customize it your way</h3>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(ex1fit_noCov_freeX, <span class="at">whatLabels=</span><span class="st">&quot;est&quot;</span>, <span class="co"># plot model not parm ests</span></span>
+<span id="cb65-2"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb65-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">rotation =</span> <span class="dv">2</span>, <span class="co"># default rotation = 1 with four options</span></span>
+<span id="cb65-3"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb65-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">asize =</span> <span class="dv">5</span>, <span class="co"># arrows&#39; size</span></span>
+<span id="cb65-4"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb65-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">esize =</span> <span class="dv">2</span>, <span class="co"># width of paths&#39; lines / curves</span></span>
+<span id="cb65-5"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb65-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">edge.label.cex =</span> <span class="fl">0.8</span>, <span class="co"># font size of regr&#39;n coeffs</span></span>
+<span id="cb65-6"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb65-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">sizeMan =</span> <span class="dv">10</span>, <span class="co"># font size of manifest variable names</span></span>
+<span id="cb65-7"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb65-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">nCharNodes =</span> <span class="dv">0</span>,</span>
+<span id="cb65-8"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb65-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">nCharEdges =</span> <span class="dv">0</span>, <span class="co"># don&#39;t limit variable name lengths</span></span>
+<span id="cb65-9"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb65-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">fade =</span> <span class="cn">FALSE</span>, <span class="co"># don&#39;t weight path width to reflect strength</span></span>
+<span id="cb65-10"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb65-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">curvePivot =</span> <span class="cn">TRUE</span>, <span class="co"># make straight edges instead of round ones</span></span>
+<span id="cb65-11"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb65-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">curve =</span> <span class="dv">2</span>, <span class="co"># pull covariances&#39; curves out a little</span></span>
+<span id="cb65-12"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb65-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">style =</span> <span class="st">&quot;lisrel&quot;</span>, <span class="co"># no variances vs. # &quot;ram&quot;&#39;s 2-headed for variances</span></span>
+<span id="cb65-13"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb65-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">color =</span> <span class="st">&quot;green&quot;</span>, <span class="co"># color of variables</span></span>
+<span id="cb65-14"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb65-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">edge.color =</span> <span class="st">&quot;black&quot;</span>, <span class="co"># color of edges/paths</span></span>
+<span id="cb65-15"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb65-15" aria-hidden="true" tabindex="-1"></a>         <span class="at">layout =</span> <span class="st">&quot;tree2&quot;</span>, <span class="co"># tree, spring, circle, circle2</span></span>
+<span id="cb65-16"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb65-16" aria-hidden="true" tabindex="-1"></a>         <span class="at">residuals =</span> <span class="cn">TRUE</span>) <span class="co"># residuals variances included in the path diagram</span></span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-41-1.png" width="672" /></p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(ex1fit_noCov_freeX, <span class="at">what=</span><span class="st">&#39;est&#39;</span>, </span>
+<span id="cb66-2"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb66-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">rotation =</span> <span class="dv">2</span>, <span class="co"># default rotation = 1 with four options</span></span>
+<span id="cb66-3"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb66-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">curve =</span> <span class="dv">2</span>, <span class="co"># pull covariances&#39; curves out a little</span></span>
+<span id="cb66-4"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb66-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">nCharNodes =</span> <span class="dv">0</span>,</span>
+<span id="cb66-5"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb66-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">nCharEdges =</span> <span class="dv">0</span>, <span class="co"># don&#39;t limit variable name lengths</span></span>
+<span id="cb66-6"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb66-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">sizeMan =</span> <span class="dv">8</span>, <span class="co"># font size of manifest variable names</span></span>
+<span id="cb66-7"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb66-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">style =</span> <span class="st">&quot;lisrel&quot;</span>, <span class="co"># single-headed arrows vs. # &quot;ram&quot;&#39;s 2-headed for variances</span></span>
+<span id="cb66-8"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb66-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">edge.label.cex=</span><span class="fl">1.2</span>, <span class="at">curvePivot =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb66-9"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb66-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">fade=</span><span class="cn">FALSE</span>)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-42-1.png" width="672" /></p>
+<!------------------------------>
+</div>
+</div>
+<div id="exercise-how-would-you-fit-the-model-in-saunders-et-al.-2016" class="section level2" number="3.7">
+<h2><span class="header-section-number">3.7</span> Exercise: How would you fit the model in Saunders et al. (2016)?</h2>
+<!------------------------------>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="r-exercises.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

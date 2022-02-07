@@ -1,10 +1,10 @@
 course
 r-exercises
-week3_2
+week4_1-lavaan-lab-1-path-analysis-model
 reading-in-and-working-with-realistic-datasets-in-r
 to-begin-we-will-read-the-file-that-we-will-use-for-our-sem-lab-eatingdisordersimdata.csv.
-you-may-also-use-getwd-to-get-the-current-working-directory-and-copy-that-in-the-file-argument-of-the-function.
 or-you-could-nest-the-file.choose-function-inside-the-read.csv-function
+pros-and-cons-of-writing-the-full-file-path-vs.-using-read.csvfile-file.choose-header-t
 gabriella-recommends
 finally-point-and-click-always-works
 sample-covariance-matrices-using-the-cov-function
@@ -14,5 +14,13 @@ loading-packages-libraries-that-you-have-installed
 using-lavaan-for-path-models
 part-i-follow-the-set-of-equations-we-wrote-in-class
 part-ii-lets-run-our-model
+ex1fit
+ex1pathsyntax_nocov
+ex1fit_nocov_freex
+ex1fit_nocov_lavaan
+sigma-matrices
+gabriellas-practical-tips
 part-iii-summarizing-our-analysis
-optional-plotting-sem-model
+plotting-sem-model
+customize-it-your-way
+exercise-how-would-you-fit-the-model-in-saunders-et-al.-2016
