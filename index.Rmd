@@ -9,6 +9,6 @@ site: bookdown::bookdown_site
 
 Structural Equation Modeling (SEM) is a general class of multivariate techniques that models relationships between latent variables and observed variables (“measurement models”) and relationships among latent variables (“structural models”) simultaneously. Students will learn the theoretical background of SEM as well as the techniques using programming language R. Topics covered in this class include mediation/moderation model; confirmatory factor analysis; model fit evaluation; multi-group SEM; latent growth modeling; MTMM model; and SEM with categorical variables. 4 graduate hours. No professional credit. Prerequisite: EPSY 580 and EPSY 581; or Equivalents.
 
-This site is supposed to serve as a repository for R codes used in lab sessions of this course in Spring 2021. 
+This site is supposed to serve as a repository for R codes used in lab sessions of this course in Spring 2022. 
 
 *Disclaimer: Opinions are my own and not the views of my employer
