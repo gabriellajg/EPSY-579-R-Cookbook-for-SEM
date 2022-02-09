@@ -1,0 +1,343 @@
+# Week4_2: Lavaan Lab 2 Mediation and Indirect Effects
+
+In this lab, we will learn how to: 
+
++ perform a simple mediation analysis using Preacher & Hayes (2004) + Bootstrap
++ test mediation effects in the eating disorder path model 
+
+<!------------------------------>
+## Reading-In and Working With Realistic Datasets In R
+<!------------------------------>
+
+If your data (eatingDisorderSimData.csv) is stored in you current working directory, then simply load your data by typing the name of the .csv file:
+
+```{r, eval = T}
+labData <- read.table(file = "eatingDisorderSimData.csv", header = T, sep = ",")
+```
+
+Save the sample covariance matrix: 
+
+```{r}
+S = cov(labData)
+```
+
+
+<!------------------------------>
+## Using Lavaan For Mediation Models - Preacher & Hayes’s 
+<!------------------------------>
+
+Load the package: 
+
+```{r, eval = T}
+library(lavaan)
+```
+
++ Part I: Writing the Model Syntax
++ Part II: Analyzing the Model Using Your Dataset
++ Part III: Examining the results.
+
+## PART I: # Follow the two equations of M (DietSE) & Y (Bulimia)
+
+Diet Self-Efficacy = BMI + Disturbance
+
+Bulimic Symptoms = BMI + Diet Self-Efficacy + Disturbance
+
+Let's write some model syntax:
+
+```{r, eval = T}
+ex1MediationSyntax <- " 			 #opening a quote
+	#Regressions
+	DietSE ~ BMI                    #M ~ X regression (a path)
+	Bulimia ~ BMI + DietSE          #Y ~ X + M regression (c prime and b)
+	"  
+```
+
+No need to fix disturbance covariances in simple mediation as none was estimated
+
+## PART II Let's run our model!
+
+let fixed.x=FALSE to print more lines
+
+```{r, eval = T}
+ex1fit_freeX <- lavaan::sem(model = ex1MediationSyntax, data = labData, fixed.x = FALSE)
+summary(ex1fit_freeX)
+```
+
+note that there are six parameter estimates and df = 0. 
+
+But the output does not include the mediation effect a*b?
+
+### Label the mediation effect
+
+Let's learn how to label parameters
+
+great tutorial example: http://lavaan.ugent.be/tutorial/mediation.html
+
+To label a parameter, include the coefficient label and an asterisk * before the variable to be labelled.
+
+E.g., y ~ b1*x + b2*m
+
+This would give x the label b1 and m the label b2 in the y regression.
+
+```{r, eval = T}
+ex2MediationSyntax <- " 			 			#opening a quote
+	#Regressions
+	DietSE ~ a*BMI                  	#Label the a coefficient in the M regression.
+	Bulimia ~ cPrime*BMI + b*DietSE   #Label the direct effect (cPrime) of X and direct effect of M (b) in the Y regression.
+	" 
+```
+
+What does this do?
+
+```{r}
+ex2fit <- lavaan::sem(model = ex2MediationSyntax, data = labData, fixed.x=FALSE)
+summary(ex2fit)
+```
+
+The regression coefficients have labels now!
+
+### Define a new term for the mediation effect a*b 
+
+...using the labels we just created in ex2MediationSyntax
+
+The := operator in lavaan defines new terms to be tested:
+
+(name of a new term) := operator
+
+```{r}
+ex3MediationSyntax <- " 			 			#opening a quote
+	#Regressions
+	DietSE ~ a*BMI                  	#Label the a coefficient in the M regression.
+	Bulimia ~ cPrime*BMI + b*DietSE   #Label the direct effect (cPrime) of X and direct effect of M (b) in the Y regression.
+	
+	#Define New Parameters
+	ab := a*b 									#the product term is computed as a*b
+	c := cPrime + ab 						#having defined ab, we can use this here.
+" 
+```
+
+```{r}
+ex3fit <- lavaan::sem(model = ex3MediationSyntax, data = labData, fixed.x=FALSE)
+summary(ex3fit)
+```
+
+Now there are two significance tests of the indirect effect ab and the total effect c! 
+
+Question: why didn't the #parameters change? 
+
+Note: *defining* a new term is NOT equivalent to *adding* a new parameter!
+
+You can create as many terms as your want without changing the #parameters and the df
+
+
+## PART III: Summarizing Our Analysis:
+
+We can request standardized coefficients very easily by adding a statement to the summary command.
+
+```{r}
+summary(ex3fit, standardized = TRUE) #This includes standardized estimates. std.all contains usual regression standardization.
+
+summary(ex3fit, ci = T)  #Include confidence intervals
+```
+
+or both!
+
+```{r}
+summary(ex3fit, standardized = TRUE, ci = T)
+```
+
+__Important: the default significance tests of defined parameters in lavaan is Sobel's test.__ 
+
+## PART IV: Bootstrap confidence intervals
+
+### The default one is boot.ci.type = "perc"
+
+You can request bootstrap standard errors in sem() using se = "bootstrap" and bootstrap = 1000
+
+```{r}
+set.seed(2022)
+ex3Boot <- lavaan::sem(model = ex3MediationSyntax, data = labData, se = "bootstrap", bootstrap = 1000, fixed.x=FALSE) 
+```
+
+This requires the full dataset - need more than the covariance matrix.
+
+se = "bootstrap" requests bootstrap standard errors.
+
+bootstrap = 1000 requests 1000 bootstrap samples.
+
+Request bootstrap CI: 
+
+```{r}
+summary(ex3Boot, ci = TRUE) 
+```
+
+Now we have bootstrap standard error and percentile confidence interval for ab!
+
+### BC (bias-corrected) confidence interval
+
+What about other types of bootstrap confidence intervals?
+
+You can request a BC (bias-corrected) by adding an argument boot.ci.type = "bca.simple" to parameterEstimates():
+
+```{r}
+parameterEstimates(ex3Boot, level = 0.95, boot.ci.type="bca.simple")
+```
+
+which returns a 95% BCa confidence interval. 
+
+This approach will yield similar results to the PROCESS Macro in SPSS with bias-corrected standard errors.
+
+
+<!------------------------------>
+## In-Class Exercise: Use Lavaan to estimate and interpret the following model
+<!------------------------------>
+
+```{r, eval=TRUE}
+ex4MediationSyntax <- "
+	#Regressions
+	DietSE ~ a*BMI                  	#Label the a coefficient in the M regression.
+	Risk ~ cPrime*BMI + b*DietSE   #Label the direct effect (cPrime) of X and direct effect of M (b) in the Y regression.
+	
+	#Define New Parameters
+	ab := a*b 									#the product term is computed as a*b
+	c := cPrime + ab 						#having defined ab, we can use this here.
+"
+```
+
+
+```{r, eval=TRUE}
+ex4fit <- lavaan::sem(model = ex4MediationSyntax, data = labData, fixed.x=FALSE)
+
+summary(ex4fit, ci = T)
+```
+
+Bootstrap confidence intervals:
+
+```{r, eval=TRUE}
+set.seed(2022)
+
+ex4Boot <- lavaan::sem(model = ex4MediationSyntax, data = labData, se = "bootstrap", bootstrap = 1000, fixed.x=FALSE) 
+
+parameterEstimates(ex4Boot, level = 0.95, boot.ci.type="bca.simple")
+```
+
+
+<!------------------------------>
+## Exercise: Eating Disorder Mediation Analysis
+<!------------------------------>
+
+Give it a try before peaking the answers! 
+
+Hints:
+
+1. Label the regression coefficients: b1 - b12;
+
+2. Fix all disturbance covariances at 0;
+
+3. Define mediation effects and total effects for each of the six mediation models using the labels;
+
+4. Request bootstrap standard errors using se = "bootstrap"; 
+
+5. Print and interpret the mediation effects;
+
+6. (Optional) Identify and interpret the inconsistent mediation effects. 
+
+I'll get you started: 
+
+
+### Step 1: Labeling and defining the parameters
+### Step 2: Fix all disturbance covariances at 0
+
+```{r}
+ex5PathSyntax_noCov <- " 			 #opening a quote
+	DietSE ~ b1*BMI + b5*SelfEsteem      #DietSE is predicted by BMI and SelfEsteem 
+	Bulimia ~ b10*DietSE + b2*BMI + b6*SelfEsteem
+	Restrictive ~ b11*DietSE + b3*BMI + b7*SelfEsteem
+	Risk ~ b12*DietSE + b4*BMI + b8*SelfEsteem + b9*Accu
+
+	#Disturbance covariances (fixed at 0):
+	DietSE ~~ 0*Bulimia  # ~~ indicates a two-headed arrow (variance or covariance)
+	DietSE ~~ 0*Restrictive  # 0* in front of the 2nd variable fixes the covariance at 0
+	DietSE ~~ 0*Risk     # These lines say that all endogenous variables have no correlated disturbance variances
+	Bulimia ~~ 0*Restrictive
+	Bulimia ~~ 0*Risk
+	Restrictive ~~ 0*Risk
+"  
+```
+
+
+### Step 3: Define new terms for mediation effects
+
+Recall:
+
+Define New Parameters
+
+ab := a*b 									#the product term is computed as a*b
+
+
+```{r, eval=TRUE}
+ex5MediationSyntax <- "
+	DietSE ~ b1*BMI + b5*SelfEsteem      #DietSE is predicted by BMI and SelfEsteem 
+	Bulimia ~ b10*DietSE + b2*BMI + b6*SelfEsteem
+	Restrictive ~ b11*DietSE + b3*BMI + b7*SelfEsteem
+	Risk ~ b12*DietSE + b4*BMI + b8*SelfEsteem + b9*Accu
+
+	#Disturbance covariances (fixed at 0):
+	DietSE ~~ 0*Bulimia  # ~~ indicates a two-headed arrow (variance or covariance)
+	DietSE ~~ 0*Restrictive  # 0* in front of the 2nd variable fixes the covariance at 0
+	DietSE ~~ 0*Risk     # These lines say that all endogenous variables have no correlated disturbance variances
+	Bulimia ~~ 0*Restrictive
+	Bulimia ~~ 0*Risk
+	Restrictive ~~ 0*Risk
+	
+	#Define New Parameters
+	med1 := b1*b10
+	total1 := b2 + med1
+	med2 := b1*b11
+	total2 := b3 + med2
+	med3 := b1*b12
+	total3 := b4 + med3
+	med4 := b5*b10
+	total4 := b6 + med4
+	med5 := b5*b11
+	total5 := b7 + med5
+	med6 := b5*b12
+	total6 := b8 + med6
+"
+```
+
+
+```{r, eval=FALSE}
+ex5fit <- lavaan::sem(model = ex5MediationSyntax, data = labData, fixed.x=FALSE)
+
+summary(ex5fit, ci = T)
+```
+
+### Step 4: Bootstrap confidence intervals:
+### Step 5: Print and interpret the mediation effects;
+
+```{r, eval=TRUE}
+set.seed(2022)
+
+ex5Boot <- lavaan::sem(model = ex5MediationSyntax, data = labData, se = "bootstrap", bootstrap = 1000, fixed.x=FALSE) 
+
+parameterEstimates(ex5Boot, level = 0.95, boot.ci.type="bca.simple")
+```
+
+
+### Plot it!
+
+```{r}
+library(semPlot)
+
+semPaths(ex5Boot, what='est', 
+         rotation = 2, # default rotation = 1 with four options
+         curve = 2, # pull covariances' curves out a little
+         nCharNodes = 0,
+         nCharEdges = 0, # don't limit variable name lengths
+         sizeMan = 8, # font size of manifest variable names
+         style = "lisrel", # single-headed arrows vs. # "ram"'s 2-headed for variances
+         edge.label.cex=1.2, curvePivot = TRUE, 
+         fade=FALSE)
+```
+
