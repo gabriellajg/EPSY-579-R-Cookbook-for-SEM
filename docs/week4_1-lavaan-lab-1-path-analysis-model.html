@@ -419,7 +419,7 @@ argument is of length zero</p>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb31-1" aria-hidden="true" tabindex="-1"></a>ex1fit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> ex1PathSyntax, <span class="at">data =</span> labData)</span></code></pre></div>
 <p>Then we can obtain complete results using the summary() function:</p>
 <div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ex1fit)</span></code></pre></div>
-<pre><code>## lavaan 0.6-10 ended normally after 36 iterations
+<pre><code>## lavaan 0.6-10 ended normally after 33 iterations
 ## 
 ##   Estimator                                         ML
 ##   Optimization method                           NLMINB
@@ -481,7 +481,7 @@ argument is of length zero</p>
 <p>example:</p>
 <div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb35-1" aria-hidden="true" tabindex="-1"></a>ex1fit_S <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> ex1PathSyntax, <span class="at">sample.cov =</span> S, <span class="at">sample.nobs =</span> n)</span>
 <span id="cb35-2"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ex1fit_S)</span></code></pre></div>
-<pre><code>## lavaan 0.6-10 ended normally after 36 iterations
+<pre><code>## lavaan 0.6-10 ended normally after 33 iterations
 ## 
 ##   Estimator                                         ML
 ##   Optimization method                           NLMINB
@@ -574,7 +574,7 @@ argument is of length zero</p>
 <span id="cb38-20"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb38-20" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb38-21"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb38-21" aria-hidden="true" tabindex="-1"></a>ex1fit_noCov <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> ex1PathSyntax_noCov, <span class="at">data =</span> labData)</span>
 <span id="cb38-22"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb38-22" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ex1fit_noCov)</span></code></pre></div>
-<pre><code>## lavaan 0.6-10 ended normally after 1 iterations
+<pre><code>## lavaan 0.6-10 ended normally after 10 iterations
 ## 
 ##   Estimator                                         ML
 ##   Optimization method                           NLMINB
@@ -653,7 +653,7 @@ argument is of length zero</p>
 <p>This usually makes no difference from ex1fit_noCov, except that it prints more lines</p>
 <div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb41-1" aria-hidden="true" tabindex="-1"></a>ex1fit_noCov_freeX <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> ex1PathSyntax_noCov, <span class="at">data =</span> labData, <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb41-2"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ex1fit_noCov_freeX)</span></code></pre></div>
-<pre><code>## lavaan 0.6-10 ended normally after 1 iterations
+<pre><code>## lavaan 0.6-10 ended normally after 10 iterations
 ## 
 ##   Estimator                                         ML
 ##   Optimization method                           NLMINB
@@ -751,7 +751,7 @@ argument is of length zero</p>
 <span id="cb43-27"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb43-27" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span>  </span>
 <span id="cb43-28"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb43-28" aria-hidden="true" tabindex="-1"></a>ex1fit_noCov_lavaan <span class="ot">&lt;-</span> <span class="fu">lavaan</span>(<span class="at">model =</span> ex1PathSyntax_lavaan, <span class="at">data =</span> labData)</span>
 <span id="cb43-29"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb43-29" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ex1fit_noCov_lavaan)</span></code></pre></div>
-<pre><code>## lavaan 0.6-10 ended normally after 11 iterations
+<pre><code>## lavaan 0.6-10 ended normally after 12 iterations
 ## 
 ##   Estimator                                         ML
 ##   Optimization method                           NLMINB

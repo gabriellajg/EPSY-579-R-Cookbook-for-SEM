@@ -12,15 +12,8 @@ In this lab, we will learn how to:
 If your data (eatingDisorderSimData.csv) is stored in you current working directory, then simply load your data by typing the name of the .csv file:
 
 ```{r, eval = T}
-labData <- read.table(file = "eatingDisorderSimData.csv", header = T, sep = ",")
+labData <- read.csv(file = "eatingDisorderSimData.csv", header = T, sep = ",")
 ```
-
-Save the sample covariance matrix: 
-
-```{r}
-S = cov(labData)
-```
-
 
 <!------------------------------>
 ## Using Lavaan For Mediation Models - Preacher & Hayes’s 
@@ -183,7 +176,7 @@ You can request a BC (bias-corrected) by adding an argument boot.ci.type = "bca.
 parameterEstimates(ex3Boot, level = 0.95, boot.ci.type="bca.simple")
 ```
 
-which returns a 95% BCa confidence interval. 
+which returns a 95% BC confidence interval. 
 
 This approach will yield similar results to the PROCESS Macro in SPSS with bias-corrected standard errors.
 
@@ -195,8 +188,8 @@ This approach will yield similar results to the PROCESS Macro in SPSS with bias-
 ```{r, eval=TRUE}
 ex4MediationSyntax <- "
 	#Regressions
-	DietSE ~ a*BMI                  	#Label the a coefficient in the M regression.
-	Risk ~ cPrime*BMI + b*DietSE   #Label the direct effect (cPrime) of X and direct effect of M (b) in the Y regression.
+	DietSE ~ a*SelfEsteem                  	
+	Risk ~ cPrime*SelfEsteem + b*DietSE   
 	
 	#Define New Parameters
 	ab := a*b 									#the product term is computed as a*b
