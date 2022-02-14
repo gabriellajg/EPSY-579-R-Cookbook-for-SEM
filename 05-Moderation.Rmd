@@ -1,0 +1,420 @@
+# Week5_1: Lavaan Lab 3 Moderation and Conditional Effects
+
+In this lab, we will learn how to: 
+
++ how to perform moderation using regression and sem
++ test the moderation effects of binary and continuous moderators
++ visualize moderation effects. 
+
+<!------------------------------>
+## Reading-In Datasets
+<!------------------------------>
+
+Let's read this dataset in. Change the file path to whatever directory where you saved the file!
+
+```{r, eval = T}
+cbtData <- read.csv(file = "dataInClass.csv", header = T)
+```
+
+Let's examine this dataset:
+
+```{r}
+head(cbtData)
+
+str(cbtData)
+
+colSums(is.na(cbtData))
+```
+
+Notice that the first two columns are not model variables
+
++ col 1 is a case ID variable.
++ col 2 is a factor variable indicating CBT vs. Info-Only treatment.
+
+Besides,
+
++ col 5 is a variable that measures negative thoughts.
++ col 7 is a continuous measure of NeedCog.
+
+
+In the first part of this demo, we will work with three variables: CBTDummy, NeedCog, and Depression
+
+Let's look at the covariance matrix of the three variables
+
+Multiple ways to accomplish this:
+
+```{r}
+cov(cbtData[,-c(1,2,5,7)])
+cov(cbtData[,c(3,4,6)])
+cov(cbtData[,c("CBTDummy", "NeedCog", "Depression")])
+```
+
+let's round this to two decimals
+
+```{r}
+round(cov(cbtData[,c("CBTDummy", "NeedCog", "Depression")]), digits = 2)
+```
+
+What about the means?
+
+```{r}
+round(apply(cbtData[,c("CBTDummy", "NeedCog", "Depression")], 2, mean), 2)
+```
+
+Although they are not centered, we will proceed because CBTDummy and NeedCog are both binary. 
+
+
+<!------------------------------>
+## Interactions in Regression Using lm()
+<!------------------------------>
+
+In regression course we learned the lm() function, which stands for linear model.
+
+To include an interaction in regression, simply use an : to create a product in the formula: 
+
+```{r}
+interactionModel <- lm(formula = Depression ~ CBTDummy + NeedCog + CBTDummy:NeedCog, data = cbtData)
+```
+
+NOTE: R is very helpful, in that if you just put an asterisk *, it includes all lower-order terms!
+
+```{r}
+interactionModel <- lm(formula = Depression ~ CBTDummy*NeedCog, data = cbtData)
+```
+
+Let's look at this interaction model: 
+
+```{r}
+summary(interactionModel)
+```
+
+
+Let's interpret this ... (In class)
+
+
+<!------------------------------>
+## Interactions in Lavaan
+<!------------------------------>
+
+Now let us write the same model using lavaan.
+
+Load the package: 
+
+```{r, eval = T}
+library(lavaan)
+```
+
+### IMPORTANT NOTE
+
+Because lavaan uses the * for assigning coefficient labels, this cannot be used to create interaction terms.
+
+Instead, we have to create the product term in the dataset first, before running our model.
+
+This is easy to do.
+
+General Format:
+
+existingDataFrame$variableName <- vectorToBeAssignedAsNewVariable
+
+```{r}
+cbtData$CBTxNeedCog <- cbtData$CBTDummy * cbtData$NeedCog
+```
+
+You can name the product term arbitrarily: 
+
+cbtData\$fourth <- cbtData\$CBTDummy * cbtData$NeedCog
+
+Let's look at cbtData again:
+
+```{r}
+head(cbtData)
+```
+
+Now you have a new variable called CBTxNeedCog at the end.
+
+
+### Follow the equation of Y (Depression): 
+
+Depression = CBTDummy +  NeedCog + CBTDummy*NeedCog + Disturbance
+
+Let's write some model syntax (with the labels):
+
+```{r, eval = T}
+interactionSyntax <- "
+	#Regression with interaction
+	#with labels
+	Depression ~ b1*CBTDummy + b2*NeedCog + b3*CBTxNeedCog
+"
+```
+
+let fixed.x=FALSE to print more lines: 
+
+```{r}
+inter_fit1 <- sem(model = interactionSyntax, 
+                  data = cbtData, 
+                  fixed.x = FALSE)
+```
+
+If you'd like lavaan to print means and intercepts, we need to ask sem() to include the meanstructure:
+
+```{r}
+inter_fit1 <- sem(model = interactionSyntax, 
+                  data = cbtData, 
+                  fixed.x =FALSE, 
+                  meanstructure = TRUE)
+```
+
+
+```{r}
+summary(inter_fit1)
+```
+
+How does this compare to our regression model?
+
+```{r}
+summary(interactionModel)
+```
+
+Same...but sem is more verbose. 
+
+
+<!------------------------------>
+## Visial inspection of interactions
+<!------------------------------>
+
+One way to plot the interactions is to use the interact_plot() function on the lm() object. 
+
+Install and load the package interactions first:
+
+```{r}
+library(interactions)
+```
+
+```{r}
+interact_plot(interactionModel, pred = "CBTDummy", modx = "NeedCog")
+```
+
+<!------------------------------>
+## Centering Continuous Moderator
+<!------------------------------>
+
+Now let's work with the continuous measure of NeedCog directly:
+
+```{r}
+mean(cbtData$NeedCogCont)
+sd(cbtData$NeedCogCont)
+```
+
+NeedCogCont has been standardized already, which is helpful.
+
+If not, we use scale() function to center a continuous variable
+
+ + Usage: scale(x, center = TRUE, scale = TRUE)
+ + If you just need to center a variable, you disable scale=FALSE
+
+```{r}
+centeredNeedCog <- scale(cbtData$NeedCogCont, center = TRUE, scale = TRUE)
+hist(centeredNeedCog)
+```
+
+For now, we will leave these variables as is in our dataset. But the scale() function is good to know.
+
+<!------------------------------>
+## Interactions in Lavaan (Continuous Moderator)
+<!------------------------------>
+
+Just like for binary NeedCog moderator, we have to manually create a product term in the dataset first before running our model.
+
+This is easy to do: 
+
+```{r}
+cbtData$CBTxNeedCogCont <- cbtData$CBTDummy * cbtData$NeedCogCont
+```
+
+Let's look at cbtData again:
+
+```{r}
+head(cbtData)
+```
+
+Time to write some lavaan model syntax (with labels): 
+
+```{r}
+interactionSyntax2 <- "
+	#Regression
+	Depression ~ b1*CBTDummy + b2*NeedCogCont + b3*CBTxNeedCogCont 
+"
+```
+
+Let's ask sem() to include the meanstructure:
+
+```{r}
+inter_fit2 <- sem(model = interactionSyntax2, 
+                  data = cbtData, 
+                  fixed.x =FALSE, 
+                  meanstructure = TRUE)
+```
+
+```{r}
+summary(inter_fit2)
+```
+
+
+<!------------------------------>
+## Simple Slopes Analysis
+<!------------------------------>
+
+pick-a-point (Rogosa, 1980) and plot the simple slopes of X at designated levels of Z: 
+
+```{r}
+mean(cbtData$NeedCogCont) #0
+sd(cbtData$NeedCogCont) # almost 1
+
+mean(cbtData$NeedCogCont) - sd(cbtData$NeedCogCont) # 1sd below the mean
+mean(cbtData$NeedCogCont) + sd(cbtData$NeedCogCont) # 1sd above the mean
+```
+
+```{r}
+interactionSyntax3 <- "
+	#Regression
+	Depression ~ b1*CBTDummy + b2*NeedCogCont + b3*CBTxNeedCogCont #regression coefficient labels
+
+	#Simple Slopes
+	
+	SSHigh := b1+b3*1 		#Since sd(NeedCogCont) = approximately 1, this is +1 SD
+	SSMod := b1+b3*0 		  #at the mean of (centered) NeedCogCont
+	SSLow := b1+b3*(-1)   #Low Simple Slope is at -1 (1 SD below since SD = 1)
+"
+```
+
+
+```{r}
+inter_fit3 <- sem(model = interactionSyntax3, 
+                  data = cbtData, 
+                  fixed.x =FALSE, 
+                  meanstructure = TRUE)
+
+summary(inter_fit3)
+```
+
+Now we have tests of the simple slopes at low, moderate, and high values of the moderator!
+
+Along with significance tests.
+
+<!------------------------------>
+## Visual inspection of interactions (lm approach)
+<!------------------------------>
+
+Interactions in Regression Using lm()
+
+To include ab interaction in regression, simply use an * to create a product in the formula.
+
+```{r}
+interactionModel2 <- lm(Depression ~ CBTDummy*NeedCogCont, cbtData)
+
+summary(interactionModel2)
+```
+
+pick-a-point (Rogosa, 1980) and plot the simple slopes of X at designated levels of Z: 
+
+```{r}
+library(interactions)
+
+interact_plot(interactionModel2, pred = "CBTDummy", modx = "NeedCogCont")
+```
+
+<!------------------------------>
+## JOHNSON-NEYMAN INTERVAL 
+<!------------------------------>
+
+```{r}
+interactions::johnson_neyman(interactionModel2, pred = "CBTDummy", modx = "NeedCogCont", alpha = 0.05)
+```
+
+
+<!------------------------------>
+## Exercise: How Framing Affects Justifications for Giving or Withholding Aid to Disaster Victims
+<!------------------------------>
+
+For this exercise, we will use a real dataset in a study by Chapman and Lickel (2016). 
+
+This study was interested in examining the relation between Climate Change and Disasters: How Framing Affects Justifications for Giving or Withholding Aid to Disaster Victims?
+
+Researchers hypothesizes that Framing a natural disaster as the product of climate change impacts attitudes toward disaster victims and humanitarian relief. 
+
+The predictor is X/Frame: 
+
+ + Participants read a story about a humanitarian crisis caused by a drought in Africa.
+ + X = 1: Half of the participants were told that the drought was caused by climate change (the climate change condition) 
+ + X  = 0: The other half were not told anything about the specific cause of the drought and thus had no reason to believe it wasn’t the result of natural causes (the natural causes condition). 
+
+The outcome is Y/Donate: 
+
+ + the participants’ willingness to donate to the victims was assessed using a set of questions. 
+ + Responses were made on a set of 7-point scales, with higher scores reflecting a greater willingness to donate to the victims
+
+The moderator is W/Skeptic: 
+
+ + The belief whether climate change is a real phenomenon was also measured.
+
+
+The moderation model looks at whether the attribution frame manipulation (X) might have had a different effect on people's willingness to donate (Y) depending on their climate change skepticism (M)
+
+### Data Prep
+
+The following example data are from Chapman and Lickel (2016)
+
+Also example data in Chapter 12 of Hayes (2017)
+
+Simply load the .rda into R:
+
+```{r}
+load("disaster.rda")
+
+head(disaster)
+str(disaster)
+```
+
+If you are able to install package processR, you can also view its help page:
+
+```{r ins1, eval=FALSE}
+install.packages("processR")
+
+library(processR)
+
+data(disaster)
+
+# take a look at the dataset: 
+
+?disaster
+```
+
+You probably have to go to https://www.xquartz.org/ to download and install X11, which is a server required by many R packages, including processR. 
+
+
+Now, disaster is a data.frame with 211 obs. of 5 variables: 
+
++ id
++ frame: Experimental condition. 0 = naturally caused disaster, 1 = climate change caused disaster
++ donate: Positive attitudes toward donating
++ justify: Negative justifications
++ skeptic: Climate change skepticism
+
+
+### Moderation with a binary moderator
+
+Let me first manually create a binary moderator based on the continuous version of skeptic: 
+
+```{r}
+disaster$skeptic_b <- ifelse(disaster$skeptic<3, 0, 1) # low and high levels of skeptism of climate change
+table(disaster$skeptic_b)
+```
+
+Next, can you test the moderation effect of skeptic_b on the path from frame to donate? (you can use either lm or lavaan)
+
+```{r}
+
+```
+
+Please interpret the coefficients in the model above and visualize the interaction using interact_plot(). 
+
