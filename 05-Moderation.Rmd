@@ -1,4 +1,4 @@
-# Week5_1: Lavaan Lab 3 Moderation and Conditional Effects
+# Week5_2: Lavaan Lab 3 Moderation and Conditional Effects
 
 In this lab, we will learn how to: 
 
@@ -213,7 +213,7 @@ If not, we use scale() function to center a continuous variable
  + If you just need to center a variable, you disable scale=FALSE
 
 ```{r}
-centeredNeedCog <- scale(cbtData$NeedCogCont, center = TRUE, scale = TRUE)
+centeredNeedCog <- scale(cbtData$NeedCogCont, center = TRUE, scale = FALSE)
 hist(centeredNeedCog)
 ```
 

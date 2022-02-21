@@ -43,7 +43,7 @@ step-3-define-new-terms-for-mediation-effects
 step-4-bootstrap-confidence-intervals
 step-5-print-and-interpret-the-mediation-effects
 plot-it
-week5_1-lavaan-lab-3-moderation-and-conditional-effects
+week5_2-lavaan-lab-3-moderation-and-conditional-effects
 reading-in-datasets
 interactions-in-regression-using-lm
 interactions-in-lavaan
@@ -58,3 +58,16 @@ johnson-neyman-interval
 exercise-how-framing-affects-justifications-for-giving-or-withholding-aid-to-disaster-victims
 data-prep
 moderation-with-a-binary-moderator
+week6_1-lavaan-lab-4-mediated-moderation-moderated-mediation
+part-1-mediated-moderation-indirect-conditional-effect
+step-1-read-in-data
+step-2-create-the-interaction-term-for-moderation-analysis
+step-3-write-the-syntax-and-fit-the-model
+step-4-bootstrap-version
+step-5-effect-size-measures
+part-2-moderated-mediation-conditional-indirect-effect
+step-1-product-term
+step-2-write-the-syntax-and-fit-the-model
+step-3-bootstrap-version
+step-4-simple-slopes
+johnson-neyman-interval-1

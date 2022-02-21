@@ -1,0 +1,401 @@
+# Week6_1: Lavaan Lab 4 Mediated Moderation & Moderated Mediation
+
+In this lab, we will learn how to: 
+
++ Estimate the mediated moderation model
++ Estimate the moderated mediation model
++ Bootstrap the effects
++ Conduct simple slope analyses
+
+<!------------------------------>
+## Part 1: Mediated Moderation (Indirect Conditional effect)
+<!------------------------------>
+
+### Step 1: Read-in Data
+
+Imagine that we extended our CBT study by adding a mediator: the average number of daily negative thoughts reported at the end of six weeks.
+
+The hypothesis we will test is that NegThoughts mediates the CBT*NeedCog -> Depression path
+
+Let's read this dataset in: 
+
+```{r, eval = T}
+cbtData <- read.csv(file = "dataInClass.csv", header = T, sep = ',')
+```
+
+This time we work with the continuous version of the moderator: NeedCogCont. 
+
+Let's examine their means and standard deviations:
+
+```{r}
+apply(cbtData[,-c(1,2)], 2, mean)
+apply(cbtData[,-c(1,2)], 2, sd)
+```
+
+Why dropping the first two variables? 
+
++ The first two variables ID and CBT are not numerical and have no means. 
+
+NeedCogCont has been standardized already, which is helpful. 
+
++ If not, don't forget to use scale() function to center the continuous variables. 
+
+### Step 2: Create the interaction term for Moderation Analysis
+
+To test the moderation effect, we have to manually create a product term in the dataset before running our model: 
+
+```{r}
+cbtData$CBTxNeedCogCont <- cbtData$CBTDummy * cbtData$NeedCogCont
+```
+
+Let's look at cbtData again:
+
+```{r}
+head(cbtData)
+```
+
+### Step 3: Write the syntax and Fit the model 
+
+load the package:
+
+```{r}
+library(lavaan)
+```
+
+Follow the two equations to write the model syntax: 
+
+```{r}
+ex1MedModerationBasic <- " 
+  # label the coefficients:
+  
+  NegThoughts ~ a_m1*CBTxNeedCogCont + a_m2*NeedCogCont + a_m3*CBTDummy
+	Depression ~ b1*CBTDummy + b2*NeedCogCont + b3*CBTxNeedCogCont + bM*NegThoughts
+
+  #Define New Parameter Using :=
+  
+  #Mediated Moderation effect  
+  MedMod_ab := a_m1*bM
+  TotalMod := MedMod_ab + b3
+	"  
+```
+
+Since we included the intercept term, we need to ask sem() to include the meanstructure:
+
+```{r}
+ex1fit <- sem(model = ex1MedModerationBasic, 
+              data = cbtData, 
+              fixed.x = FALSE,
+              meanstructure = TRUE)
+summary(ex1fit, ci = T)
+```
+
+Are we done?
+
+### Step 4: Bootstrap Version
+
+We need to request Bootstrap because this involves testing a mediation effect MedMod_ab. 
+
+Remember to set a seed: 
+
+```{r}
+set.seed(2022)
+ex1Boot <- sem(model = ex1MedModerationBasic, 
+               data = cbtData, 
+               fixed.x = FALSE,
+               meanstructure = TRUE,
+               se = "bootstrap", 
+               bootstrap = 1000) 
+```
+
++ This requires the full dataset - need more than the covariance matrix.
++ se = "bootstrap" requests bootstrap standard errors.
++ bootstrap = 1000 requests 1000 bootstrap samples. 
+
+Request BC confidence interval:
+
+```{r}
+parameterEstimates(ex1Boot, 
+                   level = 0.95, 
+                   boot.ci.type="bca.simple",
+                   standardized = TRUE)
+```
+
+Warning message:
+
+In norm.inter(t, adj.alpha) : extreme order statistics used as endpoints
+
+https://rcompanion.org/handbook/E_04.html
+
+The BCa (bias corrected, accelerated) is often cited as the best for theoretical reasons.  The percentile method is also cited as typically good.  However, if you get the “extreme order statistics used as endpoints” warning message, use a different test.  For small data sets, the interval from BCa may be wider than for some other methods.
+
+### Step 5: Effect size measures
+
+Measure 1: Completely Standardized Indirect Effect (CSIE)
+
+```{r}
+beta_a_m1 = -0.668
+beta_bM = 0.892
+es1 = beta_a_m1*beta_bM
+es1
+```
+
++ According to Cohen, .01-.09 is small, .10-.25 is medium, and .25 + is large
++ This is a large mediation effect
+
+Measure 2: 
+
++  Use unstandardized parameter estimates:
+
+```{r}
+TotalMod = -4.967
+MedMod_ab = -4.858
+prop = MedMod_ab/TotalMod #97.8%
+prop
+b3 = -0.109 # pvalue=0.218 # nonsig
+```
+
++ Mediated% = indirect effect / total effect = ab / c
++ Consistent mediation 
++ Complete mediation as the remaining direct effect is nonsig and prop > 80%
+
+
+
+
+<!------------------------------>
+## Part 2: Moderated Mediation (Conditional Indirect effect)
+<!------------------------------>
+
+In this lab, we'll test this first-stage moderated mediation model in which NeedCog moderates the CBT -> NegThoughts path
+
+### Step 1: Product Term
+
+We already have the product term in the dataset:
+
+```{r}
+cbtData$CBTxNeedCogCont <- cbtData$CBTDummy * cbtData$NeedCogCont
+```
+
+If NeedCog moderates the NegThoughts -> Depression path, then we center NegThoughts and create a product term between centered NegThoughts*NeedCogCont (making sense?)
+
+### Step 2: Write the syntax and Fit the model 
+
+```{r}
+ex2ModMediationBasic <- " 
+  NegThoughts ~ a1*CBTDummy + a2*NeedCogCont + a3*CBTxNeedCogCont 
+	Depression ~ b*NegThoughts + cprime*CBTDummy
+	"
+```
+
+We'll need to define the Index of Moderated Mediation in the syntax:
+
+```{r}
+ex2ModMediation <- " 
+	#Regressions
+  NegThoughts ~ a1*CBTDummy + a2*NeedCogCont + a3*CBTxNeedCogCont 
+	Depression ~ b*NegThoughts + cprime*CBTDummy
+
+  #Index of Moderated Mediation
+  IndexOfModMed := a3*b
+	"  
+```
+
+### Step 3: Bootstrap Version
+
+Since this model involves tests of indirect effects
+
+let's jump to the bootstrap test: 
+
+```{r}
+set.seed(2022)
+ex2Boot <- sem(model = ex2ModMediation, 
+               data = cbtData, 
+               fixed.x = FALSE,
+               meanstructure = TRUE,
+               se = "bootstrap", 
+               bootstrap = 1000) 
+```
+
+You can further request a BC (bias-corrected) by adding an argument boot.ci.type = "bca.simple" to parameterEstimates():
+
+```{r}
+parameterEstimates(ex2Boot, 
+                   level = 0.95, 
+                   boot.ci.type="bca.simple",
+                   standardized = TRUE)
+```
+
+Defined Parameters:
+
+                   Estimate  Std.Err  ci.lower  ci.upper   std.all
+
+    IndexOfModMed    -4.967    0.114    -5.180    -4.727    -0.609
+
+NeedCogCont significantly moderates CBT -> NegThoughts -> Depression indirect effect through moderating the first stage of the indirect effect
+
++ Since we expect the effect of CBT on Depression to be negative (CBT reduces Depression)
++ And IndexOfModMed is also negative
++ We'll say NeedCogCont strengthens the indirect effect of CBT on Depression through NegThoughts
++ The higher need for cognition, the stronger the indirect effect, and the more effect mediated by NegThoughts
+
+### Step 4: Simple Slopes 
+
+As a follow-up analysis to a significant moderation effect, we conduct simple slope anlaysis:
+
+Let's use pick-a-point (Rogosa, 1980) and plot the indirect effects at designated levels of NeedCogCont: 
+
+```{r}
+mean(cbtData$NeedCogCont) #0
+sd(cbtData$NeedCogCont) # 1
+```
+
+Three representative levels:
+
+```{r}
+mean(cbtData$NeedCogCont) - sd(cbtData$NeedCogCont) # -1
+mean(cbtData$NeedCogCont)  #0
+mean(cbtData$NeedCogCont) + sd(cbtData$NeedCogCont) # 1
+```
+
+let's define the Conditional Indirect Effects in the syntax:
+
+```{r}
+ex3ModMediation <- " 
+	#Regressions
+  NegThoughts ~ a1*CBTDummy + a2*NeedCogCont + a3*CBTxNeedCogCont 
+	Depression ~ b*NegThoughts + cprime*CBTDummy
+
+  #Index of Moderated Mediation
+  IndexOfModMed := a3*b
+
+  #Simple Slopes
+	aSSLow := a1+a3*(-1)	
+	aSSMean := a1+a3*0 		
+	aSSHigh := a1+a3*1 		
+
+	#Conditional Indirect Effects
+	abLow := aSSLow*b
+	abMean := aSSMean*b
+	abHigh := aSSHigh*b
+	"  
+```
+
+```{r}
+set.seed(2022)
+ex3Boot <- sem(model = ex3ModMediation, 
+               data = cbtData, 
+               se = "bootstrap", 
+               bootstrap = 1000, 
+               fixed.x=FALSE,
+               meanstructure = TRUE) 
+```
+
+```{r}
+parameterEstimates(ex3Boot, 
+                   level = 0.95, 
+                   boot.ci.type="bca.simple",
+                   standardized = TRUE)
+```
+
+
+```{r,eval=FALSE,echo=TRUE}
+Defined Parameters: 
+                   Estimate  Std.Err  z-value  P(>|z|)    ci.lower  ci.upper    std.all
+    IndexOfModMed    -4.967    0.114  -43.431    0.000      -5.180    -4.727     -0.609      
+    aSSLow           -1.990    0.092  -21.679    0.000      -2.176    -1.813     -0.126  
+    aSSMean          -5.060    0.064  -78.724    0.000      -5.183    -4.930     -0.794                                 
+    aSSHigh          -8.131    0.094  -86.243    0.000      -8.313    -7.942     -1.462  
+    abLow            -3.218    0.151  -21.338    0.000      -3.532    -2.941     -0.115  
+    abMean           -8.185    0.121  -67.625    0.000      -8.433    -7.944     -0.725  
+    abHigh          -13.152    0.181  -72.721    0.000     -13.513   -12.779     -1.334  
+    b                 1.617    0.013  124.544    0.000       1.592     1.642      0.912  
+    cprime           -1.066    0.084  -12.758    0.000      -1.216    -0.899     -0.094  
+```
+
++ What does a1 tell you?
++ What does a2 tell you?
++ What does a3 tell you?
++ What does IndexOfModMed tell you?
++ What does aSSLow tell you?
++ What does aSSMean tell you?
++ What does aSSHigh tell you?
++ What does b tell you?
++ What does abLow tell you?
++ What does abMean tell you?
++ What does abHigh tell you?
++ What does cprime tell you?
+
++ the simple slopes of CBT -> NegThoughts (a path) are all negative at three levels of the moderator
++ the indirect effects of CBT -> NegThoughts -> Depression (ab) are all negative at three levels of the moderator
+
+
+
+<!------------------------------>
+## JOHNSON-NEYMAN INTERVAL 
+<!------------------------------>
+
+Although johnson_neyman() does not work on lavaan fitted object (yet), one can use a try-and-error approach to figure out the region of significance: 
+
+First, obtain the minimum and maximum of the moderator NeedCogCont: 
+
+```{r}
+min(cbtData$NeedCogCont)   # -2.83
+max(cbtData$NeedCogCont)   #  3.31
+```
+
+
+```{r}
+ex4_JN <- " 
+	#Regressions
+  NegThoughts ~ a1*CBTDummy + a2*NeedCogCont + a3*CBTxNeedCogCont 
+	Depression ~ b*NegThoughts + cprime*CBTDummy
+
+  #Index of Moderated Mediation
+  IndexOfModMed := a3*b
+
+  #Simple Slopes
+ 	aSSMin := a1+a3*(-2.83)	
+ 	aSSMin1 := a1+a3*(-1.75)	
+ 	aSSMin2 := a1+a3*(-1.74)	
+ 	aSSMin3 := a1+a3*(-1.58)	
+ 	aSSMin4 := a1+a3*(-1.57)	
+ 	aSSLow := a1+a3*(-1)	
+ 	aSSMean := a1+a3*0 		
+ 	aSSHigh := a1+a3*1 		
+ 	aSSMax := a1+a3*(3.31)	
+
+	#Conditional Indirect Effects
+	abMin := (a1+a3*(-2.83))*b
+	abMin1 := (a1+a3*(-1.75))*b    # cutoff1
+	abMin2 := (a1+a3*(-1.74))*b
+	abMin3 := (a1+a3*(-1.58))*b
+	abMin4 := (a1+a3*(-1.57))*b    # cutoff2
+	abLow := aSSLow*b
+	abMean := aSSMean*b
+	abHigh := aSSHigh*b
+	abMax := (a1+a3*(3.31))*b
+	"  
+```
+
+
+```{r}
+set.seed(2022)
+ex4Boot <- sem(model = ex4_JN, 
+               data = cbtData, 
+               se = "bootstrap", 
+               bootstrap = 1000, 
+               fixed.x=FALSE,
+               meanstructure = TRUE) 
+```
+
+```{r}
+parameterEstimates(ex4Boot, 
+                   level = 0.95, 
+                   boot.ci.type="bca.simple")
+```
+
+So our regions of significance are: 
+
++ $[-2.83, -1.75]$: In which the ab are positive and significant. Participants with this level of NeegCog experienced elevated levels of depression due to CBT because CBT induces more negative thoughts among them. 
++ $[-1.75, -1.57]$: In which the ab are NOT significant. 
++ $[-1.57, 3.31]$: In which the ab are negative and significant. Participants with this level of NeegCog experienced reduced levels of depression due to CBT because CBT reduced negative thoughts for them. 
+ 
