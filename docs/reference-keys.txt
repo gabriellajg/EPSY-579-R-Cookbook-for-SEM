@@ -49,7 +49,7 @@ interactions-in-regression-using-lm
 interactions-in-lavaan
 important-note
 follow-the-equation-of-y-depression
-visial-inspection-of-interactions
+visual-inspection-of-interactions
 centering-continuous-moderator
 interactions-in-lavaan-continuous-moderator
 simple-slopes-analysis
@@ -74,6 +74,7 @@ johnson-neyman-interval-1
 week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016
 data-prep-1
 scatterplot-matrix
+p-value-or-bootstrapped-confidence-interval
 model-1-simple-linear-regression-model
 model-2-simple-mediation-model
 model-3-simple-moderation-model

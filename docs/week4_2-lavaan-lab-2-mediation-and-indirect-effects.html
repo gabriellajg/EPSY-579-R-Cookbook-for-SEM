@@ -193,7 +193,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.3.1" data-path="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#important-note"><i class="fa fa-check"></i><b>5.3.1</b> IMPORTANT NOTE</a></li>
 <li class="chapter" data-level="5.3.2" data-path="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#follow-the-equation-of-y-depression"><i class="fa fa-check"></i><b>5.3.2</b> Follow the equation of Y (Depression):</a></li>
 </ul></li>
-<li class="chapter" data-level="5.4" data-path="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#visial-inspection-of-interactions"><i class="fa fa-check"></i><b>5.4</b> Visial inspection of interactions</a></li>
+<li class="chapter" data-level="5.4" data-path="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#visual-inspection-of-interactions"><i class="fa fa-check"></i><b>5.4</b> Visual inspection of interactions</a></li>
 <li class="chapter" data-level="5.5" data-path="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#centering-continuous-moderator"><i class="fa fa-check"></i><b>5.5</b> Centering Continuous Moderator</a></li>
 <li class="chapter" data-level="5.6" data-path="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#interactions-in-lavaan-continuous-moderator"><i class="fa fa-check"></i><b>5.6</b> Interactions in Lavaan (Continuous Moderator)</a></li>
 <li class="chapter" data-level="5.7" data-path="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#simple-slopes-analysis"><i class="fa fa-check"></i><b>5.7</b> Simple Slopes Analysis</a></li>
@@ -229,6 +229,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.1" data-path="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#data-prep-1"><i class="fa fa-check"></i><b>7.1</b> Data Prep</a>
 <ul>
 <li class="chapter" data-level="7.1.1" data-path="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#scatterplot-matrix"><i class="fa fa-check"></i><b>7.1.1</b> Scatterplot Matrix</a></li>
+<li class="chapter" data-level="7.1.2" data-path="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#p-value-or-bootstrapped-confidence-interval"><i class="fa fa-check"></i><b>7.1.2</b> p-value or bootstrapped confidence interval?</a></li>
 </ul></li>
 <li class="chapter" data-level="7.2" data-path="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#model-1-simple-linear-regression-model"><i class="fa fa-check"></i><b>7.2</b> Model 1: Simple Linear Regression Model</a></li>
 <li class="chapter" data-level="7.3" data-path="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#model-2-simple-mediation-model"><i class="fa fa-check"></i><b>7.3</b> Model 2: Simple Mediation Model</a></li>
@@ -276,14 +277,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">4.1</span> Reading-In and Working With Realistic Datasets In R</h2>
 <!------------------------------>
 <p>If your data (eatingDisorderSimData.csv) is stored in you current working directory, then simply load your data by typing the name of the .csv file:</p>
-<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb67-1" aria-hidden="true" tabindex="-1"></a>labData <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">&quot;eatingDisorderSimData.csv&quot;</span>, <span class="at">header =</span> T, <span class="at">sep =</span> <span class="st">&quot;,&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb66-1" aria-hidden="true" tabindex="-1"></a>labData <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">&quot;eatingDisorderSimData.csv&quot;</span>, <span class="at">header =</span> T, <span class="at">sep =</span> <span class="st">&quot;,&quot;</span>)</span></code></pre></div>
 <!------------------------------>
 </div>
 <div id="using-lavaan-for-mediation-models---preacher-hayess" class="section level2" number="4.2">
 <h2><span class="header-section-number">4.2</span> Using Lavaan For Mediation Models - Preacher &amp; Hayes’s</h2>
 <!------------------------------>
 <p>Load the package:</p>
-<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span></code></pre></div>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span></code></pre></div>
 <ul>
 <li>Part I: Writing the Model Syntax</li>
 <li>Part II: Analyzing the Model Using Your Dataset</li>
@@ -295,18 +296,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Diet Self-Efficacy = BMI + Disturbance</p>
 <p>Bulimic Symptoms = BMI + Diet Self-Efficacy + Disturbance</p>
 <p>Let’s write some model syntax:</p>
-<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb69-1" aria-hidden="true" tabindex="-1"></a>ex1MediationSyntax <span class="ot">&lt;-</span> <span class="st">&quot;              #opening a quote</span></span>
-<span id="cb69-2"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb69-2" aria-hidden="true" tabindex="-1"></a><span class="st">    #Regressions</span></span>
-<span id="cb69-3"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb69-3" aria-hidden="true" tabindex="-1"></a><span class="st">    DietSE ~ BMI                    #M ~ X regression (a path)</span></span>
-<span id="cb69-4"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb69-4" aria-hidden="true" tabindex="-1"></a><span class="st">    Bulimia ~ BMI + DietSE          #Y ~ X + M regression (c prime and b)</span></span>
-<span id="cb69-5"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb69-5" aria-hidden="true" tabindex="-1"></a><span class="st">    &quot;</span>  </span></code></pre></div>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb68-1" aria-hidden="true" tabindex="-1"></a>ex1MediationSyntax <span class="ot">&lt;-</span> <span class="st">&quot;              #opening a quote</span></span>
+<span id="cb68-2"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb68-2" aria-hidden="true" tabindex="-1"></a><span class="st">    #Regressions</span></span>
+<span id="cb68-3"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb68-3" aria-hidden="true" tabindex="-1"></a><span class="st">    DietSE ~ BMI                    #M ~ X regression (a path)</span></span>
+<span id="cb68-4"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb68-4" aria-hidden="true" tabindex="-1"></a><span class="st">    Bulimia ~ BMI + DietSE          #Y ~ X + M regression (c prime and b)</span></span>
+<span id="cb68-5"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb68-5" aria-hidden="true" tabindex="-1"></a><span class="st">    &quot;</span>  </span></code></pre></div>
 <p>No need to fix disturbance covariances in simple mediation as none was estimated</p>
 </div>
 <div id="part-ii-lets-run-our-model-1" class="section level2" number="4.4">
 <h2><span class="header-section-number">4.4</span> PART II Let’s run our model!</h2>
 <p>let fixed.x=FALSE to print more lines</p>
-<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb70-1" aria-hidden="true" tabindex="-1"></a>ex1fit_freeX <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> ex1MediationSyntax, <span class="at">data =</span> labData, <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb70-2"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb70-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ex1fit_freeX)</span></code></pre></div>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb69-1" aria-hidden="true" tabindex="-1"></a>ex1fit_freeX <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> ex1MediationSyntax, <span class="at">data =</span> labData, <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb69-2"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb69-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ex1fit_freeX)</span></code></pre></div>
 <pre><code>## lavaan 0.6-10 ended normally after 1 iterations
 ## 
 ##   Estimator                                         ML
@@ -348,14 +349,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>To label a parameter, include the coefficient label and an asterisk * before the variable to be labelled.</p>
 <p>E.g., y ~ b1<em>x + b2</em>m</p>
 <p>This would give x the label b1 and m the label b2 in the y regression.</p>
-<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb72-1" aria-hidden="true" tabindex="-1"></a>ex2MediationSyntax <span class="ot">&lt;-</span> <span class="st">&quot;                         #opening a quote</span></span>
-<span id="cb72-2"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb72-2" aria-hidden="true" tabindex="-1"></a><span class="st">    #Regressions</span></span>
-<span id="cb72-3"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb72-3" aria-hidden="true" tabindex="-1"></a><span class="st">    DietSE ~ a*BMI                      #Label the a coefficient in the M regression.</span></span>
-<span id="cb72-4"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb72-4" aria-hidden="true" tabindex="-1"></a><span class="st">    Bulimia ~ cPrime*BMI + b*DietSE   #Label the direct effect (cPrime) of X and direct effect of M (b) in the Y regression.</span></span>
-<span id="cb72-5"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb72-5" aria-hidden="true" tabindex="-1"></a><span class="st">    &quot;</span> </span></code></pre></div>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb71-1" aria-hidden="true" tabindex="-1"></a>ex2MediationSyntax <span class="ot">&lt;-</span> <span class="st">&quot;                         #opening a quote</span></span>
+<span id="cb71-2"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb71-2" aria-hidden="true" tabindex="-1"></a><span class="st">    #Regressions</span></span>
+<span id="cb71-3"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb71-3" aria-hidden="true" tabindex="-1"></a><span class="st">    DietSE ~ a*BMI                      #Label the a coefficient in the M regression.</span></span>
+<span id="cb71-4"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb71-4" aria-hidden="true" tabindex="-1"></a><span class="st">    Bulimia ~ cPrime*BMI + b*DietSE   #Label the direct effect (cPrime) of X and direct effect of M (b) in the Y regression.</span></span>
+<span id="cb71-5"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb71-5" aria-hidden="true" tabindex="-1"></a><span class="st">    &quot;</span> </span></code></pre></div>
 <p>What does this do?</p>
-<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb73-1" aria-hidden="true" tabindex="-1"></a>ex2fit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> ex2MediationSyntax, <span class="at">data =</span> labData, <span class="at">fixed.x=</span><span class="cn">FALSE</span>)</span>
-<span id="cb73-2"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb73-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ex2fit)</span></code></pre></div>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb72-1" aria-hidden="true" tabindex="-1"></a>ex2fit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> ex2MediationSyntax, <span class="at">data =</span> labData, <span class="at">fixed.x=</span><span class="cn">FALSE</span>)</span>
+<span id="cb72-2"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb72-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ex2fit)</span></code></pre></div>
 <pre><code>## lavaan 0.6-10 ended normally after 1 iterations
 ## 
 ##   Estimator                                         ML
@@ -395,17 +396,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>…using the labels we just created in ex2MediationSyntax</p>
 <p>The := operator in lavaan defines new terms to be tested:</p>
 <p>(name of a new term) := operator</p>
-<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb75-1" aria-hidden="true" tabindex="-1"></a>ex3MediationSyntax <span class="ot">&lt;-</span> <span class="st">&quot;                         #opening a quote</span></span>
-<span id="cb75-2"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb75-2" aria-hidden="true" tabindex="-1"></a><span class="st">    #Regressions</span></span>
-<span id="cb75-3"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb75-3" aria-hidden="true" tabindex="-1"></a><span class="st">    DietSE ~ a*BMI                      #Label the a coefficient in the M regression.</span></span>
-<span id="cb75-4"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb75-4" aria-hidden="true" tabindex="-1"></a><span class="st">    Bulimia ~ cPrime*BMI + b*DietSE   #Label the direct effect (cPrime) of X and direct effect of M (b) in the Y regression.</span></span>
-<span id="cb75-5"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb75-5" aria-hidden="true" tabindex="-1"></a><span class="st">    </span></span>
-<span id="cb75-6"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb75-6" aria-hidden="true" tabindex="-1"></a><span class="st">    #Define New Parameters</span></span>
-<span id="cb75-7"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb75-7" aria-hidden="true" tabindex="-1"></a><span class="st">    ab := a*b                                   #the product term is computed as a*b</span></span>
-<span id="cb75-8"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb75-8" aria-hidden="true" tabindex="-1"></a><span class="st">    c := cPrime + ab                        #having defined ab, we can use this here.</span></span>
-<span id="cb75-9"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb75-9" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span> </span></code></pre></div>
-<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb76-1" aria-hidden="true" tabindex="-1"></a>ex3fit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> ex3MediationSyntax, <span class="at">data =</span> labData, <span class="at">fixed.x=</span><span class="cn">FALSE</span>)</span>
-<span id="cb76-2"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb76-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ex3fit)</span></code></pre></div>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb74-1" aria-hidden="true" tabindex="-1"></a>ex3MediationSyntax <span class="ot">&lt;-</span> <span class="st">&quot;                         #opening a quote</span></span>
+<span id="cb74-2"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb74-2" aria-hidden="true" tabindex="-1"></a><span class="st">    #Regressions</span></span>
+<span id="cb74-3"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb74-3" aria-hidden="true" tabindex="-1"></a><span class="st">    DietSE ~ a*BMI                      #Label the a coefficient in the M regression.</span></span>
+<span id="cb74-4"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb74-4" aria-hidden="true" tabindex="-1"></a><span class="st">    Bulimia ~ cPrime*BMI + b*DietSE   #Label the direct effect (cPrime) of X and direct effect of M (b) in the Y regression.</span></span>
+<span id="cb74-5"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb74-5" aria-hidden="true" tabindex="-1"></a><span class="st">    </span></span>
+<span id="cb74-6"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb74-6" aria-hidden="true" tabindex="-1"></a><span class="st">    #Define New Parameters</span></span>
+<span id="cb74-7"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb74-7" aria-hidden="true" tabindex="-1"></a><span class="st">    ab := a*b                                   #the product term is computed as a*b</span></span>
+<span id="cb74-8"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb74-8" aria-hidden="true" tabindex="-1"></a><span class="st">    c := cPrime + ab                        #having defined ab, we can use this here.</span></span>
+<span id="cb74-9"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb74-9" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span> </span></code></pre></div>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb75-1" aria-hidden="true" tabindex="-1"></a>ex3fit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> ex3MediationSyntax, <span class="at">data =</span> labData, <span class="at">fixed.x=</span><span class="cn">FALSE</span>)</span>
+<span id="cb75-2"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb75-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ex3fit)</span></code></pre></div>
 <pre><code>## lavaan 0.6-10 ended normally after 1 iterations
 ## 
 ##   Estimator                                         ML
@@ -452,7 +453,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="part-iii-summarizing-our-analysis-1" class="section level2" number="4.5">
 <h2><span class="header-section-number">4.5</span> PART III: Summarizing Our Analysis:</h2>
 <p>We can request standardized coefficients very easily by adding a statement to the summary command.</p>
-<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ex3fit, <span class="at">standardized =</span> <span class="cn">TRUE</span>) <span class="co">#This includes standardized estimates. std.all contains usual regression standardization.</span></span></code></pre></div>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ex3fit, <span class="at">standardized =</span> <span class="cn">TRUE</span>) <span class="co">#This includes standardized estimates. std.all contains usual regression standardization.</span></span></code></pre></div>
 <pre><code>## lavaan 0.6-10 ended normally after 1 iterations
 ## 
 ##   Estimator                                         ML
@@ -490,7 +491,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
 ##     ab                0.021    0.006    3.454    0.001    0.021    0.022
 ##     c                 0.151    0.027    5.678    0.000    0.151    0.153</code></pre>
-<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ex3fit, <span class="at">ci =</span> T)  <span class="co">#Include confidence intervals</span></span></code></pre></div>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ex3fit, <span class="at">ci =</span> T)  <span class="co">#Include confidence intervals</span></span></code></pre></div>
 <pre><code>## lavaan 0.6-10 ended normally after 1 iterations
 ## 
 ##   Estimator                                         ML
@@ -529,7 +530,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##     ab                0.021    0.006    3.454    0.001    0.009    0.033
 ##     c                 0.151    0.027    5.678    0.000    0.099    0.203</code></pre>
 <p>or both!</p>
-<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ex3fit, <span class="at">standardized =</span> <span class="cn">TRUE</span>, <span class="at">ci =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ex3fit, <span class="at">standardized =</span> <span class="cn">TRUE</span>, <span class="at">ci =</span> T)</span></code></pre></div>
 <pre><code>## lavaan 0.6-10 ended normally after 1 iterations
 ## 
 ##   Estimator                                         ML
@@ -574,13 +575,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="the-default-one-is-boot.ci.type-perc" class="section level3" number="4.6.1">
 <h3><span class="header-section-number">4.6.1</span> The default one is boot.ci.type = “perc”</h3>
 <p>You can request bootstrap standard errors in sem() using se = “bootstrap” and bootstrap = 1000</p>
-<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2022</span>)</span>
-<span id="cb84-2"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb84-2" aria-hidden="true" tabindex="-1"></a>ex3Boot <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> ex3MediationSyntax, <span class="at">data =</span> labData, <span class="at">se =</span> <span class="st">&quot;bootstrap&quot;</span>, <span class="at">bootstrap =</span> <span class="dv">1000</span>, <span class="at">fixed.x=</span><span class="cn">FALSE</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2022</span>)</span>
+<span id="cb83-2"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb83-2" aria-hidden="true" tabindex="-1"></a>ex3Boot <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> ex3MediationSyntax, <span class="at">data =</span> labData, <span class="at">se =</span> <span class="st">&quot;bootstrap&quot;</span>, <span class="at">bootstrap =</span> <span class="dv">1000</span>, <span class="at">fixed.x=</span><span class="cn">FALSE</span>) </span></code></pre></div>
 <p>This requires the full dataset - need more than the covariance matrix.</p>
 <p>se = “bootstrap” requests bootstrap standard errors.</p>
 <p>bootstrap = 1000 requests 1000 bootstrap samples.</p>
 <p>Request bootstrap CI:</p>
-<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ex3Boot, <span class="at">ci =</span> <span class="cn">TRUE</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ex3Boot, <span class="at">ci =</span> <span class="cn">TRUE</span>) </span></code></pre></div>
 <pre><code>## lavaan 0.6-10 ended normally after 1 iterations
 ## 
 ##   Estimator                                         ML
@@ -624,7 +625,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">4.6.2</span> BC (bias-corrected) confidence interval</h3>
 <p>What about other types of bootstrap confidence intervals?</p>
 <p>You can request a BC (bias-corrected) by adding an argument boot.ci.type = “bca.simple” to parameterEstimates():</p>
-<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="fu">parameterEstimates</span>(ex3Boot, <span class="at">level =</span> <span class="fl">0.95</span>, <span class="at">boot.ci.type=</span><span class="st">&quot;bca.simple&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="fu">parameterEstimates</span>(ex3Boot, <span class="at">level =</span> <span class="fl">0.95</span>, <span class="at">boot.ci.type=</span><span class="st">&quot;bca.simple&quot;</span>)</span></code></pre></div>
 <pre><code>##       lhs op       rhs  label    est    se      z pvalue ci.lower ci.upper
 ## 1  DietSE  ~       BMI      a -0.100 0.026 -3.779  0.000   -0.154   -0.048
 ## 2 Bulimia  ~       BMI cPrime  0.129 0.025  5.099  0.000    0.076    0.176
@@ -642,18 +643,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="in-class-exercise-use-lavaan-to-estimate-and-interpret-the-following-model" class="section level2" number="4.7">
 <h2><span class="header-section-number">4.7</span> In-Class Exercise: Use Lavaan to estimate and interpret the following model</h2>
 <!------------------------------>
-<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb89-1" aria-hidden="true" tabindex="-1"></a>ex4MediationSyntax <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
-<span id="cb89-2"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb89-2" aria-hidden="true" tabindex="-1"></a><span class="st">    #Regressions</span></span>
-<span id="cb89-3"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb89-3" aria-hidden="true" tabindex="-1"></a><span class="st">    DietSE ~ a*SelfEsteem                   </span></span>
-<span id="cb89-4"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb89-4" aria-hidden="true" tabindex="-1"></a><span class="st">    Risk ~ cPrime*SelfEsteem + b*DietSE   </span></span>
-<span id="cb89-5"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb89-5" aria-hidden="true" tabindex="-1"></a><span class="st">    </span></span>
-<span id="cb89-6"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb89-6" aria-hidden="true" tabindex="-1"></a><span class="st">    #Define New Parameters</span></span>
-<span id="cb89-7"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb89-7" aria-hidden="true" tabindex="-1"></a><span class="st">    ab := a*b                                   #the product term is computed as a*b</span></span>
-<span id="cb89-8"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb89-8" aria-hidden="true" tabindex="-1"></a><span class="st">    c := cPrime + ab                        #having defined ab, we can use this here.</span></span>
-<span id="cb89-9"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb89-9" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
-<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb90-1" aria-hidden="true" tabindex="-1"></a>ex4fit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> ex4MediationSyntax, <span class="at">data =</span> labData, <span class="at">fixed.x=</span><span class="cn">FALSE</span>)</span>
-<span id="cb90-2"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb90-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-3"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb90-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ex4fit, <span class="at">ci =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb88-1" aria-hidden="true" tabindex="-1"></a>ex4MediationSyntax <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
+<span id="cb88-2"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb88-2" aria-hidden="true" tabindex="-1"></a><span class="st">    #Regressions</span></span>
+<span id="cb88-3"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb88-3" aria-hidden="true" tabindex="-1"></a><span class="st">    DietSE ~ a*SelfEsteem                   </span></span>
+<span id="cb88-4"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb88-4" aria-hidden="true" tabindex="-1"></a><span class="st">    Risk ~ cPrime*SelfEsteem + b*DietSE   </span></span>
+<span id="cb88-5"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb88-5" aria-hidden="true" tabindex="-1"></a><span class="st">    </span></span>
+<span id="cb88-6"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb88-6" aria-hidden="true" tabindex="-1"></a><span class="st">    #Define New Parameters</span></span>
+<span id="cb88-7"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb88-7" aria-hidden="true" tabindex="-1"></a><span class="st">    ab := a*b                                   #the product term is computed as a*b</span></span>
+<span id="cb88-8"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb88-8" aria-hidden="true" tabindex="-1"></a><span class="st">    c := cPrime + ab                        #having defined ab, we can use this here.</span></span>
+<span id="cb88-9"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb88-9" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb89-1" aria-hidden="true" tabindex="-1"></a>ex4fit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> ex4MediationSyntax, <span class="at">data =</span> labData, <span class="at">fixed.x=</span><span class="cn">FALSE</span>)</span>
+<span id="cb89-2"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb89-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-3"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb89-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ex4fit, <span class="at">ci =</span> T)</span></code></pre></div>
 <pre><code>## lavaan 0.6-10 ended normally after 1 iterations
 ## 
 ##   Estimator                                         ML
@@ -692,11 +693,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##     ab                0.011    0.004    2.653    0.008    0.003    0.018
 ##     c                -0.228    0.027   -8.352    0.000   -0.282   -0.175</code></pre>
 <p>Bootstrap confidence intervals:</p>
-<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2022</span>)</span>
-<span id="cb92-2"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb92-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb92-3"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb92-3" aria-hidden="true" tabindex="-1"></a>ex4Boot <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> ex4MediationSyntax, <span class="at">data =</span> labData, <span class="at">se =</span> <span class="st">&quot;bootstrap&quot;</span>, <span class="at">bootstrap =</span> <span class="dv">1000</span>, <span class="at">fixed.x=</span><span class="cn">FALSE</span>) </span>
-<span id="cb92-4"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb92-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb92-5"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb92-5" aria-hidden="true" tabindex="-1"></a><span class="fu">parameterEstimates</span>(ex4Boot, <span class="at">level =</span> <span class="fl">0.95</span>, <span class="at">boot.ci.type=</span><span class="st">&quot;bca.simple&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2022</span>)</span>
+<span id="cb91-2"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb91-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb91-3"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb91-3" aria-hidden="true" tabindex="-1"></a>ex4Boot <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> ex4MediationSyntax, <span class="at">data =</span> labData, <span class="at">se =</span> <span class="st">&quot;bootstrap&quot;</span>, <span class="at">bootstrap =</span> <span class="dv">1000</span>, <span class="at">fixed.x=</span><span class="cn">FALSE</span>) </span>
+<span id="cb91-4"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb91-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb91-5"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb91-5" aria-hidden="true" tabindex="-1"></a><span class="fu">parameterEstimates</span>(ex4Boot, <span class="at">level =</span> <span class="fl">0.95</span>, <span class="at">boot.ci.type=</span><span class="st">&quot;bca.simple&quot;</span>)</span></code></pre></div>
 <pre><code>##          lhs op        rhs  label    est    se      z pvalue ci.lower ci.upper
 ## 1     DietSE  ~ SelfEsteem      a  0.105 0.024  4.364  0.000    0.055    0.151
 ## 2       Risk  ~ SelfEsteem cPrime -0.239 0.026 -9.162  0.000   -0.291   -0.189
@@ -727,7 +728,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="step-2-fix-all-disturbance-covariances-at-0" class="section level3" number="4.8.2">
 <h3><span class="header-section-number">4.8.2</span> Step 2: Fix all disturbance covariances at 0</h3>
-<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb94-1" aria-hidden="true" tabindex="-1"></a>ex5PathSyntax_noCov <span class="ot">&lt;-</span> <span class="st">&quot;             #opening a quote</span></span>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb93-1" aria-hidden="true" tabindex="-1"></a>ex5PathSyntax_noCov <span class="ot">&lt;-</span> <span class="st">&quot;             #opening a quote</span></span>
+<span id="cb93-2"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb93-2" aria-hidden="true" tabindex="-1"></a><span class="st">    DietSE ~ b1*BMI + b5*SelfEsteem      #DietSE is predicted by BMI and SelfEsteem </span></span>
+<span id="cb93-3"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb93-3" aria-hidden="true" tabindex="-1"></a><span class="st">    Bulimia ~ b10*DietSE + b2*BMI + b6*SelfEsteem</span></span>
+<span id="cb93-4"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb93-4" aria-hidden="true" tabindex="-1"></a><span class="st">    Restrictive ~ b11*DietSE + b3*BMI + b7*SelfEsteem</span></span>
+<span id="cb93-5"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb93-5" aria-hidden="true" tabindex="-1"></a><span class="st">    Risk ~ b12*DietSE + b4*BMI + b8*SelfEsteem + b9*Accu</span></span>
+<span id="cb93-6"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb93-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-7"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb93-7" aria-hidden="true" tabindex="-1"></a><span class="st">    #Disturbance covariances (fixed at 0):</span></span>
+<span id="cb93-8"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb93-8" aria-hidden="true" tabindex="-1"></a><span class="st">    DietSE ~~ 0*Bulimia  # ~~ indicates a two-headed arrow (variance or covariance)</span></span>
+<span id="cb93-9"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb93-9" aria-hidden="true" tabindex="-1"></a><span class="st">    DietSE ~~ 0*Restrictive  # 0* in front of the 2nd variable fixes the covariance at 0</span></span>
+<span id="cb93-10"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb93-10" aria-hidden="true" tabindex="-1"></a><span class="st">    DietSE ~~ 0*Risk     # These lines say that all endogenous variables have no correlated disturbance variances</span></span>
+<span id="cb93-11"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb93-11" aria-hidden="true" tabindex="-1"></a><span class="st">    Bulimia ~~ 0*Restrictive</span></span>
+<span id="cb93-12"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb93-12" aria-hidden="true" tabindex="-1"></a><span class="st">    Bulimia ~~ 0*Risk</span></span>
+<span id="cb93-13"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb93-13" aria-hidden="true" tabindex="-1"></a><span class="st">    Restrictive ~~ 0*Risk</span></span>
+<span id="cb93-14"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb93-14" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span>  </span></code></pre></div>
+</div>
+<div id="step-3-define-new-terms-for-mediation-effects" class="section level3" number="4.8.3">
+<h3><span class="header-section-number">4.8.3</span> Step 3: Define new terms for mediation effects</h3>
+<p>Recall:</p>
+<p>Define New Parameters</p>
+<p>ab := a<em>b #the product term is computed as a</em>b</p>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb94-1" aria-hidden="true" tabindex="-1"></a>ex5MediationSyntax <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
 <span id="cb94-2"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb94-2" aria-hidden="true" tabindex="-1"></a><span class="st">    DietSE ~ b1*BMI + b5*SelfEsteem      #DietSE is predicted by BMI and SelfEsteem </span></span>
 <span id="cb94-3"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb94-3" aria-hidden="true" tabindex="-1"></a><span class="st">    Bulimia ~ b10*DietSE + b2*BMI + b6*SelfEsteem</span></span>
 <span id="cb94-4"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb94-4" aria-hidden="true" tabindex="-1"></a><span class="st">    Restrictive ~ b11*DietSE + b3*BMI + b7*SelfEsteem</span></span>
@@ -740,55 +761,35 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb94-11"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb94-11" aria-hidden="true" tabindex="-1"></a><span class="st">    Bulimia ~~ 0*Restrictive</span></span>
 <span id="cb94-12"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb94-12" aria-hidden="true" tabindex="-1"></a><span class="st">    Bulimia ~~ 0*Risk</span></span>
 <span id="cb94-13"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb94-13" aria-hidden="true" tabindex="-1"></a><span class="st">    Restrictive ~~ 0*Risk</span></span>
-<span id="cb94-14"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb94-14" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span>  </span></code></pre></div>
-</div>
-<div id="step-3-define-new-terms-for-mediation-effects" class="section level3" number="4.8.3">
-<h3><span class="header-section-number">4.8.3</span> Step 3: Define new terms for mediation effects</h3>
-<p>Recall:</p>
-<p>Define New Parameters</p>
-<p>ab := a<em>b #the product term is computed as a</em>b</p>
-<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb95-1" aria-hidden="true" tabindex="-1"></a>ex5MediationSyntax <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
-<span id="cb95-2"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb95-2" aria-hidden="true" tabindex="-1"></a><span class="st">    DietSE ~ b1*BMI + b5*SelfEsteem      #DietSE is predicted by BMI and SelfEsteem </span></span>
-<span id="cb95-3"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb95-3" aria-hidden="true" tabindex="-1"></a><span class="st">    Bulimia ~ b10*DietSE + b2*BMI + b6*SelfEsteem</span></span>
-<span id="cb95-4"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb95-4" aria-hidden="true" tabindex="-1"></a><span class="st">    Restrictive ~ b11*DietSE + b3*BMI + b7*SelfEsteem</span></span>
-<span id="cb95-5"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb95-5" aria-hidden="true" tabindex="-1"></a><span class="st">    Risk ~ b12*DietSE + b4*BMI + b8*SelfEsteem + b9*Accu</span></span>
-<span id="cb95-6"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb95-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb95-7"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb95-7" aria-hidden="true" tabindex="-1"></a><span class="st">    #Disturbance covariances (fixed at 0):</span></span>
-<span id="cb95-8"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb95-8" aria-hidden="true" tabindex="-1"></a><span class="st">    DietSE ~~ 0*Bulimia  # ~~ indicates a two-headed arrow (variance or covariance)</span></span>
-<span id="cb95-9"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb95-9" aria-hidden="true" tabindex="-1"></a><span class="st">    DietSE ~~ 0*Restrictive  # 0* in front of the 2nd variable fixes the covariance at 0</span></span>
-<span id="cb95-10"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb95-10" aria-hidden="true" tabindex="-1"></a><span class="st">    DietSE ~~ 0*Risk     # These lines say that all endogenous variables have no correlated disturbance variances</span></span>
-<span id="cb95-11"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb95-11" aria-hidden="true" tabindex="-1"></a><span class="st">    Bulimia ~~ 0*Restrictive</span></span>
-<span id="cb95-12"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb95-12" aria-hidden="true" tabindex="-1"></a><span class="st">    Bulimia ~~ 0*Risk</span></span>
-<span id="cb95-13"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb95-13" aria-hidden="true" tabindex="-1"></a><span class="st">    Restrictive ~~ 0*Risk</span></span>
-<span id="cb95-14"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb95-14" aria-hidden="true" tabindex="-1"></a><span class="st">    </span></span>
-<span id="cb95-15"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb95-15" aria-hidden="true" tabindex="-1"></a><span class="st">    #Define New Parameters</span></span>
-<span id="cb95-16"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb95-16" aria-hidden="true" tabindex="-1"></a><span class="st">    med1 := b1*b10</span></span>
-<span id="cb95-17"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb95-17" aria-hidden="true" tabindex="-1"></a><span class="st">    total1 := b2 + med1</span></span>
-<span id="cb95-18"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb95-18" aria-hidden="true" tabindex="-1"></a><span class="st">    med2 := b1*b11</span></span>
-<span id="cb95-19"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb95-19" aria-hidden="true" tabindex="-1"></a><span class="st">    total2 := b3 + med2</span></span>
-<span id="cb95-20"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb95-20" aria-hidden="true" tabindex="-1"></a><span class="st">    med3 := b1*b12</span></span>
-<span id="cb95-21"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb95-21" aria-hidden="true" tabindex="-1"></a><span class="st">    total3 := b4 + med3</span></span>
-<span id="cb95-22"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb95-22" aria-hidden="true" tabindex="-1"></a><span class="st">    med4 := b5*b10</span></span>
-<span id="cb95-23"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb95-23" aria-hidden="true" tabindex="-1"></a><span class="st">    total4 := b6 + med4</span></span>
-<span id="cb95-24"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb95-24" aria-hidden="true" tabindex="-1"></a><span class="st">    med5 := b5*b11</span></span>
-<span id="cb95-25"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb95-25" aria-hidden="true" tabindex="-1"></a><span class="st">    total5 := b7 + med5</span></span>
-<span id="cb95-26"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb95-26" aria-hidden="true" tabindex="-1"></a><span class="st">    med6 := b5*b12</span></span>
-<span id="cb95-27"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb95-27" aria-hidden="true" tabindex="-1"></a><span class="st">    total6 := b8 + med6</span></span>
-<span id="cb95-28"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb95-28" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
-<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb96-1" aria-hidden="true" tabindex="-1"></a>ex5fit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> ex5MediationSyntax, <span class="at">data =</span> labData, <span class="at">fixed.x=</span><span class="cn">FALSE</span>)</span>
-<span id="cb96-2"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb96-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb96-3"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb96-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ex5fit, <span class="at">ci =</span> T)</span></code></pre></div>
+<span id="cb94-14"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb94-14" aria-hidden="true" tabindex="-1"></a><span class="st">    </span></span>
+<span id="cb94-15"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb94-15" aria-hidden="true" tabindex="-1"></a><span class="st">    #Define New Parameters</span></span>
+<span id="cb94-16"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb94-16" aria-hidden="true" tabindex="-1"></a><span class="st">    med1 := b1*b10</span></span>
+<span id="cb94-17"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb94-17" aria-hidden="true" tabindex="-1"></a><span class="st">    total1 := b2 + med1</span></span>
+<span id="cb94-18"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb94-18" aria-hidden="true" tabindex="-1"></a><span class="st">    med2 := b1*b11</span></span>
+<span id="cb94-19"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb94-19" aria-hidden="true" tabindex="-1"></a><span class="st">    total2 := b3 + med2</span></span>
+<span id="cb94-20"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb94-20" aria-hidden="true" tabindex="-1"></a><span class="st">    med3 := b1*b12</span></span>
+<span id="cb94-21"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb94-21" aria-hidden="true" tabindex="-1"></a><span class="st">    total3 := b4 + med3</span></span>
+<span id="cb94-22"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb94-22" aria-hidden="true" tabindex="-1"></a><span class="st">    med4 := b5*b10</span></span>
+<span id="cb94-23"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb94-23" aria-hidden="true" tabindex="-1"></a><span class="st">    total4 := b6 + med4</span></span>
+<span id="cb94-24"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb94-24" aria-hidden="true" tabindex="-1"></a><span class="st">    med5 := b5*b11</span></span>
+<span id="cb94-25"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb94-25" aria-hidden="true" tabindex="-1"></a><span class="st">    total5 := b7 + med5</span></span>
+<span id="cb94-26"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb94-26" aria-hidden="true" tabindex="-1"></a><span class="st">    med6 := b5*b12</span></span>
+<span id="cb94-27"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb94-27" aria-hidden="true" tabindex="-1"></a><span class="st">    total6 := b8 + med6</span></span>
+<span id="cb94-28"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb94-28" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb95-1" aria-hidden="true" tabindex="-1"></a>ex5fit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> ex5MediationSyntax, <span class="at">data =</span> labData, <span class="at">fixed.x=</span><span class="cn">FALSE</span>)</span>
+<span id="cb95-2"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb95-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb95-3"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb95-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ex5fit, <span class="at">ci =</span> T)</span></code></pre></div>
 </div>
 <div id="step-4-bootstrap-confidence-intervals" class="section level3" number="4.8.4">
 <h3><span class="header-section-number">4.8.4</span> Step 4: Bootstrap confidence intervals:</h3>
 </div>
 <div id="step-5-print-and-interpret-the-mediation-effects" class="section level3" number="4.8.5">
 <h3><span class="header-section-number">4.8.5</span> Step 5: Print and interpret the mediation effects;</h3>
-<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2022</span>)</span>
-<span id="cb97-2"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb97-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-3"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb97-3" aria-hidden="true" tabindex="-1"></a>ex5Boot <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> ex5MediationSyntax, <span class="at">data =</span> labData, <span class="at">se =</span> <span class="st">&quot;bootstrap&quot;</span>, <span class="at">bootstrap =</span> <span class="dv">1000</span>, <span class="at">fixed.x=</span><span class="cn">FALSE</span>) </span>
-<span id="cb97-4"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb97-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-5"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb97-5" aria-hidden="true" tabindex="-1"></a><span class="fu">parameterEstimates</span>(ex5Boot, <span class="at">level =</span> <span class="fl">0.95</span>, <span class="at">boot.ci.type=</span><span class="st">&quot;bca.simple&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2022</span>)</span>
+<span id="cb96-2"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb96-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb96-3"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb96-3" aria-hidden="true" tabindex="-1"></a>ex5Boot <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> ex5MediationSyntax, <span class="at">data =</span> labData, <span class="at">se =</span> <span class="st">&quot;bootstrap&quot;</span>, <span class="at">bootstrap =</span> <span class="dv">1000</span>, <span class="at">fixed.x=</span><span class="cn">FALSE</span>) </span>
+<span id="cb96-4"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb96-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb96-5"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb96-5" aria-hidden="true" tabindex="-1"></a><span class="fu">parameterEstimates</span>(ex5Boot, <span class="at">level =</span> <span class="fl">0.95</span>, <span class="at">boot.ci.type=</span><span class="st">&quot;bca.simple&quot;</span>)</span></code></pre></div>
 <pre><code>##            lhs op         rhs  label    est    se       z pvalue ci.lower ci.upper
 ## 1       DietSE  ~         BMI     b1 -0.088 0.026  -3.336  0.001   -0.141   -0.036
 ## 2       DietSE  ~  SelfEsteem     b5  0.093 0.024   3.862  0.000    0.044    0.139
@@ -833,17 +834,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="plot-it" class="section level3" number="4.8.6">
 <h3><span class="header-section-number">4.8.6</span> Plot it!</h3>
-<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(semPlot)</span>
-<span id="cb99-2"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb99-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb99-3"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb99-3" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(ex5Boot, <span class="at">what=</span><span class="st">&#39;est&#39;</span>, </span>
-<span id="cb99-4"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb99-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">rotation =</span> <span class="dv">2</span>, <span class="co"># default rotation = 1 with four options</span></span>
-<span id="cb99-5"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb99-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">curve =</span> <span class="dv">2</span>, <span class="co"># pull covariances&#39; curves out a little</span></span>
-<span id="cb99-6"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb99-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">nCharNodes =</span> <span class="dv">0</span>,</span>
-<span id="cb99-7"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb99-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">nCharEdges =</span> <span class="dv">0</span>, <span class="co"># don&#39;t limit variable name lengths</span></span>
-<span id="cb99-8"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb99-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">sizeMan =</span> <span class="dv">8</span>, <span class="co"># font size of manifest variable names</span></span>
-<span id="cb99-9"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb99-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">style =</span> <span class="st">&quot;lisrel&quot;</span>, <span class="co"># single-headed arrows vs. # &quot;ram&quot;&#39;s 2-headed for variances</span></span>
-<span id="cb99-10"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb99-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">edge.label.cex=</span><span class="fl">1.2</span>, <span class="at">curvePivot =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb99-11"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb99-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">fade=</span><span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(semPlot)</span>
+<span id="cb98-2"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb98-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-3"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb98-3" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(ex5Boot, <span class="at">what=</span><span class="st">&#39;est&#39;</span>, </span>
+<span id="cb98-4"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb98-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">rotation =</span> <span class="dv">2</span>, <span class="co"># default rotation = 1 with four options</span></span>
+<span id="cb98-5"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb98-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">curve =</span> <span class="dv">2</span>, <span class="co"># pull covariances&#39; curves out a little</span></span>
+<span id="cb98-6"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb98-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">nCharNodes =</span> <span class="dv">0</span>,</span>
+<span id="cb98-7"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb98-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">nCharEdges =</span> <span class="dv">0</span>, <span class="co"># don&#39;t limit variable name lengths</span></span>
+<span id="cb98-8"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb98-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">sizeMan =</span> <span class="dv">8</span>, <span class="co"># font size of manifest variable names</span></span>
+<span id="cb98-9"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb98-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">style =</span> <span class="st">&quot;lisrel&quot;</span>, <span class="co"># single-headed arrows vs. # &quot;ram&quot;&#39;s 2-headed for variances</span></span>
+<span id="cb98-10"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb98-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">edge.label.cex=</span><span class="fl">1.2</span>, <span class="at">curvePivot =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb98-11"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#cb98-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">fade=</span><span class="cn">FALSE</span>)</span></code></pre></div>
 <p><img src="bookdownproj_files/figure-html/unnamed-chunk-63-1.png" width="672" /></p>
 
 </div>

@@ -179,7 +179,7 @@ Same...but sem is more verbose.
 
 
 <!------------------------------>
-## Visial inspection of interactions
+## Visual inspection of interactions
 <!------------------------------>
 
 One way to plot the interactions is to use the interact_plot() function on the lm() object. 
