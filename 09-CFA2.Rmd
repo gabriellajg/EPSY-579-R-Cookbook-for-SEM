@@ -1,0 +1,276 @@
+# Week7_1: Lavaan Lab 5 One-factor CFA Model
+
+In this lab, we will learn how to: 
+
++ Identify the One-factor CFA Model
++ Scale the One-factor CFA Model
++ Estimate the One-factor CFA Model
++ Interpret the One-factor CFA Model
+
+
+## Data Prep
+
+We will use cfaInClassData.csv in this lab. 
+
+This is a simulated dataset based on Todd Little's positive affect example.
+
+The hypothesis is that a latent variable ‘positive affect’ is measured by three indicators (glad, cheerful and happy). 
+
+Let's read this dataset in: 
+
+```{r}
+cfaData<- read.csv("cfaInclassData.csv", header = T)
+```
+
+and examine the dataset: 
+
+```{r}
+head(cfaData)
+str(cfaData)
+dim(cfaData) #n = 1000, 7 variables
+```
+
+Let's examine their means and standard deviations:
+
+```{r}
+round(apply(cfaData[,-1], 2, mean), 2) # mean-centered
+round(apply(cfaData[,-1], 2, sd), 2) 
+```
+
+Let's call up the lavaan library and run some CFA's!
+
+```{r}
+library(lavaan)
+```
+
+<!------------------------------>
+## Part 1: One-Factor CFA, Fixed Loading
+<!------------------------------>
+
+### Fixed Loading, AKA Marker Variable method. 
+
+FYI, the three equations for the three indicators are:
+
++ Glad = lambda1*posAffect(eta) + u1
++ Cheerful = lambda2*posAffect(eta) + u2
++ Happy = lambda3*posAffect(eta) + u3
+
+Let's first follow the equations above and write the syntax (disturbances are automatically included): 
+
+```{r, eval=FALSE}
+mod1.wrong<- "
+  glad ~ posAffect
+  cheerful ~ posAffect
+  happy ~ posAffect
+"
+fit1.wrong = lavaan::sem(model = mod1.wrong, data = cfaData, fixed.x=FALSE)
+```
+
+Oops - an error message! 
+
+```{r,eval=FALSE}
+Error in lav_data_full(data = data, group = group, cluster = cluster,  : 
+  lavaan ERROR: missing observed variables in dataset: posAffect
+```
+
+This is because posAffect is a latent variable and we have to use =~ to define a latent variable: 
+
+```{r, eval=FALSE}
+mod1.wrong<-'
+posAffect =~ Glad + Cheerful + Happy
+'
+fit1.wrong = lavaan::sem(model = mod1.wrong, data = cfaData, fixed.x=FALSE)
+```
+
+```{r,eval=FALSE}
+Error in lavaan::lavaan(model = mod1.wrong, data = cfaData, fixed.x = FALSE,  : 
+  lavaan ERROR: missing observed variables in dataset: Glad Cheerful Happy
+```
+
+Error, why? 
+
+The variable names in the model syntax have to match the column names EXACTLY, even the letter cases. 
+
+Let's try again: 
+
+```{r}
+mod1<-'
+posAffect =~ glad + cheerful + happy
+'
+```
+
+Lets explain the lavaan model syntax!
+
++ mod1 is used to name our model. 
++ Since posAffect is a latent variable (it's not in the data), we cannot follow the equations above and write syntax like glad ~ posAffect
++ Instead, we specify a CFA measurement model in mod1.
++ NEW SYNTAX ALERT: Using =~ means "manifested by"
++ In the code above we can see that our latent construct 'posAffect' is manifested by glad, cheerful, and happy
++ By default, the loading of glad is fixed at 1 (Fixed Loading Method)
+
+Next we name the fitted object 'fit1' to see our output. 
+
+```{r}
+fit1 = lavaan::sem(mod1, data = cfaData, fixed.x=FALSE)
+```
+
+This summary will show us the loadings (I also requested standardized results):
+
+```{r}
+summary(fit1, standardized = T)
+```
+
+```{r, eval=FALSE}
+df = 0 (why?)
+
+Latent Variables:
+                   Estimate  Std.Err  z-value  P(>|z|)   Std.lv  Std.all
+  posAffect =~                                                          
+    glad              1.000                               0.693    0.705
+    cheerful          1.117    0.059   18.782    0.000    0.774    0.787
+    happy             1.066    0.057   18.786    0.000    0.739    0.757
+```
+
+What does this mean?
+
++ 1 unit change in posAffect produces:
+  * 1-unit change in "glad" (marker indicator)
+  * 1.117-unit change in "cheerful" (1.117 times greater than the effect on "glad")
+  * 1.066-unit change in "happy" (1.066 times greater than the effect on "glad")
+
+```{r, eval=FALSE}
+Variances:
+Unique factor variances:
+                   Estimate  Std.Err  z-value  P(>|z|)   Std.lv  Std.all
+   .glad              0.485    0.030   16.238    0.000    0.485    0.503
+   .cheerful          0.367    0.030   12.062    0.000    0.367    0.380
+   .happy             0.407    0.030   13.751    0.000    0.407    0.427
+```
+
++ The leftover unique factor variances remain substantial
++ Meaning that none of the indicators is a perfect measure of posAffect
++ but they all contribute significantly to the measurement of posAffect (the standardized loadings above larger than 0.6)
+
+Followed by the latent factor variance.
+```{r, eval=FALSE}
+                   Estimate  Std.Err  z-value  P(>|z|)   Std.lv  Std.all
+    posAffect         0.480    0.043   11.270    0.000    1.000    1.000
+```
+
+### Change marker indicator
+
+If you'd like to fix the 2nd loading to 1:
+
+```{r}
+mod1b_wrong<-'
+posAffect =~ glad + 1*cheerful + happy
+'
+```
+
+won't work. 
+
+You will get something like this:
+
+```{r,eval=FALSE}
+Latent Variables:
+                   Estimate  Std.Err  z-value  P(>|z|)   Std.lv  Std.all
+  posAffect =~                                                          
+    glad              1.000                               0.734    0.733
+    cheerful          1.000                               0.734    0.759
+    happy             1.009    0.046   22.052    0.000    0.741    0.759
+```
+
+You'll have to change the order of the indicators to move cheerful to the front of the variable list: 
+
+```{r}
+mod1b<-'
+posAffect =~ cheerful + glad + happy
+'
+```
+
+Or use \*NA to specify which loading to keep free and use *1 to specify the marker variable whose loading to be fixed at 1
+
+```{r}
+mod1b<-'
+posAffect =~ NA*glad + 1*cheerful + NA*happy
+'
+```
+
+Here we named the fitted object 'fit1b' to see our output. 
+
+```{r}
+fit1b = lavaan::sem(mod1b, data = cfaData, fixed.x=FALSE)
+summary(fit1b, standardized = T)
+```
+
++ The loadings can be obtained by dividing those in fit1 by 1.117 (i.e., they change proportionally).
++ The variances of unique factors and latent factor remain unchanged. 
+
+<!------------------------------>
+## Part 2: One-Factor CFA, Fixed Factor Variance
+<!------------------------------>
+
+### Fixed Factor Method
+
+Keep using the same syntax but assign a new name mod2: 
+
+```{r}
+mod2<-'
+posAffect =~ glad + cheerful + happy
+'
+```
+
+To fix the variance of the latent variable to 1, add std.lv=T to sem() function: 
+
+```{r}
+fit2<-lavaan::sem(mod2, data = cfaData, fixed.x=FALSE, std.lv=T)
+summary(fit2, standardized = TRUE)
+```
+
+```{r, eval=FALSE}
+Latent Variables:
+                   Estimate  Std.Err  z-value  P(>|z|)   Std.lv  Std.all
+  posAffect =~                                                          
+    glad              0.693    0.031   22.540    0.000    0.693    0.705
+    cheerful          0.774    0.031   25.233    0.000    0.774    0.787
+    happy             0.739    0.030   24.226    0.000    0.739    0.757
+```
+
++ 1-SD change in the factor (posAffect) causes:
+  * 0.693-unit change in glad (on its raw scale)
+  * 0.774-unit change in cheerful (on its raw scale)
+  * 0.739-unit change in happy (on its raw scale)
+
+```{r, eval=FALSE}
+Variances:
+                   Estimate  Std.Err  z-value  P(>|z|)   Std.lv  Std.all
+   .glad              0.485    0.030   16.238    0.000    0.485    0.503
+   .cheerful          0.367    0.030   12.062    0.000    0.367    0.380
+   .happy             0.407    0.030   13.751    0.000    0.407    0.427
+    posAffect         1.000                               1.000    1.000
+```
+
++ We see that posAffect now has variance (=sd) of 1
++ All loadings were freely estimated, no loading is 1.
++ and the unique factor variances are the same as before
+
+<!------------------------------>
+## Exercise: One-factor CFA Model
+<!------------------------------>
+
+Could you use the indicators satisfied, content, and comfortable to build a one-factor CFA model to measure a latent variable called Satisfaction? 
+
+Use the Fixed Loading and the Fixed Factor Methods and compare their estimates. 
+
+### Fixed Loading
+
+```{r}
+
+```
+
+### Fixed Factor
+
+```{r}
+
+```
+

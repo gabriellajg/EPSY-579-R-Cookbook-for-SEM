@@ -87,3 +87,13 @@ model-4e-moderated-mediation-model---path-b-and-cprime
 model-4f-moderated-mediation-model---path-a-and-b
 model-4g-moderated-mediation-model---path-a-b-and-cprime
 conclusions
+week7_1-lavaan-lab-5-one-factor-cfa-model
+data-prep-2
+part-1-one-factor-cfa-fixed-loading
+fixed-loading-aka-marker-variable-method.
+change-marker-indicator
+part-2-one-factor-cfa-fixed-factor-variance
+fixed-factor-method
+exercise-one-factor-cfa-model
+fixed-loading
+fixed-factor
