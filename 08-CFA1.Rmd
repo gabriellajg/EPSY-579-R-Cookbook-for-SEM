@@ -14,7 +14,7 @@ We will use cfaInClassData.csv in this lab.
 
 This is a simulated dataset based on Todd Little's positive affect example.
 
-The hypothesis is that a latent variable ‘positive affect’ is measured by three indicators (glad, cheerful and happy). 
+The hypothesis is that a latent variable ‘positive affect’ is measured by three indicators (glad, cheerful, and happy). 
 
 Let's read this dataset in: 
 
@@ -99,7 +99,7 @@ posAffect =~ glad + cheerful + happy
 '
 ```
 
-Lets explain the lavaan model syntax!
+Let's explain the lavaan model syntax!
 
 + mod1 is used to name our model. 
 + Since posAffect is a latent variable (it's not in the data), we cannot follow the equations above and write syntax like glad ~ posAffect

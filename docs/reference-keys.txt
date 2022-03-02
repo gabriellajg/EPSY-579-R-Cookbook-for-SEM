@@ -97,3 +97,9 @@ fixed-factor-method
 exercise-one-factor-cfa-model
 fixed-loading
 fixed-factor
+week7_2-lavaan-lab-6-two-factor-cfa-model
+data-prep-3
+part-1-two-factor-cfa-fixed-loading
+fixed-loading-aka-marker-variable-method.-1
+part-2-two-factor-cfa-fixed-factor-variance
+fixed-factor-method-1
