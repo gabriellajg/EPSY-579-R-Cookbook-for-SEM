@@ -1,4 +1,4 @@
-# Week8_1: Lavaan Lab 7 Two-factor SR Model
+# Week8_2: Lavaan Lab 7 Two-factor SR Model
 
 
 ## Data Prep
@@ -18,7 +18,7 @@ library(lavaan)
 ```
 
 <!------------------------------>
-## Part 1: Two-Factor SR, Fixed Loading
+## PART I: Two-Factor SR, Fixed Loading
 <!------------------------------>
 
 ### Fixed Loading, AKA Marker Variable method. 
@@ -77,7 +77,7 @@ returns the disturbance variance of satisfaction (sigma_(d_2)^2, not psi_2!)
 
 
 <!------------------------------>
-## Part 2: Two-Factor SR, Fixed Factor Variance
+## PART II: Two-Factor SR, Fixed Factor Variance
 <!------------------------------>
 
 ### Fixed Factor Method
@@ -101,7 +101,7 @@ Therefore, for SR models, we should always go with fixed loading scaling approac
 
 
 <!------------------------------>
-## Part 3: Exercise (what fun!): 3-Factor SR Model
+## PART III: Exercise (what fun!): 3-Factor SR Model
 <!------------------------------>
 
 Suppose that in a 3-factor SR model: 

@@ -18,7 +18,7 @@ library(lavaan)
 ```
 
 <!------------------------------>
-## Part 1: Two-Factor CFA, Fixed Loading
+## PART I: Two-Factor CFA, Fixed Loading
 <!------------------------------>
 
 ### Fixed Loading, AKA Marker Variable method. 
@@ -139,15 +139,16 @@ The proportion of variance of glad explained by posAffect is:
 
 [Exercise] What about the model-implied variance of comfortable? 
 
-+ Tracing 1: 
-+ Tracing 2: 
-+ Proportion of variance explained: 
-+ Sample var: 
++ Tracing 1: 0.918\*.597\*.918 = .503
++ Tracing 2: .400
++ Total .903
++ Proportion of variance explained: .503/.903
++ Sample var: var(cfaData$comfortable) = 0.904
 
 [Exercise] What about the model-implied covariance between glad and comfortable? (e.g., cov(y1, y6))
 
-+ Tracing 1: 
-+ Sample cov: 
++ Tracing 1: 1\*.262\*.918 = .241
++ Sample cov: cov(cfaData$glad, cfaData$comfortable) = .230
 
 Overall speaking, how is our model doing at explaining the sample covariance matrix? 
 Remember the fitted() function we used during path analysis R labs?
@@ -290,7 +291,7 @@ Why the hassle?
 
 
 <!------------------------------>
-## Part 2: Two-Factor CFA, Fixed Factor Variance
+## PART II: Two-Factor CFA, Fixed Factor Variance
 <!------------------------------>
 
 ### Fixed Factor Method

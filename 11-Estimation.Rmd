@@ -1,15 +1,7 @@
-# Week8_1: Lavaan Lab 7 Two-factor SR Model
+# Week8_2: Lavaan Lab 8 Estimation Methods
 
 
-## Data Prep
-
-Again, we use cfaInClassData.csv in this lab 
-
-Let's read this dataset in: 
-
-```{r}
-cfaData<- read.csv("cfaInclassData.csv", header = T)
-```
+In this lab, we will learn how to estimate parameters in CFA/SR models. 
 
 Load up the lavaan library: 
 
@@ -18,102 +10,225 @@ library(lavaan)
 ```
 
 <!------------------------------>
-## Part 1: Two-Factor SR, Fixed Loading
+## PART I: Hypothetical Example
 <!------------------------------>
 
-### Fixed Loading, AKA Marker Variable method. 
+### One-factor CFA model
 
-Let's write up the model syntax for the structural regression (SR) model with two factors:
+A made-up sample covariance matrix with n = 200:
 
 ```{r}
-srSyntax <- "
-	#Factor Specification	
-	posAffect =~ glad + cheerful + happy  
-	satisfaction =~ satisfied + content + comfortable 
-	
-	#Structural Regression!
-	satisfaction ~ posAffect
+n = 200
+S_3fac = matrix(c(5, 2, 3.5, 2, 3, 2, 3.5, 2, 6), 3, 3, 
+                dimnames = list(c('Y1', 'Y2', 'Y3'), c('Y1', 'Y2', 'Y3')))
+S_3fac
+```
+Fit a one-factor CFA to the sample covariance matrix:
+
+```{r}
+one_fac_syntax <- "
+	eta =~ Y1 + Y2 + Y3
 "
 ```
 
-Here we named the fitted object 'srRun' to see our output: 
+Request Unweighted Least Squares (ULS):
 
 ```{r}
-srRun = lavaan::sem(model = srSyntax, 
-                    data = cfaData, 
-                    fixed.x=FALSE)
+one_fac_fit2 <- sem(one_fac_syntax, 
+                    sample.cov = S_3fac, 
+                    sample.nobs = n, 
+                    estimator = "ULS", 
+                    fixed.x = FALSE)
+
+summary(one_fac_fit2, standardized = T)
 ```
 
-Get a summary using summary() function, add standardized=T to request standardized parameter estimates:
+Sigma:
 
 ```{r}
-summary(srRun, standardized = T)
+fitted(one_fac_fit2)$cov
 ```
 
-The above syntax reproduces the SR analysis from the class slides.
-
-+ CFA part under "Latent Variables" remains unchanged
-+ "Covariances" section no longer exists
-+ satisfaction is also removed under "Variances"
-
-Instead, in the Regressions section: 
-
-```{r,eval=FALSE}
-Regressions:
-                   Estimate  Std.Err  z-value  P(>|z|)   Std.lv  Std.all
-  satisfaction ~                                                        
-    posAffect         0.544    0.047   11.490    0.000    0.488    0.488
+```{r}
+Sigma = fitted(one_fac_fit2)$cov
+diff = Sigma[colnames(S_3fac), colnames(S_3fac)] - S_3fac
+round(diff,3)
 ```
-
-returns the regression slope of posAffect (b = 0.544). One-unit change in posAffect is leading to one-unit change in satisfaction. 
-
-```{r,eval=FALSE}
-Variances:
-                   Estimate  Std.Err  z-value  P(>|z|)   Std.lv  Std.all
-   .satisfaction      0.455    0.038   11.869    0.000    0.762    0.762
-```
-
-returns the disturbance variance of satisfaction (sigma_(d_2)^2, not psi_2!)
+all zeros. Meaning that Sigma = S.
 
 
 <!------------------------------>
-## Part 2: Two-Factor SR, Fixed Factor Variance
+## PART II: ULS on the Positive Affect Example
 <!------------------------------>
 
-### Fixed Factor Method
-
-Here we named the fitted object 'srRun2'. 
-
-We add std.lv=T to fix all latent factor variances to 1: 
+Let's read this dataset in: 
 
 ```{r}
-srRun2 = sem(model = srSyntax, 
-            data = cfaData, 
-            fixed.x=FALSE,
-            std.lv=T)
-summary(srRun2, standardized = T)
+cfaData<- read.csv("cfaInclassData.csv", header = T)
 ```
 
-This doesn't work as expected, why?
-
-Therefore, for SR models, we should always go with fixed loading scaling approach. 
-
-
-
-<!------------------------------>
-## Part 3: Exercise (what fun!): 3-Factor SR Model
-<!------------------------------>
-
-Suppose that in a 3-factor SR model: 
-
-+ Positive Affect is measured by Happy and Cheerful
-+ Satisfaction is measured by Satisfied and Content
-+ Pleasure is measured by Glad and Comfortable
-+ Satisfaction is predicted by both Positive Affect and Pleasure
-
-Can you use cfaData to fit such a model? 
+Fit a two-factor CFA model: 
 
 ```{r}
-
+fixedIndTwoFacSyntax <- "
+	#Factor Specification	
+	posAffect =~ glad + happy + cheerful 
+	satisfaction =~ satisfied + content + comfortable
+"
 ```
 
+```{r}
+two_fac_fit_uls <- sem(fixedIndTwoFacSyntax, 
+                       data = cfaData, 
+                       fixed.x = FALSE,
+                       estimator = "ULS")
+
+summary(two_fac_fit_uls, standardized = T)
+```
+
+Sigma:
+
+```{r}
+S = cov(cfaData[,-1])
+Sigma = fitted(two_fac_fit_uls)$cov[colnames(S), colnames(S)]
+diff = Sigma - S
+round(diff,3)
+
+print(paste0("The difference between S and Sigma ranged between ", round(min(diff),4), " and ", round(max(diff),4), "."))
+```
+Sigma is not the same as S, but close. 
+
+The sum of squared differences is:
+
+```{r}
+sum(diff[lower.tri(diff,diag = T)]^2)
+```
+
+
+
+<!------------------------------>
+## PART III: Calculate ULS test statistic manually
+<!------------------------------>
+
+ULS test statistic is calculated as:
+
+```{r}
+T_uls = (1000-1)*sum(diff[lower.tri(diff,diag = T)]^2)
+T_uls
+```
+
+One can also obtain vectors of S and Sigma first: 
+
+```{r}
+s = lav_matrix_vech(S)
+sigma = lav_matrix_vech(Sigma)
+```
+
+and calculate the ULS test statistic: 
+
+```{r}
+T_uls = (1000-1)*sum((s - sigma)^2)
+T_uls
+```
++ No p-value for ULS test statistic
++ as there is no known distribution for this test statistic
++ i.e., no suitable method for model fit evaluation
+
+
+
+<!------------------------------>
+## PART IV: ML vs ULS vs WLS
+<!------------------------------>
+
+### ML Estimation
+
+```{r}
+two_fac_fit_ml <- sem(fixedIndTwoFacSyntax, 
+                       data = cfaData, 
+                       fixed.x = FALSE,
+                       estimator = "ML")
+```
+
+### WLS Estimation
+
+```{r}
+two_fac_fit_wls <- sem(fixedIndTwoFacSyntax, 
+                      data = cfaData, 
+                      fixed.x = FALSE,
+                      estimator = "WLS")
+```
+
+### Compare the parameter estimates
+
+```{r}
+coefTable = parameterEstimates(two_fac_fit_ml)[,1:3]
+coefTable = cbind(coefTable, 
+                  ML = parameterEstimates(two_fac_fit_ml)$est, 
+                  ULS = parameterEstimates(two_fac_fit_uls)$est, 
+                  WLS = parameterEstimates(two_fac_fit_wls)$est)
+coefTable
+```
+
+
+
+<!------------------------------>
+## PART V: Improper Solutions
+<!------------------------------>
+
+Going back to the 1-factor toy example...
+
+Suppose we have a new covariance matrix now: 
+
+```{r}
+S_3fac_new = matrix(c(5, 1, 3.5, 1, 3, 2, 3.5, 2, 6), 3, 3, 
+                    dimnames = list(c('Y1', 'Y2', 'Y3'), c('Y1', 'Y2', 'Y3')))
+S_3fac_new
+```
+
+The one-factor syntax is still:
+
+```{r}
+one_fac_syntax <- "
+	eta =~ Y1 + Y2 + Y3
+"
+```
+
+ML Estimation:
+
+```{r}
+one_fac_fit_new <- sem(one_fac_syntax, 
+                    sample.cov = S_3fac_new, 
+                    sample.nobs = n, 
+                    estimator = "ML", 
+                    fixed.x = FALSE)
+```
+
++ lavaan WARNING: some estimated ov variances are negative
++ negative residual variances
++ ULS doesn't help either
+
+```{r}
+summary(one_fac_fit_new, standardized = T)
+```
+
+Label and constraint sig3 to be larger than 0:
+
+```{r}
+one_fac_syntax_const <- "
+	eta =~ Y1 + Y2 + Y3
+	
+	Y3~~sig3*Y3
+	# constraints
+	sig3 > 0
+"
+```
+
+ML Estimation:
+
+```{r}
+one_fac_fit_new2 <- sem(one_fac_syntax_const, 
+                       sample.cov = S_3fac_new, 
+                       sample.nobs = n, 
+                       fixed.x = FALSE)
+summary(one_fac_fit_new2, standardized = T)
+```

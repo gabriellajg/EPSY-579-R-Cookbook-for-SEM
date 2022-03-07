@@ -44,7 +44,7 @@ library(lavaan)
 ```
 
 <!------------------------------>
-## Part 1: One-Factor CFA, Fixed Loading
+## PART I: One-Factor CFA, Fixed Loading
 <!------------------------------>
 
 ### Fixed Loading, AKA Marker Variable method. 
@@ -207,7 +207,7 @@ summary(fit1b, standardized = T)
 + The variances of unique factors and latent factor remain unchanged. 
 
 <!------------------------------>
-## Part 2: One-Factor CFA, Fixed Factor Variance
+## PART II: One-Factor CFA, Fixed Factor Variance
 <!------------------------------>
 
 ### Fixed Factor Method

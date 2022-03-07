@@ -8,7 +8,7 @@ In this lab, we will learn how to:
 + Conduct simple slope analyses
 
 <!------------------------------>
-## Part 1: Mediated Moderation (Indirect Conditional effect)
+## PART 1: Mediated Moderation (Indirect Conditional effect)
 <!------------------------------>
 
 ### Step 1: Read-in Data
@@ -162,7 +162,7 @@ b3 = -0.109 # pvalue=0.218 # nonsig
 
 
 <!------------------------------>
-## Part 2: Moderated Mediation (Conditional Indirect effect)
+## PART 2: Moderated Mediation (Conditional Indirect effect)
 <!------------------------------>
 
 In this lab, we'll test this first-stage moderated mediation model in which NeedCog moderates the CBT -> NegThoughts path
@@ -330,7 +330,7 @@ Defined Parameters:
 
 
 <!------------------------------>
-## JOHNSON-NEYMAN INTERVAL 
+### Step 5 JOHNSON-NEYMAN INTERVAL 
 <!------------------------------>
 
 Although johnson_neyman() does not work on lavaan fitted object (yet), one can use a try-and-error approach to figure out the region of significance: 
