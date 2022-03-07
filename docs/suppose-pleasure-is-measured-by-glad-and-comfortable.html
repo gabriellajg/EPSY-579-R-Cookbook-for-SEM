@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 13 Suppose Pleasure is measured by Glad and Comfortable | EPSY:579 R Cookbook for SEM</title>
+  <meta name="description" content="Chapter 13 Suppose Pleasure is measured by Glad and Comfortable | EPSY:579 R Cookbook for SEM" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 13 Suppose Pleasure is measured by Glad and Comfortable | EPSY:579 R Cookbook for SEM" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 13 Suppose Pleasure is measured by Glad and Comfortable | EPSY:579 R Cookbook for SEM" />
+  
+  
+  
+
+<meta name="author" content="Gabriella Jiang" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="suppose-satisfaction-is-measured-by-satisfied-and-content.html"/>
+<link rel="next" href="can-you-analyze-such-a-3-factor-cfa-model.html"/>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">EPSY:579 R Cookbook for SEM</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Course</a></li>
+<li class="chapter" data-level="2" data-path="r-exercises.html"><a href="r-exercises.html"><i class="fa fa-check"></i><b>2</b> R Exercises</a></li>
+<li class="chapter" data-level="3" data-path="week4_1-lavaan-lab-1-path-analysis-model.html"><a href="week4_1-lavaan-lab-1-path-analysis-model.html"><i class="fa fa-check"></i><b>3</b> Week4_1: Lavaan Lab 1 Path Analysis Model</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="week4_1-lavaan-lab-1-path-analysis-model.html"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#reading-in-and-working-with-realistic-datasets-in-r"><i class="fa fa-check"></i><b>3.1</b> Reading-In and Working With Realistic Datasets In R</a></li>
+<li class="chapter" data-level="3.2" data-path="week4_1-lavaan-lab-1-path-analysis-model.html"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#sample-covariance-matrices-using-the-cov-function"><i class="fa fa-check"></i><b>3.2</b> Sample Covariance Matrices using the cov() function</a></li>
+<li class="chapter" data-level="3.3" data-path="week4_1-lavaan-lab-1-path-analysis-model.html"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#installing-packages"><i class="fa fa-check"></i><b>3.3</b> Installing Packages</a></li>
+<li class="chapter" data-level="3.4" data-path="week4_1-lavaan-lab-1-path-analysis-model.html"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#loading-packages-libraries-that-you-have-installed"><i class="fa fa-check"></i><b>3.4</b> Loading Packages (Libraries) That You Have Installed</a></li>
+<li class="chapter" data-level="3.5" data-path="week4_1-lavaan-lab-1-path-analysis-model.html"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#using-lavaan-for-path-models"><i class="fa fa-check"></i><b>3.5</b> Using Lavaan For Path Models</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="week4_1-lavaan-lab-1-path-analysis-model.html"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#part-i-follow-the-set-of-equations-we-wrote-in-class"><i class="fa fa-check"></i><b>3.5.1</b> PART I: Follow the set of equations we wrote in class:</a></li>
+<li class="chapter" data-level="3.5.2" data-path="week4_1-lavaan-lab-1-path-analysis-model.html"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#part-ii-lets-run-our-model"><i class="fa fa-check"></i><b>3.5.2</b> PART II Let’s run our model!</a></li>
+<li class="chapter" data-level="3.5.3" data-path="week4_1-lavaan-lab-1-path-analysis-model.html"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#sigma-matrices"><i class="fa fa-check"></i><b>3.5.3</b> Sigma Matrices</a></li>
+<li class="chapter" data-level="3.5.4" data-path="week4_1-lavaan-lab-1-path-analysis-model.html"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#part-iii-summarizing-our-analysis"><i class="fa fa-check"></i><b>3.5.4</b> PART III: Summarizing Our Analysis:</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="week4_1-lavaan-lab-1-path-analysis-model.html"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#plotting-sem-model"><i class="fa fa-check"></i><b>3.6</b> Plotting SEM model</a>
+<ul>
+<li class="chapter" data-level="3.6.1" data-path="week4_1-lavaan-lab-1-path-analysis-model.html"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#customize-it-your-way"><i class="fa fa-check"></i><b>3.6.1</b> customize it your way</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="week4_1-lavaan-lab-1-path-analysis-model.html"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#exercise-how-would-you-fit-the-model-in-saunders-et-al.-2016"><i class="fa fa-check"></i><b>3.7</b> Exercise: How would you fit the model in Saunders et al. (2016)?</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html"><i class="fa fa-check"></i><b>4</b> Week4_2: Lavaan Lab 2 Mediation and Indirect Effects</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#reading-in-and-working-with-realistic-datasets-in-r-1"><i class="fa fa-check"></i><b>4.1</b> Reading-In and Working With Realistic Datasets In R</a></li>
+<li class="chapter" data-level="4.2" data-path="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#using-lavaan-for-mediation-models---preacher-hayess"><i class="fa fa-check"></i><b>4.2</b> Using Lavaan For Mediation Models - Preacher &amp; Hayes’s</a></li>
+<li class="chapter" data-level="4.3" data-path="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#part-i-follow-the-two-equations-of-m-dietse-y-bulimia"><i class="fa fa-check"></i><b>4.3</b> PART I: # Follow the two equations of M (DietSE) &amp; Y (Bulimia)</a></li>
+<li class="chapter" data-level="4.4" data-path="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#part-ii-lets-run-our-model-1"><i class="fa fa-check"></i><b>4.4</b> PART II Let’s run our model!</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#label-the-mediation-effect"><i class="fa fa-check"></i><b>4.4.1</b> Label the mediation effect</a></li>
+<li class="chapter" data-level="4.4.2" data-path="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#define-a-new-term-for-the-mediation-effect-ab"><i class="fa fa-check"></i><b>4.4.2</b> Define a new term for the mediation effect a*b</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#part-iii-summarizing-our-analysis-1"><i class="fa fa-check"></i><b>4.5</b> PART III: Summarizing Our Analysis:</a></li>
+<li class="chapter" data-level="4.6" data-path="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#part-iv-bootstrap-confidence-intervals"><i class="fa fa-check"></i><b>4.6</b> PART IV: Bootstrap confidence intervals</a>
+<ul>
+<li class="chapter" data-level="4.6.1" data-path="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#the-default-one-is-boot.ci.type-perc"><i class="fa fa-check"></i><b>4.6.1</b> The default one is boot.ci.type = “perc”</a></li>
+<li class="chapter" data-level="4.6.2" data-path="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#bc-bias-corrected-confidence-interval"><i class="fa fa-check"></i><b>4.6.2</b> BC (bias-corrected) confidence interval</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#in-class-exercise-use-lavaan-to-estimate-and-interpret-the-following-model"><i class="fa fa-check"></i><b>4.7</b> In-Class Exercise: Use Lavaan to estimate and interpret the following model</a></li>
+<li class="chapter" data-level="4.8" data-path="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#exercise-eating-disorder-mediation-analysis"><i class="fa fa-check"></i><b>4.8</b> Exercise: Eating Disorder Mediation Analysis</a>
+<ul>
+<li class="chapter" data-level="4.8.1" data-path="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#step-1-labeling-and-defining-the-parameters"><i class="fa fa-check"></i><b>4.8.1</b> Step 1: Labeling and defining the parameters</a></li>
+<li class="chapter" data-level="4.8.2" data-path="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#step-2-fix-all-disturbance-covariances-at-0"><i class="fa fa-check"></i><b>4.8.2</b> Step 2: Fix all disturbance covariances at 0</a></li>
+<li class="chapter" data-level="4.8.3" data-path="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#step-3-define-new-terms-for-mediation-effects"><i class="fa fa-check"></i><b>4.8.3</b> Step 3: Define new terms for mediation effects</a></li>
+<li class="chapter" data-level="4.8.4" data-path="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#step-4-bootstrap-confidence-intervals"><i class="fa fa-check"></i><b>4.8.4</b> Step 4: Bootstrap confidence intervals:</a></li>
+<li class="chapter" data-level="4.8.5" data-path="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#step-5-print-and-interpret-the-mediation-effects"><i class="fa fa-check"></i><b>4.8.5</b> Step 5: Print and interpret the mediation effects;</a></li>
+<li class="chapter" data-level="4.8.6" data-path="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#plot-it"><i class="fa fa-check"></i><b>4.8.6</b> Plot it!</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html"><i class="fa fa-check"></i><b>5</b> Week5_2: Lavaan Lab 3 Moderation and Conditional Effects</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#reading-in-datasets"><i class="fa fa-check"></i><b>5.1</b> Reading-In Datasets</a></li>
+<li class="chapter" data-level="5.2" data-path="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#interactions-in-regression-using-lm"><i class="fa fa-check"></i><b>5.2</b> Interactions in Regression Using lm()</a></li>
+<li class="chapter" data-level="5.3" data-path="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#interactions-in-lavaan"><i class="fa fa-check"></i><b>5.3</b> Interactions in Lavaan</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#important-note"><i class="fa fa-check"></i><b>5.3.1</b> IMPORTANT NOTE</a></li>
+<li class="chapter" data-level="5.3.2" data-path="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#follow-the-equation-of-y-depression"><i class="fa fa-check"></i><b>5.3.2</b> Follow the equation of Y (Depression):</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#visual-inspection-of-interactions"><i class="fa fa-check"></i><b>5.4</b> Visual inspection of interactions</a></li>
+<li class="chapter" data-level="5.5" data-path="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#centering-continuous-moderator"><i class="fa fa-check"></i><b>5.5</b> Centering Continuous Moderator</a></li>
+<li class="chapter" data-level="5.6" data-path="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#interactions-in-lavaan-continuous-moderator"><i class="fa fa-check"></i><b>5.6</b> Interactions in Lavaan (Continuous Moderator)</a></li>
+<li class="chapter" data-level="5.7" data-path="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#simple-slopes-analysis"><i class="fa fa-check"></i><b>5.7</b> Simple Slopes Analysis</a></li>
+<li class="chapter" data-level="5.8" data-path="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#visual-inspection-of-interactions-lm-approach"><i class="fa fa-check"></i><b>5.8</b> Visual inspection of interactions (lm approach)</a></li>
+<li class="chapter" data-level="5.9" data-path="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#johnson-neyman-interval"><i class="fa fa-check"></i><b>5.9</b> JOHNSON-NEYMAN INTERVAL</a></li>
+<li class="chapter" data-level="5.10" data-path="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#exercise-how-framing-affects-justifications-for-giving-or-withholding-aid-to-disaster-victims"><i class="fa fa-check"></i><b>5.10</b> Exercise: How Framing Affects Justifications for Giving or Withholding Aid to Disaster Victims</a>
+<ul>
+<li class="chapter" data-level="5.10.1" data-path="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#data-prep"><i class="fa fa-check"></i><b>5.10.1</b> Data Prep</a></li>
+<li class="chapter" data-level="5.10.2" data-path="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#moderation-with-a-binary-moderator"><i class="fa fa-check"></i><b>5.10.2</b> Moderation with a binary moderator</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="week6_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html"><a href="week6_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html"><i class="fa fa-check"></i><b>6</b> Week6_1: Lavaan Lab 4 Mediated Moderation &amp; Moderated Mediation</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="week6_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html"><a href="week6_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#part-1-mediated-moderation-indirect-conditional-effect"><i class="fa fa-check"></i><b>6.1</b> Part 1: Mediated Moderation (Indirect Conditional effect)</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="week6_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html"><a href="week6_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#step-1-read-in-data"><i class="fa fa-check"></i><b>6.1.1</b> Step 1: Read-in Data</a></li>
+<li class="chapter" data-level="6.1.2" data-path="week6_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html"><a href="week6_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#step-2-create-the-interaction-term-for-moderation-analysis"><i class="fa fa-check"></i><b>6.1.2</b> Step 2: Create the interaction term for Moderation Analysis</a></li>
+<li class="chapter" data-level="6.1.3" data-path="week6_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html"><a href="week6_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#step-3-write-the-syntax-and-fit-the-model"><i class="fa fa-check"></i><b>6.1.3</b> Step 3: Write the syntax and Fit the model</a></li>
+<li class="chapter" data-level="6.1.4" data-path="week6_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html"><a href="week6_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#step-4-bootstrap-version"><i class="fa fa-check"></i><b>6.1.4</b> Step 4: Bootstrap Version</a></li>
+<li class="chapter" data-level="6.1.5" data-path="week6_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html"><a href="week6_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#step-5-effect-size-measures"><i class="fa fa-check"></i><b>6.1.5</b> Step 5: Effect size measures</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="week6_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html"><a href="week6_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#part-2-moderated-mediation-conditional-indirect-effect"><i class="fa fa-check"></i><b>6.2</b> Part 2: Moderated Mediation (Conditional Indirect effect)</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="week6_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html"><a href="week6_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#step-1-product-term"><i class="fa fa-check"></i><b>6.2.1</b> Step 1: Product Term</a></li>
+<li class="chapter" data-level="6.2.2" data-path="week6_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html"><a href="week6_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#step-2-write-the-syntax-and-fit-the-model"><i class="fa fa-check"></i><b>6.2.2</b> Step 2: Write the syntax and Fit the model</a></li>
+<li class="chapter" data-level="6.2.3" data-path="week6_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html"><a href="week6_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#step-3-bootstrap-version"><i class="fa fa-check"></i><b>6.2.3</b> Step 3: Bootstrap Version</a></li>
+<li class="chapter" data-level="6.2.4" data-path="week6_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html"><a href="week6_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#step-4-simple-slopes"><i class="fa fa-check"></i><b>6.2.4</b> Step 4: Simple Slopes</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="week6_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html"><a href="week6_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#johnson-neyman-interval-1"><i class="fa fa-check"></i><b>6.3</b> JOHNSON-NEYMAN INTERVAL</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><i class="fa fa-check"></i><b>7</b> Week6_2: R Lab on Disaster Dataset (Chapman and Lickel, 2016)</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#data-prep-1"><i class="fa fa-check"></i><b>7.1</b> Data Prep</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#scatterplot-matrix"><i class="fa fa-check"></i><b>7.1.1</b> Scatterplot Matrix</a></li>
+<li class="chapter" data-level="7.1.2" data-path="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#p-value-or-bootstrapped-confidence-interval"><i class="fa fa-check"></i><b>7.1.2</b> p-value or bootstrapped confidence interval?</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#model-1-simple-linear-regression-model"><i class="fa fa-check"></i><b>7.2</b> Model 1: Simple Linear Regression Model</a></li>
+<li class="chapter" data-level="7.3" data-path="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#model-2-simple-mediation-model"><i class="fa fa-check"></i><b>7.3</b> Model 2: Simple Mediation Model</a></li>
+<li class="chapter" data-level="7.4" data-path="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#model-3-simple-moderation-model"><i class="fa fa-check"></i><b>7.4</b> Model 3: Simple Moderation Model</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#johnson-neyman-interval-2"><i class="fa fa-check"></i><b>7.4.1</b> JOHNSON-NEYMAN INTERVAL</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#model-4a-moderated-mediation-model---path-a-only"><i class="fa fa-check"></i><b>7.5</b> Model 4a: Moderated Mediation Model - Path a only</a></li>
+<li class="chapter" data-level="7.6" data-path="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#model-4b-moderated-mediation-model---path-b-only"><i class="fa fa-check"></i><b>7.6</b> Model 4b: Moderated Mediation Model - Path b only</a></li>
+<li class="chapter" data-level="7.7" data-path="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#model-4c-moderation-mediation-model---path-cprime-only"><i class="fa fa-check"></i><b>7.7</b> Model 4c: Moderation &amp; Mediation Model - Path cprime only</a></li>
+<li class="chapter" data-level="7.8" data-path="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#model-4d-moderated-mediation-model---path-a-and-cprime"><i class="fa fa-check"></i><b>7.8</b> Model 4d: Moderated Mediation Model - Path a and cprime</a></li>
+<li class="chapter" data-level="7.9" data-path="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#model-4e-moderated-mediation-model---path-b-and-cprime"><i class="fa fa-check"></i><b>7.9</b> Model 4e: Moderated Mediation Model - Path b and cprime</a></li>
+<li class="chapter" data-level="7.10" data-path="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#model-4f-moderated-mediation-model---path-a-and-b"><i class="fa fa-check"></i><b>7.10</b> Model 4f: Moderated Mediation Model - Path a and b</a></li>
+<li class="chapter" data-level="7.11" data-path="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#model-4g-moderated-mediation-model---path-a-b-and-cprime"><i class="fa fa-check"></i><b>7.11</b> Model 4g: Moderated Mediation Model - Path a, b, and cprime</a></li>
+<li class="chapter" data-level="7.12" data-path="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#conclusions"><i class="fa fa-check"></i><b>7.12</b> Conclusions</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="week7_1-lavaan-lab-5-one-factor-cfa-model.html"><a href="week7_1-lavaan-lab-5-one-factor-cfa-model.html"><i class="fa fa-check"></i><b>8</b> Week7_1: Lavaan Lab 5 One-factor CFA Model</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="week7_1-lavaan-lab-5-one-factor-cfa-model.html"><a href="week7_1-lavaan-lab-5-one-factor-cfa-model.html#data-prep-2"><i class="fa fa-check"></i><b>8.1</b> Data Prep</a></li>
+<li class="chapter" data-level="8.2" data-path="week7_1-lavaan-lab-5-one-factor-cfa-model.html"><a href="week7_1-lavaan-lab-5-one-factor-cfa-model.html#part-1-one-factor-cfa-fixed-loading"><i class="fa fa-check"></i><b>8.2</b> Part 1: One-Factor CFA, Fixed Loading</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="week7_1-lavaan-lab-5-one-factor-cfa-model.html"><a href="week7_1-lavaan-lab-5-one-factor-cfa-model.html#fixed-loading-aka-marker-variable-method."><i class="fa fa-check"></i><b>8.2.1</b> Fixed Loading, AKA Marker Variable method.</a></li>
+<li class="chapter" data-level="8.2.2" data-path="week7_1-lavaan-lab-5-one-factor-cfa-model.html"><a href="week7_1-lavaan-lab-5-one-factor-cfa-model.html#change-marker-indicator"><i class="fa fa-check"></i><b>8.2.2</b> Change marker indicator</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="week7_1-lavaan-lab-5-one-factor-cfa-model.html"><a href="week7_1-lavaan-lab-5-one-factor-cfa-model.html#part-2-one-factor-cfa-fixed-factor-variance"><i class="fa fa-check"></i><b>8.3</b> Part 2: One-Factor CFA, Fixed Factor Variance</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="week7_1-lavaan-lab-5-one-factor-cfa-model.html"><a href="week7_1-lavaan-lab-5-one-factor-cfa-model.html#fixed-factor-method"><i class="fa fa-check"></i><b>8.3.1</b> Fixed Factor Method</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="week7_1-lavaan-lab-5-one-factor-cfa-model.html"><a href="week7_1-lavaan-lab-5-one-factor-cfa-model.html#exercise-one-factor-cfa-model"><i class="fa fa-check"></i><b>8.4</b> Exercise: One-factor CFA Model</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="week7_1-lavaan-lab-5-one-factor-cfa-model.html"><a href="week7_1-lavaan-lab-5-one-factor-cfa-model.html#fixed-loading"><i class="fa fa-check"></i><b>8.4.1</b> Fixed Loading</a></li>
+<li class="chapter" data-level="8.4.2" data-path="week7_1-lavaan-lab-5-one-factor-cfa-model.html"><a href="week7_1-lavaan-lab-5-one-factor-cfa-model.html#fixed-factor"><i class="fa fa-check"></i><b>8.4.2</b> Fixed Factor</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="week7_2-lavaan-lab-6-two-factor-cfa-model.html"><a href="week7_2-lavaan-lab-6-two-factor-cfa-model.html"><i class="fa fa-check"></i><b>9</b> Week7_2: Lavaan Lab 6 Two-factor CFA Model</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="week7_2-lavaan-lab-6-two-factor-cfa-model.html"><a href="week7_2-lavaan-lab-6-two-factor-cfa-model.html#data-prep-3"><i class="fa fa-check"></i><b>9.1</b> Data Prep</a></li>
+<li class="chapter" data-level="9.2" data-path="week7_2-lavaan-lab-6-two-factor-cfa-model.html"><a href="week7_2-lavaan-lab-6-two-factor-cfa-model.html#part-1-two-factor-cfa-fixed-loading"><i class="fa fa-check"></i><b>9.2</b> Part 1: Two-Factor CFA, Fixed Loading</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="week7_2-lavaan-lab-6-two-factor-cfa-model.html"><a href="week7_2-lavaan-lab-6-two-factor-cfa-model.html#fixed-loading-aka-marker-variable-method.-1"><i class="fa fa-check"></i><b>9.2.1</b> Fixed Loading, AKA Marker Variable method.</a></li>
+<li class="chapter" data-level="9.2.2" data-path="week7_2-lavaan-lab-6-two-factor-cfa-model.html"><a href="week7_2-lavaan-lab-6-two-factor-cfa-model.html#how-well-does-this-model-fit-to-the-data"><i class="fa fa-check"></i><b>9.2.2</b> How well does this model fit to the data?</a></li>
+<li class="chapter" data-level="9.2.3" data-path="week7_2-lavaan-lab-6-two-factor-cfa-model.html"><a href="week7_2-lavaan-lab-6-two-factor-cfa-model.html#fundamental-equation-of-sem"><i class="fa fa-check"></i><b>9.2.3</b> Fundamental Equation of SEM</a></li>
+<li class="chapter" data-level="9.2.4" data-path="week7_2-lavaan-lab-6-two-factor-cfa-model.html"><a href="week7_2-lavaan-lab-6-two-factor-cfa-model.html#interpretion"><i class="fa fa-check"></i><b>9.2.4</b> Interpretion</a></li>
+<li class="chapter" data-level="9.2.5" data-path="week7_2-lavaan-lab-6-two-factor-cfa-model.html"><a href="week7_2-lavaan-lab-6-two-factor-cfa-model.html#standardized-solutions-std.lv-vs.-std.all"><i class="fa fa-check"></i><b>9.2.5</b> Standardized solutions: Std.lv vs. Std.all</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="week7_2-lavaan-lab-6-two-factor-cfa-model.html"><a href="week7_2-lavaan-lab-6-two-factor-cfa-model.html#part-2-two-factor-cfa-fixed-factor-variance"><i class="fa fa-check"></i><b>9.3</b> Part 2: Two-Factor CFA, Fixed Factor Variance</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="week7_2-lavaan-lab-6-two-factor-cfa-model.html"><a href="week7_2-lavaan-lab-6-two-factor-cfa-model.html#fixed-factor-method-1"><i class="fa fa-check"></i><b>9.3.1</b> Fixed Factor Method</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="week8_1-lavaan-lab-7-two-factor-sr-model.html"><a href="week8_1-lavaan-lab-7-two-factor-sr-model.html"><i class="fa fa-check"></i><b>10</b> Week8_1: Lavaan Lab 7 Two-factor SR Model</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="week8_1-lavaan-lab-7-two-factor-sr-model.html"><a href="week8_1-lavaan-lab-7-two-factor-sr-model.html#data-prep-4"><i class="fa fa-check"></i><b>10.1</b> Data Prep</a></li>
+<li class="chapter" data-level="10.2" data-path="week8_1-lavaan-lab-7-two-factor-sr-model.html"><a href="week8_1-lavaan-lab-7-two-factor-sr-model.html#part-1-two-factor-sr-fixed-loading"><i class="fa fa-check"></i><b>10.2</b> Part 1: Two-Factor SR, Fixed Loading</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="week8_1-lavaan-lab-7-two-factor-sr-model.html"><a href="week8_1-lavaan-lab-7-two-factor-sr-model.html#fixed-loading-aka-marker-variable-method.-2"><i class="fa fa-check"></i><b>10.2.1</b> Fixed Loading, AKA Marker Variable method.</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="suppose-positive-affect-is-measured-by-happy-and-cheerful.html"><a href="suppose-positive-affect-is-measured-by-happy-and-cheerful.html"><i class="fa fa-check"></i><b>11</b> Suppose Positive Affect is measured by Happy and Cheerful</a></li>
+<li class="chapter" data-level="12" data-path="suppose-satisfaction-is-measured-by-satisfied-and-content.html"><a href="suppose-satisfaction-is-measured-by-satisfied-and-content.html"><i class="fa fa-check"></i><b>12</b> Suppose Satisfaction is measured by Satisfied and Content</a></li>
+<li class="chapter" data-level="13" data-path="suppose-pleasure-is-measured-by-glad-and-comfortable.html"><a href="suppose-pleasure-is-measured-by-glad-and-comfortable.html"><i class="fa fa-check"></i><b>13</b> Suppose Pleasure is measured by Glad and Comfortable</a></li>
+<li class="chapter" data-level="14" data-path="can-you-analyze-such-a-3-factor-cfa-model.html"><a href="can-you-analyze-such-a-3-factor-cfa-model.html"><i class="fa fa-check"></i><b>14</b> Can you analyze such a 3-factor CFA model?</a>
+<ul>
+<li class="chapter" data-level="14.0.1" data-path="can-you-analyze-such-a-3-factor-cfa-model.html"><a href="can-you-analyze-such-a-3-factor-cfa-model.html#how-well-does-this-model-fit-to-the-data-1"><i class="fa fa-check"></i><b>14.0.1</b> How well does this model fit to the data?</a></li>
+<li class="chapter" data-level="14.0.2" data-path="can-you-analyze-such-a-3-factor-cfa-model.html"><a href="can-you-analyze-such-a-3-factor-cfa-model.html#standardized-solutions-std.lv-vs.-std.all-1"><i class="fa fa-check"></i><b>14.0.2</b> Standardized solutions: Std.lv vs. Std.all</a></li>
+<li class="chapter" data-level="14.1" data-path="can-you-analyze-such-a-3-factor-cfa-model.html"><a href="can-you-analyze-such-a-3-factor-cfa-model.html#part-2-two-factor-cfa-fixed-factor-variance-1"><i class="fa fa-check"></i><b>14.1</b> Part 2: Two-Factor CFA, Fixed Factor Variance</a>
+<ul>
+<li class="chapter" data-level="14.1.1" data-path="can-you-analyze-such-a-3-factor-cfa-model.html"><a href="can-you-analyze-such-a-3-factor-cfa-model.html#fixed-factor-method-2"><i class="fa fa-check"></i><b>14.1.1</b> Fixed Factor Method</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">EPSY:579 R Cookbook for SEM</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="suppose-pleasure-is-measured-by-glad-and-comfortable" class="section level1" number="13">
+<h1><span class="header-section-number">Chapter 13</span> Suppose Pleasure is measured by Glad and Comfortable</h1>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="suppose-satisfaction-is-measured-by-satisfied-and-content.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="can-you-analyze-such-a-3-factor-cfa-model.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

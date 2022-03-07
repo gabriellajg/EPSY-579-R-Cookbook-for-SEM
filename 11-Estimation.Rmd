@@ -1,0 +1,119 @@
+# Week8_1: Lavaan Lab 7 Two-factor SR Model
+
+
+## Data Prep
+
+Again, we use cfaInClassData.csv in this lab 
+
+Let's read this dataset in: 
+
+```{r}
+cfaData<- read.csv("cfaInclassData.csv", header = T)
+```
+
+Load up the lavaan library: 
+
+```{r}
+library(lavaan)
+```
+
+<!------------------------------>
+## Part 1: Two-Factor SR, Fixed Loading
+<!------------------------------>
+
+### Fixed Loading, AKA Marker Variable method. 
+
+Let's write up the model syntax for the structural regression (SR) model with two factors:
+
+```{r}
+srSyntax <- "
+	#Factor Specification	
+	posAffect =~ glad + cheerful + happy  
+	satisfaction =~ satisfied + content + comfortable 
+	
+	#Structural Regression!
+	satisfaction ~ posAffect
+"
+```
+
+Here we named the fitted object 'srRun' to see our output: 
+
+```{r}
+srRun = lavaan::sem(model = srSyntax, 
+                    data = cfaData, 
+                    fixed.x=FALSE)
+```
+
+Get a summary using summary() function, add standardized=T to request standardized parameter estimates:
+
+```{r}
+summary(srRun, standardized = T)
+```
+
+The above syntax reproduces the SR analysis from the class slides.
+
++ CFA part under "Latent Variables" remains unchanged
++ "Covariances" section no longer exists
++ satisfaction is also removed under "Variances"
+
+Instead, in the Regressions section: 
+
+```{r,eval=FALSE}
+Regressions:
+                   Estimate  Std.Err  z-value  P(>|z|)   Std.lv  Std.all
+  satisfaction ~                                                        
+    posAffect         0.544    0.047   11.490    0.000    0.488    0.488
+```
+
+returns the regression slope of posAffect (b = 0.544). One-unit change in posAffect is leading to one-unit change in satisfaction. 
+
+```{r,eval=FALSE}
+Variances:
+                   Estimate  Std.Err  z-value  P(>|z|)   Std.lv  Std.all
+   .satisfaction      0.455    0.038   11.869    0.000    0.762    0.762
+```
+
+returns the disturbance variance of satisfaction (sigma_(d_2)^2, not psi_2!)
+
+
+<!------------------------------>
+## Part 2: Two-Factor SR, Fixed Factor Variance
+<!------------------------------>
+
+### Fixed Factor Method
+
+Here we named the fitted object 'srRun2'. 
+
+We add std.lv=T to fix all latent factor variances to 1: 
+
+```{r}
+srRun2 = sem(model = srSyntax, 
+            data = cfaData, 
+            fixed.x=FALSE,
+            std.lv=T)
+summary(srRun2, standardized = T)
+```
+
+This doesn't work as expected, why?
+
+Therefore, for SR models, we should always go with fixed loading scaling approach. 
+
+
+
+<!------------------------------>
+## Part 3: Exercise (what fun!): 3-Factor SR Model
+<!------------------------------>
+
+Suppose that in a 3-factor SR model: 
+
++ Positive Affect is measured by Happy and Cheerful
++ Satisfaction is measured by Satisfied and Content
++ Pleasure is measured by Glad and Comfortable
++ Satisfaction is predicted by both Positive Affect and Pleasure
+
+Can you use cfaData to fit such a model? 
+
+```{r}
+
+```
+

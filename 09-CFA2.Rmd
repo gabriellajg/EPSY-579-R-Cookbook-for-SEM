@@ -1,4 +1,4 @@
-# Week7_2: Lavaan Lab 6 Two-factor CFA Model
+# Week8_1: Lavaan Lab 6 Two-factor CFA Model
 
 
 ## Data Prep
@@ -45,6 +45,14 @@ Get a summary using summary() function, add standardized=T to request standardiz
 summary(fixedIndTwoFacRun, standardized=T)
 ```
 
+Here is the fun part. Plot the fitted model using semPaths() function from the semPlot package: 
+
+```{r}
+library(semPlot)
+semPaths(fixedIndTwoFacRun)
+semPaths(fixedIndTwoFacRun, what = 'est') # under "Estimate"
+```
+
 ```{r, eval=FALSE}
 df = 8 (why?)
 
@@ -73,16 +81,6 @@ What does this mean?
   * 0.918-unit change in "comfortable" (0.918 times greater than the effect on "satisfied")
 
 ```{r, eval=FALSE}
-Covariances:
-                  Estimate  Std.Err  z-value  P(>|z|)   Std.lv  Std.all
- posAffect ~~                                                          
-   satisfaction      0.262    0.025   10.284    0.000    0.488    0.488
-```
-
-+ covariance between posAffect and satisfaction is 0.262
-+ standardized covariance (correlation) between posAffect and satisfaction is 0.488
-
-```{r, eval=FALSE}
 Variances:
                     Estimate  Std.Err  z-value  P(>|z|)   Std.lv  Std.all
     .glad              0.484    0.029   16.647    0.000    0.484    0.501
@@ -104,9 +102,191 @@ Followed by two factor variances:
      satisfaction      0.597    0.047   12.686    0.000    1.000    1.000
 ```
 
-which were freely estimated using Fixed Loading scaling method. 
++ which were freely estimated using Fixed Loading scaling method. 
++ Both posAffect and satisfaction are variable across participants (sig* according to p-values)
++ posAffect seems to be more stable than satisfaction (0.482<0.597). 
+
+```{r, eval=FALSE}
+Covariances:
+                  Estimate  Std.Err  z-value  P(>|z|)   Std.lv  Std.all
+ posAffect ~~                                                          
+   satisfaction      0.262    0.025   10.284    0.000    0.488    0.488
+```
+
++ covariance between posAffect and satisfaction is 0.262
++ standardized covariance (correlation) between posAffect and satisfaction is 0.488 (sig*)
++ 0.262/sqrt(0.482)/sqrt(0.597) = 0.488
++ posAffect is positively correlated with satisfaction. Participants who have a high level posAffect tend to have a high level of satisfaction. 
+
+### How well does this model fit to the data? 
+
+The model-implied variance of glad is the sum of:
+
++ Tracing 1: lam1\*psi1\*lam1 = 1.0\*0.482\*1.0 = 0.482
++ Tracing 2: sig2_u1 = sig2_glad = 0.484
+
+which is 0.966. 
+
+What is the sample variance of glad? 
+
++ var(cfaData$glad) = 0.9664733, which is super close to the model-implied one! 
++ meaning our CFA model is doing a pretty good job at explaining the sample variance of glad. 
+
+The proportion of variance of glad explained by posAffect is: 
+
++ Tracing 1 / (Tracing 1+Tracing 2) = 49.9%
++ Unexplained: 50.1%
+
+[Exercise] What about the model-implied variance of comfortable? 
+
++ Tracing 1: 
++ Tracing 2: 
++ Proportion of variance explained: 
++ Sample var: 
+
+[Exercise] What about the model-implied covariance between glad and comfortable? (e.g., cov(y1, y6))
+
++ Tracing 1: 
++ Sample cov: 
+
+Overall speaking, how is our model doing at explaining the sample covariance matrix? 
+Remember the fitted() function we used during path analysis R labs?
+
+Apply fitted() function to the fitted object fixedIndTwoFacRun (not on the model syntax fixedIndTwoFacSyntax!!):
+
+```{r}
+fitted(fixedIndTwoFacRun)
+Sigma <- fitted(fixedIndTwoFacRun)$cov
+```
+
+How close is Sigma to S? 
+
++ Rearrange the rows and columns of Sigma (important!) and take the difference between Sigma and S
+
+```{r}
+(S = cov(cfaData[,-1]))
+
+diff = Sigma[colnames(S), colnames(S)] - S
+round(diff, 3)
+
+print(paste0("The difference between S and Sigma ranged between ", round(min(diff),4), " and ", round(max(diff),4), "."))
+```
+
+This is the closest Sigma can get to S. Any other set of parameter estimates would yield bigger differences with S. 
+
+Have you wondered about how we obtain the parameter estimates in the output?
+
+Estimation down the road...
+
+### Fundamental Equation of SEM
+
+Just some bonus stuff...
+
+You can inspect the fitted object using inspect() and save the object as InspFit1. 
+
+```{r}
+InspFit1 <- inspect(fixedIndTwoFacRun, what = "est")
+```
+
+Extract Lambda matrix from InspFit1. 
+
+```{r}
+Lambda <- InspFit1$lambda
+Lambda
+```
+
+Extract Psi matrix from InspFit1. 
+
+```{r}
+Psi <- InspFit1$psi
+Psi
+```
+
+Extract Theta matrix from InspFit1. 
+
+```{r}
+Theta <- InspFit1$theta
+Theta
+```
+
+Use the three matrices above to calculate the model-implied covariance matrix and save is as SIGMA: 
+
+```{r}
+SIGMA <- Lambda%*%Psi%*%t(Lambda)+Theta
+```
+
+A shortcut function to obtain the SIGMA matrix is to use fitted() function, as shown above...
+
+```{r}
+all.equal(Sigma, SIGMA)
+```
+
+### Interpretion
+
+How do I interpret the results? 
+
++ (1) Introduce the scaling method I used;
++ (2) Based on the loadings, acknowledge that the indicators are not perfect measures of the latent factors, but they all contribute significantly to the measurement of latent factors (the standardized loadings above larger than 0.6);
++ (3) Report the the proportions of variance explained on each indicator;
++ (4) Describe the discrepancy between S and Sigma (where the main differences lie, and whether the differences are concerning);
++ (5) Interpret the correlation among the latent factors (size, sign, positive/negative, sig/non-sig). 
 
 
+### Standardized solutions: Std.lv vs. Std.all
+
+Std.lv: 
+
++ This is the solution you'll get using Fixed Factor Variance Scaling Method;
++ All factor variances are fixed as 1.0;
++ Factor covariance is the same as factor correlation;
++ All factor loadings are freely estimated so that the model-implied covariance matrix remains the same;
++ All unique factor variances remain unchanged. 
+
+For example, under Std.lv, the model-implied variance of glad is the sum of:
+
++ Tracing 1: lam1\*psi1\*lam1 = 0.694\*1.0\*0.694 = 0.482
++ Tracing 2: sig2_u1 = sig2_glad = 0.484
++ Proportion of variance explained: 0.482/0.966 = 50.1%
+
+which is still 0.966. 
+
+[Exercise] Why is 0.709 the loading of comfortable under Std.lv? 
+
+Under Std.lv, the model-implied variance of comfortable is the sum of:
+
++ Tracing 1: 
++ Tracing 2: 
++ Proportion of variance explained: 
+
+
+Std.all:
+
++ All factor variances are fixed as 1.0;
++ Factor covariance is the same as factor correlation;
++ All factor loadings and unique factor variances are re-estimated so that the model-implied variances of indicators are all 1.0;
+
+For example, under Std.all, the model-implied variance of glad is the sum of:
+
++ Tracing 1: lam1\*psi1\*lam1 = 0.706\*1.0\*0.706 = 0.499
++ Tracing 2: sig2_u1 = sig2_glad = 0.501
+
+which add to 1.0. 
+
+[Exercise] Why is 0.746 the loading of comfortable under Std.all? 
+
+Under Std.all, the model-implied variance of comfortable is the sum of:
+
++ Tracing 1: 
++ Tracing 2: 
+
+
+Why the hassle? 
+
++ The solution is fully standardized so that squaring Std.all loadings is equivalent to the proportion of variance explained: 
++ 0.706\*0.706 (std.all)
++ 1.0\*0.482\*1.0/0.966 (fixed loading)
++ 0.694\*1.0\*0.694/0.966 (fixed variance; std.lv)
++ = 49.9%
 
 
 <!------------------------------>
