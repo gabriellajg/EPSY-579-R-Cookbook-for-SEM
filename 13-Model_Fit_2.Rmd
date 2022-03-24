@@ -1,0 +1,269 @@
+# Week11_1: Lavaan Lab 10 Model Fit Part II (Fit Indices)
+
+
+In this lab, we will learn: 
+
++ how to calculate and interpret global fit indices for SEM models.
++ how to compare non-nested models using AIC and BIC. 
+
+Load up the lavaan library:
+
+```{r}
+library(lavaan)
+```
+
+<!------------------------------>
+## PART I: Fit Indices
+<!------------------------------>
+
+Let's read this dataset in: 
+
+```{r}
+cfaData<- read.csv("cfaInclassData.csv", header = T)
+```
+
+Write out syntax for a two-factor CFA model: 
+
+```{r}
+fixedIndTwoFacSyntax <- "
+	#Factor Specification	
+	posAffect =~ glad + happy + cheerful 
+	satisfaction =~ satisfied + content + comfortable
+"
+```
+
+Fit the model regularly:
+
+```{r}
+fixedIndTwoFacRun = sem(model = fixedIndTwoFacSyntax, 
+                        data = cfaData, 
+                        fixed.x=FALSE)
+```
+
+Request fit indices by adding fit.measures = T in the summary() function:
+
+```{r}
+summary(fixedIndTwoFacRun, standardized = T, fit.measures = T)
+```
+
+### RMSEA
+
+```{r, eval=FALSE}
+Root Mean Square Error of Approximation:
+
+  RMSEA                                          0.000
+  90 Percent confidence interval - lower         0.000
+  90 Percent confidence interval - upper         0.009
+  P-value RMSEA <= 0.05                          1.000
+```
+
+reproducing RMSEA: 
+
++ T = 2.957
++ df = 8
++ N = 1000
++ RMSEA = sqrt(max(T-df,0)/(N-1)/df) = sqrt(max(2.957-8,0)/(1000-1)/8) = 0
+
+
+### SRMR
+
+```{r, eval=FALSE}
+Standardized Root Mean Square Residual:
+
+  SRMR                                           0.007
+```
+
+reproducing SRMR: 
+
+```{r}
+S = cov(cfaData[,-1])
+colnames = colnames(S)
+SIGMA = fitted(fixedIndTwoFacRun)$cov[colnames, colnames]
+p = ncol(S)
+
+# use cov2cor() function to convert diff to a correlation matrix and standardize the residuals: 
+
+resd = cov2cor(S) - cov2cor(SIGMA)
+
+# keep only the nonduplicated elements:
+
+resd2 = lav_matrix_vech(resd)
+
+sqrt(sum(resd2^2)/(p*(p+1)/2))
+```
++ A small average standardized residual...looks good
+
+
+### Null Model MO
+
+```{r, eval=FALSE}
+Model Test Baseline Model:
+
+  Test statistic                              2020.010
+  Degrees of freedom                                15
+  P-value                                        0.000
+```
+
++ This is the chi_sq for the baseline model used in the CFI/TLI/comparative fit measures.
++ We know what this means now!
++ chisquare of the null model: 2020.010
++ df of the null model: 15
+
+reproducing M0:
+
+```{r}
+baselineM0 <- "
+	glad ~~ glad
+	happy ~~ happy
+	cheerful ~~ cheerful
+	satisfied ~~ satisfied
+	content ~~ content
+	comfortable ~~ comfortable
+"
+base_fit <- sem(baselineM0, data = cfaData, fixed.x = FALSE)
+base_fit
+```
+
+
+### CFI/TLI
+
+```{r, eval=FALSE}
+User Model versus Baseline Model:
+
+  Comparative Fit Index (CFI)                    1.000
+  Tucker-Lewis Index (TLI)                       1.005
+```
+
+
++ 100% improvement over the null(baseline) model ... great fit
++ Here TLI is larger than 1 because this is a rare situation with chisquare=2.957<df=8
++ numerator of TLI = (2020.010/15-2.957/8) = 134.2977
++ denominator of TLI = (2020.010/15-1) = 133.6673
++ TLI = 134.2977 / 133.6673 = 1.005
++ A TLI that is larger than 1 is no different from TLI = 1
+
+great overall fit. 
+
+### Loglikelihood
+
+```{r, eval=FALSE}
+Loglikelihood and Information Criteria:
+
+  Loglikelihood user model (H0)              -7483.272
+  Loglikelihood unrestricted model (H1)      -7481.793
+```
+
++ H0 is the loglikelihood of your model (user model ... lavaan is kind to clarify this)
++ H1 is the saturated model loglikelihood.
+
+### AIC/BIC
+
+```{r, eval=FALSE}
+  Akaike (AIC)                               14992.544
+  Bayesian (BIC)                             15056.345
+  Sample-size adjusted Bayesian (BIC)        15015.056
+```
+
++ Penalized -2 LogL
++ If these are lower than some other model -> prefer this model.
++ If these are higher than some other model -> prefer the other model.
+
+reproducing AIC/BIC:
+
+```{r}
+logLik = -7483.272
+q = 13 # (4 loadings + 6 unique factor variances + 3 factor var/covs)
+N = 1000
+
+(AIC = -2*logLik + 2*q)
+(BIC = -2*logLik + log(N)*q)
+```
+
+<!------------------------------>
+## PART II: Exercise
+<!------------------------------>
+
+For this portion, we will run the CFA analyses on a new simulated dataset based on Todd Little's positive affect example. 
+
+Read in the new dataset:
+
+```{r}
+affectData_new <- read.csv("ChiStatSimDat.csv", header = T)
+```
+
+Examine the dataset:
+
+```{r}
+head(affectData_new)
+```
+
+Examine the covariance matrix:
+
+```{r}
+cov(affectData_new)
+```
+all positive! (Remember that indicators need to be all positively correlated for CFA models?)
+
+### PART I: Plot the distributions of all indicators
+
+```{r}
+library(PerformanceAnalytics)
+chart.Correlation(affectData_new)
+```
+
+all indicators look roughly normal
+
+### PART II: Write out the model syntax for two-factor model
+
+```{r}
+twofa.model <- "
+	#Factor Specification	
+	posAffect =~ glad + happy + cheerful 
+	satisfaction =~ satisfied + content + comfortable  
+"
+```
+
+### PART III: Fit the two-factor model
+
+```{r}
+new_fit = sem(twofa.model, data = affectData_new, fixed.x=FALSE)
+summary(new_fit, standardized = T, fit.measures = T)
+```
+
+### PART IV: Interpret the chisquare statistic and fit indices
+
+```{r,eval=FALSE}
+Model Test User Model:
+                                                      
+  Test statistic                               113.638
+  Degrees of freedom                                 8
+  P-value (Chi-square)                           0.000
+```
+
++ 113.638 is much larger than df=8 and the p-value is 0.000<0.05,
++ This chisquare is too large and the model is a poor fit. 
+
+```{r,eval=FALSE}
+Root Mean Square Error of Approximation:
+
+  RMSEA                                          0.257
+  90 Percent confidence interval - lower         0.216
+  90 Percent confidence interval - upper         0.300
+  P-value RMSEA <= 0.05                          0.000
+
+Standardized Root Mean Square Residual:
+
+  SRMR                                           0.070
+
+User Model versus Baseline Model:
+
+  Comparative Fit Index (CFI)                    0.908
+  Tucker-Lewis Index (TLI)                       0.828
+```
+
++ RMSEA = 0.257 >> 0.1. The lower bound of the confidence interval is also larger than 0.1. This indicates a poor fit. 
++ P-value RMSEA <= 0.05: sig - close fit null hypothesis rejected.
++ SRMR = 0.07 < 0.08, meaning that the average standardized residual between S and Sigma is no larger than 0.08, but SRMR is known to be lenient (i.e., low SRMR =/= good models, but high SRMR = bad models). 
++ 90.8% improvement over the null model ... marginal fit
+
+

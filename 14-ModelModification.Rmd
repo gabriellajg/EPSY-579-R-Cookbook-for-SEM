@@ -1,0 +1,214 @@
+# Week11_2: Lavaan Lab 11 Model Local Fitting and Model Modifications
+
+
+In this lab, we will learn: 
+
++ how to examine SEM local fit using residuals 
++ how to modify SEM models for improved fit using modification indices
+
+Load up the lavaan library:
+
+```{r}
+library(lavaan)
+```
+
+<!------------------------------>
+## PART I: Local Fit with Residuals
+<!------------------------------>
+
+Let's read in the new dataset ChiStatSimDat.csv: 
+
+```{r}
+cfaData<- read.csv("ChiStatSimDat.csv", header = T)
+```
+
+Write out syntax for a two-factor CFA model: 
+
+```{r}
+fixedIndTwoFacSyntax <- "
+	#Factor Specification	
+	posAffect =~ glad + happy + cheerful 
+	satisfaction =~ satisfied + content + comfortable
+"
+```
+
+Fit the two-factor model:
+
+```{r}
+fixedIndTwoFacRun = sem(model = fixedIndTwoFacSyntax, 
+                        data = cfaData, 
+                        fixed.x=FALSE)
+```
+
+### Unstandardized residuals
+
+```{r}
+resid(fixedIndTwoFacRun)$cov
+```
+
+What does this mean? What is the metric?
+
+### Standardized residuals
+
+```{r}
+resid(fixedIndTwoFacRun, type = "standardized")$cov
+```
+
+### Normalized residuals
+
+```{r}
+resid(fixedIndTwoFacRun, type = "normalized")$cov
+```
+
++ Different residuals, same story
++ The covariance residual between cheerful and comfortable is the largest and positive
++ The model under-predicts this covariance
++ Fix!
+
+
+<!------------------------------>
+## PART II: Modification Indices
+<!------------------------------>
+
+```{r, eval=FALSE}
+modindices(fixedIndTwoFacRun)
+```
+
+Filter output and only show rows with a modification index value equal or higher than 1:
+
+```{r}
+modindices(fixedIndTwoFacRun, minimum.value = 10)
+```
+
+Sort the output using the values of the modification index values. Higher values appear first: 
+```{r}
+modindices(fixedIndTwoFacRun, minimum.value = 10, sort = TRUE)
+```
+
++ op ~~ : a correlation between two unique factors 
++ op =~ : cross-loading
++ This indicates that the parameters lavaan detects for you to free up are all residual covariances.
+
+### Modified Model 1:
+
+```{r}
+mod1 <- "
+	posAffect =~ glad + happy + cheerful 
+	satisfaction =~ satisfied + content + comfortable  
+	
+	#residal covariance
+	cheerful ~~ comfortable
+"
+```
+
+```{r}
+mod1_fit <- sem(mod1, data = cfaData, std.lv = TRUE, fixed.x=FALSE)
+
+summary(mod1_fit, fit.measures = T, standardized = T)
+```
+
+Model comparison: 
+
+```{r}
+anova(mod1_fit, fixedIndTwoFacRun)
+```
+
+Keep modifying mod1:
+
+```{r}
+modindices(mod1_fit, minimum.value = 10, sort = TRUE)
+```
+
+
+### Modified Model 2_1:
+
+```{r}
+mod2_1 <- "
+  # cross loading
+	posAffect =~ glad + happy + cheerful 
+	satisfaction =~ cheerful + satisfied + content + comfortable  # cheerful also loads on satisfaction
+	
+	#residal covariance
+	cheerful ~~ comfortable
+"
+```
+
+```{r}
+mod2_1_fit <- sem(mod2_1, data = cfaData, std.lv = TRUE, fixed.x=FALSE)
+
+summary(mod2_1_fit, fit.measures = T, standardized = T)
+```
+
+Model comparison: 
+
+```{r}
+anova(mod2_1_fit, mod1_fit)
+```
+
+
+### Modified Model 2_2:
+
+```{r}
+mod2_2 <- "
+	posAffect =~ glad + happy + cheerful 
+	satisfaction =~ satisfied + content + comfortable 
+	
+	#residal covariance
+	cheerful ~~ comfortable
+	glad ~~ happy
+"
+```
+
+```{r}
+mod2_2_fit <- sem(mod2_2, data = cfaData, std.lv = TRUE, fixed.x=FALSE)
+
+summary(mod2_2_fit, fit.measures = T, standardized = T)
+```
+
+Model comparison: 
+
+```{r}
+anova(mod2_2_fit, mod1_fit)
+```
+
+Keep modifying 2_2:
+
+```{r}
+modindices(mod2_2_fit, minimum.value = 10, sort = TRUE)
+```
+
+
+
+### Modified Model 3:
+
+```{r}
+mod3 <- "
+	posAffect =~ glad + happy + cheerful 
+	satisfaction =~ satisfied + content + comfortable 
+	
+	#residal covariance
+	cheerful ~~ comfortable
+	glad ~~ happy
+	content ~~ happy
+"
+```
+
+```{r}
+mod3_fit <- sem(mod3, data = cfaData, std.lv = TRUE, fixed.x = FALSE)
+
+summary(mod3_fit, fit.measures = T, standardized = T)
+```
+
+Model comparison: 
+
+```{r}
+anova(mod3_fit, mod2_2_fit)
+```
+
+Keep modifying mod3:
+
+```{r}
+modindices(mod3_fit, minimum.value = 10, sort = TRUE)
+```
+
+No suggestions could decrease the model chisquare by more than 10. 

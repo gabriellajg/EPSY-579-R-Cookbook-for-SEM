@@ -1,0 +1,314 @@
+# Week10_2: Lavaan Lab 9 Model Fit Part I (Test Statistics)
+
+
+In this lab, we will learn: 
+
++ how to calculate and interpret chi-square statistics for SEM models.
++ how to compare nested models using chi-square difference test. 
+
+Load up the lavaan and semPlot libraries: 
+
+```{r}
+library(lavaan)
+library(semPlot)
+```
+
+<!------------------------------>
+## PART I: Robust ML on the Positive Affect Example
+<!------------------------------>
+
+Let's read this dataset in: 
+
+```{r}
+cfaData<- read.csv("cfaInclassData.csv", header = T)
+```
+
+Write out syntax for a two-factor CFA model: 
+
+```{r}
+fixedIndTwoFacSyntax <- "
+	#Factor Specification	
+	posAffect =~ glad + happy + cheerful 
+	satisfaction =~ satisfied + content + comfortable
+"
+```
+
+Fit the model regularly:
+
+```{r}
+fixedIndTwoFacRun = sem(model = fixedIndTwoFacSyntax, 
+                        data = cfaData, 
+                        fixed.x=FALSE)
+
+fixedIndTwoFacRun
+```
++ Model chi_sq: misfit defined through the likelihood ratio.
++ T_ML = 2.957
++ df_ML = 8
++ pvalue_ML = 0.937
++ Since pvalue_ML > 0.05, this model does not have significant model misfit. 
+
+### Mean corrected statistic (T_M)
+
+Satorra and Bentler (1994, 2001) proposed two robust corrections for non-normally distributed data: 
+
+```{r}
+two_fac_fit_M <- sem(fixedIndTwoFacSyntax, 
+                     data = cfaData, 
+                     fixed.x=FALSE,
+                     estimator = "MLM")
+
+two_fac_fit_M
+```
+
++ T_M = 2.891
++ df_M = 8
++ pvalue_M = 0.941
+
+### Mean and variance adjusted statistic (T_MV)
+
++ estimator = "MLMVS" returns the Mean- and variance adjusted statistic with an updated degrees of freedom (recommended)
++ estimator = "MLMV" returns another version of Mean- and variance adjusted statistic but does not change the degrees of freedom 
+
+```{r}
+two_fac_fit_MV <- sem(fixedIndTwoFacSyntax, 
+                      data = cfaData, 
+                      fixed.x=FALSE,
+                      estimator = "MLMVS")
+
+#summary(two_fac_fit_MV, standardized = T)
+two_fac_fit_MV
+```
+
++ T_MV = 2.842
++ df_MV = 7.864
++ pvalue_MV = 0.939
+
+Please see a complete list of estimators here: http://lavaan.ugent.be/tutorial/est.html
+
+### Yuan-Bentler test statistic (T_MLR)
+
+Just like T_M and T_MV, T_MLR also corrects for nonnormality. Since MLR works for both complete and incomplete data, T_MLR is more popular in practice:
+
+```{r}
+two_fac_fit_MLR <- sem(fixedIndTwoFacSyntax, 
+                      data = cfaData, 
+                      fixed.x=FALSE,
+                      estimator = "MLR")
+
+two_fac_fit_MLR
+```
++ T_MLR = 2.897
++ df_MLR = 8
++ pvalue_MLR = 0.941
+
+### Small sample correction - F test
+
+```{r}
+F_ratio = 2.957/8
+```
+
+referred to an F(df, N-1) distribution:
+
+```{r}
+?pf
+p_val_F = 1-pf(F_ratio, 8, 1000-1)
+p_val_F
+```
+
+which is very similar to the three p-values given above given a large sample size in this study N = 1000. 
+
+<!------------------------------>
+## PART II: Nested Model Comparison
+<!------------------------------>
+
+We can compare the fit of the two-factor model to that of a one-factor model because the one-factor model is nested in the two-factor model. 
+
+### One-factor model
+
+```{r}
+OneFacSyntax <- "
+	#Factor Specification	
+	eta1 =~ glad + happy + cheerful + satisfied + content + comfortable  
+"
+
+one_fac_fit = sem(model = OneFacSyntax, 
+                  data = cfaData, 
+                  fixed.x=FALSE) 
+```
+
+request standardized = T to check standardized loadings - item reliability
+
+```{r}
+summary(one_fac_fit, standardized = T)
+```
+
++ Only the last three standardized loadings are larger than 0.6
++ The first three indicators are not reliable indicators of the new latent variable eta1
+
+```{r,eval=FALSE}
+Model Test User Model:
+
+  Test statistic                               592.661
+  Degrees of freedom                                 9
+  P-value (Chi-square)                           0.000
+```
+
++ The chi-square statistic is very large and significant for this one-factor model...poor fit
+
+### Plotting
+
+```{r}
+semPaths(fixedIndTwoFacRun, what = "std", fade= F)
+semPaths(one_fac_fit, what = "std", fade= F)
+```
+
+### Comparing Nested Models
+
++ The one-factor model is nested in the two-factor model. 
++ The fit of the one-factor model is worse than the two-factor model, but is it significantly worse? 
++ Here we use anova() function to perform chi-square difference test
++ Note that the order of the models in anova() doesn't matter 
+
+```{r}
+anova(one_fac_fit, fixedIndTwoFacRun)
+```
+
+```{r,eval=FALSE}
+Chi-Squared Difference Test
+
+                  Df   AIC   BIC    Chisq Chisq diff Df diff Pr(>Chisq)    
+fixedIndTwoFacRun  8 14992 15056   2.9575                                  
+one_fac_fit        9 15580 15639 592.6611      589.7       1  < 2.2e-16 ***
+ ---
+ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+```
+
++ The model on top is the base model and the model at the bottom is the restricted model.
++ The restricted model always fits worse than the base model. 
++ Chisq diff = 589.7; Df diff = 1; p-value < 0.001
++ Chisq diff is sig: one-factor fits **significantly** worse than the two-factor model and we should endorse two-factor model 
+
+<!------------------------------>
+## PART III: Exercises: More Nested Models
+<!------------------------------>
+
+Your turn now, Have fun! 
+
+### Exercises: Compare the base model (fixedIndTwoFacRun) to
+
++ (Model 2) 2-factor CFA model with orthogonal latent variables
++ (Model 3) 2-factor CFA model with a cross-loading from posAffect to satisfied
++ (Model 4) 2-factor CFA model with a correlation between unique factors u1 and u4
+
+### Model 2: Orthogonal Factors
+
+```{r}
+OrthFacSyntax <- "
+	#Factor Specification	
+	posAffect =~ glad + happy + cheerful 
+	satisfaction =~ satisfied + content + comfortable
+	
+	#Orthogonal Factors: no covariance 
+	posAffect ~~ 0*satisfaction
+"
+```
+
+Fit Model 2: 
+
+```{r}
+OrthFac_fit <- sem(model = OrthFacSyntax, 
+                   data = cfaData, 
+                   fixed.x = F)
+```
+
+Plot Model 2: 
+
+```{r}
+semPaths(OrthFac_fit, what = "std", fade= F)
+```
+
+chi-square difference test:
+
+```{r}
+anova(fixedIndTwoFacRun, OrthFac_fit)
+```
+
++ Chisq diff = 165.52; Df diff = 1; p-value < 0.001
++ Chisq diff is sig: the two-factor model with orthogonal latent variables fits **significantly** worse than the model with correlated latent variables. 
++ We should endorse the base two-factor model with correlated latent variables. 
+
+
+### Model 3: Cross loading
+
+```{r}
+CrossLoadingSyntax <- "
+	#Factor Specification	
+	# cross loading: satisfied load on both latent variables
+	# try to avoid using satisfied as the marker variable
+	posAffect =~ glad + satisfied + happy + cheerful 
+	satisfaction =~ satisfied + content + comfortable
+"
+```
+
+Fit Model 3: 
+
+```{r}
+CrossLoading_fit <- sem(model = CrossLoadingSyntax, data = cfaData, fixed.x = F)
+```
+
+Plot Model 3: 
+
+```{r}
+semPaths(CrossLoading_fit, what = "std", fade= F)
+```
+
+chi-square difference test:
+
+```{r}
+anova(fixedIndTwoFacRun, CrossLoading_fit)
+```
+
++ Chisq diff = 0.052477; Df diff = 1; p-value = 0.8188
++ Chisq diff is not sig: the two-factor model without the cross-loading is **NOT** significantly worse than the model with the cross-loading. 
++ The cross-loading is not necessary. 
++ We should endorse the base two-factor model without the cross-loading. 
+
+
+### Model 4: Correlated Unique Factors
+
+```{r}
+CorrUniSyntax <-"
+	#Factor Specification	
+	posAffect =~ glad + happy + cheerful 
+	satisfaction =~ satisfied + content + comfortable
+
+  # correlated error 
+	glad ~~ satisfied
+"
+```
+
+Fit Model 4: 
+
+```{r}
+CorrUni_fit <- sem(model= CorrUniSyntax, data = cfaData, fixed.x = F)
+```
+
+Plot Model 4: 
+
+```{r}
+semPaths(CorrUni_fit, what = "std", fade= F)
+```
+
+chi-square difference test:
+
+```{r}
+anova(fixedIndTwoFacRun, CorrUni_fit)
+```
+
++ Chisq diff = 1.3232; Df diff = 1; p-value = 0.25
++ Chisq diff is not sig: the two-factor model without the correlated unique factors is **NOT** significantly worse than the model with the correlated unique factors. 
++ The correlation between u1 and u4 is not necessary. 
++ We should endorse the base two-factor model without the correlated unique factors.
+
+
