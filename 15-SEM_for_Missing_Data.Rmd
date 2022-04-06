@@ -1,0 +1,176 @@
+# Week12_1: Lavaan Lab 12 SEM for Missing Data
+
+In this lab, we'll use an example dataset HolzingerSwineford1939 in the package lavaan. Hence, lavaan must be installed.
+
+Load up the lavaan library:
+
+```{r}
+library(lavaan)
+```
+
+Use data() to load HolzingerSwineford1939: 
+
+```{r}
+data(HolzingerSwineford1939)
+head(HolzingerSwineford1939,3)
+tail(HolzingerSwineford1939,3)
+?HolzingerSwineford1939
+```
+
++ The classic Holzinger and Swineford (1939) dataset consists of mental ability test scores of seventh- and eighth-grade children from two different schools (Pasteur and Grant-White). 
++ In the original dataset (available in the MBESS package), there are scores for 26 tests. 
++ However, a smaller subset with 9 variables is more widely used in the literature (for example in Joreskog's 1969 paper, which also uses the 145 subjects from the Grant-White school only).
+
+
+
+<!------------------------------>
+## PART I: Generate some missing data
+<!------------------------------>
+
+HolzingerSwineford1939 has complete dataset on all nine indicators x1-x9. In this example, we will create some missingness in x5 and x9. 
+
+For a commented analysis, check vignettes of the R package lslx. 
+
++ First, missingness on x5 depends on x1: lowest 20% of x1 miss x5 values 
+
+```{r}
+data_miss <- lavaan::HolzingerSwineford1939
+data_miss$x5 <- ifelse(data_miss$x1 <= quantile(data_miss$x1, .2), 
+                       NA, data_miss$x5)
+```
+
++ Second, missingness on x9 depends on age: lowest 10% of age group miss x9 values 
++ Note that age is created by ageyr and agemo. Since ageyr and agemo are not the variables that we are interested, the two variables are treated as auxiliary in the later analysis.
+
+```{r}
+data_miss$age <- data_miss$ageyr + data_miss$agemo/12
+data_miss$x9 <- ifelse(data_miss$age <= quantile(data_miss$age, .1), 
+                       NA, data_miss$x9)
+head(data_miss)
+```
+
++ use the function is.na() to return a matrix of missing data indicators (missing: true, complete: false)
+
+```{r}
+na.eval = is.na(data_miss)
+head(na.eval[,7:15], 3)
+```
+
++ missing counts for each column (variable)
+
+```{r}
+colSums(na.eval)
+```
+
++ 65 values are missing on x5
++ 33 values are missing on x9
+
+MCAR, MAR, OR MNAR? 
+
++ Ans: MAR for both x5 and x9
++ A small tip: if you want a complete version of the dataset, use function na.omit()
+
+
+```{r}
+data.complete = na.omit(data_miss)
+dim(data.complete) # [1] 208  16
+```
+
+<!------------------------------>
+## PART II: Visualization of missing data patterns (nice-to-have)
+<!------------------------------>
+
+To visualize and handle missingness, we need mice package:
+
+```{r,message=FALSE}
+#install.packages('mice', dependencies=TRUE)
+library("mice")
+```
+
+Display missing-data patterns:
+```{r}
+md.pattern(data_miss)
+```
+
+Three variables with missing values on the right side: grade x9 x5: 
+
++ five rows: five patterns:
++ 208 cases with complete responses (0 variable missing)
++ 59 cases with only x5 missing (1 variable missing)
++ 27 cases with only x9 missing (1 variable missing)
++ 6 cases with both x5 and x9 missing (2 variables missing)
++ 1 case with grade missing (1 variable missing)
+
+
+<!------------------------------>
+## PART III: Build a CFA model with missing data
+<!------------------------------>
+
+Write out syntax for a three-factor CFA model: 
+
+```{r}
+HS.model <- ' visual  =~ x1 + x2 + x3
+              textual =~ x4 + x5 + x6
+              speed   =~ x7 + x8 + x9 '
+```
+
+Left untreated, the default in sem() is listwise deletion: 
+
+```{r}
+fit.listwise <- sem(HS.model, 
+                    data = data_miss, 
+                    fixed.x = FALSE)
+
+summary(fit.listwise, fit.measures = TRUE)
+```
+
+
+<!------------------------------>
+## PART IV: Addressing missing data
+<!------------------------------>
+
+### FIML
+
+```{r}
+fit.fiml <- sem(HS.model, 
+                data = data_miss, 
+                missing = 'fiml',
+                fixed.x = FALSE)
+
+summary(fit.fiml, fit.measures = TRUE)
+```
+
+
+### Multiple Imputation
+
+To perform MI with lavaan, we turn to the R-package semTools which offers many functions that extends the basic sem() function. 
+
+```{r,message=FALSE}
+#install.packages('semTools', dependencies=TRUE)
+library("semTools")
+```
+
+
+Mice also utilizes information from auxiliary variables. Since we don't know which ones are auxiliary variables, let's include sex, age and grade and generate imputed datasets.
+
+Again, MI consists of three steps:
+
++ (1) Imputation Step
++ (2) Analysis Step
++ (3) Pooling Step
+
+```{r}
+out1 <- cfa.mi(HS.model, 
+               data=data_miss[,c("x1", "x2", "x3", "x4", "x5", "x6", "x7", "x8", "x9", "sex", "age", "grade")],
+               fixed.x = FALSE, 
+               m = 20, 
+               miPackage="mice",
+               seed = 12345)
+
+summary(out1)
+```
+
+
+
+
+

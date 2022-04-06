@@ -1,0 +1,135 @@
+# Week12_2: Lavaan Lab 13 SEM for Nonnormal and Categorical Data
+
+Load up the lavaan library:
+
+```{r}
+library(lavaan)
+```
+
+<!------------------------------>
+## PART I: Nonnormality Diagnosis
+<!------------------------------>
+
+Let's first load the simulated non-normal data and look at the normality/nonnormality of the items:
+
+```{r}
+nnorm_dat <- read.csv("nonnormal.csv", header = T)
+head(nnorm_dat)
+```
+
+```{r}
+par(mfrow = c(2, 2)) #opens graph window with 2 rows 2 columns
+hist(nnorm_dat$odd5)
+hist(nnorm_dat$odd6)
+hist(nnorm_dat$odd7)
+hist(nnorm_dat$odd8)
+```
+
+Use describe() function from the psych package to get univariate descriptives:
+
+```{r,message=FALSE}
+#install.packages("psych")
+library(psych)
+describe(nnorm_dat)
+```
+
+Use mardia() from the psych package to test multivariate normality:
+
+```{r}
+par(mfrow = c(1, 1)) #opens graph window
+mardia(nnorm_dat)
+```
+
+In any case, these data are clearly far from normal, so ...
+
+<!------------------------------>
+## PART II: Robust corrections
+<!------------------------------>
+
+Write out syntax for a one-factor CFA model: 
+
+```{r}
+cfaSyn <- "
+	odd =~ odd1 + odd2 + odd3 + odd4 + odd5 + odd6 + odd7 + odd8
+"
+```
+
+Fit the one-factor model:
+
+```{r}
+mlrFit <- sem(cfaSyn, 
+              data = nnorm_dat, 
+              fixed.x = FALSE,
+              estimator = "mlr")
+
+summary(mlrFit, fit.measure = T)
+```
+
+
+<!------------------------------>
+## PART III: Categorical Data Analysis in Lavaan
+<!------------------------------>
+
+Let's load the simulated data in which ODD items are ordinal:
+
+```{r}
+odd <- read.csv("oddData.csv", header = T)
+head(odd)
+```
+
+Write out syntax for a one-factor CFA model: 
+
+```{r}
+oddOneFac = '
+	#Specify Overall Odd Factor
+	odd  =~ odd1 + odd2 + odd3 + odd4 + odd5 + odd6 + odd7 + odd8
+	'
+```
+
++ Fit the one-factor model:
++ label ordinal variables using ordered argument: 
++ ordered = c( #NAMES OF ORDINAL INDICATORS#)
+
+```{r}
+oneFacFit <- sem(oddOneFac, 
+                 data = odd,
+                 ordered=c('odd1','odd2','odd3','odd4','odd5','odd6','odd7','odd8'), 
+                 fixed.x = FALSE) 
+#declare these as ordered variable
+
+summary(oneFacFit, fit.measures = T)
+```
+
+
+<!------------------------------>
+## PART IV: What if you have it all? 
+<!------------------------------>
+
++ Unfortunately you cannot use missing = 'fiml' for categorical data:
+
+```{r}
+FitMessy <- sem(oddOneFac, 
+                data = odd,
+                ordered=c('odd1','odd2','odd3','odd4','odd5','odd6','odd7','odd8'), 
+                fixed.x = FALSE,
+                estimator = "DWLS",
+                #missing = 'fiml'
+                ) 
+
+FitMessy
+#summary(FitMessy, fit.measures = T)
+```
+
++ But you cannot use missing = 'fiml' together with MLR for nonnormal data:
+
+```{r}
+FitMessy <- sem(oddOneFac, 
+                data = nnorm_dat,
+                #ordered=c('odd1','odd2','odd3','odd4','odd5','odd6','odd7','odd8'), 
+                fixed.x = FALSE,
+                estimator = "mlr",
+                missing = 'fiml') 
+
+FitMessy
+#summary(FitMessy, fit.measures = T)
+```

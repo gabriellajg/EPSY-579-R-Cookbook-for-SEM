@@ -6,3 +6,6 @@ processR
 zoo
 xts
 PerformanceAnalytics
+mice
+semTools
+psych

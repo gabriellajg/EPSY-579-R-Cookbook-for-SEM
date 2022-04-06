@@ -162,3 +162,15 @@ modified-model-1
 modified-model-2_1
 modified-model-2_2
 modified-model-3
+week12_1-lavaan-lab-12-sem-for-missing-data
+part-i-generate-some-missing-data
+part-ii-visualization-of-missing-data-patterns-nice-to-have
+part-iii-build-a-cfa-model-with-missing-data
+part-iv-addressing-missing-data
+fiml
+multiple-imputation
+week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data
+part-i-nonnormality-diagnosis
+part-ii-robust-corrections
+part-iii-categorical-data-analysis-in-lavaan
+part-iv-what-if-you-have-it-all
