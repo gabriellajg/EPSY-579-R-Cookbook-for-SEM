@@ -1,0 +1,582 @@
+# Week13_2: Lavaan Lab 15 MIMIC & Longitudinal Invariance
+
++ For this lab, we will run Partial Invariance Test and MIMIC Models using simulated data based on Todd Little's positive affect example.
++ We will also test longitudinal measurement invariance using a longitudinal dataset from semTools
+
+Load up the lavaan library:
+
+```{r, message=FALSE}
+library(lavaan)
+```
+
+and the dataset:
+
+```{r}
+affectData <- read.csv("cfaInclassData.csv", header = T)
+```
+
+For demonstration purposes, let's first simulate a grouping variable called school:
+
+```{r}
+set.seed(555)
+affectData$school = sample(c('public', 'private'), nrow(affectData), replace = T)
+```
+
+
+<!------------------------------>
+## PART I: Partial Invariance
+<!------------------------------>
+
+Suppose that you do not need: 
+
++ the loading of content on satisfaction
++ the intercept of content 
+
+to be equal across groups, you can use group.partial= to relax them: 
+
++ "satisfaction=~content": factor loading of content on satisfaction
++ "content~1": intercept of indicator content
+
+```{r}
+srSyntax <- "
+	posAffect =~ glad + happy + cheerful 
+	satisfaction =~ satisfied + content + comfortable 
+	
+	# Structural Regression: beta
+	satisfaction ~ posAffect
+	"
+```
+
+```{r}
+PartialInvFit <- sem(srSyntax, 
+                 data = affectData, 
+                 fixed.x=FALSE,
+                 estimator = 'MLR',
+                 group = "school", 
+                 group.equal = c("loadings", "intercepts", "residuals"),
+                 group.partial = c("satisfaction=~content", "content~1")) 
+summary(PartialInvFit, standardized = T, fit.measures = T)
+```
+
++ The overall model seems to be fine, so we can safely assume these two parameters can be freed across group; 
++ Technically you want to compare PartialInvFit to resVarFit from last lab
+
+<!------------------------------>
+## PART II: MIMIC
+<!------------------------------>
+
+To test whether the grouping variable school affects the loadings (i.e., metric invariance), school has to first interact with PA and predict the indicators:
+
+This is easily said than done. **To create such an interaction, we first need to create indicators of the latent interaction by multiplying school with each of the indicators of PA**:
+
+```{r}
+# first convert public/private to 0/1
+affectData$school_N = ifelse(affectData$school=='public', 0, 1)
+
+affectData$intPA1 =  affectData$school_N * affectData$glad
+affectData$intPA2 =  affectData$school_N * affectData$happy
+affectData$intPA3 =  affectData$school_N * affectData$cheerful
+```
+
+### Test Metric Invariance
+
+Now that we have our latent interaction indicators ready, we can run our MIMIC analyses by testing: 
+
+```{r}
+srSyntaxMIMIC0 <- "
+	posAffect =~ glad + happy + cheerful 
+	satisfaction =~ satisfied + content + comfortable 
+	schoolxPA =~ intPA1 + intPA2 + intPA3 
+	
+	# Structural Regression: beta
+	satisfaction ~ posAffect
+	
+	# Correlated Residuals:
+	intPA1 ~~ glad
+	intPA2 ~~ happy
+	intPA3 ~~ cheerful
+	"
+```
+
+```{r}
+MIMICmodel <- sem(srSyntaxMIMIC0, 
+                 data = affectData, 
+                 fixed.x=FALSE,
+                 estimator = 'MLR') 
+```
+
+```{r,warning=FALSE}
+library(semPlot)
+semPaths(MIMICmodel, what='est', 
+         nCharNodes = 0,
+         nCharEdges = 0, # don't limit variable name lengths
+         edge.label.cex=0.6, 
+         curvePivot = TRUE, 
+         curve = 1.5, # pull covariances' curves out a little
+         fade=FALSE)
+```
+
+
+```{r}
+srSyntaxMIMICLoading <- "
+	posAffect =~ glad + happy + cheerful 
+	satisfaction =~ satisfied + content + comfortable 
+	schoolxPA =~ intPA1 + intPA2 + intPA3 
+	
+	# Structural Regression: beta
+	satisfaction ~ posAffect
+	
+	# Correlated Residuals:
+	intPA1 ~~ glad
+	intPA2 ~~ happy
+	intPA3 ~~ cheerful
+	
+	# Test Metric Invariance
+	glad ~ school + schoolxPA
+	happy ~ school + schoolxPA
+	cheerful ~ school + schoolxPA
+	"
+```
+
+Note that you don't need group=, group.equal=, or group.partial= in the following function (why?): 
+
+```{r}
+MIMICloading <- sem(srSyntaxMIMICLoading, 
+                 data = affectData, 
+                 fixed.x=FALSE,
+                 estimator = 'MLR') 
+summary(MIMICloading, standardized = T, fit.measures = T)
+```
+
+```{r,warning=FALSE}
+semPaths(MIMICloading, what='est', 
+         nCharNodes = 0,
+         nCharEdges = 0, # don't limit variable name lengths
+         edge.label.cex=0.6, 
+         curvePivot = TRUE, 
+         curve = 1.5, # pull covariances' curves out a little
+         fade=FALSE)
+```
+
+```{r, eval = FALSE, echo=TRUE}
+Regressions:
+                   Estimate  Std.Err  z-value  P(>|z|)   Std.lv  Std.all
+  satisfaction ~                                                        
+    posAffect         0.583    0.073    7.942    0.000    0.485    0.485
+  glad ~                                                                
+    school           -0.038    0.043   -0.869    0.385   -0.038   -0.019
+    schoolxPA         0.129    0.147    0.874    0.382    0.068    0.070
+  happy ~                                                               
+    school           -0.014    0.043   -0.325    0.745   -0.014   -0.007
+    schoolxPA        -0.081    0.177   -0.457    0.648   -0.043   -0.044
+  cheerful ~                                                            
+    school           -0.048    0.042   -1.150    0.250   -0.048   -0.024
+    schoolxPA         0.118    0.173    0.681    0.496    0.063    0.064
+```
+
++ The coefficient of schoolxPA on all indicators were insignificant. 
++ The loadings do not depend on school type.
++ No sign of violation of metric invariance.
+
+### Test Scalar Invariance
+
+Since metric invariance has been established, we do not need the indicators of the latent interactions, we simply predict each of the indicators using group: 
+
+```{r}
+srSyntaxMIMICInt <- "
+	posAffect =~ glad + happy + cheerful 
+	satisfaction =~ satisfied + content + comfortable 
+
+	# Structural Regression: beta
+	satisfaction ~ posAffect
+
+	# Test Scalar Invariance
+	glad ~ school
+	happy ~ school
+	cheerful ~ school
+	"
+```
+
+```{r}
+MIMICintercept <- sem(srSyntaxMIMICInt, 
+                       data = affectData,
+                       fixed.x=FALSE,
+                       estimator = 'MLR') 
+```
+
+```{r,warning=FALSE}
+semPaths(MIMICintercept, what='est', 
+         nCharNodes = 0,
+         nCharEdges = 0, # don't limit variable name lengths
+         edge.label.cex=0.6, 
+         curvePivot = TRUE, 
+         curve = 1.5, # pull covariances' curves out a little
+         fade=FALSE)
+```
+
+```{r}
+summary(MIMICintercept, standardized = T, fit.measures = T)
+```
+
++ The coefficient of school on all indicators were insignificant. 
++ The intercepts of indicators do not depend on school type.
++ No sign of violation of scalar invariance.
+
+### Test The Hypothesis of Equal Factor Means:
+
+```{r}
+cfaSyntaxMIMIC <- "
+	posAffect =~ glad + happy + cheerful 
+	satisfaction =~ satisfied + content + comfortable 
+
+	# Test Equal Factor Means
+	posAffect ~ school
+	satisfaction ~ school
+	"
+```
+
+```{r}
+MIMICmean <- sem(cfaSyntaxMIMIC, 
+                 data = affectData,
+                 fixed.x=FALSE,
+                 estimator = 'MLR') 
+summary(MIMICmean, standardized = T, fit.measures = T)
+```
+
+```{r,warning=FALSE}
+semPaths(MIMICmean, what='est', 
+         nCharNodes = 0,
+         nCharEdges = 0, # don't limit variable name lengths
+         edge.label.cex=0.6, 
+         curvePivot = TRUE, 
+         curve = 1.5, # pull covariances' curves out a little
+         fade=FALSE)
+```
+
++ The coefficient of school on two latent variables were insignificant. 
++ It says the levels of positive affect and satisfaction in public schools were essentially the same as those in private schools. 
+
+<!------------------------------>
+## PART III: Longitudinal Invariance
+<!------------------------------>
+
+The following codes were adapted from the examples of measEq.syntax() in semTools: 
+
+```{r, message=FALSE}
+library(semTools)
+?measEq.syntax
+```
+
+They used a built-in dataset called datCat: 
+
+```{r}
+head(datCat)
+```
+
++ A data.frame with 200 observations of 9 variables.
++ A simulated data set with 2 factors with 4 indicators each separated into two groups
++ Let's ignore the gender groups for now
++ u1-u4 are likert variables measured at time 1
++ u5-u8 are the same set of likert variables measured at time 2
++ Both u1-u4 and u5-u8 measure the same latent variable, FU
+
+The goal of testing longitudinal invariance is to make sure that the scale that measures positive affect and satisfaction functions in the same way across all time points. 
+
+### step 1: Configural invariance
+
+First define the CFA model that measures the same latent variable (FU) at two time points:
+
+```{r}
+mod.cat <- ' FU1 =~ u1 + u2 + u3 + u4
+             FU2 =~ u5 + u6 + u7 + u8 '
+```
+
+It's important to know: 
+
++ You do not want to use sem() to test longitudinal invariance (technically you can, but it'll be very messy)
++ I recommend using the function measEq.syntax() from semTools package
++ To tell measEq.syntax() that FU1 are FU2 are just the same variables, you need to define a list longFacNames that includes this information
++ The indicators are categorical you'll need the ordered= argument and parameterization = "theta"
++ The example codes used ID.fac = "std.lv" (fixed variance scaling) so we'll use this as well
++ return.fit = TRUE fits the model instead of just creating a model syntax
+
+```{r}
+## the 2 factors are actually the same factor (FU) measured twice
+longFacNames <- list(FU = c("FU1","FU2"))
+```
+
+```{r}
+syntax.config <- measEq.syntax(configural.model = mod.cat,
+                               data = datCat,
+                               ordered = paste0("u", 1:8),
+                               parameterization = "theta",
+                               ID.fac = "std.lv", 
+                               longFacNames = longFacNames,
+                               fixed.x = TRUE,
+                               return.fit = TRUE)
+#cat(as.character(syntax.config))
+summary(syntax.config, standardized = T, fit.measures = T)
+```
+
+
+### step 1.5: Threshold invariance (for categorical indicators only)
+
++ The test of Threshold invariance has to happen before the test of all other parameters;
++ Note that we do not have to use group = argument, longFacNames does the job 
++ Use long.equal = c("thresholds") to test Threshold invariance
+
+```{r}
+syntax.thresh <- measEq.syntax(configural.model = mod.cat,
+                               data = datCat,
+                               ordered = paste0("u", 1:8),
+                               parameterization = "theta",
+                               ID.fac = "std.lv", 
+                               longFacNames = longFacNames,
+                               long.equal = c("thresholds"),
+                               fixed.x = TRUE,
+                               return.fit = TRUE)
+
+summary(syntax.thresh, standardized = T, fit.measures = T)
+```
+
+compare their fit to test threshold invariance:
+
+```{r}
+anova(syntax.config, syntax.thresh)
+```
+
++ The test was not significant, meaning the increase in chi-square (due to the assumption of equal thresholds) was not substantial enough to worsen the model fit; 
++ Threshold invariance was established; 
+
+
+<!------------------------------>
+### RECOMMENDED PRACTICE: fit one invariance model at a time
+<!------------------------------>
+
++ A downside of setting return.fit=TRUE is that if the model has trouble converging, you don't have the opportunity to investigate the syntax, or even to know whether an error resulted from the syntax-generator or from lavaan itself.
++ A downside of automatically fitting an entire set of invariance models (like the old measurementInvariance() function did) is that you might end up testing models that shouldn't even be fitted because less restrictive models already fail (e.g., don't test full scalar invariance if metric invariance fails! Establish partial metric invariance first, then test equivalent of intercepts ONLY among the indicators that have invariate loadings.)
+
++ The recommended sequence is to 
+  (1) generate and save each syntax object (i.e., return = FALSE), 
+  (2) print it to the screen to verify you are fitting the model you expect to (and potentially learn which identification constraints should be released when equality constraints are imposed), and 
+  (3) fit that model to the data, as you would if you had written the syntax yourself.
+
++ Continuing from the examples above, after establishing invariance of thresholds, we proceed to test equivalence of loadings and intercepts (metric and scalar invariance, respectively) simultaneously across groups and repeated measures.
+
+
+### step 2: Metric (weak) invariance
+
+```{r, results='hide'}
+syntax.metric <- measEq.syntax(configural.model = mod.cat,
+                               data = datCat,
+                               ordered = paste0("u", 1:8),
+                               parameterization = "theta",
+                               ID.fac = "std.lv", 
+                               longFacNames = longFacNames,
+                               long.equal = c("thresholds","loadings"),
+                               fixed.x = TRUE,
+                               return.fit = TRUE)
+summary(syntax.metric, standardized = T, fit.measures = T)  # summarize model features
+```
+
+test equivalence of loadings, given equivalence of thresholds: 
+
+```{r}
+anova(syntax.thresh, syntax.metric)
+```
+
++ The test was not significant, meaning the increase in chi-square (due to the assumption of equal loadings) was not substantial enough to worsen the model fit; 
++ Metric invariance was established; 
+
+
+### step 3: Scalar (strong) Invariance
+
+```{r, results='hide'}
+syntax.scalar <- measEq.syntax(configural.model = mod.cat, 
+                               data = datCat,
+                               ordered = paste0("u", 1:8),
+                               parameterization = "theta",
+                               ID.fac = "std.lv", 
+                               longFacNames = longFacNames,
+                               long.equal  = c("thresholds","loadings","intercepts"),
+                               fixed.x = TRUE,
+                               return.fit = TRUE)
+summary(syntax.scalar, standardized = T, fit.measures = T)  # summarize model features
+```
+
+test equivalence of intercepts, given equal thresholds & loadings:
+
+```{r}
+anova(syntax.metric, syntax.scalar)
+```
+
++ The test was not significant, meaning the increase in chi-square (due to the assumption of equal intercepts) was not substantial enough to worsen the model fit; 
++ Scalar invariance was established; 
+
+
+### step 4: Residual variance (strict) invariance 
+
+```{r, results='hide'}
+syntax.strict <- measEq.syntax(configural.model = mod.cat, 
+                               data = datCat,
+                               ordered = paste0("u", 1:8),
+                               parameterization = "theta",
+                               ID.fac = "std.lv", 
+                               longFacNames = longFacNames,
+                               long.equal  = c("thresholds","loadings","intercepts", 
+                                               "residuals"),
+                               fixed.x = TRUE,
+                               return.fit = TRUE)
+summary(syntax.strict, standardized = T, fit.measures = T)  # summarize model features
+```
+
+test equivalence of intercepts, given equal thresholds & loadings: 
+
+```{r}
+anova(syntax.scalar, syntax.strict)
+```
+
++ The test was not significant, meaning the increase in chi-square (due to the assumption of equal residual variances) was not substantial enough to worsen the model fit; 
++ Strict invariance was established; 
+
+
+### Shortcut Function
+
+For a single table with all results, you can pass the models to summarize to the compareFit() function:
+
+```{r}
+summary(compareFit(syntax.config, syntax.thresh, syntax.metric, syntax.scalar, syntax.strict))
+```
+
+<!------------------------------>
+### NOT RECOMMENDED: fit several invariance models at once
+<!------------------------------>
+
+Must SIMULTANEOUSLY constrain thresholds, loadings, and intercepts": 
+
+```{r}
+test.seq <- list(strong = c("thresholds", "loadings","intercepts"),
+                 strict = c("residuals"))
+```
+
+```{r}
+meq.list <- list()
+for (i in 0:length(test.seq)) {
+  if (i == 0L) {
+    meq.label <- "configural"
+    long.equal <- ""
+  } else {
+    meq.label <- names(test.seq)[i]
+    long.equal <- unlist(test.seq[1:i])
+  }
+  meq.list[[meq.label]] <- measEq.syntax(configural.model = mod.cat,
+                                         data = datCat,
+                                         ordered = paste0("u", 1:8),
+                                         parameterization = "theta",
+                                         ID.fac = "std.lv",
+                                         longFacNames = longFacNames,
+                                         long.equal = long.equal,
+                                         fixed.x = TRUE,
+                                         return.fit = TRUE)
+}
+```
+
+```{r}
+compareFit(meq.list)
+summary(compareFit(meq.list))
+```
+
+<!------------------------------>
+## PART IV: Exercises: MIMIC
+<!------------------------------>
+
+In this exercise, you are given a dataset, activefull.txt, to fit the MIMIC model on page 70 of <Week13 MGSEM + Measurement Invariance.pdf>: 
+
+I'll get you started: 
+
+```{r}
+active<-read.table('activefull.txt', header=T)
+V<-c('ws1','ls1','lt1','gender')
+active_sub<-active[,V]
+head(active_sub)
+```
+
++ This subscale measures the latent variable R using three continuous indicators: 'ws1','ls1','lt1'
++ You can ignore the mediator edu for now. 
+
+**Using active_sub, can you test the (1) Metric Invariance and (2) Scalar Invariance of this subscale between gender groups? **
+
+```{r}
+
+```
+
+
+
+
+<!------------------------------>
+## PART V: Exercises: Longitudinal Invariance
+<!------------------------------>
+
+In this exercise, you are given a dataset, myData, that can be downloaded from Mplus website: 
+
+```{r}
+myData <- read.table("http://www.statmodel.com/usersguide/chap5/ex5.16.dat")
+names(myData) <- c("u1","u2","u3","u4","u5","u6","x1","x2","x3","g")
+myData_sub<-myData[,c("u1","u2","u3","u4","u5","u6")]
+head(myData_sub)
+```
+
++ myData_sub is a data.frame with 2200 observations of 6 variables.
++ u1-u3 are binary variables measured at time 1
++ u4-u6 are the same set of binary variables measured at time 2
++ Both u1-u3 and u4-u6 measure the same latent variable, FU
+
+Let's first define the CFA model that measures the same latent variable (FU) at two time points (you are welcome):
+
+```{r}
+bin.mod <- '
+  FU1 =~ u1 + u2 + u3
+  FU2 =~ u4 + u5 + u6
+'
+```
+
+Using myData_sub, can you test the (1) Metric Invariance and (2) Scalar Invariance of this subscale between gender groups? 
+
+```{r}
+
+```
+
+
+```{r}
+test.seq <- list(strong = c("thresholds", "loadings","intercepts"),
+                 strict = c("residuals"))
+```
+
+```{r}
+meq.list <- list()
+for (i in 0:length(test.seq)) {
+  if (i == 0L) {
+    meq.label <- "configural"
+    long.equal <- ""
+  } else {
+    meq.label <- names(test.seq)[i]
+    long.equal <- unlist(test.seq[1:i])
+  }
+  meq.list[[meq.label]] <- measEq.syntax(configural.model = bin.mod,
+                                         data = myData_sub,
+                                         ordered = paste0("u", 1:6),
+                                         parameterization = "theta",
+                                         ID.fac = "std.lv",
+                                         longFacNames = longFacNames,
+                                         long.equal = long.equal,
+                                         fixed.x = TRUE,
+                                         return.fit = TRUE)
+}
+```
+
+```{r}
+compareFit(meq.list)
+summary(compareFit(meq.list))
+```
+
+

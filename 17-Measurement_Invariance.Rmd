@@ -1,0 +1,269 @@
+# Week13_1: Lavaan Lab 14 Measurement Invariance
+
+For this lab, we will run the MG-CFA analyses in class using simulated data based on Todd Little's positive affect example.
+
+Load up the lavaan library:
+
+```{r, message=FALSE}
+library(lavaan)
+```
+
+and the dataset:
+
+```{r}
+affectData <- read.csv("cfaInclassData.csv", header = T)
+```
+
+For demonstration purposes, let's first simulate a grouping variable called school:
+
+```{r}
+set.seed(555)
+affectData$school = sample(c('public', 'private'), nrow(affectData), replace = T)
+table(affectData$school)
+head(affectData)
+```
+
+The goal of testing measurement invariance (MI) is to make sure that the scale that measures positive affect and satisfaction functions in the same way between public and private schools.
+
+<!------------------------------>
+## PART I: Multi-Group Analyses, Done Incorrectly
+<!------------------------------>
+
+Syntax for an SR model (it doesn't matter whether the model is for CFA or SR, the test of MI only applies to the CFA part): 
+
+```{r}
+srSyntax <- "
+	posAffect =~ glad + happy + cheerful 
+	satisfaction =~ satisfied + content + comfortable 
+	
+	# Structural Regression: beta
+	satisfaction ~ posAffect
+	"
+```
+
+```{r}
+MGsrRunWRONG <- sem(srSyntax, 
+                    data = affectData, 
+                    fixed.x=FALSE,
+                    group = "school", # group indicator
+                    estimator = "MLR") # use MLR as a go-to estimation method
+
+summary(MGsrRunWRONG, standardized = T, fit.measures = T)
+```
+
+```{r,warning=FALSE}
+library(semPlot)
+semPaths(MGsrRunWRONG, what='est', 
+         nCharNodes = 0,
+         nCharEdges = 0, # don't limit variable name lengths
+         edge.label.cex=0.6, 
+         curvePivot = TRUE, 
+         curve = 1.5, # pull covariances' curves out a little
+         fade=FALSE)
+```
+
+
+<!------------------------------>
+## PART II: Testing Measurement Invariance
+<!------------------------------>
+
+### step 1: Configural invariance
+
+If you simply use the MGsrRunWRONG synatx above, you are just testing configural invariance: 
+
+```{r}
+configuralFit <- sem(srSyntax, 
+                    data = affectData, 
+                    fixed.x=FALSE,
+                    group = "school", # group indicator
+                    estimator = "MLR") # use MLR as a go-to estimation method
+#summary(configuralFit, standardized = T, fit.measures = T)
+```
+
++ Configural invariance was established due to satisfying model fit; 
+
+### step 2: Metric (weak) invariance
+
+To test metric invariance, you could manually constraint all factor loadings to be the same using tricks like "posAffect =~ c(lam1, lam1)*glad" but there is a shortcut using "group.equal" argument:
+
+```{r}
+metricFit <- sem(srSyntax, 
+                 data = affectData, 
+                 fixed.x=FALSE,
+                 estimator = 'MLR',
+                 group = "school", 
+                 group.equal = c("loadings")) 
+```
+
++ so that all factor loadings are fixed to be the same across groups
++ More group equality constraints can be added, like "intercepts", "means", "residuals", "residual.covariances", "lv.variances", "lv.covariances", "regressions"
+
+```{r}
+summary(metricFit, standardized = T, fit.measures = T)
+```
+
++ Again, metric invariance was established due to satisfying model fit; 
++ To test whether the equal factor loading assumption caused damage to model fit, we compare metricFit to configuralFit: 
+
+Model comparison: 
+
+```{r}
+anova(configuralFit, metricFit)
+```
+
++ The test was not significant, meaning the increase in chi-square (due to the assumption of equal factor loadings) was not substantial enough to worsen the model fit; 
++ Note that this test suffers from the same problem as the chi-square test (too sensitive to model misfit)
+
+### step 3: Scalar (strong) Invariance
+
+In this step, both factor loadings and measurement intercepts (of course, including factor structure) are constrained to be equal between the groups: 
+
+```{r}
+scalarFit <- sem(srSyntax, 
+                 data = affectData, 
+                 fixed.x=FALSE,
+                 estimator = 'MLR',
+                 group = "school", 
+                 group.equal = c("loadings", "intercepts")) 
+summary(scalarFit, standardized = T, fit.measures = T)
+```
+
+Model comparison: 
+
+```{r}
+anova(metricFit, scalarFit)
+```
+
++ The test was not significant, meaning the increase in chi-square (due to the assumption of equal measurement intercepts) was not substantial enough to worsen the model fit; 
++ Scalar invariance was established; 
+
+### step 4: (Optional) Residual variance (strict) invariance 
+
+```{r}
+resVarFit <- sem(srSyntax, 
+                 data = affectData, 
+                 fixed.x=FALSE,
+                 estimator = 'MLR',
+                 group = "school", 
+                 group.equal = c("loadings", "intercepts", "residuals")) 
+summary(resVarFit, standardized = T, fit.measures = T)
+```
+
+Model comparison: 
+
+```{r}
+anova(resVarFit, scalarFit)
+```
+
++ The test was not significant, meaning the increase in chi-square (due to the assumption of equal residual variances) was not substantial enough to worsen the model fit; 
++ Strict invariance was established. 
+
+<!------------------------------>
+## PART III: Shortcut to performing MI
+<!------------------------------>
+
+### measurementInvariance()
+
+There is a shortcut function in package 'semTools' that performsinvariance testing in one place, but unfornately it will soon retire...
+
+```{r, message=FALSE}
+library(semTools)
+
+measurementInvariance(model = srSyntax, 
+                      data = affectData, 
+                      fixed.x=FALSE,
+                      estimator = 'MLR', 
+                      group = "school")
+```
+
+### measEq.syntax()
+
+To use measEq.syntax() from semTools, we need to use a model syntax for CFA model instead of SR model: 
+
+```{r}
+cfaSyntax <- "
+	posAffect =~ glad + happy + cheerful 
+	satisfaction =~ satisfied + content + comfortable 
+	"
+```
+
+```{r}
+test.seq <- list(weak = c("loadings"),
+                 strong = c("intercepts"),
+                 strict = c("residuals"))
+meq.list <- list()
+for (i in 0:length(test.seq)) {
+  if (i == 0L) {
+    meq.label <- "configural"
+    group.equal <- ""
+  } else {
+    meq.label <- names(test.seq)[i]
+    group.equal <- unlist(test.seq[1:i])
+  }
+  meq.list[[meq.label]] <- measEq.syntax(configural.model = cfaSyntax,
+                                         data = affectData,
+                                         fixed.x = TRUE,
+                                         estimator = 'MLR', 
+                                         group = "school",
+                                         group.equal = group.equal,
+                                         return.fit = TRUE)
+}
+```
+
+```{r}
+compareFit(meq.list)
+summary(compareFit(meq.list))
+```
+
+
+<!------------------------------>
+## PART IV: Multi-Group CFA Modeling, done right
+<!------------------------------>
+
++ To compare the structural model parameters, at least scalar (strong) invariance is required; 
++ Since strict invariance was also satisfied, we will use resVarFit for MG-SR Modeling in this example:
+
+### Statistical Test of Equal Factor Means:
+
+```{r}
+equalMeanfit <- sem(cfaSyntax, 
+                    affectData, 
+                    fixed.x = FALSE, 
+                    estimator = 'MLR', 
+                    group = "school", 
+                    group.equal = c("loadings", "intercepts", "residuals", 
+                                    "means"))
+
+summary(equalMeanfit, standardized = T, fit.measures = T)
+
+anova(resVarFit, equalMeanfit)
+```
+
++ The anova test was not significant, meaning the increase in chi-square (due to the constraint of equal latent means) was not substantial enough to worsen the model fit; 
++ It says the levels of positive affect and satisfaction in public schools were essentially the same as those in private schools. 
+
+### Statistical Test of Equal Regression Coefficients:
+
++ Note that we used srSyntax here because we need to define the regression coefficient between PA and satisfaction: 
+
+```{r}
+equalBetafit <- sem(srSyntax, 
+                    affectData, 
+                    fixed.x = FALSE, 
+                    estimator = 'MLR', 
+                    group = "school", 
+                    group.equal = c("loadings", "intercepts", "residuals",
+                                 "regressions"))
+
+summary(equalBetafit, standardized = T, fit.measures = T)
+
+anova(resVarFit, equalBetafit)
+```
+
++ The test was not significant, meaning the increase in chi-square (due to the constraint of equal regression coefficients) was not substantial enough to worsen the model fit; 
++ It says the effect of positive affect on satisfaction in public schools was essentially the same as that in private schools.
+
+
+
+
+
