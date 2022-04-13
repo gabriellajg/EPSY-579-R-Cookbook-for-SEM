@@ -211,7 +211,7 @@ for (i in 0:length(test.seq)) {
 ```
 
 ```{r}
-compareFit(meq.list)
+a = compareFit(meq.list)
 summary(compareFit(meq.list))
 ```
 
