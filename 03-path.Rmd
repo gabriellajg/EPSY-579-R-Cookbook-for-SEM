@@ -262,13 +262,13 @@ You can run the sem() function using two different sources of data:
 1. The raw dataset, using:
 
 ```{r, eval = F}
-sem(model = modelSyntax, data = yourDataset)
+lavaan::sem(model = modelSyntax, data = yourDataset)
 ```
 
 example:
 
 ```{r, eval = F}
-ex1fit <- sem(model = ex1PathSyntax, data = labData)
+ex1fit <- lavaan::sem(model = ex1PathSyntax, data = labData)
 ```
 
 If you encounter errors like: 
@@ -293,7 +293,7 @@ summary(ex1fit)
 2. The covariance matrix, using:
 
 ```{r, eval = F}
-sem(model = modelSyntax, sample.cov = yourCovarianceMatrix, sample.nobs = numberOfObservationsInYourDataset)
+lavaan::sem(model = modelSyntax, sample.cov = yourCovarianceMatrix, sample.nobs = numberOfObservationsInYourDataset)
 ```
 
 This is to illustrate that WITH COMPLETE DATA, you can run SEM analyses using only covariances as input and obtain the same results as with raw data! 

@@ -1,0 +1,415 @@
+# Week14: Lavaan Lab 16 Latent Growth Models
+
+In this lab, we will:
+
++ run and interpret a series of growth models (no growth, linear, quadratic, latent basis, spline growth);
++ compare nested models and identify the best possible shape for characterizing the growth patterns; 
++ add predictors for the growth factors;
++ run growth models on latent variables. 
+
+Load up the lavaan library:
+
+```{r, message=FALSE}
+library(lavaan)
+```
+
+We will also need ggplot2, semPlot, and semTools. Install them if you haven't: 
+
+```{r,message=FALSE}
+#install.packages("ggplot2")
+#install.packages("semPlot")
+#install.packages("semTools")
+library(ggplot2)
+library(semPlot)
+library(semTools)
+```
+
++ For this lab, we will work with a simulated dataset # based on an example from McCoach & Kaniskan (2010). 
++ The main DV is Oral Reading Fluency (ORF) and is measured over 4 time points (Fall and Spring, 2 consecutive years) 
++ N = 277 Elementary students.
++ Let's read in the dataset:
+
+```{r}
+orf <- read.csv("readingSimData.csv", header = T)
+```
+
+Take a look at the dataset:
+
+```{r}
+head(orf)
+```
+
+sample size:
+```{r}
+n <- nrow(orf)
+n #277, just like the McCoach paper.
+```
+
+sample means and cov matrix
+```{r}
+orfNames <- paste0("orf", 1:4)
+(samMeans <- round(apply(orf[,orfNames], 2, mean), 3))
+(samCov <- round(cov(orf[,orfNames])*((n-1)/n), 3))
+```
+
+<!------------------------------>
+## PART I: Spaghetti Plot
+<!------------------------------>
+
+For more details, check out https://www.r-bloggers.com/my-commonly-done-ggplot2-graphs/
+
+First, let's use reshape() to convert wide format to long format for plotting: 
+
+```{r}
+growthDataLong <- reshape(orf, varying = paste0("orf", 1:4), sep = "", direction = "long")
+head(growthDataLong)
+```
+
+Plot trajectory of individual with id=1
+
+```{r}
+tspag_id1 = ggplot(growthDataLong[growthDataLong$id==1, ], aes(x=time, y=orf)) + 
+  geom_line() + 
+  xlab("Observation Time Point") +
+  ylab("Y") + 
+  ylim(-40, 300) + 
+  ggtitle("Spaghetti plot") + 
+  aes(colour = factor(id))
+tspag_id1
+```
+
+plot trajectory of everyone 
+
+```{r}
+tspag = ggplot(growthDataLong, aes(x=time, y=orf)) + 
+  geom_line(show.legend = FALSE) + 
+  xlab("Observation Time Point") +
+  ylab("Y") + 
+  ylim(-40, 300) + 
+  ggtitle("Spaghetti plot") + 
+  aes(colour = factor(id))
+tspag
+```
+
+
+<!------------------------------>
+## PART II: Growth Models
+<!------------------------------>
+
+### 1. No growth model
+
++ Let's start by examining the hypothesis of no growth (intercept only)
++ Intercept loads on all variables with fixed loadings of 1.0
++ Use a*VAR1 to fix the coefficient of VAR1 at a:
+
+```{r}
+noGrowthSyn <- "
+	#Specify Latent Intercept
+	I =~ 1*orf1 + 1*orf2 + 1*orf3 + 1*orf4
+"
+```
+
+```{r}
+noGrowthFit <- growth(noGrowthSyn, data = orf, fixed.x = FALSE)
+summary(noGrowthFit, fit.measures = T)
+```
+
+```{r}
+semPaths(noGrowthFit, what='est', fade= F)
+```
+
+### 2. Linear growth model
+
++ Intercept loads on all variables with fixed loadings of 1.0
++ Slope loads on all variables with fixed loadings of t = 0, 1, 2, ..., t-1
++ t must start from 0
+
+```{r}
+linearGrowthSyn <- "
+	#Specify Latent Intercept and Slope
+	I =~ 1*orf1 + 1*orf2 + 1*orf3 + 1*orf4
+	S =~ 0*orf1 + 1*orf2 + 2*orf3 + 3*orf4
+"
+```
+
+```{r}
+linearGrowthFit <- growth(linearGrowthSyn, data = orf, fixed.x = FALSE)
+summary(linearGrowthFit, fit.measures = T)
+```
+
+```{r}
+semPaths(linearGrowthFit, what='est', fade= F)
+```
+
+### 3. Quadratic growth model
+
++ Intercept loads on all variables with fixed loadings of 1.0
++ Slope loads on all variables with fixed loadings of t = 0, 1, 2, ..., t-1
++ Quadratic loads on all variables with fixed loadings of t^2 = 0, 1, 4, ..., (t-1)^2
++ Quadratic has no variance and covariances
+
+```{r}
+quadGrowthSyn <- "
+	#int and slope factors
+	I =~ 1*orf1 + 1*orf2 + 1*orf3 + 1*orf4
+	S =~ 0*orf1 + 1*orf2 + 2*orf3 + 3*orf4
+	#quadratic factor = slope^2
+	quadS =~ 0*orf1 + 1*orf2 + 4*orf3 + 9*orf4
+"
+```
+
+```{r}
+quadGrowthFit <- growth(quadGrowthSyn, data = orf, fixed.x = FALSE)
+```
+
+If you get the following warning messages:
+
+1: In lav_object_post_check(object) :
+  lavaan WARNING: some estimated ov variances are negative
+
++ Use var1~~0*var2 to fix the (co)variances at 0
+
+```{r}
+quadGrowthSyn_noQuad <- "
+	#int and slope factors
+	I =~ 1*orf1 + 1*orf2 + 1*orf3 + 1*orf4
+	S =~ 0*orf1 + 1*orf2 + 2*orf3 + 3*orf4
+	#quadratic factor = slope^2
+	quadS =~ 0*orf1 + 1*orf2 + 4*orf3 + 9*orf4
+	
+	quadS ~~ 0*quadS #restrict quadratic variance to 0
+	quadS ~~ 0*I #restrict quadratic covariance with I to 0
+	quadS ~~ 0*S #restrict quadratic covariance with S to 0
+"
+```
+
+```{r}
+quadGrowthNoquadFit <- growth(quadGrowthSyn_noQuad, 
+                              data = orf, fixed.x = FALSE)
+summary(quadGrowthNoquadFit, fit.measures = T)
+```
+
+```{r}
+semPaths(quadGrowthNoquadFit, what='est', fade= F)
+```
+
+### 4. Latent basis growth model (extension of linear growth model)
+
++ Intercept loads on all variables with fixed loadings of 1.0
++ Slope loads on all variables with free loadings between 0 and t-1
+
+```{r}
+latentBasisSyn <- "
+	#Int and slope specification
+	I =~ 1*orf1 + 1*orf2 + 1*orf3 + 1*orf4
+	
+	#orf2 and orf3 are free in the latent basis specification
+	S =~ 0*orf1 + alpha1*orf2 + alpha2*orf3 + 3*orf4
+"
+```
+
+```{r}
+latentBasisFit <- growth(latentBasisSyn, 
+                         data = orf, 
+                         fixed.x = FALSE)
+summary(latentBasisFit, fit.measures = T)
+```
+
+```{r}
+semPaths(latentBasisFit, what='est', fade= F)
+```
+
+RMSEA failed us...
+one approach is to use model modification indices: 
+
+```{r,warning=FALSE}
+modindices(latentBasisFit,sort. = T)
+```
+
+Another approach is to use Spline Growth Model.
+
+### 5. Spline Growth Model
+
+```{r}
+splineGrowthSyn <- "
+	#Specify Latent Intercept and Slope
+	I =~ 1*orf1 + 1*orf2 + 1*orf3 + 1*orf4
+	S =~ 0*orf1 + 1*orf2 + 2*orf3 + 3*orf4
+
+	#summer is the spline variable
+	summer =~ 0*orf1 + 0*orf2 + 1*orf3 + 1*orf4
+
+	#Summer gets a mean but no variance
+	summer ~ 1
+	summer ~~ 0*summer
+
+	#Summer is uncorrelated with I and S
+	summer ~~ 0*I 
+	summer ~~ 0*S 
+"
+```
+
+```{r}
+splineGrowthFit <- growth(splineGrowthSyn, data = orf, fixed.x = FALSE)
+summary(splineGrowthFit, fit.measures = T)
+```
+
+```{r}
+semPaths(splineGrowthFit, what='est', fade= F)
+```
+
+### Model Comparison
+
+```{r}
+lavTestLRT(noGrowthFit, linearGrowthFit)
+```
+
++ Linear Growth Model fits significantly better than No Growth Model
+
+```{r}
+lavTestLRT(linearGrowthFit, quadGrowthNoquadFit)
+```
+
++ Linear Growth Model fits almost the same as the Quadratic Growth Model (keep linear model due to parsimony principle)
+
+```{r}
+lavTestLRT(linearGrowthFit, latentBasisFit)
+```
+
++ Latent Basis Model fits significantly better than Linear Growth Model
+
+```{r}
+lavTestLRT(linearGrowthFit, splineGrowthFit)
+```
+
++ Spline Growth Model also fits significantly better than Linear Growth Model
+
+### 6. Final Model: Spline Growth Model with a binary treatment predictor
+
+```{r}
+splineGrowthTreatmentPredictorSyn <- "
+	#Specify Latent Intercept and Slope
+	I =~ 1*orf1 + 1*orf2 + 1*orf3 + 1*orf4
+	S =~ 0*orf1 + 1*orf2 + 2*orf3 + 3*orf4
+
+	#summer is the spline variable
+	summer =~ 0*orf1 + 0*orf2 + 1*orf3 + 1*orf4
+
+	#Summer gets a mean but no variance
+	summer ~~ 0*summer
+
+	#Summer is uncorrelated with I and S
+	summer ~~ 0*I 
+	summer ~~ 0*S 
+
+	#Intercept, Slope, and Summer regressed on (predicted by) treatment
+	I ~ treatmentDummy
+	S ~ treatmentDummy
+	summer ~ treatmentDummy
+"
+```
+
++ When including external predictors, we need to turn on fixed.x = T...
++ otherwise you'll get a warning message and misleading model fit:
+
+```{r}
+# do not do this:
+splineGrowthTreatPredictorFit <- growth(splineGrowthTreatmentPredictorSyn, 
+                                       data = orf, 
+                                       fixed.x = F) # <- Here
+```
+
+Instead, turn on fixed.x = T:
+
+```{r}
+splineGrowthTreatPredictorFit <- growth(splineGrowthTreatmentPredictorSyn, 
+                                       data = orf, 
+                                       fixed.x = T) # <- Here
+summary(splineGrowthTreatPredictorFit, fit.measures = T)
+```
+
+```{r}
+semPaths(splineGrowthTreatPredictorFit, what='est', fade= F)
+```
+
+
+<!------------------------------>
+## PART III: LGM on Latent Variables
+<!------------------------------>
+
+### Example
+
+Please go over the checklist:
+
+1. Make sure the latent variables satisfy longitudinal measurement invariance at the level of scalar invariance or above 
+2. Use the loadings over time (i.e., metric invariance)
+3. No need to correlate the latent factors
+4. Add intercepts for all indicators EXCEPT for marker indicators
+5. Add correlated residuals for repeated measures of the same indicators
+6. Use std.lv = TRUE as the scaling method in growth()
+
+For this example, we will use the dataset exLong from package semTools: 
+
+```{r}
+data(exLong)
+head(exLong)
+?exLong
+```
+
+The syntax for linear growth model with latent variables:
+
+```{r}
+exLinearGrowthsyn <- "
+  
+  # Use the loadings over time (i.e., metric invariance)
+  f_t1 =~ lamb1*y1t1 + lamb2*y2t1 + lamb3*y3t1
+  f_t2 =~ lamb1*y1t2 + lamb2*y2t2 + lamb3*y3t2
+  f_t3 =~ lamb1*y1t3 + lamb2*y2t3 + lamb3*y3t3
+
+  #Int and slope specification
+	I =~ 1*f_t1 + 1*f_t2 + 1*f_t3
+	S =~ 0*f_t1 + 1*f_t2 + 2*f_t3
+	
+	# Add intercepts for all indicators EXCEPT for marker indicators
+  y2t1 ~ 1
+  y3t1 ~ 1
+  y2t2 ~ 1
+  y3t2 ~ 1
+	y2t3 ~ 1
+  y3t3 ~ 1
+
+	# Add correlated residuals for repeated measures of the same indicators
+	y1t1 ~~ y1t2
+	y1t1 ~~ y1t3
+	y1t2 ~~ y1t3
+	y2t1 ~~ y2t2
+	y2t1 ~~ y2t3
+	y2t2 ~~ y2t3
+	y3t1 ~~ y3t2
+	y3t1 ~~ y3t3
+	y3t2 ~~ y3t3
+"
+```
+
+Use std.lv = TRUE as the scaling method in growth():
+
+```{r}
+exLinearGrowthFit <- growth(exLinearGrowthsyn, 
+                         data = exLong, 
+                         fixed.x = FALSE,
+                         std.lv = TRUE)
+summary(exLinearGrowthFit, fit.measures = T)
+```
+
+```{r}
+semPaths(exLinearGrowthFit, what='est', fade= F)
+```
+
+### Exercise
+
+Q: Could you fit the latent basis model to the same dataset and compare the fit of the two models?
+
+```{r}
+
+```
+

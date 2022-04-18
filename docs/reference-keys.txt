@@ -204,3 +204,16 @@ shortcut-function
 not-recommended-fit-several-invariance-models-at-once
 part-iv-exercises-mimic
 part-v-exercises-longitudinal-invariance
+week14-lavaan-lab-16-latent-growth-models
+part-i-spaghetti-plot
+part-ii-growth-models
+no-growth-model
+linear-growth-model
+quadratic-growth-model
+latent-basis-growth-model-extension-of-linear-growth-model
+spline-growth-model
+model-comparison
+final-model-spline-growth-model-with-a-binary-treatment-predictor
+part-iii-lgm-on-latent-variables
+example
+exercise

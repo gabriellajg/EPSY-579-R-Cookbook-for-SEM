@@ -430,6 +430,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="18.4" data-path="week13_2-lavaan-lab-15-mimic-longitudinal-invariance.html"><a href="week13_2-lavaan-lab-15-mimic-longitudinal-invariance.html#part-iv-exercises-mimic"><i class="fa fa-check"></i><b>18.4</b> PART IV: Exercises: MIMIC<span></span></a></li>
 <li class="chapter" data-level="18.5" data-path="week13_2-lavaan-lab-15-mimic-longitudinal-invariance.html"><a href="week13_2-lavaan-lab-15-mimic-longitudinal-invariance.html#part-v-exercises-longitudinal-invariance"><i class="fa fa-check"></i><b>18.5</b> PART V: Exercises: Longitudinal Invariance<span></span></a></li>
 </ul></li>
+<li class="chapter" data-level="19" data-path="week14-lavaan-lab-16-latent-growth-models.html"><a href="week14-lavaan-lab-16-latent-growth-models.html"><i class="fa fa-check"></i><b>19</b> Week14: Lavaan Lab 16 Latent Growth Models<span></span></a>
+<ul>
+<li class="chapter" data-level="19.1" data-path="week14-lavaan-lab-16-latent-growth-models.html"><a href="week14-lavaan-lab-16-latent-growth-models.html#part-i-spaghetti-plot"><i class="fa fa-check"></i><b>19.1</b> PART I: Spaghetti Plot<span></span></a></li>
+<li class="chapter" data-level="19.2" data-path="week14-lavaan-lab-16-latent-growth-models.html"><a href="week14-lavaan-lab-16-latent-growth-models.html#part-ii-growth-models"><i class="fa fa-check"></i><b>19.2</b> PART II: Growth Models<span></span></a>
+<ul>
+<li class="chapter" data-level="19.2.1" data-path="week14-lavaan-lab-16-latent-growth-models.html"><a href="week14-lavaan-lab-16-latent-growth-models.html#no-growth-model"><i class="fa fa-check"></i><b>19.2.1</b> 1. No growth model<span></span></a></li>
+<li class="chapter" data-level="19.2.2" data-path="week14-lavaan-lab-16-latent-growth-models.html"><a href="week14-lavaan-lab-16-latent-growth-models.html#linear-growth-model"><i class="fa fa-check"></i><b>19.2.2</b> 2. Linear growth model<span></span></a></li>
+<li class="chapter" data-level="19.2.3" data-path="week14-lavaan-lab-16-latent-growth-models.html"><a href="week14-lavaan-lab-16-latent-growth-models.html#quadratic-growth-model"><i class="fa fa-check"></i><b>19.2.3</b> 3. Quadratic growth model<span></span></a></li>
+<li class="chapter" data-level="19.2.4" data-path="week14-lavaan-lab-16-latent-growth-models.html"><a href="week14-lavaan-lab-16-latent-growth-models.html#latent-basis-growth-model-extension-of-linear-growth-model"><i class="fa fa-check"></i><b>19.2.4</b> 4. Latent basis growth model (extension of linear growth model)<span></span></a></li>
+<li class="chapter" data-level="19.2.5" data-path="week14-lavaan-lab-16-latent-growth-models.html"><a href="week14-lavaan-lab-16-latent-growth-models.html#spline-growth-model"><i class="fa fa-check"></i><b>19.2.5</b> 5. Spline Growth Model<span></span></a></li>
+<li class="chapter" data-level="19.2.6" data-path="week14-lavaan-lab-16-latent-growth-models.html"><a href="week14-lavaan-lab-16-latent-growth-models.html#model-comparison"><i class="fa fa-check"></i><b>19.2.6</b> Model Comparison<span></span></a></li>
+<li class="chapter" data-level="19.2.7" data-path="week14-lavaan-lab-16-latent-growth-models.html"><a href="week14-lavaan-lab-16-latent-growth-models.html#final-model-spline-growth-model-with-a-binary-treatment-predictor"><i class="fa fa-check"></i><b>19.2.7</b> 6. Final Model: Spline Growth Model with a binary treatment predictor<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="19.3" data-path="week14-lavaan-lab-16-latent-growth-models.html"><a href="week14-lavaan-lab-16-latent-growth-models.html#part-iii-lgm-on-latent-variables"><i class="fa fa-check"></i><b>19.3</b> PART III: LGM on Latent Variables<span></span></a>
+<ul>
+<li class="chapter" data-level="19.3.1" data-path="week14-lavaan-lab-16-latent-growth-models.html"><a href="week14-lavaan-lab-16-latent-growth-models.html#example"><i class="fa fa-check"></i><b>19.3.1</b> Example<span></span></a></li>
+<li class="chapter" data-level="19.3.2" data-path="week14-lavaan-lab-16-latent-growth-models.html"><a href="week14-lavaan-lab-16-latent-growth-models.html#exercise"><i class="fa fa-check"></i><b>19.3.2</b> Exercise<span></span></a></li>
+</ul></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 </ul>
@@ -453,20 +472,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">Chapter 15</span> Week12_1: Lavaan Lab 12 SEM for Missing Data<a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#week12_1-lavaan-lab-12-sem-for-missing-data" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>In this lab, we’ll use an example dataset HolzingerSwineford1939 in the package lavaan. Hence, lavaan must be installed.</p>
 <p>Load up the lavaan library:</p>
-<div class="sourceCode" id="cb509"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb509-1"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb509-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span></code></pre></div>
+<div class="sourceCode" id="cb506"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb506-1"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb506-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span></code></pre></div>
 <p>Use data() to load HolzingerSwineford1939:</p>
-<div class="sourceCode" id="cb510"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb510-1"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb510-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(HolzingerSwineford1939)</span>
-<span id="cb510-2"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb510-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(HolzingerSwineford1939,<span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb507"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb507-1"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb507-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(HolzingerSwineford1939)</span>
+<span id="cb507-2"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb507-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(HolzingerSwineford1939,<span class="dv">3</span>)</span></code></pre></div>
 <pre><code>##   id sex ageyr agemo  school grade       x1   x2    x3       x4   x5        x6       x7   x8       x9
 ## 1  1   1    13     1 Pasteur     7 3.333333 7.75 0.375 2.333333 5.75 1.2857143 3.391304 5.75 6.361111
 ## 2  2   2    13     7 Pasteur     7 5.333333 5.25 2.125 1.666667 3.00 1.2857143 3.782609 6.25 7.916667
 ## 3  3   2    13     1 Pasteur     7 4.500000 5.25 1.875 1.000000 1.75 0.4285714 3.260870 3.90 4.416667</code></pre>
-<div class="sourceCode" id="cb512"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb512-1"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb512-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(HolzingerSwineford1939,<span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb509"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb509-1"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb509-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(HolzingerSwineford1939,<span class="dv">3</span>)</span></code></pre></div>
 <pre><code>##      id sex ageyr agemo      school grade       x1   x2    x3       x4   x5       x6       x7   x8       x9
 ## 299 348   2    14     3 Grant-White     8 4.666667 5.50 1.875 3.666667 5.75 4.285714 4.000000 6.00 7.611111
 ## 300 349   1    14     2 Grant-White     8 4.333333 6.75 0.500 3.666667 4.50 2.000000 5.086957 6.20 4.388889
 ## 301 351   1    13     5 Grant-White    NA 4.333333 6.00 3.375 3.666667 5.75 3.142857 4.086957 6.95 5.166667</code></pre>
-<div class="sourceCode" id="cb514"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb514-1"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb514-1" aria-hidden="true" tabindex="-1"></a>?HolzingerSwineford1939</span></code></pre></div>
+<div class="sourceCode" id="cb511"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb511-1"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb511-1" aria-hidden="true" tabindex="-1"></a>?HolzingerSwineford1939</span></code></pre></div>
 <ul>
 <li>The classic Holzinger and Swineford (1939) dataset consists of mental ability test scores of seventh- and eighth-grade children from two different schools (Pasteur and Grant-White).</li>
 <li>In the original dataset (available in the MBESS package), there are scores for 26 tests.</li>
@@ -481,17 +500,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li>First, missingness on x5 depends on x1: lowest 20% of x1 miss x5 values</li>
 </ul>
-<div class="sourceCode" id="cb515"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb515-1"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb515-1" aria-hidden="true" tabindex="-1"></a>data_miss <span class="ot">&lt;-</span> lavaan<span class="sc">::</span>HolzingerSwineford1939</span>
-<span id="cb515-2"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb515-2" aria-hidden="true" tabindex="-1"></a>data_miss<span class="sc">$</span>x5 <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(data_miss<span class="sc">$</span>x1 <span class="sc">&lt;=</span> <span class="fu">quantile</span>(data_miss<span class="sc">$</span>x1, .<span class="dv">2</span>), </span>
-<span id="cb515-3"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb515-3" aria-hidden="true" tabindex="-1"></a>                       <span class="cn">NA</span>, data_miss<span class="sc">$</span>x5)</span></code></pre></div>
+<div class="sourceCode" id="cb512"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb512-1"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb512-1" aria-hidden="true" tabindex="-1"></a>data_miss <span class="ot">&lt;-</span> lavaan<span class="sc">::</span>HolzingerSwineford1939</span>
+<span id="cb512-2"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb512-2" aria-hidden="true" tabindex="-1"></a>data_miss<span class="sc">$</span>x5 <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(data_miss<span class="sc">$</span>x1 <span class="sc">&lt;=</span> <span class="fu">quantile</span>(data_miss<span class="sc">$</span>x1, .<span class="dv">2</span>), </span>
+<span id="cb512-3"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb512-3" aria-hidden="true" tabindex="-1"></a>                       <span class="cn">NA</span>, data_miss<span class="sc">$</span>x5)</span></code></pre></div>
 <ul>
 <li>Second, missingness on x9 depends on age: lowest 10% of age group miss x9 values</li>
 <li>Note that age is created by ageyr and agemo. Since ageyr and agemo are not the variables that we are interested, the two variables are treated as auxiliary in the later analysis.</li>
 </ul>
-<div class="sourceCode" id="cb516"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb516-1"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb516-1" aria-hidden="true" tabindex="-1"></a>data_miss<span class="sc">$</span>age <span class="ot">&lt;-</span> data_miss<span class="sc">$</span>ageyr <span class="sc">+</span> data_miss<span class="sc">$</span>agemo<span class="sc">/</span><span class="dv">12</span></span>
-<span id="cb516-2"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb516-2" aria-hidden="true" tabindex="-1"></a>data_miss<span class="sc">$</span>x9 <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(data_miss<span class="sc">$</span>age <span class="sc">&lt;=</span> <span class="fu">quantile</span>(data_miss<span class="sc">$</span>age, .<span class="dv">1</span>), </span>
-<span id="cb516-3"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb516-3" aria-hidden="true" tabindex="-1"></a>                       <span class="cn">NA</span>, data_miss<span class="sc">$</span>x9)</span>
-<span id="cb516-4"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb516-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(data_miss)</span></code></pre></div>
+<div class="sourceCode" id="cb513"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb513-1"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb513-1" aria-hidden="true" tabindex="-1"></a>data_miss<span class="sc">$</span>age <span class="ot">&lt;-</span> data_miss<span class="sc">$</span>ageyr <span class="sc">+</span> data_miss<span class="sc">$</span>agemo<span class="sc">/</span><span class="dv">12</span></span>
+<span id="cb513-2"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb513-2" aria-hidden="true" tabindex="-1"></a>data_miss<span class="sc">$</span>x9 <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(data_miss<span class="sc">$</span>age <span class="sc">&lt;=</span> <span class="fu">quantile</span>(data_miss<span class="sc">$</span>age, .<span class="dv">1</span>), </span>
+<span id="cb513-3"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb513-3" aria-hidden="true" tabindex="-1"></a>                       <span class="cn">NA</span>, data_miss<span class="sc">$</span>x9)</span>
+<span id="cb513-4"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb513-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(data_miss)</span></code></pre></div>
 <pre><code>##   id sex ageyr agemo  school grade       x1   x2    x3       x4   x5        x6       x7   x8       x9      age
 ## 1  1   1    13     1 Pasteur     7 3.333333 7.75 0.375 2.333333   NA 1.2857143 3.391304 5.75 6.361111 13.08333
 ## 2  2   2    13     7 Pasteur     7 5.333333 5.25 2.125 1.666667 3.00 1.2857143 3.782609 6.25 7.916667 13.58333
@@ -502,8 +521,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li>use the function is.na() to return a matrix of missing data indicators (missing: true, complete: false)</li>
 </ul>
-<div class="sourceCode" id="cb518"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb518-1"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb518-1" aria-hidden="true" tabindex="-1"></a>na.eval <span class="ot">=</span> <span class="fu">is.na</span>(data_miss)</span>
-<span id="cb518-2"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb518-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(na.eval[,<span class="dv">7</span><span class="sc">:</span><span class="dv">15</span>], <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb515"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb515-1"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb515-1" aria-hidden="true" tabindex="-1"></a>na.eval <span class="ot">=</span> <span class="fu">is.na</span>(data_miss)</span>
+<span id="cb515-2"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb515-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(na.eval[,<span class="dv">7</span><span class="sc">:</span><span class="dv">15</span>], <span class="dv">3</span>)</span></code></pre></div>
 <pre><code>##         x1    x2    x3    x4    x5    x6    x7    x8    x9
 ## [1,] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE
 ## [2,] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
@@ -511,7 +530,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li>missing counts for each column (variable)</li>
 </ul>
-<div class="sourceCode" id="cb520"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb520-1"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb520-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colSums</span>(na.eval)</span></code></pre></div>
+<div class="sourceCode" id="cb517"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb517-1"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb517-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colSums</span>(na.eval)</span></code></pre></div>
 <pre><code>##     id    sex  ageyr  agemo school  grade     x1     x2     x3     x4     x5     x6     x7     x8     x9    age 
 ##      0      0      0      0      0      1      0      0      0      0     65      0      0      0     33      0</code></pre>
 <ul>
@@ -523,8 +542,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Ans: MAR for both x5 and x9</li>
 <li>A small tip: if you want a complete version of the dataset, use function na.omit()</li>
 </ul>
-<div class="sourceCode" id="cb522"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb522-1"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb522-1" aria-hidden="true" tabindex="-1"></a>data.complete <span class="ot">=</span> <span class="fu">na.omit</span>(data_miss)</span>
-<span id="cb522-2"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb522-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(data.complete) <span class="co"># [1] 208  16</span></span></code></pre></div>
+<div class="sourceCode" id="cb519"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb519-1"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb519-1" aria-hidden="true" tabindex="-1"></a>data.complete <span class="ot">=</span> <span class="fu">na.omit</span>(data_miss)</span>
+<span id="cb519-2"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb519-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(data.complete) <span class="co"># [1] 208  16</span></span></code></pre></div>
 <pre><code>## [1] 208  16</code></pre>
 <!------------------------------>
 </div>
@@ -532,10 +551,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">15.2</span> PART II: Visualization of missing data patterns (nice-to-have)<a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#part-ii-visualization-of-missing-data-patterns-nice-to-have" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!------------------------------>
 <p>To visualize and handle missingness, we need mice package:</p>
-<div class="sourceCode" id="cb524"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb524-1"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb524-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages(&#39;mice&#39;, dependencies=TRUE)</span></span>
-<span id="cb524-2"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb524-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;mice&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb521"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb521-1"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb521-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages(&#39;mice&#39;, dependencies=TRUE)</span></span>
+<span id="cb521-2"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb521-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;mice&quot;</span>)</span></code></pre></div>
 <p>Display missing-data patterns:</p>
-<div class="sourceCode" id="cb525"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb525-1"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb525-1" aria-hidden="true" tabindex="-1"></a><span class="fu">md.pattern</span>(data_miss)</span></code></pre></div>
+<div class="sourceCode" id="cb522"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb522-1"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb522-1" aria-hidden="true" tabindex="-1"></a><span class="fu">md.pattern</span>(data_miss)</span></code></pre></div>
 <p><img src="bookdownproj_files/figure-html/unnamed-chunk-301-1.png" width="672" /></p>
 <pre><code>##     id sex ageyr agemo school x1 x2 x3 x4 x6 x7 x8 age grade x9 x5   
 ## 208  1   1     1     1      1  1  1  1  1  1  1  1   1     1  1  1  0
@@ -559,15 +578,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">15.3</span> PART III: Build a CFA model with missing data<a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#part-iii-build-a-cfa-model-with-missing-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!------------------------------>
 <p>Write out syntax for a three-factor CFA model:</p>
-<div class="sourceCode" id="cb527"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb527-1"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb527-1" aria-hidden="true" tabindex="-1"></a>HS.model <span class="ot">&lt;-</span> <span class="st">&#39; visual  =~ x1 + x2 + x3</span></span>
-<span id="cb527-2"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb527-2" aria-hidden="true" tabindex="-1"></a><span class="st">              textual =~ x4 + x5 + x6</span></span>
-<span id="cb527-3"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb527-3" aria-hidden="true" tabindex="-1"></a><span class="st">              speed   =~ x7 + x8 + x9 &#39;</span></span></code></pre></div>
+<div class="sourceCode" id="cb524"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb524-1"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb524-1" aria-hidden="true" tabindex="-1"></a>HS.model <span class="ot">&lt;-</span> <span class="st">&#39; visual  =~ x1 + x2 + x3</span></span>
+<span id="cb524-2"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb524-2" aria-hidden="true" tabindex="-1"></a><span class="st">              textual =~ x4 + x5 + x6</span></span>
+<span id="cb524-3"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb524-3" aria-hidden="true" tabindex="-1"></a><span class="st">              speed   =~ x7 + x8 + x9 &#39;</span></span></code></pre></div>
 <p>Left untreated, the default in sem() is listwise deletion:</p>
-<div class="sourceCode" id="cb528"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb528-1"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb528-1" aria-hidden="true" tabindex="-1"></a>fit.listwise <span class="ot">&lt;-</span> <span class="fu">sem</span>(HS.model, </span>
-<span id="cb528-2"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb528-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> data_miss, </span>
-<span id="cb528-3"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb528-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb528-4"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb528-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb528-5"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb528-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit.listwise, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb525"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb525-1"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb525-1" aria-hidden="true" tabindex="-1"></a>fit.listwise <span class="ot">&lt;-</span> <span class="fu">sem</span>(HS.model, </span>
+<span id="cb525-2"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb525-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> data_miss, </span>
+<span id="cb525-3"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb525-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb525-4"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb525-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb525-5"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb525-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit.listwise, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>## lavaan 0.6-10 ended normally after 35 iterations
 ## 
 ##   Estimator                                         ML
@@ -664,12 +683,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!------------------------------>
 <div id="fiml" class="section level3 hasAnchor" number="15.4.1">
 <h3><span class="header-section-number">15.4.1</span> FIML<a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#fiml" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb530"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb530-1"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb530-1" aria-hidden="true" tabindex="-1"></a>fit.fiml <span class="ot">&lt;-</span> <span class="fu">sem</span>(HS.model, </span>
-<span id="cb530-2"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb530-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">data =</span> data_miss, </span>
-<span id="cb530-3"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb530-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">missing =</span> <span class="st">&#39;fiml&#39;</span>,</span>
-<span id="cb530-4"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb530-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb530-5"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb530-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb530-6"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb530-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit.fiml, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb527"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb527-1"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb527-1" aria-hidden="true" tabindex="-1"></a>fit.fiml <span class="ot">&lt;-</span> <span class="fu">sem</span>(HS.model, </span>
+<span id="cb527-2"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb527-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">data =</span> data_miss, </span>
+<span id="cb527-3"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb527-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">missing =</span> <span class="st">&#39;fiml&#39;</span>,</span>
+<span id="cb527-4"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb527-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb527-5"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb527-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb527-6"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb527-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit.fiml, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>## lavaan 0.6-10 ended normally after 52 iterations
 ## 
 ##   Estimator                                         ML
@@ -778,8 +797,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="multiple-imputation" class="section level3 hasAnchor" number="15.4.2">
 <h3><span class="header-section-number">15.4.2</span> Multiple Imputation<a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#multiple-imputation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>To perform MI with lavaan, we turn to the R-package semTools which offers many functions that extends the basic sem() function.</p>
-<div class="sourceCode" id="cb532"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb532-1"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb532-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages(&#39;semTools&#39;, dependencies=TRUE)</span></span>
-<span id="cb532-2"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb532-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;semTools&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb529"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb529-1"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb529-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages(&#39;semTools&#39;, dependencies=TRUE)</span></span>
+<span id="cb529-2"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb529-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;semTools&quot;</span>)</span></code></pre></div>
 <p>Mice also utilizes information from auxiliary variables. Since we don’t know which ones are auxiliary variables, let’s include sex, age and grade and generate imputed datasets.</p>
 <p>Again, MI consists of three steps:</p>
 <ul>
@@ -793,14 +812,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Pooling Step</li>
 </ol></li>
 </ul>
-<div class="sourceCode" id="cb533"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb533-1"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb533-1" aria-hidden="true" tabindex="-1"></a>out1 <span class="ot">&lt;-</span> <span class="fu">cfa.mi</span>(HS.model, </span>
-<span id="cb533-2"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb533-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">data=</span>data_miss[,<span class="fu">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>, <span class="st">&quot;x3&quot;</span>, <span class="st">&quot;x4&quot;</span>, <span class="st">&quot;x5&quot;</span>, <span class="st">&quot;x6&quot;</span>, <span class="st">&quot;x7&quot;</span>, <span class="st">&quot;x8&quot;</span>, <span class="st">&quot;x9&quot;</span>, <span class="st">&quot;sex&quot;</span>, <span class="st">&quot;age&quot;</span>, <span class="st">&quot;grade&quot;</span>)],</span>
-<span id="cb533-3"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb533-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">fixed.x =</span> <span class="cn">FALSE</span>, </span>
-<span id="cb533-4"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb533-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">m =</span> <span class="dv">20</span>, </span>
-<span id="cb533-5"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb533-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">miPackage=</span><span class="st">&quot;mice&quot;</span>,</span>
-<span id="cb533-6"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb533-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">seed =</span> <span class="dv">12345</span>)</span>
-<span id="cb533-7"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb533-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb533-8"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb533-8" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(out1)</span></code></pre></div>
+<div class="sourceCode" id="cb530"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb530-1"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb530-1" aria-hidden="true" tabindex="-1"></a>out1 <span class="ot">&lt;-</span> <span class="fu">cfa.mi</span>(HS.model, </span>
+<span id="cb530-2"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb530-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">data=</span>data_miss[,<span class="fu">c</span>(<span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>, <span class="st">&quot;x3&quot;</span>, <span class="st">&quot;x4&quot;</span>, <span class="st">&quot;x5&quot;</span>, <span class="st">&quot;x6&quot;</span>, <span class="st">&quot;x7&quot;</span>, <span class="st">&quot;x8&quot;</span>, <span class="st">&quot;x9&quot;</span>, <span class="st">&quot;sex&quot;</span>, <span class="st">&quot;age&quot;</span>, <span class="st">&quot;grade&quot;</span>)],</span>
+<span id="cb530-3"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb530-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">fixed.x =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb530-4"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb530-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">m =</span> <span class="dv">20</span>, </span>
+<span id="cb530-5"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb530-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">miPackage=</span><span class="st">&quot;mice&quot;</span>,</span>
+<span id="cb530-6"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb530-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">seed =</span> <span class="dv">12345</span>)</span>
+<span id="cb530-7"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb530-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb530-8"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#cb530-8" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(out1)</span></code></pre></div>
 <pre><code>## lavaanList (0.6-10) -- based on 20 datasets (20 converged)
 ## 
 ## Latent Variables:

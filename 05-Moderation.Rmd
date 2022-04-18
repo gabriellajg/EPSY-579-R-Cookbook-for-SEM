@@ -141,8 +141,8 @@ Let's write some model syntax (with the labels):
 
 ```{r, eval = T}
 interactionSyntax <- "
-	#Regression with interaction
-	#with labels
+  #Regression with interaction
+  #with labels
 	Depression ~ b1*CBTDummy + b2*NeedCog + b3*CBTxNeedCog
 "
 ```
@@ -150,7 +150,7 @@ interactionSyntax <- "
 let fixed.x=FALSE to print more lines: 
 
 ```{r}
-inter_fit1 <- sem(model = interactionSyntax, 
+inter_fit1 <- lavaan::sem(model = interactionSyntax, 
                   data = cbtData, 
                   fixed.x = FALSE)
 ```
@@ -158,7 +158,7 @@ inter_fit1 <- sem(model = interactionSyntax,
 If you'd like lavaan to print means and intercepts, we need to ask sem() to include the meanstructure:
 
 ```{r}
-inter_fit1 <- sem(model = interactionSyntax, 
+inter_fit1 <- lavaan::sem(model = interactionSyntax, 
                   data = cbtData, 
                   fixed.x =FALSE, 
                   meanstructure = TRUE)
@@ -249,7 +249,7 @@ interactionSyntax2 <- "
 Let's ask sem() to include the meanstructure:
 
 ```{r}
-inter_fit2 <- sem(model = interactionSyntax2, 
+inter_fit2 <- lavaan::sem(model = interactionSyntax2, 
                   data = cbtData, 
                   fixed.x =FALSE, 
                   meanstructure = TRUE)
@@ -289,7 +289,7 @@ interactionSyntax3 <- "
 
 
 ```{r}
-inter_fit3 <- sem(model = interactionSyntax3, 
+inter_fit3 <- lavaan::sem(model = interactionSyntax3, 
                   data = cbtData, 
                   fixed.x =FALSE, 
                   meanstructure = TRUE)

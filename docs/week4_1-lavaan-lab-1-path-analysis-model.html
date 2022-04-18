@@ -430,6 +430,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="18.4" data-path="week13_2-lavaan-lab-15-mimic-longitudinal-invariance.html"><a href="week13_2-lavaan-lab-15-mimic-longitudinal-invariance.html#part-iv-exercises-mimic"><i class="fa fa-check"></i><b>18.4</b> PART IV: Exercises: MIMIC<span></span></a></li>
 <li class="chapter" data-level="18.5" data-path="week13_2-lavaan-lab-15-mimic-longitudinal-invariance.html"><a href="week13_2-lavaan-lab-15-mimic-longitudinal-invariance.html#part-v-exercises-longitudinal-invariance"><i class="fa fa-check"></i><b>18.5</b> PART V: Exercises: Longitudinal Invariance<span></span></a></li>
 </ul></li>
+<li class="chapter" data-level="19" data-path="week14-lavaan-lab-16-latent-growth-models.html"><a href="week14-lavaan-lab-16-latent-growth-models.html"><i class="fa fa-check"></i><b>19</b> Week14: Lavaan Lab 16 Latent Growth Models<span></span></a>
+<ul>
+<li class="chapter" data-level="19.1" data-path="week14-lavaan-lab-16-latent-growth-models.html"><a href="week14-lavaan-lab-16-latent-growth-models.html#part-i-spaghetti-plot"><i class="fa fa-check"></i><b>19.1</b> PART I: Spaghetti Plot<span></span></a></li>
+<li class="chapter" data-level="19.2" data-path="week14-lavaan-lab-16-latent-growth-models.html"><a href="week14-lavaan-lab-16-latent-growth-models.html#part-ii-growth-models"><i class="fa fa-check"></i><b>19.2</b> PART II: Growth Models<span></span></a>
+<ul>
+<li class="chapter" data-level="19.2.1" data-path="week14-lavaan-lab-16-latent-growth-models.html"><a href="week14-lavaan-lab-16-latent-growth-models.html#no-growth-model"><i class="fa fa-check"></i><b>19.2.1</b> 1. No growth model<span></span></a></li>
+<li class="chapter" data-level="19.2.2" data-path="week14-lavaan-lab-16-latent-growth-models.html"><a href="week14-lavaan-lab-16-latent-growth-models.html#linear-growth-model"><i class="fa fa-check"></i><b>19.2.2</b> 2. Linear growth model<span></span></a></li>
+<li class="chapter" data-level="19.2.3" data-path="week14-lavaan-lab-16-latent-growth-models.html"><a href="week14-lavaan-lab-16-latent-growth-models.html#quadratic-growth-model"><i class="fa fa-check"></i><b>19.2.3</b> 3. Quadratic growth model<span></span></a></li>
+<li class="chapter" data-level="19.2.4" data-path="week14-lavaan-lab-16-latent-growth-models.html"><a href="week14-lavaan-lab-16-latent-growth-models.html#latent-basis-growth-model-extension-of-linear-growth-model"><i class="fa fa-check"></i><b>19.2.4</b> 4. Latent basis growth model (extension of linear growth model)<span></span></a></li>
+<li class="chapter" data-level="19.2.5" data-path="week14-lavaan-lab-16-latent-growth-models.html"><a href="week14-lavaan-lab-16-latent-growth-models.html#spline-growth-model"><i class="fa fa-check"></i><b>19.2.5</b> 5. Spline Growth Model<span></span></a></li>
+<li class="chapter" data-level="19.2.6" data-path="week14-lavaan-lab-16-latent-growth-models.html"><a href="week14-lavaan-lab-16-latent-growth-models.html#model-comparison"><i class="fa fa-check"></i><b>19.2.6</b> Model Comparison<span></span></a></li>
+<li class="chapter" data-level="19.2.7" data-path="week14-lavaan-lab-16-latent-growth-models.html"><a href="week14-lavaan-lab-16-latent-growth-models.html#final-model-spline-growth-model-with-a-binary-treatment-predictor"><i class="fa fa-check"></i><b>19.2.7</b> 6. Final Model: Spline Growth Model with a binary treatment predictor<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="19.3" data-path="week14-lavaan-lab-16-latent-growth-models.html"><a href="week14-lavaan-lab-16-latent-growth-models.html#part-iii-lgm-on-latent-variables"><i class="fa fa-check"></i><b>19.3</b> PART III: LGM on Latent Variables<span></span></a>
+<ul>
+<li class="chapter" data-level="19.3.1" data-path="week14-lavaan-lab-16-latent-growth-models.html"><a href="week14-lavaan-lab-16-latent-growth-models.html#example"><i class="fa fa-check"></i><b>19.3.1</b> Example<span></span></a></li>
+<li class="chapter" data-level="19.3.2" data-path="week14-lavaan-lab-16-latent-growth-models.html"><a href="week14-lavaan-lab-16-latent-growth-models.html#exercise"><i class="fa fa-check"></i><b>19.3.2</b> Exercise<span></span></a></li>
+</ul></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 </ul>
@@ -599,24 +618,8 @@ lavaan is FREE software! Please report any bugs.</p>
 <p>If you boot up R and receive error msgs like “could not find function”sem””
 IT IS PROBABLY BECAUSE YOU HAVEN’T LOADED THE lavaan PACKAGE.</p>
 <p>Check out the help page of a particular function, say sem():</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">help</span>(sem)</span></code></pre></div>
-<pre><code>## Help on topic &#39;sem&#39; was found in the following packages:
-## 
-##   Package               Library
-##   lavaan                /Library/Frameworks/R.framework/Versions/4.1-arm64/Resources/library
-##   sem                   /Library/Frameworks/R.framework/Versions/4.1-arm64/Resources/library
-## 
-## 
-## Using the first match ...</code></pre>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb29-1" aria-hidden="true" tabindex="-1"></a>?sem</span></code></pre></div>
-<pre><code>## Help on topic &#39;sem&#39; was found in the following packages:
-## 
-##   Package               Library
-##   lavaan                /Library/Frameworks/R.framework/Versions/4.1-arm64/Resources/library
-##   sem                   /Library/Frameworks/R.framework/Versions/4.1-arm64/Resources/library
-## 
-## 
-## Using the first match ...</code></pre>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">help</span>(sem)</span>
+<span id="cb27-2"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb27-2" aria-hidden="true" tabindex="-1"></a>?sem</span></code></pre></div>
 <!------------------------------>
 </div>
 <div id="using-lavaan-for-path-models" class="section level2 hasAnchor" number="3.5">
@@ -635,18 +638,18 @@ IT IS PROBABLY BECAUSE YOU HAVEN’T LOADED THE lavaan PACKAGE.</p>
 <p>Restrictive Symptoms = BMI + Self-Esteem + Self-Efficacy + Disturbance</p>
 <p>Overall Risk = BMI + Self-Esteem + Self-Efficacy + Acculturation + Disturbance</p>
 <p>Let’s write some model syntax:</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb31-1" aria-hidden="true" tabindex="-1"></a>ex1PathSyntax <span class="ot">&lt;-</span> <span class="st">&quot;           #opening a quote</span></span>
-<span id="cb31-2"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="st">  # Tilda ~ : Regression </span></span>
-<span id="cb31-3"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="st">  # M ~ X regression (X predicts M)</span></span>
-<span id="cb31-4"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="st">  # Each line corresponds to an equation </span></span>
-<span id="cb31-5"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="st">  # Disturbance is automatically included for each regression </span></span>
-<span id="cb31-6"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb31-6" aria-hidden="true" tabindex="-1"></a><span class="st">  # (i.e. no extra term needed)</span></span>
-<span id="cb31-7"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="st">  </span></span>
-<span id="cb31-8"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb31-8" aria-hidden="true" tabindex="-1"></a><span class="st">  DietSE ~ BMI + SelfEsteem      #DietSE is predicted by BMI and SelfEsteem </span></span>
-<span id="cb31-9"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb31-9" aria-hidden="true" tabindex="-1"></a><span class="st">    Bulimia ~ DietSE + BMI + SelfEsteem</span></span>
-<span id="cb31-10"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb31-10" aria-hidden="true" tabindex="-1"></a><span class="st">    Restrictive ~ DietSE + BMI + SelfEsteem</span></span>
-<span id="cb31-11"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb31-11" aria-hidden="true" tabindex="-1"></a><span class="st">    Risk ~ DietSE + BMI + SelfEsteem + Accu</span></span>
-<span id="cb31-12"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb31-12" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span>  </span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb28-1" aria-hidden="true" tabindex="-1"></a>ex1PathSyntax <span class="ot">&lt;-</span> <span class="st">&quot;           #opening a quote</span></span>
+<span id="cb28-2"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="st">  # Tilda ~ : Regression </span></span>
+<span id="cb28-3"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="st">  # M ~ X regression (X predicts M)</span></span>
+<span id="cb28-4"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="st">  # Each line corresponds to an equation </span></span>
+<span id="cb28-5"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="st">  # Disturbance is automatically included for each regression </span></span>
+<span id="cb28-6"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="st">  # (i.e. no extra term needed)</span></span>
+<span id="cb28-7"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="st">  </span></span>
+<span id="cb28-8"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="st">  DietSE ~ BMI + SelfEsteem      #DietSE is predicted by BMI and SelfEsteem </span></span>
+<span id="cb28-9"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="st">    Bulimia ~ DietSE + BMI + SelfEsteem</span></span>
+<span id="cb28-10"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="st">    Restrictive ~ DietSE + BMI + SelfEsteem</span></span>
+<span id="cb28-11"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb28-11" aria-hidden="true" tabindex="-1"></a><span class="st">    Risk ~ DietSE + BMI + SelfEsteem + Accu</span></span>
+<span id="cb28-12"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb28-12" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span>  </span></code></pre></div>
 <p>Things to note here:</p>
 <ul>
 <li>We are calling our saved model syntax object ex1PathSyntax</li>
@@ -670,17 +673,17 @@ IT IS PROBABLY BECAUSE YOU HAVEN’T LOADED THE lavaan PACKAGE.</p>
 <ol style="list-style-type: decimal">
 <li>The raw dataset, using:</li>
 </ol>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sem</span>(<span class="at">model =</span> modelSyntax, <span class="at">data =</span> yourDataset)</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb29-1" aria-hidden="true" tabindex="-1"></a>lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> modelSyntax, <span class="at">data =</span> yourDataset)</span></code></pre></div>
 <p>example:</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb33-1" aria-hidden="true" tabindex="-1"></a>ex1fit <span class="ot">&lt;-</span> <span class="fu">sem</span>(<span class="at">model =</span> ex1PathSyntax, <span class="at">data =</span> labData)</span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb30-1" aria-hidden="true" tabindex="-1"></a>ex1fit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> ex1PathSyntax, <span class="at">data =</span> labData)</span></code></pre></div>
 <p>If you encounter errors like:</p>
 <p>Error in if ((!is.matrix(model)) | ncol(model) != 3) stop(“model argument must be a 3-column matrix”) :
 argument is of length zero</p>
 <p>IT IS PROBABLY BECAUSE YOU HAVEN’T LOADED THE lavaan PACKAGE.</p>
 <p>To make sure you are using the sem() function from the lavaan package, add PackageName:: before a function:</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb34-1" aria-hidden="true" tabindex="-1"></a>ex1fit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> ex1PathSyntax, <span class="at">data =</span> labData)</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb31-1" aria-hidden="true" tabindex="-1"></a>ex1fit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> ex1PathSyntax, <span class="at">data =</span> labData)</span></code></pre></div>
 <p>Then we can obtain complete results using the summary() function:</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ex1fit)</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ex1fit)</span></code></pre></div>
 <pre><code>## lavaan 0.6-10 ended normally after 36 iterations
 ## 
 ##   Estimator                                         ML
@@ -737,12 +740,12 @@ argument is of length zero</p>
 <ol start="2" style="list-style-type: decimal">
 <li>The covariance matrix, using:</li>
 </ol>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sem</span>(<span class="at">model =</span> modelSyntax, <span class="at">sample.cov =</span> yourCovarianceMatrix, <span class="at">sample.nobs =</span> numberOfObservationsInYourDataset)</span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb34-1" aria-hidden="true" tabindex="-1"></a>lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> modelSyntax, <span class="at">sample.cov =</span> yourCovarianceMatrix, <span class="at">sample.nobs =</span> numberOfObservationsInYourDataset)</span></code></pre></div>
 <p>This is to illustrate that WITH COMPLETE DATA, you can run SEM analyses using only covariances as input and obtain the same results as with raw data!</p>
 <p>This positions SEM for meta-analysis and replication studies.</p>
 <p>example:</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb38-1" aria-hidden="true" tabindex="-1"></a>ex1fit_S <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> ex1PathSyntax, <span class="at">sample.cov =</span> S, <span class="at">sample.nobs =</span> n)</span>
-<span id="cb38-2"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ex1fit_S)</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb35-1" aria-hidden="true" tabindex="-1"></a>ex1fit_S <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> ex1PathSyntax, <span class="at">sample.cov =</span> S, <span class="at">sample.nobs =</span> n)</span>
+<span id="cb35-2"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ex1fit_S)</span></code></pre></div>
 <pre><code>## lavaan 0.6-10 ended normally after 36 iterations
 ## 
 ##   Estimator                                         ML
@@ -802,40 +805,40 @@ argument is of length zero</p>
 <p>Wait, Gabriella, the df is not 6….</p>
 <p>This is because sem() by default assumes that disturbances of endogenous variables covary among themselves (which, in our model, are not correlated at all!)</p>
 <p>The estimates of disturbance covariances are presented under “Covariances” in the output:</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb40-1" aria-hidden="true" tabindex="-1"></a>Covariances<span class="sc">:</span></span>
-<span id="cb40-2"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb40-2" aria-hidden="true" tabindex="-1"></a>                   Estimate  Std.Err  z<span class="sc">-</span>value  <span class="fu">P</span>(<span class="sc">&gt;</span><span class="er">|</span>z<span class="sc">|</span>)</span>
-<span id="cb40-3"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb40-3" aria-hidden="true" tabindex="-1"></a>.Bulimia <span class="sc">~</span><span class="er">~</span>                                          </span>
-<span id="cb40-4"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb40-4" aria-hidden="true" tabindex="-1"></a>  .Restrictive       <span class="fl">0.536</span>    <span class="fl">0.029</span>   <span class="fl">18.389</span>    <span class="fl">0.000</span></span>
-<span id="cb40-5"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb40-5" aria-hidden="true" tabindex="-1"></a>  .Risk              <span class="fl">0.814</span>    <span class="fl">0.034</span>   <span class="fl">23.983</span>    <span class="fl">0.000</span></span>
-<span id="cb40-6"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb40-6" aria-hidden="true" tabindex="-1"></a>.Restrictive <span class="sc">~</span><span class="er">~</span>                                      </span>
-<span id="cb40-7"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb40-7" aria-hidden="true" tabindex="-1"></a>  .Risk              <span class="fl">0.785</span>    <span class="fl">0.034</span>   <span class="fl">22.996</span>    <span class="fl">0.000</span></span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb37-1" aria-hidden="true" tabindex="-1"></a>Covariances<span class="sc">:</span></span>
+<span id="cb37-2"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb37-2" aria-hidden="true" tabindex="-1"></a>                   Estimate  Std.Err  z<span class="sc">-</span>value  <span class="fu">P</span>(<span class="sc">&gt;</span><span class="er">|</span>z<span class="sc">|</span>)</span>
+<span id="cb37-3"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb37-3" aria-hidden="true" tabindex="-1"></a>.Bulimia <span class="sc">~</span><span class="er">~</span>                                          </span>
+<span id="cb37-4"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb37-4" aria-hidden="true" tabindex="-1"></a>  .Restrictive       <span class="fl">0.536</span>    <span class="fl">0.029</span>   <span class="fl">18.389</span>    <span class="fl">0.000</span></span>
+<span id="cb37-5"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb37-5" aria-hidden="true" tabindex="-1"></a>  .Risk              <span class="fl">0.814</span>    <span class="fl">0.034</span>   <span class="fl">23.983</span>    <span class="fl">0.000</span></span>
+<span id="cb37-6"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb37-6" aria-hidden="true" tabindex="-1"></a>.Restrictive <span class="sc">~</span><span class="er">~</span>                                      </span>
+<span id="cb37-7"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb37-7" aria-hidden="true" tabindex="-1"></a>  .Risk              <span class="fl">0.785</span>    <span class="fl">0.034</span>   <span class="fl">22.996</span>    <span class="fl">0.000</span></span></code></pre></div>
 </div>
 <div id="ex1pathsyntax_nocov" class="section level4 hasAnchor" number="3.5.2.2">
 <h4><span class="header-section-number">3.5.2.2</span> ex1PathSyntax_noCov<a href="week4_1-lavaan-lab-1-path-analysis-model.html#ex1pathsyntax_nocov" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>To change those defaults, one needs to explicitly fix those disturbance covariances at 0 (this is a strong assumption, I know…):</p>
 <p><a href="http://lavaan.ugent.be/tutorial/syntax2.html" class="uri">http://lavaan.ugent.be/tutorial/syntax2.html</a></p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb41-1" aria-hidden="true" tabindex="-1"></a>ex1PathSyntax_noCov <span class="ot">&lt;-</span> <span class="st">&quot;             #opening a quote</span></span>
-<span id="cb41-2"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="st">  # ~~ indicates a two-headed arrow (variance or covariance)</span></span>
-<span id="cb41-3"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="st">  # 0* in front of the 2nd variable fixes the covariance at 0</span></span>
-<span id="cb41-4"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="st">  </span></span>
-<span id="cb41-5"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="st">  DietSE ~ BMI + SelfEsteem      #DietSE is predicted by BMI and SelfEsteem </span></span>
-<span id="cb41-6"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb41-6" aria-hidden="true" tabindex="-1"></a><span class="st">    Bulimia ~ DietSE + BMI + SelfEsteem</span></span>
-<span id="cb41-7"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb41-7" aria-hidden="true" tabindex="-1"></a><span class="st">    Restrictive ~ DietSE + BMI + SelfEsteem</span></span>
-<span id="cb41-8"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb41-8" aria-hidden="true" tabindex="-1"></a><span class="st">    Risk ~ DietSE + BMI + SelfEsteem + Accu</span></span>
-<span id="cb41-9"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb41-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-10"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb41-10" aria-hidden="true" tabindex="-1"></a><span class="st">    #Disturbance covariances (fixed at 0):</span></span>
-<span id="cb41-11"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb41-11" aria-hidden="true" tabindex="-1"></a><span class="st">    DietSE ~~ 0*Bulimia  </span></span>
-<span id="cb41-12"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb41-12" aria-hidden="true" tabindex="-1"></a><span class="st">    DietSE ~~ 0*Restrictive  </span></span>
-<span id="cb41-13"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb41-13" aria-hidden="true" tabindex="-1"></a><span class="st">    DietSE ~~ 0*Risk     </span></span>
-<span id="cb41-14"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb41-14" aria-hidden="true" tabindex="-1"></a><span class="st">    Bulimia ~~ 0*Restrictive</span></span>
-<span id="cb41-15"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb41-15" aria-hidden="true" tabindex="-1"></a><span class="st">    Bulimia ~~ 0*Risk</span></span>
-<span id="cb41-16"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb41-16" aria-hidden="true" tabindex="-1"></a><span class="st">    Restrictive ~~ 0*Risk</span></span>
-<span id="cb41-17"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb41-17" aria-hidden="true" tabindex="-1"></a><span class="st">    </span></span>
-<span id="cb41-18"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb41-18" aria-hidden="true" tabindex="-1"></a><span class="st">    # These lines above say that there is no covariance among the disturbances of all endogenous variables</span></span>
-<span id="cb41-19"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb41-19" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span>  </span>
-<span id="cb41-20"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb41-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-21"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb41-21" aria-hidden="true" tabindex="-1"></a>ex1fit_noCov <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> ex1PathSyntax_noCov, <span class="at">data =</span> labData)</span>
-<span id="cb41-22"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb41-22" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ex1fit_noCov)</span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb38-1" aria-hidden="true" tabindex="-1"></a>ex1PathSyntax_noCov <span class="ot">&lt;-</span> <span class="st">&quot;             #opening a quote</span></span>
+<span id="cb38-2"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="st">  # ~~ indicates a two-headed arrow (variance or covariance)</span></span>
+<span id="cb38-3"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="st">  # 0* in front of the 2nd variable fixes the covariance at 0</span></span>
+<span id="cb38-4"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="st">  </span></span>
+<span id="cb38-5"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="st">  DietSE ~ BMI + SelfEsteem      #DietSE is predicted by BMI and SelfEsteem </span></span>
+<span id="cb38-6"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb38-6" aria-hidden="true" tabindex="-1"></a><span class="st">    Bulimia ~ DietSE + BMI + SelfEsteem</span></span>
+<span id="cb38-7"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb38-7" aria-hidden="true" tabindex="-1"></a><span class="st">    Restrictive ~ DietSE + BMI + SelfEsteem</span></span>
+<span id="cb38-8"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb38-8" aria-hidden="true" tabindex="-1"></a><span class="st">    Risk ~ DietSE + BMI + SelfEsteem + Accu</span></span>
+<span id="cb38-9"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb38-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-10"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb38-10" aria-hidden="true" tabindex="-1"></a><span class="st">    #Disturbance covariances (fixed at 0):</span></span>
+<span id="cb38-11"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb38-11" aria-hidden="true" tabindex="-1"></a><span class="st">    DietSE ~~ 0*Bulimia  </span></span>
+<span id="cb38-12"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb38-12" aria-hidden="true" tabindex="-1"></a><span class="st">    DietSE ~~ 0*Restrictive  </span></span>
+<span id="cb38-13"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb38-13" aria-hidden="true" tabindex="-1"></a><span class="st">    DietSE ~~ 0*Risk     </span></span>
+<span id="cb38-14"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb38-14" aria-hidden="true" tabindex="-1"></a><span class="st">    Bulimia ~~ 0*Restrictive</span></span>
+<span id="cb38-15"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb38-15" aria-hidden="true" tabindex="-1"></a><span class="st">    Bulimia ~~ 0*Risk</span></span>
+<span id="cb38-16"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb38-16" aria-hidden="true" tabindex="-1"></a><span class="st">    Restrictive ~~ 0*Risk</span></span>
+<span id="cb38-17"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb38-17" aria-hidden="true" tabindex="-1"></a><span class="st">    </span></span>
+<span id="cb38-18"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb38-18" aria-hidden="true" tabindex="-1"></a><span class="st">    # These lines above say that there is no covariance among the disturbances of all endogenous variables</span></span>
+<span id="cb38-19"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb38-19" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span>  </span>
+<span id="cb38-20"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb38-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-21"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb38-21" aria-hidden="true" tabindex="-1"></a>ex1fit_noCov <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> ex1PathSyntax_noCov, <span class="at">data =</span> labData)</span>
+<span id="cb38-22"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb38-22" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ex1fit_noCov)</span></code></pre></div>
 <pre><code>## lavaan 0.6-10 ended normally after 1 iterations
 ## 
 ##   Estimator                                         ML
@@ -893,19 +896,19 @@ argument is of length zero</p>
 ##    .Bulimia           0.890    0.034   25.875    0.000
 ##    .Restrictive       0.955    0.037   25.875    0.000
 ##    .Risk              0.979    0.038   25.875    0.000</code></pre>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb43-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">=</span> <span class="dv">6</span> and </span>
-<span id="cb43-2"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb43-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-3"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb43-3" aria-hidden="true" tabindex="-1"></a>Covariances<span class="sc">:</span></span>
-<span id="cb43-4"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb43-4" aria-hidden="true" tabindex="-1"></a>                  Estimate  Std.Err  z<span class="sc">-</span>value  <span class="fu">P</span>(<span class="sc">&gt;</span><span class="er">|</span>z<span class="sc">|</span>)</span>
-<span id="cb43-5"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb43-5" aria-hidden="true" tabindex="-1"></a>.DietSE <span class="sc">~</span><span class="er">~</span>                                           </span>
-<span id="cb43-6"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb43-6" aria-hidden="true" tabindex="-1"></a>  .Bulimia           <span class="fl">0.000</span>                           </span>
-<span id="cb43-7"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb43-7" aria-hidden="true" tabindex="-1"></a>  .Restrictive       <span class="fl">0.000</span>                           </span>
-<span id="cb43-8"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb43-8" aria-hidden="true" tabindex="-1"></a>  .Risk              <span class="fl">0.000</span>                           </span>
-<span id="cb43-9"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb43-9" aria-hidden="true" tabindex="-1"></a>.Bulimia <span class="sc">~</span><span class="er">~</span>                                          </span>
-<span id="cb43-10"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb43-10" aria-hidden="true" tabindex="-1"></a>  .Restrictive       <span class="fl">0.000</span>                           </span>
-<span id="cb43-11"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb43-11" aria-hidden="true" tabindex="-1"></a>  .Risk              <span class="fl">0.000</span>                           </span>
-<span id="cb43-12"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb43-12" aria-hidden="true" tabindex="-1"></a>.Restrictive <span class="sc">~</span><span class="er">~</span>                                      </span>
-<span id="cb43-13"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb43-13" aria-hidden="true" tabindex="-1"></a>  .Risk              <span class="fl">0.000</span>                           </span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb40-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">=</span> <span class="dv">6</span> and </span>
+<span id="cb40-2"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb40-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-3"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb40-3" aria-hidden="true" tabindex="-1"></a>Covariances<span class="sc">:</span></span>
+<span id="cb40-4"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb40-4" aria-hidden="true" tabindex="-1"></a>                  Estimate  Std.Err  z<span class="sc">-</span>value  <span class="fu">P</span>(<span class="sc">&gt;</span><span class="er">|</span>z<span class="sc">|</span>)</span>
+<span id="cb40-5"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb40-5" aria-hidden="true" tabindex="-1"></a>.DietSE <span class="sc">~</span><span class="er">~</span>                                           </span>
+<span id="cb40-6"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb40-6" aria-hidden="true" tabindex="-1"></a>  .Bulimia           <span class="fl">0.000</span>                           </span>
+<span id="cb40-7"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb40-7" aria-hidden="true" tabindex="-1"></a>  .Restrictive       <span class="fl">0.000</span>                           </span>
+<span id="cb40-8"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb40-8" aria-hidden="true" tabindex="-1"></a>  .Risk              <span class="fl">0.000</span>                           </span>
+<span id="cb40-9"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb40-9" aria-hidden="true" tabindex="-1"></a>.Bulimia <span class="sc">~</span><span class="er">~</span>                                          </span>
+<span id="cb40-10"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb40-10" aria-hidden="true" tabindex="-1"></a>  .Restrictive       <span class="fl">0.000</span>                           </span>
+<span id="cb40-11"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb40-11" aria-hidden="true" tabindex="-1"></a>  .Risk              <span class="fl">0.000</span>                           </span>
+<span id="cb40-12"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb40-12" aria-hidden="true" tabindex="-1"></a>.Restrictive <span class="sc">~</span><span class="er">~</span>                                      </span>
+<span id="cb40-13"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb40-13" aria-hidden="true" tabindex="-1"></a>  .Risk              <span class="fl">0.000</span>                           </span></code></pre></div>
 <p>Wait, where are the variances and covariances of exogenous variables?</p>
 <p>They are not included in the output because they are estimated PERFECTLY</p>
 </div>
@@ -913,8 +916,8 @@ argument is of length zero</p>
 <h4><span class="header-section-number">3.5.2.3</span> ex1fit_noCov_freeX<a href="week4_1-lavaan-lab-1-path-analysis-model.html#ex1fit_nocov_freex" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>fixed.x=FALSE asks for the variances/covariances/means of the exogenous variables to be freely estimated instead of being fixed at the values found from the sample</p>
 <p>This usually makes no difference from ex1fit_noCov, except that it prints more lines</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb44-1" aria-hidden="true" tabindex="-1"></a>ex1fit_noCov_freeX <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> ex1PathSyntax_noCov, <span class="at">data =</span> labData, <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb44-2"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ex1fit_noCov_freeX)</span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb41-1" aria-hidden="true" tabindex="-1"></a>ex1fit_noCov_freeX <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> ex1PathSyntax_noCov, <span class="at">data =</span> labData, <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb41-2"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ex1fit_noCov_freeX)</span></code></pre></div>
 <pre><code>## lavaan 0.6-10 ended normally after 1 iterations
 ## 
 ##   Estimator                                         ML
@@ -984,35 +987,35 @@ argument is of length zero</p>
 <div id="ex1fit_nocov_lavaan" class="section level4 hasAnchor" number="3.5.2.4">
 <h4><span class="header-section-number">3.5.2.4</span> ex1fit_noCov_lavaan<a href="week4_1-lavaan-lab-1-path-analysis-model.html#ex1fit_nocov_lavaan" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>As a bonus, here is how you would write the model syntax if you use lavaan() instead of sem()…</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb46-1" aria-hidden="true" tabindex="-1"></a>ex1PathSyntax_lavaan <span class="ot">&lt;-</span> <span class="st">&quot;            #opening a quote</span></span>
-<span id="cb46-2"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="st">  # ~~ indicates a two-headed arrow (variance or covariance)</span></span>
-<span id="cb46-3"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb46-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb46-4"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="st">  #regression coefficients (12)</span></span>
-<span id="cb46-5"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb46-5" aria-hidden="true" tabindex="-1"></a><span class="st">  DietSE ~ BMI + SelfEsteem      </span></span>
-<span id="cb46-6"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb46-6" aria-hidden="true" tabindex="-1"></a><span class="st">    Bulimia ~ DietSE + BMI + SelfEsteem</span></span>
-<span id="cb46-7"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb46-7" aria-hidden="true" tabindex="-1"></a><span class="st">    Restrictive ~ DietSE + BMI + SelfEsteem</span></span>
-<span id="cb46-8"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb46-8" aria-hidden="true" tabindex="-1"></a><span class="st">    Risk ~ DietSE + BMI + SelfEsteem + Accu</span></span>
-<span id="cb46-9"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb46-9" aria-hidden="true" tabindex="-1"></a><span class="st">    </span></span>
-<span id="cb46-10"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb46-10" aria-hidden="true" tabindex="-1"></a><span class="st">    #variances of exogenous variables (3)</span></span>
-<span id="cb46-11"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb46-11" aria-hidden="true" tabindex="-1"></a><span class="st">    BMI ~~ BMI</span></span>
-<span id="cb46-12"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb46-12" aria-hidden="true" tabindex="-1"></a><span class="st">    SelfEsteem ~~ SelfEsteem</span></span>
-<span id="cb46-13"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb46-13" aria-hidden="true" tabindex="-1"></a><span class="st">    Accu ~~ Accu</span></span>
-<span id="cb46-14"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb46-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb46-15"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb46-15" aria-hidden="true" tabindex="-1"></a><span class="st">  #disturbance variances (4)</span></span>
-<span id="cb46-16"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb46-16" aria-hidden="true" tabindex="-1"></a><span class="st">    DietSE ~~ DietSE</span></span>
-<span id="cb46-17"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb46-17" aria-hidden="true" tabindex="-1"></a><span class="st">    Bulimia ~~ Bulimia</span></span>
-<span id="cb46-18"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb46-18" aria-hidden="true" tabindex="-1"></a><span class="st">    Restrictive ~~ Restrictive</span></span>
-<span id="cb46-19"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb46-19" aria-hidden="true" tabindex="-1"></a><span class="st">    Risk ~~ Risk</span></span>
-<span id="cb46-20"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb46-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb46-21"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb46-21" aria-hidden="true" tabindex="-1"></a><span class="st">    #covariances among exogenous variables (3)</span></span>
-<span id="cb46-22"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb46-22" aria-hidden="true" tabindex="-1"></a><span class="st">    BMI ~~ SelfEsteem</span></span>
-<span id="cb46-23"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb46-23" aria-hidden="true" tabindex="-1"></a><span class="st">    BMI ~~ Accu</span></span>
-<span id="cb46-24"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb46-24" aria-hidden="true" tabindex="-1"></a><span class="st">    SelfEsteem ~~ Accu</span></span>
-<span id="cb46-25"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb46-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb46-26"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb46-26" aria-hidden="true" tabindex="-1"></a><span class="st">  #total: 22 parameters</span></span>
-<span id="cb46-27"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb46-27" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span>  </span>
-<span id="cb46-28"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb46-28" aria-hidden="true" tabindex="-1"></a>ex1fit_noCov_lavaan <span class="ot">&lt;-</span> <span class="fu">lavaan</span>(<span class="at">model =</span> ex1PathSyntax_lavaan, <span class="at">data =</span> labData)</span>
-<span id="cb46-29"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb46-29" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ex1fit_noCov_lavaan)</span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb43-1" aria-hidden="true" tabindex="-1"></a>ex1PathSyntax_lavaan <span class="ot">&lt;-</span> <span class="st">&quot;            #opening a quote</span></span>
+<span id="cb43-2"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="st">  # ~~ indicates a two-headed arrow (variance or covariance)</span></span>
+<span id="cb43-3"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb43-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-4"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="st">  #regression coefficients (12)</span></span>
+<span id="cb43-5"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb43-5" aria-hidden="true" tabindex="-1"></a><span class="st">  DietSE ~ BMI + SelfEsteem      </span></span>
+<span id="cb43-6"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb43-6" aria-hidden="true" tabindex="-1"></a><span class="st">    Bulimia ~ DietSE + BMI + SelfEsteem</span></span>
+<span id="cb43-7"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb43-7" aria-hidden="true" tabindex="-1"></a><span class="st">    Restrictive ~ DietSE + BMI + SelfEsteem</span></span>
+<span id="cb43-8"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb43-8" aria-hidden="true" tabindex="-1"></a><span class="st">    Risk ~ DietSE + BMI + SelfEsteem + Accu</span></span>
+<span id="cb43-9"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb43-9" aria-hidden="true" tabindex="-1"></a><span class="st">    </span></span>
+<span id="cb43-10"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb43-10" aria-hidden="true" tabindex="-1"></a><span class="st">    #variances of exogenous variables (3)</span></span>
+<span id="cb43-11"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb43-11" aria-hidden="true" tabindex="-1"></a><span class="st">    BMI ~~ BMI</span></span>
+<span id="cb43-12"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb43-12" aria-hidden="true" tabindex="-1"></a><span class="st">    SelfEsteem ~~ SelfEsteem</span></span>
+<span id="cb43-13"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb43-13" aria-hidden="true" tabindex="-1"></a><span class="st">    Accu ~~ Accu</span></span>
+<span id="cb43-14"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb43-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-15"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb43-15" aria-hidden="true" tabindex="-1"></a><span class="st">  #disturbance variances (4)</span></span>
+<span id="cb43-16"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb43-16" aria-hidden="true" tabindex="-1"></a><span class="st">    DietSE ~~ DietSE</span></span>
+<span id="cb43-17"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb43-17" aria-hidden="true" tabindex="-1"></a><span class="st">    Bulimia ~~ Bulimia</span></span>
+<span id="cb43-18"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb43-18" aria-hidden="true" tabindex="-1"></a><span class="st">    Restrictive ~~ Restrictive</span></span>
+<span id="cb43-19"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb43-19" aria-hidden="true" tabindex="-1"></a><span class="st">    Risk ~~ Risk</span></span>
+<span id="cb43-20"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb43-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-21"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb43-21" aria-hidden="true" tabindex="-1"></a><span class="st">    #covariances among exogenous variables (3)</span></span>
+<span id="cb43-22"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb43-22" aria-hidden="true" tabindex="-1"></a><span class="st">    BMI ~~ SelfEsteem</span></span>
+<span id="cb43-23"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb43-23" aria-hidden="true" tabindex="-1"></a><span class="st">    BMI ~~ Accu</span></span>
+<span id="cb43-24"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb43-24" aria-hidden="true" tabindex="-1"></a><span class="st">    SelfEsteem ~~ Accu</span></span>
+<span id="cb43-25"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb43-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-26"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb43-26" aria-hidden="true" tabindex="-1"></a><span class="st">  #total: 22 parameters</span></span>
+<span id="cb43-27"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb43-27" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span>  </span>
+<span id="cb43-28"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb43-28" aria-hidden="true" tabindex="-1"></a>ex1fit_noCov_lavaan <span class="ot">&lt;-</span> <span class="fu">lavaan</span>(<span class="at">model =</span> ex1PathSyntax_lavaan, <span class="at">data =</span> labData)</span>
+<span id="cb43-29"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb43-29" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ex1fit_noCov_lavaan)</span></code></pre></div>
 <pre><code>## lavaan 0.6-10 ended normally after 11 iterations
 ## 
 ##   Estimator                                         ML
@@ -1075,7 +1078,7 @@ argument is of length zero</p>
 <div id="sigma-matrices" class="section level3 hasAnchor" number="3.5.3">
 <h3><span class="header-section-number">3.5.3</span> Sigma Matrices<a href="week4_1-lavaan-lab-1-path-analysis-model.html#sigma-matrices" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Let’s have a look at the model-implied covarinace matrix from our final model ex1fit_noCov_freeX and save it as Sigma:</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fitted</span>(ex1fit_noCov_freeX)</span></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fitted</span>(ex1fit_noCov_freeX)</span></code></pre></div>
 <pre><code>## $cov
 ##             DietSE Bulimi Rstrct Risk   BMI    SlfEst Accu  
 ## DietSE       0.965                                          
@@ -1085,13 +1088,13 @@ argument is of length zero</p>
 ## BMI         -0.107  0.162 -0.130  0.079  1.073              
 ## SelfEsteem   0.105 -0.317 -0.120 -0.228 -0.138  1.001       
 ## Accu         0.005 -0.013 -0.002 -0.101 -0.021  0.035  0.971</code></pre>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb50-1" aria-hidden="true" tabindex="-1"></a>Sigma <span class="ot">&lt;-</span> <span class="fu">fitted</span>(ex1fit_noCov_freeX)<span class="sc">$</span>cov</span></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb47-1" aria-hidden="true" tabindex="-1"></a>Sigma <span class="ot">&lt;-</span> <span class="fu">fitted</span>(ex1fit_noCov_freeX)<span class="sc">$</span>cov</span></code></pre></div>
 <p>How close is Sigma to S?</p>
 <ul>
 <li>Rearrange the rows and columns of Sigma (important!) and take the difference</li>
 </ul>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb51-1" aria-hidden="true" tabindex="-1"></a>diff <span class="ot">=</span> Sigma[<span class="fu">colnames</span>(S), <span class="fu">colnames</span>(S)] <span class="sc">-</span> S</span>
-<span id="cb51-2"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(diff, <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb48-1" aria-hidden="true" tabindex="-1"></a>diff <span class="ot">=</span> Sigma[<span class="fu">colnames</span>(S), <span class="fu">colnames</span>(S)] <span class="sc">-</span> S</span>
+<span id="cb48-2"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(diff, <span class="dv">3</span>)</span></code></pre></div>
 <pre><code>##                BMI SelfEsteem   Accu DietSE Restrictive Bulimia   Risk
 ## BMI         -0.001      0.000  0.000  0.000       0.000   0.000  0.000
 ## SelfEsteem   0.000     -0.001  0.000  0.000       0.000   0.000  0.000
@@ -1101,9 +1104,9 @@ argument is of length zero</p>
 ## Bulimia      0.000      0.000  0.083  0.000      -0.536  -0.001 -0.814
 ## Risk         0.000      0.000  0.003 -0.002      -0.785  -0.814 -0.001</code></pre>
 <p>How about the default model that include disturbance covariances?</p>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb53-1" aria-hidden="true" tabindex="-1"></a>Sigma0 <span class="ot">&lt;-</span> <span class="fu">fitted</span>(ex1fit)<span class="sc">$</span>cov</span>
-<span id="cb53-2"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb53-2" aria-hidden="true" tabindex="-1"></a>diff0 <span class="ot">=</span> Sigma0[<span class="fu">colnames</span>(S), <span class="fu">colnames</span>(S)] <span class="sc">-</span> S</span>
-<span id="cb53-3"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb53-3" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(diff0, <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb50-1" aria-hidden="true" tabindex="-1"></a>Sigma0 <span class="ot">&lt;-</span> <span class="fu">fitted</span>(ex1fit)<span class="sc">$</span>cov</span>
+<span id="cb50-2"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb50-2" aria-hidden="true" tabindex="-1"></a>diff0 <span class="ot">=</span> Sigma0[<span class="fu">colnames</span>(S), <span class="fu">colnames</span>(S)] <span class="sc">-</span> S</span>
+<span id="cb50-3"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(diff0, <span class="dv">3</span>)</span></code></pre></div>
 <pre><code>##                BMI SelfEsteem   Accu DietSE Restrictive Bulimia  Risk
 ## BMI         -0.001      0.000  0.000  0.000       0.000   0.000 0.000
 ## SelfEsteem   0.000     -0.001  0.000  0.000       0.000   0.000 0.000
@@ -1124,13 +1127,13 @@ argument is of length zero</p>
 <div id="part-iii-summarizing-our-analysis" class="section level3 hasAnchor" number="3.5.4">
 <h3><span class="header-section-number">3.5.4</span> PART III: Summarizing Our Analysis:<a href="week4_1-lavaan-lab-1-path-analysis-model.html#part-iii-summarizing-our-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>There are some useful options we can ask for with summary():</p>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ex1fit_noCov_freeX, <span class="at">fit.measures =</span> T) <span class="co">#include model fit measures</span></span>
-<span id="cb55-2"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ex1fit_noCov_freeX, <span class="at">standardized =</span> T) <span class="co">#This includes standardized estimates. std.all contains usual regression standardization.</span></span>
-<span id="cb55-3"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb55-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ex1fit_noCov_freeX, <span class="at">ci =</span> T)  <span class="co">#Include confidence intervals</span></span>
-<span id="cb55-4"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb55-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-5"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb55-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Add them all!</span></span></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ex1fit_noCov_freeX, <span class="at">fit.measures =</span> T) <span class="co">#include model fit measures</span></span>
+<span id="cb52-2"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ex1fit_noCov_freeX, <span class="at">standardized =</span> T) <span class="co">#This includes standardized estimates. std.all contains usual regression standardization.</span></span>
+<span id="cb52-3"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ex1fit_noCov_freeX, <span class="at">ci =</span> T)  <span class="co">#Include confidence intervals</span></span>
+<span id="cb52-4"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb52-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-5"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb52-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Add them all!</span></span></code></pre></div>
 <p>If we JUST want the parameter estimates:</p>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">parameterEstimates</span>(ex1fit_noCov_freeX)</span></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">parameterEstimates</span>(ex1fit_noCov_freeX)</span></code></pre></div>
 <pre><code>##            lhs op         rhs    est    se       z pvalue ci.lower ci.upper
 ## 1       DietSE  ~         BMI -0.088 0.026  -3.381  0.001   -0.138   -0.037
 ## 2       DietSE  ~  SelfEsteem  0.093 0.027   3.480  0.001    0.041    0.146
@@ -1160,7 +1163,7 @@ argument is of length zero</p>
 ## 26  SelfEsteem ~~  SelfEsteem  1.001 0.039  25.875  0.000    0.926    1.077
 ## 27  SelfEsteem ~~        Accu  0.035 0.027   1.298  0.194   -0.018    0.088
 ## 28        Accu ~~        Accu  0.971 0.038  25.875  0.000    0.897    1.045</code></pre>
-<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">parameterEstimates</span>(ex1fit_noCov_freeX, <span class="at">standardized =</span> T) <span class="co">#include standardized solution....</span></span></code></pre></div>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">parameterEstimates</span>(ex1fit_noCov_freeX, <span class="at">standardized =</span> T) <span class="co">#include standardized solution....</span></span></code></pre></div>
 <pre><code>##            lhs op         rhs    est    se       z pvalue ci.lower ci.upper std.lv std.all std.nox
 ## 1       DietSE  ~         BMI -0.088 0.026  -3.381  0.001   -0.138   -0.037 -0.088  -0.092  -0.089
 ## 2       DietSE  ~  SelfEsteem  0.093 0.027   3.480  0.001    0.041    0.146  0.093   0.095   0.095
@@ -1191,7 +1194,7 @@ argument is of length zero</p>
 ## 27  SelfEsteem ~~        Accu  0.035 0.027   1.298  0.194   -0.018    0.088  0.035   0.035   0.035
 ## 28        Accu ~~        Accu  0.971 0.038  25.875  0.000    0.897    1.045  0.971   1.000   0.971</code></pre>
 <p>For standardized solutions, there is also this function:</p>
-<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">standardizedSolution</span>(ex1fit_noCov_freeX, <span class="at">type =</span> <span class="st">&quot;std.all&quot;</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">standardizedSolution</span>(ex1fit_noCov_freeX, <span class="at">type =</span> <span class="st">&quot;std.all&quot;</span>) </span></code></pre></div>
 <pre><code>##            lhs op         rhs est.std    se       z pvalue ci.lower ci.upper
 ## 1       DietSE  ~         BMI  -0.092 0.027  -3.395  0.001   -0.146   -0.039
 ## 2       DietSE  ~  SelfEsteem   0.095 0.027   3.496  0.000    0.042    0.148
@@ -1222,62 +1225,62 @@ argument is of length zero</p>
 ## 27  SelfEsteem ~~        Accu   0.035 0.027   1.300  0.194   -0.018    0.089
 ## 28        Accu ~~        Accu   1.000 0.000      NA     NA    1.000    1.000</code></pre>
 <p>How does it work?</p>
-<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb62-1" aria-hidden="true" tabindex="-1"></a>?standardizedSolution</span></code></pre></div>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb59-1" aria-hidden="true" tabindex="-1"></a>?standardizedSolution</span></code></pre></div>
 <!------------------------------>
 </div>
 </div>
 <div id="plotting-sem-model" class="section level2 hasAnchor" number="3.6">
 <h2><span class="header-section-number">3.6</span> Plotting SEM model<a href="week4_1-lavaan-lab-1-path-analysis-model.html#plotting-sem-model" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!------------------------------>
-<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(&quot;semPlot&quot;)</span></span>
-<span id="cb63-2"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb63-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(semPlot)</span>
-<span id="cb63-3"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb63-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb63-4"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb63-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot!</span></span>
-<span id="cb63-5"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb63-5" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(ex1fit_noCov_freeX)</span></code></pre></div>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(&quot;semPlot&quot;)</span></span>
+<span id="cb60-2"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(semPlot)</span>
+<span id="cb60-3"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb60-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-4"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb60-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot!</span></span>
+<span id="cb60-5"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb60-5" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(ex1fit_noCov_freeX)</span></code></pre></div>
 <p><img src="bookdownproj_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
-<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="co"># estimates instead of paths only</span></span>
-<span id="cb64-2"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb64-2" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(ex1fit_noCov_freeX, <span class="at">what=</span><span class="st">&#39;est&#39;</span>, </span>
-<span id="cb64-3"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb64-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">edge.label.cex=</span><span class="fl">1.25</span>, <span class="at">curvePivot =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb64-4"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb64-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">fade=</span><span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="co"># estimates instead of paths only</span></span>
+<span id="cb61-2"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb61-2" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(ex1fit_noCov_freeX, <span class="at">what=</span><span class="st">&#39;est&#39;</span>, </span>
+<span id="cb61-3"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb61-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">edge.label.cex=</span><span class="fl">1.25</span>, <span class="at">curvePivot =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb61-4"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb61-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">fade=</span><span class="cn">FALSE</span>)</span></code></pre></div>
 <p><img src="bookdownproj_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
-<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="co"># standardized solutions</span></span>
-<span id="cb65-2"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb65-2" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(ex1fit_noCov_freeX, <span class="at">what=</span><span class="st">&#39;std&#39;</span>, </span>
-<span id="cb65-3"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb65-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">edge.label.cex=</span><span class="fl">1.25</span>, <span class="at">curvePivot =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb65-4"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb65-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">fade=</span><span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># standardized solutions</span></span>
+<span id="cb62-2"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(ex1fit_noCov_freeX, <span class="at">what=</span><span class="st">&#39;std&#39;</span>, </span>
+<span id="cb62-3"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb62-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">edge.label.cex=</span><span class="fl">1.25</span>, <span class="at">curvePivot =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb62-4"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb62-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">fade=</span><span class="cn">FALSE</span>)</span></code></pre></div>
 <p><img src="bookdownproj_files/figure-html/unnamed-chunk-39-1.png" width="672" /></p>
-<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(ex1fit_noCov_freeX, <span class="at">what=</span><span class="st">&#39;est&#39;</span>, </span>
-<span id="cb66-2"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb66-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">rotation =</span> <span class="dv">2</span>, <span class="co"># default rotation = 1 with four options</span></span>
-<span id="cb66-3"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb66-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">edge.label.cex=</span><span class="fl">1.25</span>, <span class="at">curvePivot =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb66-4"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb66-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">fade=</span><span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(ex1fit_noCov_freeX, <span class="at">what=</span><span class="st">&#39;est&#39;</span>, </span>
+<span id="cb63-2"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb63-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">rotation =</span> <span class="dv">2</span>, <span class="co"># default rotation = 1 with four options</span></span>
+<span id="cb63-3"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb63-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">edge.label.cex=</span><span class="fl">1.25</span>, <span class="at">curvePivot =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb63-4"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb63-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">fade=</span><span class="cn">FALSE</span>)</span></code></pre></div>
 <p><img src="bookdownproj_files/figure-html/unnamed-chunk-40-1.png" width="672" /></p>
 <div id="customize-it-your-way" class="section level3 hasAnchor" number="3.6.1">
 <h3><span class="header-section-number">3.6.1</span> customize it your way<a href="week4_1-lavaan-lab-1-path-analysis-model.html#customize-it-your-way" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(ex1fit_noCov_freeX, <span class="at">whatLabels=</span><span class="st">&quot;est&quot;</span>, <span class="co"># plot model not parm ests</span></span>
-<span id="cb67-2"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb67-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">rotation =</span> <span class="dv">2</span>, <span class="co"># default rotation = 1 with four options</span></span>
-<span id="cb67-3"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb67-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">asize =</span> <span class="dv">5</span>, <span class="co"># arrows&#39; size</span></span>
-<span id="cb67-4"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb67-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">esize =</span> <span class="dv">2</span>, <span class="co"># width of paths&#39; lines / curves</span></span>
-<span id="cb67-5"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb67-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">edge.label.cex =</span> <span class="fl">0.8</span>, <span class="co"># font size of regr&#39;n coeffs</span></span>
-<span id="cb67-6"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb67-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">sizeMan =</span> <span class="dv">10</span>, <span class="co"># font size of manifest variable names</span></span>
-<span id="cb67-7"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb67-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">nCharNodes =</span> <span class="dv">0</span>,</span>
-<span id="cb67-8"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb67-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">nCharEdges =</span> <span class="dv">0</span>, <span class="co"># don&#39;t limit variable name lengths</span></span>
-<span id="cb67-9"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb67-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">fade =</span> <span class="cn">FALSE</span>, <span class="co"># don&#39;t weight path width to reflect strength</span></span>
-<span id="cb67-10"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb67-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">curvePivot =</span> <span class="cn">TRUE</span>, <span class="co"># make straight edges instead of round ones</span></span>
-<span id="cb67-11"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb67-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">curve =</span> <span class="dv">2</span>, <span class="co"># pull covariances&#39; curves out a little</span></span>
-<span id="cb67-12"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb67-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">style =</span> <span class="st">&quot;lisrel&quot;</span>, <span class="co"># no variances vs. # &quot;ram&quot;&#39;s 2-headed for variances</span></span>
-<span id="cb67-13"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb67-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">color =</span> <span class="st">&quot;green&quot;</span>, <span class="co"># color of variables</span></span>
-<span id="cb67-14"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb67-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">edge.color =</span> <span class="st">&quot;black&quot;</span>, <span class="co"># color of edges/paths</span></span>
-<span id="cb67-15"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb67-15" aria-hidden="true" tabindex="-1"></a>         <span class="at">layout =</span> <span class="st">&quot;tree2&quot;</span>, <span class="co"># tree, spring, circle, circle2</span></span>
-<span id="cb67-16"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb67-16" aria-hidden="true" tabindex="-1"></a>         <span class="at">residuals =</span> <span class="cn">TRUE</span>) <span class="co"># residuals variances included in the path diagram</span></span></code></pre></div>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(ex1fit_noCov_freeX, <span class="at">whatLabels=</span><span class="st">&quot;est&quot;</span>, <span class="co"># plot model not parm ests</span></span>
+<span id="cb64-2"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb64-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">rotation =</span> <span class="dv">2</span>, <span class="co"># default rotation = 1 with four options</span></span>
+<span id="cb64-3"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb64-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">asize =</span> <span class="dv">5</span>, <span class="co"># arrows&#39; size</span></span>
+<span id="cb64-4"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb64-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">esize =</span> <span class="dv">2</span>, <span class="co"># width of paths&#39; lines / curves</span></span>
+<span id="cb64-5"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb64-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">edge.label.cex =</span> <span class="fl">0.8</span>, <span class="co"># font size of regr&#39;n coeffs</span></span>
+<span id="cb64-6"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb64-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">sizeMan =</span> <span class="dv">10</span>, <span class="co"># font size of manifest variable names</span></span>
+<span id="cb64-7"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb64-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">nCharNodes =</span> <span class="dv">0</span>,</span>
+<span id="cb64-8"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb64-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">nCharEdges =</span> <span class="dv">0</span>, <span class="co"># don&#39;t limit variable name lengths</span></span>
+<span id="cb64-9"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb64-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">fade =</span> <span class="cn">FALSE</span>, <span class="co"># don&#39;t weight path width to reflect strength</span></span>
+<span id="cb64-10"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb64-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">curvePivot =</span> <span class="cn">TRUE</span>, <span class="co"># make straight edges instead of round ones</span></span>
+<span id="cb64-11"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb64-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">curve =</span> <span class="dv">2</span>, <span class="co"># pull covariances&#39; curves out a little</span></span>
+<span id="cb64-12"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb64-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">style =</span> <span class="st">&quot;lisrel&quot;</span>, <span class="co"># no variances vs. # &quot;ram&quot;&#39;s 2-headed for variances</span></span>
+<span id="cb64-13"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb64-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">color =</span> <span class="st">&quot;green&quot;</span>, <span class="co"># color of variables</span></span>
+<span id="cb64-14"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb64-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">edge.color =</span> <span class="st">&quot;black&quot;</span>, <span class="co"># color of edges/paths</span></span>
+<span id="cb64-15"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb64-15" aria-hidden="true" tabindex="-1"></a>         <span class="at">layout =</span> <span class="st">&quot;tree2&quot;</span>, <span class="co"># tree, spring, circle, circle2</span></span>
+<span id="cb64-16"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb64-16" aria-hidden="true" tabindex="-1"></a>         <span class="at">residuals =</span> <span class="cn">TRUE</span>) <span class="co"># residuals variances included in the path diagram</span></span></code></pre></div>
 <p><img src="bookdownproj_files/figure-html/unnamed-chunk-41-1.png" width="672" /></p>
-<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(ex1fit_noCov_freeX, <span class="at">what=</span><span class="st">&#39;est&#39;</span>, </span>
-<span id="cb68-2"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb68-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">rotation =</span> <span class="dv">2</span>, <span class="co"># default rotation = 1 with four options</span></span>
-<span id="cb68-3"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb68-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">curve =</span> <span class="dv">2</span>, <span class="co"># pull covariances&#39; curves out a little</span></span>
-<span id="cb68-4"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb68-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">nCharNodes =</span> <span class="dv">0</span>,</span>
-<span id="cb68-5"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb68-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">nCharEdges =</span> <span class="dv">0</span>, <span class="co"># don&#39;t limit variable name lengths</span></span>
-<span id="cb68-6"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb68-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">sizeMan =</span> <span class="dv">8</span>, <span class="co"># font size of manifest variable names</span></span>
-<span id="cb68-7"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb68-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">style =</span> <span class="st">&quot;lisrel&quot;</span>, <span class="co"># single-headed arrows vs. # &quot;ram&quot;&#39;s 2-headed for variances</span></span>
-<span id="cb68-8"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb68-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">edge.label.cex=</span><span class="fl">1.2</span>, <span class="at">curvePivot =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb68-9"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb68-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">fade=</span><span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(ex1fit_noCov_freeX, <span class="at">what=</span><span class="st">&#39;est&#39;</span>, </span>
+<span id="cb65-2"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb65-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">rotation =</span> <span class="dv">2</span>, <span class="co"># default rotation = 1 with four options</span></span>
+<span id="cb65-3"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb65-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">curve =</span> <span class="dv">2</span>, <span class="co"># pull covariances&#39; curves out a little</span></span>
+<span id="cb65-4"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb65-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">nCharNodes =</span> <span class="dv">0</span>,</span>
+<span id="cb65-5"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb65-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">nCharEdges =</span> <span class="dv">0</span>, <span class="co"># don&#39;t limit variable name lengths</span></span>
+<span id="cb65-6"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb65-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">sizeMan =</span> <span class="dv">8</span>, <span class="co"># font size of manifest variable names</span></span>
+<span id="cb65-7"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb65-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">style =</span> <span class="st">&quot;lisrel&quot;</span>, <span class="co"># single-headed arrows vs. # &quot;ram&quot;&#39;s 2-headed for variances</span></span>
+<span id="cb65-8"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb65-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">edge.label.cex=</span><span class="fl">1.2</span>, <span class="at">curvePivot =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb65-9"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#cb65-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">fade=</span><span class="cn">FALSE</span>)</span></code></pre></div>
 <p><img src="bookdownproj_files/figure-html/unnamed-chunk-42-1.png" width="672" /></p>
 <!------------------------------>
 </div>

@@ -430,6 +430,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="18.4" data-path="week13_2-lavaan-lab-15-mimic-longitudinal-invariance.html"><a href="week13_2-lavaan-lab-15-mimic-longitudinal-invariance.html#part-iv-exercises-mimic"><i class="fa fa-check"></i><b>18.4</b> PART IV: Exercises: MIMIC<span></span></a></li>
 <li class="chapter" data-level="18.5" data-path="week13_2-lavaan-lab-15-mimic-longitudinal-invariance.html"><a href="week13_2-lavaan-lab-15-mimic-longitudinal-invariance.html#part-v-exercises-longitudinal-invariance"><i class="fa fa-check"></i><b>18.5</b> PART V: Exercises: Longitudinal Invariance<span></span></a></li>
 </ul></li>
+<li class="chapter" data-level="19" data-path="week14-lavaan-lab-16-latent-growth-models.html"><a href="week14-lavaan-lab-16-latent-growth-models.html"><i class="fa fa-check"></i><b>19</b> Week14: Lavaan Lab 16 Latent Growth Models<span></span></a>
+<ul>
+<li class="chapter" data-level="19.1" data-path="week14-lavaan-lab-16-latent-growth-models.html"><a href="week14-lavaan-lab-16-latent-growth-models.html#part-i-spaghetti-plot"><i class="fa fa-check"></i><b>19.1</b> PART I: Spaghetti Plot<span></span></a></li>
+<li class="chapter" data-level="19.2" data-path="week14-lavaan-lab-16-latent-growth-models.html"><a href="week14-lavaan-lab-16-latent-growth-models.html#part-ii-growth-models"><i class="fa fa-check"></i><b>19.2</b> PART II: Growth Models<span></span></a>
+<ul>
+<li class="chapter" data-level="19.2.1" data-path="week14-lavaan-lab-16-latent-growth-models.html"><a href="week14-lavaan-lab-16-latent-growth-models.html#no-growth-model"><i class="fa fa-check"></i><b>19.2.1</b> 1. No growth model<span></span></a></li>
+<li class="chapter" data-level="19.2.2" data-path="week14-lavaan-lab-16-latent-growth-models.html"><a href="week14-lavaan-lab-16-latent-growth-models.html#linear-growth-model"><i class="fa fa-check"></i><b>19.2.2</b> 2. Linear growth model<span></span></a></li>
+<li class="chapter" data-level="19.2.3" data-path="week14-lavaan-lab-16-latent-growth-models.html"><a href="week14-lavaan-lab-16-latent-growth-models.html#quadratic-growth-model"><i class="fa fa-check"></i><b>19.2.3</b> 3. Quadratic growth model<span></span></a></li>
+<li class="chapter" data-level="19.2.4" data-path="week14-lavaan-lab-16-latent-growth-models.html"><a href="week14-lavaan-lab-16-latent-growth-models.html#latent-basis-growth-model-extension-of-linear-growth-model"><i class="fa fa-check"></i><b>19.2.4</b> 4. Latent basis growth model (extension of linear growth model)<span></span></a></li>
+<li class="chapter" data-level="19.2.5" data-path="week14-lavaan-lab-16-latent-growth-models.html"><a href="week14-lavaan-lab-16-latent-growth-models.html#spline-growth-model"><i class="fa fa-check"></i><b>19.2.5</b> 5. Spline Growth Model<span></span></a></li>
+<li class="chapter" data-level="19.2.6" data-path="week14-lavaan-lab-16-latent-growth-models.html"><a href="week14-lavaan-lab-16-latent-growth-models.html#model-comparison"><i class="fa fa-check"></i><b>19.2.6</b> Model Comparison<span></span></a></li>
+<li class="chapter" data-level="19.2.7" data-path="week14-lavaan-lab-16-latent-growth-models.html"><a href="week14-lavaan-lab-16-latent-growth-models.html#final-model-spline-growth-model-with-a-binary-treatment-predictor"><i class="fa fa-check"></i><b>19.2.7</b> 6. Final Model: Spline Growth Model with a binary treatment predictor<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="19.3" data-path="week14-lavaan-lab-16-latent-growth-models.html"><a href="week14-lavaan-lab-16-latent-growth-models.html#part-iii-lgm-on-latent-variables"><i class="fa fa-check"></i><b>19.3</b> PART III: LGM on Latent Variables<span></span></a>
+<ul>
+<li class="chapter" data-level="19.3.1" data-path="week14-lavaan-lab-16-latent-growth-models.html"><a href="week14-lavaan-lab-16-latent-growth-models.html#example"><i class="fa fa-check"></i><b>19.3.1</b> Example<span></span></a></li>
+<li class="chapter" data-level="19.3.2" data-path="week14-lavaan-lab-16-latent-growth-models.html"><a href="week14-lavaan-lab-16-latent-growth-models.html#exercise"><i class="fa fa-check"></i><b>19.3.2</b> Exercise<span></span></a></li>
+</ul></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 </ul>
@@ -462,9 +481,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">5.1</span> Reading-In Datasets<a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#reading-in-datasets" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!------------------------------>
 <p>Let’s read this dataset in. Change the file path to whatever directory where you saved the file!</p>
-<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb102-1" aria-hidden="true" tabindex="-1"></a>cbtData <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">&quot;dataInClass.csv&quot;</span>, <span class="at">header =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb99-1" aria-hidden="true" tabindex="-1"></a>cbtData <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">&quot;dataInClass.csv&quot;</span>, <span class="at">header =</span> T)</span></code></pre></div>
 <p>Let’s examine this dataset:</p>
-<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(cbtData)</span></code></pre></div>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(cbtData)</span></code></pre></div>
 <pre><code>##   ID              CBT CBTDummy NeedCog NegThoughts Depression NeedCogCont
 ## 1  1    CBT Treatment        1       0  -4.1453029  -5.802172   0.0182802
 ## 2  2 Information Only        0       1   2.1775218   5.496665   1.4238703
@@ -472,7 +491,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 4  4 Information Only        0       0   0.1679286   2.655801  -0.8547152
 ## 5  5 Information Only        0       1   2.5103192   6.855488   0.6759705
 ## 6  6    CBT Treatment        1       0  -3.1626670  -2.968198  -0.9123426</code></pre>
-<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(cbtData)</span></code></pre></div>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb102-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(cbtData)</span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    1000 obs. of  7 variables:
 ##  $ ID         : int  1 2 3 4 5 6 7 8 9 10 ...
 ##  $ CBT        : chr  &quot;CBT Treatment&quot; &quot;Information Only&quot; &quot;CBT Treatment&quot; &quot;Information Only&quot; ...
@@ -481,7 +500,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  $ NegThoughts: num  -4.145 2.178 -1.555 0.168 2.51 ...
 ##  $ Depression : num  -5.8 5.5 -1.95 2.66 6.86 ...
 ##  $ NeedCogCont: num  0.0183 1.4239 -1.0152 -0.8547 0.676 ...</code></pre>
-<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colSums</span>(<span class="fu">is.na</span>(cbtData))</span></code></pre></div>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colSums</span>(<span class="fu">is.na</span>(cbtData))</span></code></pre></div>
 <pre><code>##          ID         CBT    CBTDummy     NeedCog NegThoughts  Depression NeedCogCont 
 ##           0           0           0           0           0           0           0</code></pre>
 <p>Notice that the first two columns are not model variables</p>
@@ -497,29 +516,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>In the first part of this demo, we will work with three variables: CBTDummy, NeedCog, and Depression</p>
 <p>Let’s look at the covariance matrix of the three variables</p>
 <p>Multiple ways to accomplish this:</p>
-<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cov</span>(cbtData[,<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">5</span>,<span class="dv">7</span>)])</span></code></pre></div>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cov</span>(cbtData[,<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">5</span>,<span class="dv">7</span>)])</span></code></pre></div>
 <pre><code>##                CBTDummy      NeedCog Depression
 ## CBTDummy    0.250250250 -0.008508509 -2.3372519
 ## NeedCog    -0.008508509  0.213732733  0.4371738
 ## Depression -2.337251860  0.437173798 31.9301427</code></pre>
-<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cov</span>(cbtData[,<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">6</span>)])</span></code></pre></div>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb108-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cov</span>(cbtData[,<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">6</span>)])</span></code></pre></div>
 <pre><code>##                CBTDummy      NeedCog Depression
 ## CBTDummy    0.250250250 -0.008508509 -2.3372519
 ## NeedCog    -0.008508509  0.213732733  0.4371738
 ## Depression -2.337251860  0.437173798 31.9301427</code></pre>
-<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb113-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cov</span>(cbtData[,<span class="fu">c</span>(<span class="st">&quot;CBTDummy&quot;</span>, <span class="st">&quot;NeedCog&quot;</span>, <span class="st">&quot;Depression&quot;</span>)])</span></code></pre></div>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cov</span>(cbtData[,<span class="fu">c</span>(<span class="st">&quot;CBTDummy&quot;</span>, <span class="st">&quot;NeedCog&quot;</span>, <span class="st">&quot;Depression&quot;</span>)])</span></code></pre></div>
 <pre><code>##                CBTDummy      NeedCog Depression
 ## CBTDummy    0.250250250 -0.008508509 -2.3372519
 ## NeedCog    -0.008508509  0.213732733  0.4371738
 ## Depression -2.337251860  0.437173798 31.9301427</code></pre>
 <p>let’s round this to two decimals</p>
-<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb115-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">cov</span>(cbtData[,<span class="fu">c</span>(<span class="st">&quot;CBTDummy&quot;</span>, <span class="st">&quot;NeedCog&quot;</span>, <span class="st">&quot;Depression&quot;</span>)]), <span class="at">digits =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb112-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">cov</span>(cbtData[,<span class="fu">c</span>(<span class="st">&quot;CBTDummy&quot;</span>, <span class="st">&quot;NeedCog&quot;</span>, <span class="st">&quot;Depression&quot;</span>)]), <span class="at">digits =</span> <span class="dv">2</span>)</span></code></pre></div>
 <pre><code>##            CBTDummy NeedCog Depression
 ## CBTDummy       0.25   -0.01      -2.34
 ## NeedCog       -0.01    0.21       0.44
 ## Depression    -2.34    0.44      31.93</code></pre>
 <p>What about the means?</p>
-<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb117-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">apply</span>(cbtData[,<span class="fu">c</span>(<span class="st">&quot;CBTDummy&quot;</span>, <span class="st">&quot;NeedCog&quot;</span>, <span class="st">&quot;Depression&quot;</span>)], <span class="dv">2</span>, mean), <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb114-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">apply</span>(cbtData[,<span class="fu">c</span>(<span class="st">&quot;CBTDummy&quot;</span>, <span class="st">&quot;NeedCog&quot;</span>, <span class="st">&quot;Depression&quot;</span>)], <span class="dv">2</span>, mean), <span class="dv">2</span>)</span></code></pre></div>
 <pre><code>##   CBTDummy    NeedCog Depression 
 ##       0.50       0.31      -1.59</code></pre>
 <p>Although they are not centered, we will proceed because CBTDummy and NeedCog are both binary.</p>
@@ -530,11 +549,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!------------------------------>
 <p>In regression course we learned the lm() function, which stands for linear model.</p>
 <p>To include an interaction in regression, simply use an : to create a product in the formula:</p>
-<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb119-1" aria-hidden="true" tabindex="-1"></a>interactionModel <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">formula =</span> Depression <span class="sc">~</span> CBTDummy <span class="sc">+</span> NeedCog <span class="sc">+</span> CBTDummy<span class="sc">:</span>NeedCog, <span class="at">data =</span> cbtData)</span></code></pre></div>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb116-1" aria-hidden="true" tabindex="-1"></a>interactionModel <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">formula =</span> Depression <span class="sc">~</span> CBTDummy <span class="sc">+</span> NeedCog <span class="sc">+</span> CBTDummy<span class="sc">:</span>NeedCog, <span class="at">data =</span> cbtData)</span></code></pre></div>
 <p>NOTE: R is very helpful, in that if you just put an asterisk *, it includes all lower-order terms!</p>
-<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb120-1" aria-hidden="true" tabindex="-1"></a>interactionModel <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">formula =</span> Depression <span class="sc">~</span> CBTDummy<span class="sc">*</span>NeedCog, <span class="at">data =</span> cbtData)</span></code></pre></div>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb117-1" aria-hidden="true" tabindex="-1"></a>interactionModel <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">formula =</span> Depression <span class="sc">~</span> CBTDummy<span class="sc">*</span>NeedCog, <span class="at">data =</span> cbtData)</span></code></pre></div>
 <p>Let’s look at this interaction model:</p>
-<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb121-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(interactionModel)</span></code></pre></div>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb118-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(interactionModel)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = Depression ~ CBTDummy * NeedCog, data = cbtData)
@@ -563,7 +582,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!------------------------------>
 <p>Now let us write the same model using lavaan.</p>
 <p>Load the package:</p>
-<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb123-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span></code></pre></div>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb120-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span></code></pre></div>
 <div id="important-note" class="section level3 hasAnchor" number="5.3.1">
 <h3><span class="header-section-number">5.3.1</span> IMPORTANT NOTE<a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#important-note" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Because lavaan uses the * for assigning coefficient labels, this cannot be used to create interaction terms.</p>
@@ -571,11 +590,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>This is easy to do.</p>
 <p>General Format:</p>
 <p>existingDataFrame$variableName &lt;- vectorToBeAssignedAsNewVariable</p>
-<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb124-1" aria-hidden="true" tabindex="-1"></a>cbtData<span class="sc">$</span>CBTxNeedCog <span class="ot">&lt;-</span> cbtData<span class="sc">$</span>CBTDummy <span class="sc">*</span> cbtData<span class="sc">$</span>NeedCog</span></code></pre></div>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb121-1" aria-hidden="true" tabindex="-1"></a>cbtData<span class="sc">$</span>CBTxNeedCog <span class="ot">&lt;-</span> cbtData<span class="sc">$</span>CBTDummy <span class="sc">*</span> cbtData<span class="sc">$</span>NeedCog</span></code></pre></div>
 <p>You can name the product term arbitrarily:</p>
 <p>cbtData$fourth &lt;- cbtData$CBTDummy * cbtData$NeedCog</p>
 <p>Let’s look at cbtData again:</p>
-<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb125-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(cbtData)</span></code></pre></div>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb122-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(cbtData)</span></code></pre></div>
 <pre><code>##   ID              CBT CBTDummy NeedCog NegThoughts Depression NeedCogCont CBTxNeedCog
 ## 1  1    CBT Treatment        1       0  -4.1453029  -5.802172   0.0182802           0
 ## 2  2 Information Only        0       1   2.1775218   5.496665   1.4238703           0
@@ -589,22 +608,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">5.3.2</span> Follow the equation of Y (Depression):<a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#follow-the-equation-of-y-depression" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Depression = CBTDummy + NeedCog + CBTDummy*NeedCog + Disturbance</p>
 <p>Let’s write some model syntax (with the labels):</p>
-<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb127-1" aria-hidden="true" tabindex="-1"></a>interactionSyntax <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
-<span id="cb127-2"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb127-2" aria-hidden="true" tabindex="-1"></a><span class="st">    #Regression with interaction</span></span>
-<span id="cb127-3"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb127-3" aria-hidden="true" tabindex="-1"></a><span class="st">    #with labels</span></span>
-<span id="cb127-4"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb127-4" aria-hidden="true" tabindex="-1"></a><span class="st">    Depression ~ b1*CBTDummy + b2*NeedCog + b3*CBTxNeedCog</span></span>
-<span id="cb127-5"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb127-5" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb124-1" aria-hidden="true" tabindex="-1"></a>interactionSyntax <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
+<span id="cb124-2"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb124-2" aria-hidden="true" tabindex="-1"></a><span class="st">  #Regression with interaction</span></span>
+<span id="cb124-3"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb124-3" aria-hidden="true" tabindex="-1"></a><span class="st">  #with labels</span></span>
+<span id="cb124-4"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb124-4" aria-hidden="true" tabindex="-1"></a><span class="st">    Depression ~ b1*CBTDummy + b2*NeedCog + b3*CBTxNeedCog</span></span>
+<span id="cb124-5"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb124-5" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
 <p>let fixed.x=FALSE to print more lines:</p>
-<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb128-1" aria-hidden="true" tabindex="-1"></a>inter_fit1 <span class="ot">&lt;-</span> <span class="fu">sem</span>(<span class="at">model =</span> interactionSyntax, </span>
-<span id="cb128-2"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb128-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">data =</span> cbtData, </span>
-<span id="cb128-3"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb128-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb125-1" aria-hidden="true" tabindex="-1"></a>inter_fit1 <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> interactionSyntax, </span>
+<span id="cb125-2"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb125-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">data =</span> cbtData, </span>
+<span id="cb125-3"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb125-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <p>If you’d like lavaan to print means and intercepts, we need to ask sem() to include the meanstructure:</p>
-<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb129-1" aria-hidden="true" tabindex="-1"></a>inter_fit1 <span class="ot">&lt;-</span> <span class="fu">sem</span>(<span class="at">model =</span> interactionSyntax, </span>
-<span id="cb129-2"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb129-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">data =</span> cbtData, </span>
-<span id="cb129-3"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb129-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">fixed.x =</span><span class="cn">FALSE</span>, </span>
-<span id="cb129-4"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb129-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">meanstructure =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb130-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(inter_fit1)</span></code></pre></div>
-<pre><code>## lavaan 0.6-10 ended normally after 33 iterations
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb126-1" aria-hidden="true" tabindex="-1"></a>inter_fit1 <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> interactionSyntax, </span>
+<span id="cb126-2"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb126-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">data =</span> cbtData, </span>
+<span id="cb126-3"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb126-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">fixed.x =</span><span class="cn">FALSE</span>, </span>
+<span id="cb126-4"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb126-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">meanstructure =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb127-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(inter_fit1)</span></code></pre></div>
+<pre><code>## lavaan 0.6-10 ended normally after 41 iterations
 ## 
 ##   Estimator                                         ML
 ##   Optimization method                           NLMINB
@@ -633,7 +652,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Covariances:
 ##                    Estimate  Std.Err  z-value  P(&gt;|z|)
 ##   CBTDummy ~~                                         
-##     NeedCog          -0.009    0.007   -1.163    0.245
+##     NeedCog          -0.008    0.007   -1.163    0.245
 ##     CBTxNeedCog       0.073    0.006   12.083    0.000
 ##   NeedCog ~~                                          
 ##     CBTxNeedCog       0.101    0.006   16.630    0.000
@@ -652,7 +671,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##     NeedCog           0.214    0.010   22.361    0.000
 ##     CBTxNeedCog       0.125    0.006   22.361    0.000</code></pre>
 <p>How does this compare to our regression model?</p>
-<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb132-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(interactionModel)</span></code></pre></div>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb129-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(interactionModel)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = Depression ~ CBTDummy * NeedCog, data = cbtData)
@@ -682,8 +701,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!------------------------------>
 <p>One way to plot the interactions is to use the interact_plot() function on the lm() object.</p>
 <p>Install and load the package interactions first:</p>
-<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb134-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(interactions)</span></code></pre></div>
-<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb135-1" aria-hidden="true" tabindex="-1"></a><span class="fu">interact_plot</span>(interactionModel, <span class="at">pred =</span> <span class="st">&quot;CBTDummy&quot;</span>, <span class="at">modx =</span> <span class="st">&quot;NeedCog&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb131-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(interactions)</span></code></pre></div>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb132-1" aria-hidden="true" tabindex="-1"></a><span class="fu">interact_plot</span>(interactionModel, <span class="at">pred =</span> <span class="st">&quot;CBTDummy&quot;</span>, <span class="at">modx =</span> <span class="st">&quot;NeedCog&quot;</span>)</span></code></pre></div>
 <p><img src="bookdownproj_files/figure-html/unnamed-chunk-81-1.png" width="672" /></p>
 <!------------------------------>
 </div>
@@ -691,9 +710,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">5.5</span> Centering Continuous Moderator<a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#centering-continuous-moderator" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!------------------------------>
 <p>Now let’s work with the continuous measure of NeedCog directly:</p>
-<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb136-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(cbtData<span class="sc">$</span>NeedCogCont)</span></code></pre></div>
+<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb133-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(cbtData<span class="sc">$</span>NeedCogCont)</span></code></pre></div>
 <pre><code>## [1] 0.005925852</code></pre>
-<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb138-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(cbtData<span class="sc">$</span>NeedCogCont)</span></code></pre></div>
+<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb135-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(cbtData<span class="sc">$</span>NeedCogCont)</span></code></pre></div>
 <pre><code>## [1] 0.9974319</code></pre>
 <p>NeedCogCont has been standardized already, which is helpful.</p>
 <p>If not, we use scale() function to center a continuous variable</p>
@@ -701,8 +720,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Usage: scale(x, center = TRUE, scale = TRUE)</li>
 <li>If you just need to center a variable, you disable scale=FALSE</li>
 </ul>
-<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb140-1" aria-hidden="true" tabindex="-1"></a>centeredNeedCog <span class="ot">&lt;-</span> <span class="fu">scale</span>(cbtData<span class="sc">$</span>NeedCogCont, <span class="at">center =</span> <span class="cn">TRUE</span>, <span class="at">scale =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb140-2"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb140-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(centeredNeedCog)</span></code></pre></div>
+<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb137-1" aria-hidden="true" tabindex="-1"></a>centeredNeedCog <span class="ot">&lt;-</span> <span class="fu">scale</span>(cbtData<span class="sc">$</span>NeedCogCont, <span class="at">center =</span> <span class="cn">TRUE</span>, <span class="at">scale =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb137-2"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb137-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(centeredNeedCog)</span></code></pre></div>
 <p><img src="bookdownproj_files/figure-html/unnamed-chunk-83-1.png" width="672" /></p>
 <p>For now, we will leave these variables as is in our dataset. But the scale() function is good to know.</p>
 <!------------------------------>
@@ -712,9 +731,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!------------------------------>
 <p>Just like for binary NeedCog moderator, we have to manually create a product term in the dataset first before running our model.</p>
 <p>This is easy to do:</p>
-<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb141-1" aria-hidden="true" tabindex="-1"></a>cbtData<span class="sc">$</span>CBTxNeedCogCont <span class="ot">&lt;-</span> cbtData<span class="sc">$</span>CBTDummy <span class="sc">*</span> cbtData<span class="sc">$</span>NeedCogCont</span></code></pre></div>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb138-1" aria-hidden="true" tabindex="-1"></a>cbtData<span class="sc">$</span>CBTxNeedCogCont <span class="ot">&lt;-</span> cbtData<span class="sc">$</span>CBTDummy <span class="sc">*</span> cbtData<span class="sc">$</span>NeedCogCont</span></code></pre></div>
 <p>Let’s look at cbtData again:</p>
-<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb142-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(cbtData)</span></code></pre></div>
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb139-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(cbtData)</span></code></pre></div>
 <pre><code>##   ID              CBT CBTDummy NeedCog NegThoughts Depression NeedCogCont CBTxNeedCog CBTxNeedCogCont
 ## 1  1    CBT Treatment        1       0  -4.1453029  -5.802172   0.0182802           0       0.0182802
 ## 2  2 Information Only        0       1   2.1775218   5.496665   1.4238703           0       0.0000000
@@ -723,17 +742,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 5  5 Information Only        0       1   2.5103192   6.855488   0.6759705           0       0.0000000
 ## 6  6    CBT Treatment        1       0  -3.1626670  -2.968198  -0.9123426           0      -0.9123426</code></pre>
 <p>Time to write some lavaan model syntax (with labels):</p>
-<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb144-1" aria-hidden="true" tabindex="-1"></a>interactionSyntax2 <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
-<span id="cb144-2"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb144-2" aria-hidden="true" tabindex="-1"></a><span class="st">    #Regression</span></span>
-<span id="cb144-3"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb144-3" aria-hidden="true" tabindex="-1"></a><span class="st">    Depression ~ b1*CBTDummy + b2*NeedCogCont + b3*CBTxNeedCogCont </span></span>
-<span id="cb144-4"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb144-4" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb141-1" aria-hidden="true" tabindex="-1"></a>interactionSyntax2 <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
+<span id="cb141-2"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb141-2" aria-hidden="true" tabindex="-1"></a><span class="st">    #Regression</span></span>
+<span id="cb141-3"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb141-3" aria-hidden="true" tabindex="-1"></a><span class="st">    Depression ~ b1*CBTDummy + b2*NeedCogCont + b3*CBTxNeedCogCont </span></span>
+<span id="cb141-4"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb141-4" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
 <p>Let’s ask sem() to include the meanstructure:</p>
-<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb145-1" aria-hidden="true" tabindex="-1"></a>inter_fit2 <span class="ot">&lt;-</span> <span class="fu">sem</span>(<span class="at">model =</span> interactionSyntax2, </span>
-<span id="cb145-2"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb145-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">data =</span> cbtData, </span>
-<span id="cb145-3"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb145-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">fixed.x =</span><span class="cn">FALSE</span>, </span>
-<span id="cb145-4"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb145-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">meanstructure =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb146-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(inter_fit2)</span></code></pre></div>
-<pre><code>## lavaan 0.6-10 ended normally after 32 iterations
+<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb142-1" aria-hidden="true" tabindex="-1"></a>inter_fit2 <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> interactionSyntax2, </span>
+<span id="cb142-2"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb142-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">data =</span> cbtData, </span>
+<span id="cb142-3"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb142-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">fixed.x =</span><span class="cn">FALSE</span>, </span>
+<span id="cb142-4"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb142-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">meanstructure =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb143-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(inter_fit2)</span></code></pre></div>
+<pre><code>## lavaan 0.6-10 ended normally after 35 iterations
 ## 
 ##   Estimator                                         ML
 ##   Optimization method                           NLMINB
@@ -786,31 +805,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">5.7</span> Simple Slopes Analysis<a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#simple-slopes-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!------------------------------>
 <p>pick-a-point (Rogosa, 1980) and plot the simple slopes of X at designated levels of Z:</p>
-<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb148-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(cbtData<span class="sc">$</span>NeedCogCont) <span class="co">#0</span></span></code></pre></div>
+<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb145-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(cbtData<span class="sc">$</span>NeedCogCont) <span class="co">#0</span></span></code></pre></div>
 <pre><code>## [1] 0.005925852</code></pre>
-<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb150-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(cbtData<span class="sc">$</span>NeedCogCont) <span class="co"># almost 1</span></span></code></pre></div>
+<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb147-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(cbtData<span class="sc">$</span>NeedCogCont) <span class="co"># almost 1</span></span></code></pre></div>
 <pre><code>## [1] 0.9974319</code></pre>
-<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb152-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(cbtData<span class="sc">$</span>NeedCogCont) <span class="sc">-</span> <span class="fu">sd</span>(cbtData<span class="sc">$</span>NeedCogCont) <span class="co"># 1sd below the mean</span></span></code></pre></div>
+<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb149-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(cbtData<span class="sc">$</span>NeedCogCont) <span class="sc">-</span> <span class="fu">sd</span>(cbtData<span class="sc">$</span>NeedCogCont) <span class="co"># 1sd below the mean</span></span></code></pre></div>
 <pre><code>## [1] -0.991506</code></pre>
-<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb154-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(cbtData<span class="sc">$</span>NeedCogCont) <span class="sc">+</span> <span class="fu">sd</span>(cbtData<span class="sc">$</span>NeedCogCont) <span class="co"># 1sd above the mean</span></span></code></pre></div>
+<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb151-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(cbtData<span class="sc">$</span>NeedCogCont) <span class="sc">+</span> <span class="fu">sd</span>(cbtData<span class="sc">$</span>NeedCogCont) <span class="co"># 1sd above the mean</span></span></code></pre></div>
 <pre><code>## [1] 1.003358</code></pre>
-<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb156-1" aria-hidden="true" tabindex="-1"></a>interactionSyntax3 <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
-<span id="cb156-2"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb156-2" aria-hidden="true" tabindex="-1"></a><span class="st">    #Regression</span></span>
-<span id="cb156-3"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb156-3" aria-hidden="true" tabindex="-1"></a><span class="st">    Depression ~ b1*CBTDummy + b2*NeedCogCont + b3*CBTxNeedCogCont #regression coefficient labels</span></span>
-<span id="cb156-4"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb156-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb156-5"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb156-5" aria-hidden="true" tabindex="-1"></a><span class="st">    #Simple Slopes</span></span>
-<span id="cb156-6"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb156-6" aria-hidden="true" tabindex="-1"></a><span class="st">    </span></span>
-<span id="cb156-7"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb156-7" aria-hidden="true" tabindex="-1"></a><span class="st">    SSHigh := b1+b3*1       #Since sd(NeedCogCont) = approximately 1, this is +1 SD</span></span>
-<span id="cb156-8"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb156-8" aria-hidden="true" tabindex="-1"></a><span class="st">    SSMod := b1+b3*0          #at the mean of (centered) NeedCogCont</span></span>
-<span id="cb156-9"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb156-9" aria-hidden="true" tabindex="-1"></a><span class="st">    SSLow := b1+b3*(-1)   #Low Simple Slope is at -1 (1 SD below since SD = 1)</span></span>
-<span id="cb156-10"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb156-10" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
-<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb157-1" aria-hidden="true" tabindex="-1"></a>inter_fit3 <span class="ot">&lt;-</span> <span class="fu">sem</span>(<span class="at">model =</span> interactionSyntax3, </span>
-<span id="cb157-2"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb157-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">data =</span> cbtData, </span>
-<span id="cb157-3"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb157-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">fixed.x =</span><span class="cn">FALSE</span>, </span>
-<span id="cb157-4"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb157-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">meanstructure =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb157-5"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb157-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb157-6"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb157-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(inter_fit3)</span></code></pre></div>
-<pre><code>## lavaan 0.6-10 ended normally after 32 iterations
+<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb153-1" aria-hidden="true" tabindex="-1"></a>interactionSyntax3 <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
+<span id="cb153-2"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb153-2" aria-hidden="true" tabindex="-1"></a><span class="st">    #Regression</span></span>
+<span id="cb153-3"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb153-3" aria-hidden="true" tabindex="-1"></a><span class="st">    Depression ~ b1*CBTDummy + b2*NeedCogCont + b3*CBTxNeedCogCont #regression coefficient labels</span></span>
+<span id="cb153-4"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb153-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb153-5"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb153-5" aria-hidden="true" tabindex="-1"></a><span class="st">    #Simple Slopes</span></span>
+<span id="cb153-6"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb153-6" aria-hidden="true" tabindex="-1"></a><span class="st">    </span></span>
+<span id="cb153-7"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb153-7" aria-hidden="true" tabindex="-1"></a><span class="st">    SSHigh := b1+b3*1       #Since sd(NeedCogCont) = approximately 1, this is +1 SD</span></span>
+<span id="cb153-8"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb153-8" aria-hidden="true" tabindex="-1"></a><span class="st">    SSMod := b1+b3*0          #at the mean of (centered) NeedCogCont</span></span>
+<span id="cb153-9"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb153-9" aria-hidden="true" tabindex="-1"></a><span class="st">    SSLow := b1+b3*(-1)   #Low Simple Slope is at -1 (1 SD below since SD = 1)</span></span>
+<span id="cb153-10"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb153-10" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb154-1" aria-hidden="true" tabindex="-1"></a>inter_fit3 <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> interactionSyntax3, </span>
+<span id="cb154-2"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb154-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">data =</span> cbtData, </span>
+<span id="cb154-3"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb154-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">fixed.x =</span><span class="cn">FALSE</span>, </span>
+<span id="cb154-4"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb154-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">meanstructure =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb154-5"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb154-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-6"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb154-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(inter_fit3)</span></code></pre></div>
+<pre><code>## lavaan 0.6-10 ended normally after 35 iterations
 ## 
 ##   Estimator                                         ML
 ##   Optimization method                           NLMINB
@@ -872,9 +891,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!------------------------------>
 <p>Interactions in Regression Using lm()</p>
 <p>To include ab interaction in regression, simply use an * to create a product in the formula.</p>
-<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb159-1" aria-hidden="true" tabindex="-1"></a>interactionModel2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Depression <span class="sc">~</span> CBTDummy<span class="sc">*</span>NeedCogCont, cbtData)</span>
-<span id="cb159-2"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb159-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb159-3"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb159-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(interactionModel2)</span></code></pre></div>
+<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb156-1" aria-hidden="true" tabindex="-1"></a>interactionModel2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Depression <span class="sc">~</span> CBTDummy<span class="sc">*</span>NeedCogCont, cbtData)</span>
+<span id="cb156-2"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb156-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb156-3"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb156-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(interactionModel2)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = Depression ~ CBTDummy * NeedCogCont, data = cbtData)
@@ -896,16 +915,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Multiple R-squared:  0.9008, Adjusted R-squared:  0.9005 
 ## F-statistic:  3013 on 3 and 996 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>pick-a-point (Rogosa, 1980) and plot the simple slopes of X at designated levels of Z:</p>
-<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb161-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(interactions)</span>
-<span id="cb161-2"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb161-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb161-3"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb161-3" aria-hidden="true" tabindex="-1"></a><span class="fu">interact_plot</span>(interactionModel2, <span class="at">pred =</span> <span class="st">&quot;CBTDummy&quot;</span>, <span class="at">modx =</span> <span class="st">&quot;NeedCogCont&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb158-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(interactions)</span>
+<span id="cb158-2"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb158-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb158-3"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb158-3" aria-hidden="true" tabindex="-1"></a><span class="fu">interact_plot</span>(interactionModel2, <span class="at">pred =</span> <span class="st">&quot;CBTDummy&quot;</span>, <span class="at">modx =</span> <span class="st">&quot;NeedCogCont&quot;</span>)</span></code></pre></div>
 <p><img src="bookdownproj_files/figure-html/unnamed-chunk-93-1.png" width="672" /></p>
 <!------------------------------>
 </div>
 <div id="johnson-neyman-interval" class="section level2 hasAnchor" number="5.9">
 <h2><span class="header-section-number">5.9</span> JOHNSON-NEYMAN INTERVAL<a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#johnson-neyman-interval" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!------------------------------>
-<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb162-1" aria-hidden="true" tabindex="-1"></a>interactions<span class="sc">::</span><span class="fu">johnson_neyman</span>(interactionModel2, <span class="at">pred =</span> <span class="st">&quot;CBTDummy&quot;</span>, <span class="at">modx =</span> <span class="st">&quot;NeedCogCont&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.05</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb159-1" aria-hidden="true" tabindex="-1"></a>interactions<span class="sc">::</span><span class="fu">johnson_neyman</span>(interactionModel2, <span class="at">pred =</span> <span class="st">&quot;CBTDummy&quot;</span>, <span class="at">modx =</span> <span class="st">&quot;NeedCogCont&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.05</span>)</span></code></pre></div>
 <pre><code>## JOHNSON-NEYMAN INTERVAL 
 ## 
 ## When NeedCogCont is OUTSIDE the interval [-1.96, -1.77], the slope of CBTDummy is p &lt; .05.
@@ -941,9 +960,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The following example data are from Chapman and Lickel (2016)</p>
 <p>Also example data in Chapter 12 of Hayes (2017)</p>
 <p>Simply load the .rda into R:</p>
-<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb164-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;disaster.rda&quot;</span>)</span>
-<span id="cb164-2"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb164-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb164-3"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb164-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(disaster)</span></code></pre></div>
+<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb161-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;disaster.rda&quot;</span>)</span>
+<span id="cb161-2"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb161-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb161-3"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb161-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(disaster)</span></code></pre></div>
 <pre><code>##   id frame donate justify skeptic
 ## 1  1     1    5.6    2.95     1.8
 ## 2  2     1    4.2    2.85     5.2
@@ -951,7 +970,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 4  4     1    4.6    3.30     1.0
 ## 5  5     1    3.0    5.00     7.6
 ## 6  6     0    5.0    3.20     4.2</code></pre>
-<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb166-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(disaster)</span></code></pre></div>
+<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb163-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(disaster)</span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    211 obs. of  5 variables:
 ##  $ id     : num  1 2 3 4 5 6 7 8 9 10 ...
 ##   ..- attr(*, &quot;format.spss&quot;)= chr &quot;F8.0&quot;
@@ -973,15 +992,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##   ..- attr(*, &quot;label&quot;)= chr &quot;Climate change skepticism&quot;
 ##   ..- attr(*, &quot;format.spss&quot;)= chr &quot;F8.2&quot;</code></pre>
 <p>If you are able to install package processR, you can also view its help page:</p>
-<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb168-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;processR&quot;</span>)</span>
-<span id="cb168-2"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb168-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb168-3"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb168-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(processR)</span>
-<span id="cb168-4"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb168-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb168-5"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb168-5" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(disaster)</span>
-<span id="cb168-6"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb168-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb168-7"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb168-7" aria-hidden="true" tabindex="-1"></a><span class="co"># take a look at the dataset: </span></span>
-<span id="cb168-8"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb168-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb168-9"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb168-9" aria-hidden="true" tabindex="-1"></a>?disaster</span></code></pre></div>
+<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb165-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;processR&quot;</span>)</span>
+<span id="cb165-2"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb165-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb165-3"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb165-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(processR)</span>
+<span id="cb165-4"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb165-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb165-5"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb165-5" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(disaster)</span>
+<span id="cb165-6"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb165-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb165-7"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb165-7" aria-hidden="true" tabindex="-1"></a><span class="co"># take a look at the dataset: </span></span>
+<span id="cb165-8"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb165-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb165-9"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb165-9" aria-hidden="true" tabindex="-1"></a>?disaster</span></code></pre></div>
 <p>You probably have to go to <a href="https://www.xquartz.org/" class="uri">https://www.xquartz.org/</a> to download and install X11, which is a server required by many R packages, including processR.</p>
 <p>Now, disaster is a data.frame with 211 obs. of 5 variables:</p>
 <ul>
@@ -995,8 +1014,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="moderation-with-a-binary-moderator" class="section level3 hasAnchor" number="5.10.2">
 <h3><span class="header-section-number">5.10.2</span> Moderation with a binary moderator<a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#moderation-with-a-binary-moderator" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Let me first manually create a binary moderator based on the continuous version of skeptic:</p>
-<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb169-1" aria-hidden="true" tabindex="-1"></a>disaster<span class="sc">$</span>skeptic_b <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(disaster<span class="sc">$</span>skeptic<span class="sc">&lt;</span><span class="dv">3</span>, <span class="dv">0</span>, <span class="dv">1</span>) <span class="co"># low and high levels of skeptism of climate change</span></span>
-<span id="cb169-2"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb169-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(disaster<span class="sc">$</span>skeptic_b)</span></code></pre></div>
+<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb166-1" aria-hidden="true" tabindex="-1"></a>disaster<span class="sc">$</span>skeptic_b <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(disaster<span class="sc">$</span>skeptic<span class="sc">&lt;</span><span class="dv">3</span>, <span class="dv">0</span>, <span class="dv">1</span>) <span class="co"># low and high levels of skeptism of climate change</span></span>
+<span id="cb166-2"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#cb166-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(disaster<span class="sc">$</span>skeptic_b)</span></code></pre></div>
 <pre><code>## 
 ##   0   1 
 ## 112  99</code></pre>

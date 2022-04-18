@@ -121,6 +121,8 @@ semPaths(MIMICmodel, what='est',
 srSyntaxMIMICLoading <- "
 	posAffect =~ glad + happy + cheerful 
 	satisfaction =~ satisfied + content + comfortable 
+	
+	
 	schoolxPA =~ intPA1 + intPA2 + intPA3 
 	
 	# Structural Regression: beta

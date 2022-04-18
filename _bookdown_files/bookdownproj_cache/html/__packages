@@ -9,3 +9,7 @@ PerformanceAnalytics
 mice
 semTools
 psych
+ggplot2
+sem
+MASS
+rsem
