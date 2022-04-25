@@ -1,0 +1,192 @@
+# Week16: Lavaan Lab 18 CFA of MTMM Matrix
+
+In this lab, we will:
+    
++ run CFA on MTMM Matrix to investigate convergent and discrimative validity 
+
+Load up the lavaan and semPlot libraries:
+
+```{r, message=FALSE}
+library(lavaan)
+library(semPlot)
+```
+
++ Let's read in a simulated MTMM matrix:
+
+```{r}
+load("MTMM.RData")
+```
+
+Take a look at the matrix:
+
+```{r}
+dim(MTMM)
+head(MTMM)
+```
+This is a covariance matrix. You could also convert it to a correlation matrix: 
+
+```{r}
+cov2cor(MTMM)
+```
+
+
+<!------------------------------>
+## PART I: Correlated methods specification 
+<!------------------------------>
+
+This model specifies both traits and methods factors:
+
+```{r}
+MTMM.model.spec1.wrong <- '
+# trait factors
+
+paranoid =~ PARI +  PARC + PARO   
+schizotypal =~ SZTI + SZTC + SZTO
+schizoid =~ SZDI + SZDC + SZDO
+
+# method factors
+
+inventory =~ SZTI + PARI + SZDI
+clininter =~ PARC + SZTC + SZDC
+obsrating =~ PARO + SZTO + SZDO
+'
+```
+
+Fit the model:
+
++ Since MTMM is a covariance matrix, we supply the sample size 500;
+
+```{r}
+fit1 <- lavaan::sem(MTMM.model.spec1.wrong, 
+            sample.cov=MTMM, sample.nobs=500,
+            fixed.x = F)
+```
+
+You might get the following warning message:
+
+```{r, eval=FALSE}
+Warning message:
+  In lavaan::lavaan(model = MTMM.model.spec1.wrong, sample.cov = MTMM,  :
+        lavaan WARNING:
+        the optimizer (NLMINB) claimed the model converged, but not all
+        elements of the gradient are (near) zero; the optimizer may not
+        have found a local solution use check.gradient = FALSE to skip
+        this check.                        
+```
+
++ The problem is by default lavaan correlates all traits and methods factors; 
++ To get the model to fit, we need to manually uncorrelate traits and methods factors;
+
+```{r}
+MTMM.model.spec1 <- '
+# trait factors
+
+paranoid =~ PARI +  PARC + PARO   
+schizotypal =~ SZTI + SZTC + SZTO
+schizoid =~ SZDI + SZDC + SZDO
+
+# method factors
+
+inventory =~ SZTI + PARI + SZDI
+clininter =~ PARC + SZTC + SZDC
+obsrating =~ PARO + SZTO + SZDO
+
+# uncorrelated trait and method
+
+paranoid ~~ 0*inventory
+paranoid ~~ 0*clininter
+paranoid ~~ 0*obsrating
+schizotypal ~~ 0*inventory
+schizotypal ~~ 0*clininter
+schizotypal ~~ 0*obsrating
+schizoid ~~ 0*inventory
+schizoid ~~ 0*clininter
+schizoid ~~ 0*obsrating
+'
+```
+
+Model fit:
+
+```{r}
+fit2 <- lavaan::sem(MTMM.model.spec1, 
+            sample.cov=MTMM, sample.nobs=500,
+            fixed.x = F)
+
+summary(fit2, standardized = T, fit.measures = T)
+```
+
+```{r, eval=FALSE}
+Heywood case
+Warning messages:
+1: In lav_object_post_check(object) :
+  lavaan WARNING: some estimated ov variances are negative
+```
+
+Plot the path diagram:
+
+```{r}
+semPaths(fit2, what='std', 
+         nCharNodes = 0,
+         nCharEdges = 0, # don't limit variable name lengths
+         curvePivot = TRUE, 
+         curve = 1.1, # pull covariances' curves out a little
+         fade=FALSE)
+```
+
+
+<!------------------------------>
+## PART II: Correlated uniqueness specification
+<!------------------------------>
+
+In this specification: 
+
++ There is no method factor;
++ Instead, the unique factors are correlated within method blocks; 
+
+```{r}
+MTMM.model.spec2 <- '
+# trait factors
+
+paranoid =~ PARI + PARC + PARO   
+schizotypal =~ SZTI + SZTC + SZTO
+schizoid =~ SZDI + SZDC + SZDO
+
+# no method factors
+
+# correlated residual covariances
+
+# Method 1 Block
+PARI ~~ SZTI + SZDI
+SZTI ~~ SZDI
+
+# Method 2 Block
+PARC ~~ SZTC + SZDC
+SZTC ~~ SZDC
+
+# Method 3 Block
+PARO ~~ SZTO + SZDO
+SZTO ~~ SZDO
+'
+```
+
+Model fit:
+
+```{r}
+fit3 <- lavaan::sem(MTMM.model.spec2, 
+            sample.cov=MTMM, sample.nobs=500,
+            fixed.x = F, std.lv = T)
+
+#results with standardized parameter estimates
+summary(fit3, standardized=TRUE, fit.measures=TRUE)
+```
+
+```{r}
+semPaths(fit3, what='std', 
+         nCharNodes = 0,
+         nCharEdges = 0, # don't limit variable name lengths
+         curvePivot = TRUE, 
+         curve = 1.1, # pull covariances' curves out a little
+         fade=FALSE)
+```
+
+

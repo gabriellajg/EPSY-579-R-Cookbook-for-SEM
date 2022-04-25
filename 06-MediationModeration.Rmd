@@ -82,7 +82,7 @@ ex1MedModerationBasic <- "
 Since we included the intercept term, we need to ask sem() to include the meanstructure:
 
 ```{r}
-ex1fit <- sem(model = ex1MedModerationBasic, 
+ex1fit <- lavaan::sem(model = ex1MedModerationBasic, 
               data = cbtData, 
               fixed.x = FALSE,
               meanstructure = TRUE)
@@ -99,7 +99,7 @@ Remember to set a seed:
 
 ```{r}
 set.seed(2022)
-ex1Boot <- sem(model = ex1MedModerationBasic, 
+ex1Boot <- lavaan::sem(model = ex1MedModerationBasic, 
                data = cbtData, 
                fixed.x = FALSE,
                meanstructure = TRUE,
@@ -207,7 +207,7 @@ let's jump to the bootstrap test:
 
 ```{r}
 set.seed(2022)
-ex2Boot <- sem(model = ex2ModMediation, 
+ex2Boot <- lavaan::sem(model = ex2ModMediation, 
                data = cbtData, 
                fixed.x = FALSE,
                meanstructure = TRUE,
@@ -281,7 +281,7 @@ ex3ModMediation <- "
 
 ```{r}
 set.seed(2022)
-ex3Boot <- sem(model = ex3ModMediation, 
+ex3Boot <- lavaan::sem(model = ex3ModMediation, 
                data = cbtData, 
                se = "bootstrap", 
                bootstrap = 1000, 
@@ -379,7 +379,7 @@ ex4_JN <- "
 
 ```{r}
 set.seed(2022)
-ex4Boot <- sem(model = ex4_JN, 
+ex4Boot <- lavaan::sem(model = ex4_JN, 
                data = cbtData, 
                se = "bootstrap", 
                bootstrap = 1000, 

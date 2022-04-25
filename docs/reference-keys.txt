@@ -217,3 +217,13 @@ final-model-spline-growth-model-with-a-binary-treatment-predictor
 part-iii-lgm-on-latent-variables
 example
 exercise
+week15-lavaan-lab-17-second-order-and-bifactor-models
+part-i-unidimensional-model
+part-ii-correlated-factors-model
+part-iii-second-order-factor-model
+part-iv-bifactor-model
+part-v-model-comparison
+exercise-mental-ability-scale
+week16-lavaan-lab-18-cfa-of-mtmm-matrix
+part-i-correlated-methods-specification
+part-ii-correlated-uniqueness-specification

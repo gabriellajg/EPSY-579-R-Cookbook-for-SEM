@@ -1,0 +1,243 @@
+# Week15: Lavaan Lab 17 Second-order and Bifactor Models
+
+In this lab, we will evaluate the dimensionality of ISMI-29 by fitting and comparing the following four models:
+
+1. Unidimensional model (one-factor CFA)
+2. Correlated factors model (multi-factor CFA)
+3. Second-order factor model
+4. Bifactor model 
+
+Load up the lavaan and semPlot libraries:
+
+```{r, message=FALSE}
+library(lavaan)
+library(semPlot)
+```
+
++ In this lab, we will work with the ISMI-29 data that are collected using Internalized Stigma of Mental Illness Scale 
++ 758 participants and 29 items
++ Let's read in the dataset:
+
+```{r}
+ISMI29 = read.csv('ISMI-29 n758 (Hammer 16).csv', header = F)
+```
+
+Take a look at the dataset:
+
+```{r}
+head(ISMI29)
+```
+
+sample size:
+```{r}
+n <- nrow(ISMI29)
+n #758
+```
+
+Factor structure: 
+
++ Item1-6: Alienation  “Having a mental illness has spoiled my life.”
++ Item7-13: Stereotype Endorsement  “Mentally ill people tend to be violent”
++ Item14-18: Discrimination Experience   “People discriminate against me because I have a mental illness”
++ Item19-24: Social Withdrawal   “I don’t talk about myself as much because I don’t want to burden others with my mental illness”
++ Item25-29: \*Stigma Resistance  (*reverse-coded) “I can have a good, fulfilling life, despite my mental illness”    
+
+<!------------------------------>
+## PART I: Unidimensional model
+<!------------------------------>
+
+Write out syntax for a one-factor CFA model: 
+
+```{r}
+uni.model = '
+ISMI =~ V1+V2+V3+V4+V5+V6+V7+V8+V9+V10+V11+V12+V13+V14+V15+V16+V17+V18+V19+
+        V20+V21+V22+V23+V24+V25+V26+V27+V28+V29
+'
+```
+
+Fit the model:
+
++ It is recommended to fix the variances of all first- and second-order factors to be 1 (lavaan: std.lv = TRUE) and request standardized solutions;
+
+```{r}
+uni.model.fit = lavaan::sem(uni.model, 
+                    data=ISMI29, 
+                    ordered = colnames(ISMI29), 
+                    std.lv = TRUE, 
+                    fixed.x = F)
+summary(uni.model.fit, standardized = TRUE, fit.measures = TRUE)
+```
+
+Plot the path diagram:
+
+```{r}
+semPaths(uni.model.fit, what = 'std', fade = F)
+```
+
+<!------------------------------>
+## PART II: Correlated factors model
+<!------------------------------>
+
+Write out syntax for a five-factor CFA model: 
+
+```{r}
+cor.fac.model = '
+Alienation =~ V1+V2+V3+V4+V5+V6
+Stereotype =~ V7+V8+V9+V10+V11+V12+V13
+Discrimination =~ V14+V15+V16+V17+V18
+Withdrawal =~ V19+V20+V21+V22+V23+V24
+Stigma =~ V25+V26+V27+V28+V29
+'
+```
+
+```{r}
+cor.fac.model.fit = lavaan::sem(cor.fac.model, 
+                        data=ISMI29, 
+                        ordered = colnames(ISMI29), 
+                        std.lv = TRUE, 
+                        fixed.x = F)
+
+summary(cor.fac.model.fit, standardized = TRUE, fit.measures = TRUE)
+```
+
+```{r}
+semPaths(cor.fac.model.fit, what = 'std', fade = F)
+```
+
+
+<!------------------------------>
+## PART III: Second-order factor Model
+<!------------------------------>
+
+Write out syntax for a five-factor second-order CFA model: 
+
+```{r}
+secondfac.model = '
+Alienation =~ V1+V2+V3+V4+V5+V6
+Stereotype =~ V7+V8+V9+V10+V11+V12+V13
+Discrimination =~ V14+V15+V16+V17+V18
+Withdrawal =~ V19+V20+V21+V22+V23+V24
+Stigma =~ V25+V26+V27+V28+V29
+
+# Second-order factor ISMI
+ISMI =~ Alienation + Stereotype + Discrimination + Withdrawal + Stigma
+'
+```
+
+```{r}
+secondfac.model.fit = lavaan::sem(secondfac.model, 
+                          data=ISMI29, 
+                          ordered = colnames(ISMI29), 
+                          std.lv = TRUE, 
+                          fixed.x = F)
+summary(secondfac.model.fit, standardized = TRUE, fit.measures = TRUE)
+```
+
+```{r}
+semPaths(secondfac.model.fit, what = 'std', fade = F)
+```
+
+<!------------------------------>
+## PART IV: Bifactor Model
+<!------------------------------>
+
+```{r}
+bifac.model = '
+# specific factors
+Alienation =~ V1+V2+V3+V4+V5+V6
+Stereotype =~ V7+V8+V9+V10+V11+V12+V13
+Discrimination =~ V14+V15+V16+V17+V18
+Withdrawal =~ V19+V20+V21+V22+V23+V24
+Stigma =~ V25+V26+V27+V28+V29
+
+# general factor GEN
+GEN =~ V1+V2+V3+V4+V5+V6+V7+V8+V9+V10+V11+V12+V13+V14+V15+V16+V17+V18+V19+
+      V20+V21+V22+V23+V24+V25+V26+V27+V28+V29
+'
+```
+
+When using sem() to fit a bifactor model, make sure to turn on 
+
++ orthogonal = TRUE to ensure that all specific factors and general factors are uncorrelated
++ otherwise, you'll get an error/warning saying that the model is not identified.
+
+```{r}
+bifac.model.fit = lavaan::sem(bifac.model, 
+                      data=ISMI29, 
+                      ordered = colnames(ISMI29), 
+                      std.lv = TRUE, 
+                      fixed.x = F,
+                      orthogonal = TRUE)
+```
+
+```{r}
+summary(bifac.model.fit, standardized = TRUE, fit.measures = TRUE)
+```
+
+```{r}
+semPaths(bifac.model.fit, what = 'std', fade = F)
+```
+
+
+<!------------------------------>
+## PART V: Model Comparison 
+<!------------------------------>
+
+```{r}
+UniFactor = fitMeasures(uni.model.fit, fit.measures = c("chisq.scaled", "df.scaled", "pvalue.scaled", "rmsea.scaled", "rmsea.ci.lower.scaled", "rmsea.ci.upper.scaled", "cfi.scaled", "tli.scaled", "srmr_bentler"))
+FiveFactor = fitMeasures(cor.fac.model.fit, fit.measures = c("chisq.scaled", "df.scaled", "pvalue.scaled", "rmsea.scaled", "rmsea.ci.lower.scaled", "rmsea.ci.upper.scaled", "cfi.scaled", "tli.scaled", "srmr_bentler"))
+SecondOrder = fitMeasures(secondfac.model.fit, fit.measures = c("chisq.scaled", "df.scaled", "pvalue.scaled", "rmsea.scaled", "rmsea.ci.lower.scaled", "rmsea.ci.upper.scaled", "cfi.scaled", "tli.scaled", "srmr_bentler"))
+Bifactor = fitMeasures(bifac.model.fit, fit.measures = c("chisq.scaled", "df.scaled", "pvalue.scaled", "rmsea.scaled", "rmsea.ci.lower.scaled", "rmsea.ci.upper.scaled", "cfi.scaled", "tli.scaled", "srmr_bentler"))
+round(cbind(UniFactor, FiveFactor, SecondOrder, Bifactor), 3)
+```
+
+Bifactor model wins!
+
+
+<!------------------------------>
+## Exercise: Mental Ability Scale
+<!------------------------------>
+
+Let's bring our Holzinger and Swineford Dataset back: 
+
+```{r}
+head(HolzingerSwineford1939)
+?HolzingerSwineford1939
+```
+
+This dataset has 301 cases with 9 mental ability items.
+
+**Assignment: Could you use the four models above to examine the dimensionality of this ODD Subscale?**
+
+Here is a factor structure that you may need: 
+
+```{r}
+cor.fac.HS.model = '
+visual  =~ x1 + x2 + x3
+textual =~ x4 + x5 + x6
+speed   =~ x7 + x8 + x9
+'
+```
+
+Good luck!
+
+```{r}
+bifac.model = '
+# specific factors
+visual  =~ x2 + x3 # remove x1 because of heywood case
+textual =~ x4 + x5 + x6
+speed   =~ x7 + x8 + x9
+
+# general factor GEN
+G =~ x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9
+'
+bifac.model.fit = lavaan::sem(bifac.model, 
+                      data=HolzingerSwineford1939, 
+                      #ordered = colnames(odd), 
+                      std.lv = TRUE, 
+                      fixed.x = F,
+                      orthogonal = TRUE,
+                      estimator = 'MLR')
+lavaan:::summary(bifac.model.fit, standardized = TRUE, fit.measures = TRUE)
+```
+

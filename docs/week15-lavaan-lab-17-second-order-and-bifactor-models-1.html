@@ -1,0 +1,1975 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 21 Week15: Lavaan Lab 17 Second-order and Bifactor Models | EPSY:579 R Cookbook for SEM</title>
+  <meta name="description" content="Chapter 21 Week15: Lavaan Lab 17 Second-order and Bifactor Models | EPSY:579 R Cookbook for SEM" />
+  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 21 Week15: Lavaan Lab 17 Second-order and Bifactor Models | EPSY:579 R Cookbook for SEM" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 21 Week15: Lavaan Lab 17 Second-order and Bifactor Models | EPSY:579 R Cookbook for SEM" />
+  
+  
+  
+
+<meta name="author" content="Gabriella Jiang" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="week15-lavaan-lab-17-second-order-and-bifactor-models.html"/>
+<link rel="next" href="week14-lavaan-lab-16-latent-growth-models-1.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">EPSY:579 R Cookbook for SEM</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Course</a></li>
+<li class="chapter" data-level="2" data-path="r-exercises.html"><a href="r-exercises.html"><i class="fa fa-check"></i><b>2</b> R Exercises</a></li>
+<li class="chapter" data-level="3" data-path="week4_1-lavaan-lab-1-path-analysis-model.html"><a href="week4_1-lavaan-lab-1-path-analysis-model.html"><i class="fa fa-check"></i><b>3</b> Week4_1: Lavaan Lab 1 Path Analysis Model</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="week4_1-lavaan-lab-1-path-analysis-model.html"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#reading-in-and-working-with-realistic-datasets-in-r"><i class="fa fa-check"></i><b>3.1</b> Reading-In and Working With Realistic Datasets In R</a></li>
+<li class="chapter" data-level="3.2" data-path="week4_1-lavaan-lab-1-path-analysis-model.html"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#sample-covariance-matrices-using-the-cov-function"><i class="fa fa-check"></i><b>3.2</b> Sample Covariance Matrices using the cov() function</a></li>
+<li class="chapter" data-level="3.3" data-path="week4_1-lavaan-lab-1-path-analysis-model.html"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#installing-packages"><i class="fa fa-check"></i><b>3.3</b> Installing Packages</a></li>
+<li class="chapter" data-level="3.4" data-path="week4_1-lavaan-lab-1-path-analysis-model.html"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#loading-packages-libraries-that-you-have-installed"><i class="fa fa-check"></i><b>3.4</b> Loading Packages (Libraries) That You Have Installed</a></li>
+<li class="chapter" data-level="3.5" data-path="week4_1-lavaan-lab-1-path-analysis-model.html"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#using-lavaan-for-path-models"><i class="fa fa-check"></i><b>3.5</b> Using Lavaan For Path Models</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="week4_1-lavaan-lab-1-path-analysis-model.html"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#part-i-follow-the-set-of-equations-we-wrote-in-class"><i class="fa fa-check"></i><b>3.5.1</b> PART I: Follow the set of equations we wrote in class:</a></li>
+<li class="chapter" data-level="3.5.2" data-path="week4_1-lavaan-lab-1-path-analysis-model.html"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#part-ii-lets-run-our-model"><i class="fa fa-check"></i><b>3.5.2</b> PART II Let’s run our model!</a></li>
+<li class="chapter" data-level="3.5.3" data-path="week4_1-lavaan-lab-1-path-analysis-model.html"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#sigma-matrices"><i class="fa fa-check"></i><b>3.5.3</b> Sigma Matrices</a></li>
+<li class="chapter" data-level="3.5.4" data-path="week4_1-lavaan-lab-1-path-analysis-model.html"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#part-iii-summarizing-our-analysis"><i class="fa fa-check"></i><b>3.5.4</b> PART III: Summarizing Our Analysis:</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="week4_1-lavaan-lab-1-path-analysis-model.html"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#plotting-sem-model"><i class="fa fa-check"></i><b>3.6</b> Plotting SEM model</a>
+<ul>
+<li class="chapter" data-level="3.6.1" data-path="week4_1-lavaan-lab-1-path-analysis-model.html"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#customize-it-your-way"><i class="fa fa-check"></i><b>3.6.1</b> customize it your way</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="week4_1-lavaan-lab-1-path-analysis-model.html"><a href="week4_1-lavaan-lab-1-path-analysis-model.html#exercise-how-would-you-fit-the-model-in-saunders-et-al.-2016"><i class="fa fa-check"></i><b>3.7</b> Exercise: How would you fit the model in Saunders et al. (2016)?</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html"><i class="fa fa-check"></i><b>4</b> Week4_2: Lavaan Lab 2 Mediation and Indirect Effects</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#reading-in-and-working-with-realistic-datasets-in-r-1"><i class="fa fa-check"></i><b>4.1</b> Reading-In and Working With Realistic Datasets In R</a></li>
+<li class="chapter" data-level="4.2" data-path="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#using-lavaan-for-mediation-models---preacher-hayess"><i class="fa fa-check"></i><b>4.2</b> Using Lavaan For Mediation Models - Preacher &amp; Hayes’s</a></li>
+<li class="chapter" data-level="4.3" data-path="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#part-i-follow-the-two-equations-of-m-dietse-y-bulimia"><i class="fa fa-check"></i><b>4.3</b> PART I: # Follow the two equations of M (DietSE) &amp; Y (Bulimia)</a></li>
+<li class="chapter" data-level="4.4" data-path="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#part-ii-lets-run-our-model-1"><i class="fa fa-check"></i><b>4.4</b> PART II Let’s run our model!</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#label-the-mediation-effect"><i class="fa fa-check"></i><b>4.4.1</b> Label the mediation effect</a></li>
+<li class="chapter" data-level="4.4.2" data-path="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#define-a-new-term-for-the-mediation-effect-ab"><i class="fa fa-check"></i><b>4.4.2</b> Define a new term for the mediation effect a*b</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#part-iii-summarizing-our-analysis-1"><i class="fa fa-check"></i><b>4.5</b> PART III: Summarizing Our Analysis:</a></li>
+<li class="chapter" data-level="4.6" data-path="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#part-iv-bootstrap-confidence-intervals"><i class="fa fa-check"></i><b>4.6</b> PART IV: Bootstrap confidence intervals</a>
+<ul>
+<li class="chapter" data-level="4.6.1" data-path="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#the-default-one-is-boot.ci.type-perc"><i class="fa fa-check"></i><b>4.6.1</b> The default one is boot.ci.type = “perc”</a></li>
+<li class="chapter" data-level="4.6.2" data-path="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#bc-bias-corrected-confidence-interval"><i class="fa fa-check"></i><b>4.6.2</b> BC (bias-corrected) confidence interval</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#in-class-exercise-use-lavaan-to-estimate-and-interpret-the-following-model"><i class="fa fa-check"></i><b>4.7</b> In-Class Exercise: Use Lavaan to estimate and interpret the following model</a></li>
+<li class="chapter" data-level="4.8" data-path="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#exercise-eating-disorder-mediation-analysis"><i class="fa fa-check"></i><b>4.8</b> Exercise: Eating Disorder Mediation Analysis</a>
+<ul>
+<li class="chapter" data-level="4.8.1" data-path="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#step-1-labeling-and-defining-the-parameters"><i class="fa fa-check"></i><b>4.8.1</b> Step 1: Labeling and defining the parameters</a></li>
+<li class="chapter" data-level="4.8.2" data-path="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#step-2-fix-all-disturbance-covariances-at-0"><i class="fa fa-check"></i><b>4.8.2</b> Step 2: Fix all disturbance covariances at 0</a></li>
+<li class="chapter" data-level="4.8.3" data-path="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#step-3-define-new-terms-for-mediation-effects"><i class="fa fa-check"></i><b>4.8.3</b> Step 3: Define new terms for mediation effects</a></li>
+<li class="chapter" data-level="4.8.4" data-path="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#step-4-bootstrap-confidence-intervals"><i class="fa fa-check"></i><b>4.8.4</b> Step 4: Bootstrap confidence intervals:</a></li>
+<li class="chapter" data-level="4.8.5" data-path="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#step-5-print-and-interpret-the-mediation-effects"><i class="fa fa-check"></i><b>4.8.5</b> Step 5: Print and interpret the mediation effects;</a></li>
+<li class="chapter" data-level="4.8.6" data-path="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html"><a href="week4_2-lavaan-lab-2-mediation-and-indirect-effects.html#plot-it"><i class="fa fa-check"></i><b>4.8.6</b> Plot it!</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html"><i class="fa fa-check"></i><b>5</b> Week5_2: Lavaan Lab 3 Moderation and Conditional Effects</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#reading-in-datasets"><i class="fa fa-check"></i><b>5.1</b> Reading-In Datasets</a></li>
+<li class="chapter" data-level="5.2" data-path="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#interactions-in-regression-using-lm"><i class="fa fa-check"></i><b>5.2</b> Interactions in Regression Using lm()</a></li>
+<li class="chapter" data-level="5.3" data-path="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#interactions-in-lavaan"><i class="fa fa-check"></i><b>5.3</b> Interactions in Lavaan</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#important-note"><i class="fa fa-check"></i><b>5.3.1</b> IMPORTANT NOTE</a></li>
+<li class="chapter" data-level="5.3.2" data-path="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#follow-the-equation-of-y-depression"><i class="fa fa-check"></i><b>5.3.2</b> Follow the equation of Y (Depression):</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#visual-inspection-of-interactions"><i class="fa fa-check"></i><b>5.4</b> Visual inspection of interactions</a></li>
+<li class="chapter" data-level="5.5" data-path="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#centering-continuous-moderator"><i class="fa fa-check"></i><b>5.5</b> Centering Continuous Moderator</a></li>
+<li class="chapter" data-level="5.6" data-path="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#interactions-in-lavaan-continuous-moderator"><i class="fa fa-check"></i><b>5.6</b> Interactions in Lavaan (Continuous Moderator)</a></li>
+<li class="chapter" data-level="5.7" data-path="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#simple-slopes-analysis"><i class="fa fa-check"></i><b>5.7</b> Simple Slopes Analysis</a></li>
+<li class="chapter" data-level="5.8" data-path="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#visual-inspection-of-interactions-lm-approach"><i class="fa fa-check"></i><b>5.8</b> Visual inspection of interactions (lm approach)</a></li>
+<li class="chapter" data-level="5.9" data-path="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#johnson-neyman-interval"><i class="fa fa-check"></i><b>5.9</b> JOHNSON-NEYMAN INTERVAL</a></li>
+<li class="chapter" data-level="5.10" data-path="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#exercise-how-framing-affects-justifications-for-giving-or-withholding-aid-to-disaster-victims"><i class="fa fa-check"></i><b>5.10</b> Exercise: How Framing Affects Justifications for Giving or Withholding Aid to Disaster Victims</a>
+<ul>
+<li class="chapter" data-level="5.10.1" data-path="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#data-prep"><i class="fa fa-check"></i><b>5.10.1</b> Data Prep</a></li>
+<li class="chapter" data-level="5.10.2" data-path="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html"><a href="week5_2-lavaan-lab-3-moderation-and-conditional-effects.html#moderation-with-a-binary-moderator"><i class="fa fa-check"></i><b>5.10.2</b> Moderation with a binary moderator</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="week6_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html"><a href="week6_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html"><i class="fa fa-check"></i><b>6</b> Week6_1: Lavaan Lab 4 Mediated Moderation &amp; Moderated Mediation</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="week6_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html"><a href="week6_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#part-1-mediated-moderation-indirect-conditional-effect"><i class="fa fa-check"></i><b>6.1</b> PART 1: Mediated Moderation (Indirect Conditional effect)</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="week6_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html"><a href="week6_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#step-1-read-in-data"><i class="fa fa-check"></i><b>6.1.1</b> Step 1: Read-in Data</a></li>
+<li class="chapter" data-level="6.1.2" data-path="week6_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html"><a href="week6_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#step-2-create-the-interaction-term-for-moderation-analysis"><i class="fa fa-check"></i><b>6.1.2</b> Step 2: Create the interaction term for Moderation Analysis</a></li>
+<li class="chapter" data-level="6.1.3" data-path="week6_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html"><a href="week6_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#step-3-write-the-syntax-and-fit-the-model"><i class="fa fa-check"></i><b>6.1.3</b> Step 3: Write the syntax and Fit the model</a></li>
+<li class="chapter" data-level="6.1.4" data-path="week6_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html"><a href="week6_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#step-4-bootstrap-version"><i class="fa fa-check"></i><b>6.1.4</b> Step 4: Bootstrap Version</a></li>
+<li class="chapter" data-level="6.1.5" data-path="week6_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html"><a href="week6_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#step-5-effect-size-measures"><i class="fa fa-check"></i><b>6.1.5</b> Step 5: Effect size measures</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="week6_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html"><a href="week6_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#part-2-moderated-mediation-conditional-indirect-effect"><i class="fa fa-check"></i><b>6.2</b> PART 2: Moderated Mediation (Conditional Indirect effect)</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="week6_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html"><a href="week6_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#step-1-product-term"><i class="fa fa-check"></i><b>6.2.1</b> Step 1: Product Term</a></li>
+<li class="chapter" data-level="6.2.2" data-path="week6_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html"><a href="week6_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#step-2-write-the-syntax-and-fit-the-model"><i class="fa fa-check"></i><b>6.2.2</b> Step 2: Write the syntax and Fit the model</a></li>
+<li class="chapter" data-level="6.2.3" data-path="week6_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html"><a href="week6_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#step-3-bootstrap-version"><i class="fa fa-check"></i><b>6.2.3</b> Step 3: Bootstrap Version</a></li>
+<li class="chapter" data-level="6.2.4" data-path="week6_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html"><a href="week6_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#step-4-simple-slopes"><i class="fa fa-check"></i><b>6.2.4</b> Step 4: Simple Slopes</a></li>
+<li class="chapter" data-level="6.2.5" data-path="week6_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html"><a href="week6_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#step-5-johnson-neyman-interval"><i class="fa fa-check"></i><b>6.2.5</b> Step 5 JOHNSON-NEYMAN INTERVAL</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><i class="fa fa-check"></i><b>7</b> Week6_2: R Lab on Disaster Dataset (Chapman and Lickel, 2016)</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#data-prep-1"><i class="fa fa-check"></i><b>7.1</b> Data Prep</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#scatterplot-matrix"><i class="fa fa-check"></i><b>7.1.1</b> Scatterplot Matrix</a></li>
+<li class="chapter" data-level="7.1.2" data-path="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#p-value-or-bootstrapped-confidence-interval"><i class="fa fa-check"></i><b>7.1.2</b> p-value or bootstrapped confidence interval?</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#model-1-simple-linear-regression-model"><i class="fa fa-check"></i><b>7.2</b> Model 1: Simple Linear Regression Model</a></li>
+<li class="chapter" data-level="7.3" data-path="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#model-2-simple-mediation-model"><i class="fa fa-check"></i><b>7.3</b> Model 2: Simple Mediation Model</a></li>
+<li class="chapter" data-level="7.4" data-path="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#model-3-simple-moderation-model"><i class="fa fa-check"></i><b>7.4</b> Model 3: Simple Moderation Model</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#johnson-neyman-interval-1"><i class="fa fa-check"></i><b>7.4.1</b> JOHNSON-NEYMAN INTERVAL</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#model-4a-moderated-mediation-model---path-a-only"><i class="fa fa-check"></i><b>7.5</b> Model 4a: Moderated Mediation Model - Path a only</a></li>
+<li class="chapter" data-level="7.6" data-path="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#model-4b-moderated-mediation-model---path-b-only"><i class="fa fa-check"></i><b>7.6</b> Model 4b: Moderated Mediation Model - Path b only</a></li>
+<li class="chapter" data-level="7.7" data-path="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#model-4c-moderation-mediation-model---path-cprime-only"><i class="fa fa-check"></i><b>7.7</b> Model 4c: Moderation &amp; Mediation Model - Path cprime only</a></li>
+<li class="chapter" data-level="7.8" data-path="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#model-4d-moderated-mediation-model---path-a-and-cprime"><i class="fa fa-check"></i><b>7.8</b> Model 4d: Moderated Mediation Model - Path a and cprime</a></li>
+<li class="chapter" data-level="7.9" data-path="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#model-4e-moderated-mediation-model---path-b-and-cprime"><i class="fa fa-check"></i><b>7.9</b> Model 4e: Moderated Mediation Model - Path b and cprime</a></li>
+<li class="chapter" data-level="7.10" data-path="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#model-4f-moderated-mediation-model---path-a-and-b"><i class="fa fa-check"></i><b>7.10</b> Model 4f: Moderated Mediation Model - Path a and b</a></li>
+<li class="chapter" data-level="7.11" data-path="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#model-4g-moderated-mediation-model---path-a-b-and-cprime"><i class="fa fa-check"></i><b>7.11</b> Model 4g: Moderated Mediation Model - Path a, b, and cprime</a></li>
+<li class="chapter" data-level="7.12" data-path="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="week6_2-r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#conclusions"><i class="fa fa-check"></i><b>7.12</b> Conclusions</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="week7_1-lavaan-lab-5-one-factor-cfa-model.html"><a href="week7_1-lavaan-lab-5-one-factor-cfa-model.html"><i class="fa fa-check"></i><b>8</b> Week7_1: Lavaan Lab 5 One-factor CFA Model</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="week7_1-lavaan-lab-5-one-factor-cfa-model.html"><a href="week7_1-lavaan-lab-5-one-factor-cfa-model.html#data-prep-2"><i class="fa fa-check"></i><b>8.1</b> Data Prep</a></li>
+<li class="chapter" data-level="8.2" data-path="week7_1-lavaan-lab-5-one-factor-cfa-model.html"><a href="week7_1-lavaan-lab-5-one-factor-cfa-model.html#part-i-one-factor-cfa-fixed-loading"><i class="fa fa-check"></i><b>8.2</b> PART I: One-Factor CFA, Fixed Loading</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="week7_1-lavaan-lab-5-one-factor-cfa-model.html"><a href="week7_1-lavaan-lab-5-one-factor-cfa-model.html#fixed-loading-aka-marker-variable-method."><i class="fa fa-check"></i><b>8.2.1</b> Fixed Loading, AKA Marker Variable method.</a></li>
+<li class="chapter" data-level="8.2.2" data-path="week7_1-lavaan-lab-5-one-factor-cfa-model.html"><a href="week7_1-lavaan-lab-5-one-factor-cfa-model.html#change-marker-indicator"><i class="fa fa-check"></i><b>8.2.2</b> Change marker indicator</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="week7_1-lavaan-lab-5-one-factor-cfa-model.html"><a href="week7_1-lavaan-lab-5-one-factor-cfa-model.html#part-ii-one-factor-cfa-fixed-factor-variance"><i class="fa fa-check"></i><b>8.3</b> PART II: One-Factor CFA, Fixed Factor Variance</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="week7_1-lavaan-lab-5-one-factor-cfa-model.html"><a href="week7_1-lavaan-lab-5-one-factor-cfa-model.html#fixed-factor-method"><i class="fa fa-check"></i><b>8.3.1</b> Fixed Factor Method</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="week7_1-lavaan-lab-5-one-factor-cfa-model.html"><a href="week7_1-lavaan-lab-5-one-factor-cfa-model.html#exercise-one-factor-cfa-model"><i class="fa fa-check"></i><b>8.4</b> Exercise: One-factor CFA Model</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="week7_1-lavaan-lab-5-one-factor-cfa-model.html"><a href="week7_1-lavaan-lab-5-one-factor-cfa-model.html#fixed-loading"><i class="fa fa-check"></i><b>8.4.1</b> Fixed Loading</a></li>
+<li class="chapter" data-level="8.4.2" data-path="week7_1-lavaan-lab-5-one-factor-cfa-model.html"><a href="week7_1-lavaan-lab-5-one-factor-cfa-model.html#fixed-factor"><i class="fa fa-check"></i><b>8.4.2</b> Fixed Factor</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="week8_1-lavaan-lab-6-two-factor-cfa-model.html"><a href="week8_1-lavaan-lab-6-two-factor-cfa-model.html"><i class="fa fa-check"></i><b>9</b> Week8_1: Lavaan Lab 6 Two-factor CFA Model</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="week8_1-lavaan-lab-6-two-factor-cfa-model.html"><a href="week8_1-lavaan-lab-6-two-factor-cfa-model.html#data-prep-3"><i class="fa fa-check"></i><b>9.1</b> Data Prep</a></li>
+<li class="chapter" data-level="9.2" data-path="week8_1-lavaan-lab-6-two-factor-cfa-model.html"><a href="week8_1-lavaan-lab-6-two-factor-cfa-model.html#part-i-two-factor-cfa-fixed-loading"><i class="fa fa-check"></i><b>9.2</b> PART I: Two-Factor CFA, Fixed Loading</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="week8_1-lavaan-lab-6-two-factor-cfa-model.html"><a href="week8_1-lavaan-lab-6-two-factor-cfa-model.html#fixed-loading-aka-marker-variable-method.-1"><i class="fa fa-check"></i><b>9.2.1</b> Fixed Loading, AKA Marker Variable method.</a></li>
+<li class="chapter" data-level="9.2.2" data-path="week8_1-lavaan-lab-6-two-factor-cfa-model.html"><a href="week8_1-lavaan-lab-6-two-factor-cfa-model.html#how-well-does-this-model-fit-to-the-data"><i class="fa fa-check"></i><b>9.2.2</b> How well does this model fit to the data?</a></li>
+<li class="chapter" data-level="9.2.3" data-path="week8_1-lavaan-lab-6-two-factor-cfa-model.html"><a href="week8_1-lavaan-lab-6-two-factor-cfa-model.html#fundamental-equation-of-sem"><i class="fa fa-check"></i><b>9.2.3</b> Fundamental Equation of SEM</a></li>
+<li class="chapter" data-level="9.2.4" data-path="week8_1-lavaan-lab-6-two-factor-cfa-model.html"><a href="week8_1-lavaan-lab-6-two-factor-cfa-model.html#interpretion"><i class="fa fa-check"></i><b>9.2.4</b> Interpretion</a></li>
+<li class="chapter" data-level="9.2.5" data-path="week8_1-lavaan-lab-6-two-factor-cfa-model.html"><a href="week8_1-lavaan-lab-6-two-factor-cfa-model.html#standardized-solutions-std.lv-vs.-std.all"><i class="fa fa-check"></i><b>9.2.5</b> Standardized solutions: Std.lv vs. Std.all</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="week8_1-lavaan-lab-6-two-factor-cfa-model.html"><a href="week8_1-lavaan-lab-6-two-factor-cfa-model.html#part-ii-two-factor-cfa-fixed-factor-variance"><i class="fa fa-check"></i><b>9.3</b> PART II: Two-Factor CFA, Fixed Factor Variance</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="week8_1-lavaan-lab-6-two-factor-cfa-model.html"><a href="week8_1-lavaan-lab-6-two-factor-cfa-model.html#fixed-factor-method-1"><i class="fa fa-check"></i><b>9.3.1</b> Fixed Factor Method</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="week8_2-lavaan-lab-7-two-factor-sr-model.html"><a href="week8_2-lavaan-lab-7-two-factor-sr-model.html"><i class="fa fa-check"></i><b>10</b> Week8_2: Lavaan Lab 7 Two-factor SR Model</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="week8_2-lavaan-lab-7-two-factor-sr-model.html"><a href="week8_2-lavaan-lab-7-two-factor-sr-model.html#data-prep-4"><i class="fa fa-check"></i><b>10.1</b> Data Prep</a></li>
+<li class="chapter" data-level="10.2" data-path="week8_2-lavaan-lab-7-two-factor-sr-model.html"><a href="week8_2-lavaan-lab-7-two-factor-sr-model.html#part-i-two-factor-sr-fixed-loading"><i class="fa fa-check"></i><b>10.2</b> PART I: Two-Factor SR, Fixed Loading</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="week8_2-lavaan-lab-7-two-factor-sr-model.html"><a href="week8_2-lavaan-lab-7-two-factor-sr-model.html#fixed-loading-aka-marker-variable-method.-2"><i class="fa fa-check"></i><b>10.2.1</b> Fixed Loading, AKA Marker Variable method.</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="week8_2-lavaan-lab-7-two-factor-sr-model.html"><a href="week8_2-lavaan-lab-7-two-factor-sr-model.html#part-ii-two-factor-sr-fixed-factor-variance"><i class="fa fa-check"></i><b>10.3</b> PART II: Two-Factor SR, Fixed Factor Variance</a>
+<ul>
+<li class="chapter" data-level="10.3.1" data-path="week8_2-lavaan-lab-7-two-factor-sr-model.html"><a href="week8_2-lavaan-lab-7-two-factor-sr-model.html#fixed-factor-method-2"><i class="fa fa-check"></i><b>10.3.1</b> Fixed Factor Method</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="week8_2-lavaan-lab-7-two-factor-sr-model.html"><a href="week8_2-lavaan-lab-7-two-factor-sr-model.html#part-iii-exercise-what-fun-3-factor-sr-model"><i class="fa fa-check"></i><b>10.4</b> PART III: Exercise (what fun!): 3-Factor SR Model</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="week8_2-lavaan-lab-8-estimation-methods.html"><a href="week8_2-lavaan-lab-8-estimation-methods.html"><i class="fa fa-check"></i><b>11</b> Week8_2: Lavaan Lab 8 Estimation Methods</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="week8_2-lavaan-lab-8-estimation-methods.html"><a href="week8_2-lavaan-lab-8-estimation-methods.html#part-i-hypothetical-example"><i class="fa fa-check"></i><b>11.1</b> PART I: Hypothetical Example</a>
+<ul>
+<li class="chapter" data-level="11.1.1" data-path="week8_2-lavaan-lab-8-estimation-methods.html"><a href="week8_2-lavaan-lab-8-estimation-methods.html#one-factor-cfa-model"><i class="fa fa-check"></i><b>11.1.1</b> One-factor CFA model</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="week8_2-lavaan-lab-8-estimation-methods.html"><a href="week8_2-lavaan-lab-8-estimation-methods.html#part-ii-uls-on-the-positive-affect-example"><i class="fa fa-check"></i><b>11.2</b> PART II: ULS on the Positive Affect Example</a></li>
+<li class="chapter" data-level="11.3" data-path="week8_2-lavaan-lab-8-estimation-methods.html"><a href="week8_2-lavaan-lab-8-estimation-methods.html#part-iii-calculate-uls-test-statistic-manually"><i class="fa fa-check"></i><b>11.3</b> PART III: Calculate ULS test statistic manually</a></li>
+<li class="chapter" data-level="11.4" data-path="week8_2-lavaan-lab-8-estimation-methods.html"><a href="week8_2-lavaan-lab-8-estimation-methods.html#part-iv-ml-vs-uls-vs-wls"><i class="fa fa-check"></i><b>11.4</b> PART IV: ML vs ULS vs WLS</a>
+<ul>
+<li class="chapter" data-level="11.4.1" data-path="week8_2-lavaan-lab-8-estimation-methods.html"><a href="week8_2-lavaan-lab-8-estimation-methods.html#ml-estimation"><i class="fa fa-check"></i><b>11.4.1</b> ML Estimation</a></li>
+<li class="chapter" data-level="11.4.2" data-path="week8_2-lavaan-lab-8-estimation-methods.html"><a href="week8_2-lavaan-lab-8-estimation-methods.html#wls-estimation"><i class="fa fa-check"></i><b>11.4.2</b> WLS Estimation</a></li>
+<li class="chapter" data-level="11.4.3" data-path="week8_2-lavaan-lab-8-estimation-methods.html"><a href="week8_2-lavaan-lab-8-estimation-methods.html#compare-the-parameter-estimates"><i class="fa fa-check"></i><b>11.4.3</b> Compare the parameter estimates</a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="week8_2-lavaan-lab-8-estimation-methods.html"><a href="week8_2-lavaan-lab-8-estimation-methods.html#part-v-improper-solutions"><i class="fa fa-check"></i><b>11.5</b> PART V: Improper Solutions</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html"><i class="fa fa-check"></i><b>12</b> Week10_2: Lavaan Lab 9 Model Fit Part I (Test Statistics)</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#part-i-robust-ml-on-the-positive-affect-example"><i class="fa fa-check"></i><b>12.1</b> PART I: Robust ML on the Positive Affect Example</a>
+<ul>
+<li class="chapter" data-level="12.1.1" data-path="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#mean-corrected-statistic-t_m"><i class="fa fa-check"></i><b>12.1.1</b> Mean corrected statistic (T_M)</a></li>
+<li class="chapter" data-level="12.1.2" data-path="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#mean-and-variance-adjusted-statistic-t_mv"><i class="fa fa-check"></i><b>12.1.2</b> Mean and variance adjusted statistic (T_MV)</a></li>
+<li class="chapter" data-level="12.1.3" data-path="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#yuan-bentler-test-statistic-t_mlr"><i class="fa fa-check"></i><b>12.1.3</b> Yuan-Bentler test statistic (T_MLR)</a></li>
+<li class="chapter" data-level="12.1.4" data-path="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#small-sample-correction---f-test"><i class="fa fa-check"></i><b>12.1.4</b> Small sample correction - F test</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#part-ii-nested-model-comparison"><i class="fa fa-check"></i><b>12.2</b> PART II: Nested Model Comparison</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#one-factor-model"><i class="fa fa-check"></i><b>12.2.1</b> One-factor model</a></li>
+<li class="chapter" data-level="12.2.2" data-path="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#plotting"><i class="fa fa-check"></i><b>12.2.2</b> Plotting</a></li>
+<li class="chapter" data-level="12.2.3" data-path="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#comparing-nested-models"><i class="fa fa-check"></i><b>12.2.3</b> Comparing Nested Models</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#part-iii-exercises-more-nested-models"><i class="fa fa-check"></i><b>12.3</b> PART III: Exercises: More Nested Models</a>
+<ul>
+<li class="chapter" data-level="12.3.1" data-path="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#exercises-compare-the-base-model-fixedindtwofacrun-to"><i class="fa fa-check"></i><b>12.3.1</b> Exercises: Compare the base model (fixedIndTwoFacRun) to</a></li>
+<li class="chapter" data-level="12.3.2" data-path="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#model-2-orthogonal-factors"><i class="fa fa-check"></i><b>12.3.2</b> Model 2: Orthogonal Factors</a></li>
+<li class="chapter" data-level="12.3.3" data-path="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#model-3-cross-loading"><i class="fa fa-check"></i><b>12.3.3</b> Model 3: Cross loading</a></li>
+<li class="chapter" data-level="12.3.4" data-path="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#model-4-correlated-unique-factors"><i class="fa fa-check"></i><b>12.3.4</b> Model 4: Correlated Unique Factors</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html"><i class="fa fa-check"></i><b>13</b> Week11_1: Lavaan Lab 10 Model Fit Part II (Fit Indices)</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#part-i-fit-indices"><i class="fa fa-check"></i><b>13.1</b> PART I: Fit Indices</a>
+<ul>
+<li class="chapter" data-level="13.1.1" data-path="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#rmsea"><i class="fa fa-check"></i><b>13.1.1</b> RMSEA</a></li>
+<li class="chapter" data-level="13.1.2" data-path="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#srmr"><i class="fa fa-check"></i><b>13.1.2</b> SRMR</a></li>
+<li class="chapter" data-level="13.1.3" data-path="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#null-model-mo"><i class="fa fa-check"></i><b>13.1.3</b> Null Model MO</a></li>
+<li class="chapter" data-level="13.1.4" data-path="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cfitli"><i class="fa fa-check"></i><b>13.1.4</b> CFI/TLI</a></li>
+<li class="chapter" data-level="13.1.5" data-path="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#loglikelihood"><i class="fa fa-check"></i><b>13.1.5</b> Loglikelihood</a></li>
+<li class="chapter" data-level="13.1.6" data-path="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#aicbic"><i class="fa fa-check"></i><b>13.1.6</b> AIC/BIC</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#part-ii-exercise"><i class="fa fa-check"></i><b>13.2</b> PART II: Exercise</a>
+<ul>
+<li class="chapter" data-level="13.2.1" data-path="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#part-i-plot-the-distributions-of-all-indicators"><i class="fa fa-check"></i><b>13.2.1</b> PART I: Plot the distributions of all indicators</a></li>
+<li class="chapter" data-level="13.2.2" data-path="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#part-ii-write-out-the-model-syntax-for-two-factor-model"><i class="fa fa-check"></i><b>13.2.2</b> PART II: Write out the model syntax for two-factor model</a></li>
+<li class="chapter" data-level="13.2.3" data-path="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#part-iii-fit-the-two-factor-model"><i class="fa fa-check"></i><b>13.2.3</b> PART III: Fit the two-factor model</a></li>
+<li class="chapter" data-level="13.2.4" data-path="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#part-iv-interpret-the-chisquare-statistic-and-fit-indices"><i class="fa fa-check"></i><b>13.2.4</b> PART IV: Interpret the chisquare statistic and fit indices</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html"><i class="fa fa-check"></i><b>14</b> Week11_2: Lavaan Lab 11 Model Local Fitting and Model Modifications</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#part-i-local-fit-with-residuals"><i class="fa fa-check"></i><b>14.1</b> PART I: Local Fit with Residuals</a>
+<ul>
+<li class="chapter" data-level="14.1.1" data-path="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#unstandardized-residuals"><i class="fa fa-check"></i><b>14.1.1</b> Unstandardized residuals</a></li>
+<li class="chapter" data-level="14.1.2" data-path="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#standardized-residuals"><i class="fa fa-check"></i><b>14.1.2</b> Standardized residuals</a></li>
+<li class="chapter" data-level="14.1.3" data-path="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#normalized-residuals"><i class="fa fa-check"></i><b>14.1.3</b> Normalized residuals</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#part-ii-modification-indices"><i class="fa fa-check"></i><b>14.2</b> PART II: Modification Indices</a>
+<ul>
+<li class="chapter" data-level="14.2.1" data-path="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#modified-model-1"><i class="fa fa-check"></i><b>14.2.1</b> Modified Model 1:</a></li>
+<li class="chapter" data-level="14.2.2" data-path="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#modified-model-2_1"><i class="fa fa-check"></i><b>14.2.2</b> Modified Model 2_1:</a></li>
+<li class="chapter" data-level="14.2.3" data-path="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#modified-model-2_2"><i class="fa fa-check"></i><b>14.2.3</b> Modified Model 2_2:</a></li>
+<li class="chapter" data-level="14.2.4" data-path="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#modified-model-3"><i class="fa fa-check"></i><b>14.2.4</b> Modified Model 3:</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="week12_1-lavaan-lab-12-sem-for-missing-data.html"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html"><i class="fa fa-check"></i><b>15</b> Week12_1: Lavaan Lab 12 SEM for Missing Data</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="week12_1-lavaan-lab-12-sem-for-missing-data.html"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#part-i-generate-some-missing-data"><i class="fa fa-check"></i><b>15.1</b> PART I: Generate some missing data</a></li>
+<li class="chapter" data-level="15.2" data-path="week12_1-lavaan-lab-12-sem-for-missing-data.html"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#part-ii-visualization-of-missing-data-patterns-nice-to-have"><i class="fa fa-check"></i><b>15.2</b> PART II: Visualization of missing data patterns (nice-to-have)</a></li>
+<li class="chapter" data-level="15.3" data-path="week12_1-lavaan-lab-12-sem-for-missing-data.html"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#part-iii-build-a-cfa-model-with-missing-data"><i class="fa fa-check"></i><b>15.3</b> PART III: Build a CFA model with missing data</a></li>
+<li class="chapter" data-level="15.4" data-path="week12_1-lavaan-lab-12-sem-for-missing-data.html"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#part-iv-addressing-missing-data"><i class="fa fa-check"></i><b>15.4</b> PART IV: Addressing missing data</a>
+<ul>
+<li class="chapter" data-level="15.4.1" data-path="week12_1-lavaan-lab-12-sem-for-missing-data.html"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#fiml"><i class="fa fa-check"></i><b>15.4.1</b> FIML</a></li>
+<li class="chapter" data-level="15.4.2" data-path="week12_1-lavaan-lab-12-sem-for-missing-data.html"><a href="week12_1-lavaan-lab-12-sem-for-missing-data.html#multiple-imputation"><i class="fa fa-check"></i><b>15.4.2</b> Multiple Imputation</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html"><i class="fa fa-check"></i><b>16</b> Week12_2: Lavaan Lab 13 SEM for Nonnormal and Categorical Data</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#part-i-nonnormality-diagnosis"><i class="fa fa-check"></i><b>16.1</b> PART I: Nonnormality Diagnosis</a></li>
+<li class="chapter" data-level="16.2" data-path="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#part-ii-robust-corrections"><i class="fa fa-check"></i><b>16.2</b> PART II: Robust corrections</a></li>
+<li class="chapter" data-level="16.3" data-path="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#part-iii-categorical-data-analysis-in-lavaan"><i class="fa fa-check"></i><b>16.3</b> PART III: Categorical Data Analysis in Lavaan</a></li>
+<li class="chapter" data-level="16.4" data-path="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#part-iv-what-if-you-have-it-all"><i class="fa fa-check"></i><b>16.4</b> PART IV: What if you have it all?</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="week13_1-lavaan-lab-14-measurement-invariance.html"><a href="week13_1-lavaan-lab-14-measurement-invariance.html"><i class="fa fa-check"></i><b>17</b> Week13_1: Lavaan Lab 14 Measurement Invariance</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="week13_1-lavaan-lab-14-measurement-invariance.html"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#part-i-multi-group-analyses-done-incorrectly"><i class="fa fa-check"></i><b>17.1</b> PART I: Multi-Group Analyses, Done Incorrectly</a></li>
+<li class="chapter" data-level="17.2" data-path="week13_1-lavaan-lab-14-measurement-invariance.html"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#part-ii-testing-measurement-invariance"><i class="fa fa-check"></i><b>17.2</b> PART II: Testing Measurement Invariance</a>
+<ul>
+<li class="chapter" data-level="17.2.1" data-path="week13_1-lavaan-lab-14-measurement-invariance.html"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#step-1-configural-invariance"><i class="fa fa-check"></i><b>17.2.1</b> step 1: Configural invariance</a></li>
+<li class="chapter" data-level="17.2.2" data-path="week13_1-lavaan-lab-14-measurement-invariance.html"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#step-2-metric-weak-invariance"><i class="fa fa-check"></i><b>17.2.2</b> step 2: Metric (weak) invariance</a></li>
+<li class="chapter" data-level="17.2.3" data-path="week13_1-lavaan-lab-14-measurement-invariance.html"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#step-3-scalar-strong-invariance"><i class="fa fa-check"></i><b>17.2.3</b> step 3: Scalar (strong) Invariance</a></li>
+<li class="chapter" data-level="17.2.4" data-path="week13_1-lavaan-lab-14-measurement-invariance.html"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#step-4-optional-residual-variance-strict-invariance"><i class="fa fa-check"></i><b>17.2.4</b> step 4: (Optional) Residual variance (strict) invariance</a></li>
+</ul></li>
+<li class="chapter" data-level="17.3" data-path="week13_1-lavaan-lab-14-measurement-invariance.html"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#part-iii-shortcut-to-performing-mi"><i class="fa fa-check"></i><b>17.3</b> PART III: Shortcut to performing MI</a>
+<ul>
+<li class="chapter" data-level="17.3.1" data-path="week13_1-lavaan-lab-14-measurement-invariance.html"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#measurementinvariance"><i class="fa fa-check"></i><b>17.3.1</b> measurementInvariance()</a></li>
+<li class="chapter" data-level="17.3.2" data-path="week13_1-lavaan-lab-14-measurement-invariance.html"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#measeq.syntax"><i class="fa fa-check"></i><b>17.3.2</b> measEq.syntax()</a></li>
+</ul></li>
+<li class="chapter" data-level="17.4" data-path="week13_1-lavaan-lab-14-measurement-invariance.html"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#part-iv-multi-group-cfa-modeling-done-right"><i class="fa fa-check"></i><b>17.4</b> PART IV: Multi-Group CFA Modeling, done right</a>
+<ul>
+<li class="chapter" data-level="17.4.1" data-path="week13_1-lavaan-lab-14-measurement-invariance.html"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#statistical-test-of-equal-factor-means"><i class="fa fa-check"></i><b>17.4.1</b> Statistical Test of Equal Factor Means:</a></li>
+<li class="chapter" data-level="17.4.2" data-path="week13_1-lavaan-lab-14-measurement-invariance.html"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#statistical-test-of-equal-regression-coefficients"><i class="fa fa-check"></i><b>17.4.2</b> Statistical Test of Equal Regression Coefficients:</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="week13_2-lavaan-lab-15-mimic-longitudinal-invariance.html"><a href="week13_2-lavaan-lab-15-mimic-longitudinal-invariance.html"><i class="fa fa-check"></i><b>18</b> Week13_2: Lavaan Lab 15 MIMIC &amp; Longitudinal Invariance</a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="week13_2-lavaan-lab-15-mimic-longitudinal-invariance.html"><a href="week13_2-lavaan-lab-15-mimic-longitudinal-invariance.html#part-i-partial-invariance"><i class="fa fa-check"></i><b>18.1</b> PART I: Partial Invariance</a></li>
+<li class="chapter" data-level="18.2" data-path="week13_2-lavaan-lab-15-mimic-longitudinal-invariance.html"><a href="week13_2-lavaan-lab-15-mimic-longitudinal-invariance.html#part-ii-mimic"><i class="fa fa-check"></i><b>18.2</b> PART II: MIMIC</a>
+<ul>
+<li class="chapter" data-level="18.2.1" data-path="week13_2-lavaan-lab-15-mimic-longitudinal-invariance.html"><a href="week13_2-lavaan-lab-15-mimic-longitudinal-invariance.html#test-metric-invariance"><i class="fa fa-check"></i><b>18.2.1</b> Test Metric Invariance</a></li>
+<li class="chapter" data-level="18.2.2" data-path="week13_2-lavaan-lab-15-mimic-longitudinal-invariance.html"><a href="week13_2-lavaan-lab-15-mimic-longitudinal-invariance.html#test-scalar-invariance"><i class="fa fa-check"></i><b>18.2.2</b> Test Scalar Invariance</a></li>
+<li class="chapter" data-level="18.2.3" data-path="week13_2-lavaan-lab-15-mimic-longitudinal-invariance.html"><a href="week13_2-lavaan-lab-15-mimic-longitudinal-invariance.html#test-the-hypothesis-of-equal-factor-means"><i class="fa fa-check"></i><b>18.2.3</b> Test The Hypothesis of Equal Factor Means:</a></li>
+</ul></li>
+<li class="chapter" data-level="18.3" data-path="week13_2-lavaan-lab-15-mimic-longitudinal-invariance.html"><a href="week13_2-lavaan-lab-15-mimic-longitudinal-invariance.html#part-iii-longitudinal-invariance"><i class="fa fa-check"></i><b>18.3</b> PART III: Longitudinal Invariance</a>
+<ul>
+<li class="chapter" data-level="18.3.1" data-path="week13_2-lavaan-lab-15-mimic-longitudinal-invariance.html"><a href="week13_2-lavaan-lab-15-mimic-longitudinal-invariance.html#step-1-configural-invariance-1"><i class="fa fa-check"></i><b>18.3.1</b> step 1: Configural invariance</a></li>
+<li class="chapter" data-level="18.3.2" data-path="week13_2-lavaan-lab-15-mimic-longitudinal-invariance.html"><a href="week13_2-lavaan-lab-15-mimic-longitudinal-invariance.html#step-1.5-threshold-invariance-for-categorical-indicators-only"><i class="fa fa-check"></i><b>18.3.2</b> step 1.5: Threshold invariance (for categorical indicators only)</a></li>
+<li class="chapter" data-level="18.3.3" data-path="week13_2-lavaan-lab-15-mimic-longitudinal-invariance.html"><a href="week13_2-lavaan-lab-15-mimic-longitudinal-invariance.html#recommended-practice-fit-one-invariance-model-at-a-time"><i class="fa fa-check"></i><b>18.3.3</b> RECOMMENDED PRACTICE: fit one invariance model at a time</a></li>
+<li class="chapter" data-level="18.3.4" data-path="week13_2-lavaan-lab-15-mimic-longitudinal-invariance.html"><a href="week13_2-lavaan-lab-15-mimic-longitudinal-invariance.html#step-2-metric-weak-invariance-1"><i class="fa fa-check"></i><b>18.3.4</b> step 2: Metric (weak) invariance</a></li>
+<li class="chapter" data-level="18.3.5" data-path="week13_2-lavaan-lab-15-mimic-longitudinal-invariance.html"><a href="week13_2-lavaan-lab-15-mimic-longitudinal-invariance.html#step-3-scalar-strong-invariance-1"><i class="fa fa-check"></i><b>18.3.5</b> step 3: Scalar (strong) Invariance</a></li>
+<li class="chapter" data-level="18.3.6" data-path="week13_2-lavaan-lab-15-mimic-longitudinal-invariance.html"><a href="week13_2-lavaan-lab-15-mimic-longitudinal-invariance.html#step-4-residual-variance-strict-invariance"><i class="fa fa-check"></i><b>18.3.6</b> step 4: Residual variance (strict) invariance</a></li>
+<li class="chapter" data-level="18.3.7" data-path="week13_2-lavaan-lab-15-mimic-longitudinal-invariance.html"><a href="week13_2-lavaan-lab-15-mimic-longitudinal-invariance.html#shortcut-function"><i class="fa fa-check"></i><b>18.3.7</b> Shortcut Function</a></li>
+<li class="chapter" data-level="18.3.8" data-path="week13_2-lavaan-lab-15-mimic-longitudinal-invariance.html"><a href="week13_2-lavaan-lab-15-mimic-longitudinal-invariance.html#not-recommended-fit-several-invariance-models-at-once"><i class="fa fa-check"></i><b>18.3.8</b> NOT RECOMMENDED: fit several invariance models at once</a></li>
+</ul></li>
+<li class="chapter" data-level="18.4" data-path="week13_2-lavaan-lab-15-mimic-longitudinal-invariance.html"><a href="week13_2-lavaan-lab-15-mimic-longitudinal-invariance.html#part-iv-exercises-mimic"><i class="fa fa-check"></i><b>18.4</b> PART IV: Exercises: MIMIC</a></li>
+<li class="chapter" data-level="18.5" data-path="week13_2-lavaan-lab-15-mimic-longitudinal-invariance.html"><a href="week13_2-lavaan-lab-15-mimic-longitudinal-invariance.html#part-v-exercises-longitudinal-invariance"><i class="fa fa-check"></i><b>18.5</b> PART V: Exercises: Longitudinal Invariance</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="week14-lavaan-lab-16-latent-growth-models.html"><a href="week14-lavaan-lab-16-latent-growth-models.html"><i class="fa fa-check"></i><b>19</b> Week14: Lavaan Lab 16 Latent Growth Models</a>
+<ul>
+<li class="chapter" data-level="19.1" data-path="week14-lavaan-lab-16-latent-growth-models.html"><a href="week14-lavaan-lab-16-latent-growth-models.html#part-i-spaghetti-plot"><i class="fa fa-check"></i><b>19.1</b> PART I: Spaghetti Plot</a></li>
+<li class="chapter" data-level="19.2" data-path="week14-lavaan-lab-16-latent-growth-models.html"><a href="week14-lavaan-lab-16-latent-growth-models.html#part-ii-growth-models"><i class="fa fa-check"></i><b>19.2</b> PART II: Growth Models</a>
+<ul>
+<li class="chapter" data-level="19.2.1" data-path="week14-lavaan-lab-16-latent-growth-models.html"><a href="week14-lavaan-lab-16-latent-growth-models.html#no-growth-model"><i class="fa fa-check"></i><b>19.2.1</b> 1. No growth model</a></li>
+<li class="chapter" data-level="19.2.2" data-path="week14-lavaan-lab-16-latent-growth-models.html"><a href="week14-lavaan-lab-16-latent-growth-models.html#linear-growth-model"><i class="fa fa-check"></i><b>19.2.2</b> 2. Linear growth model</a></li>
+<li class="chapter" data-level="19.2.3" data-path="week14-lavaan-lab-16-latent-growth-models.html"><a href="week14-lavaan-lab-16-latent-growth-models.html#quadratic-growth-model"><i class="fa fa-check"></i><b>19.2.3</b> 3. Quadratic growth model</a></li>
+<li class="chapter" data-level="19.2.4" data-path="week14-lavaan-lab-16-latent-growth-models.html"><a href="week14-lavaan-lab-16-latent-growth-models.html#latent-basis-growth-model-extension-of-linear-growth-model"><i class="fa fa-check"></i><b>19.2.4</b> 4. Latent basis growth model (extension of linear growth model)</a></li>
+<li class="chapter" data-level="19.2.5" data-path="week14-lavaan-lab-16-latent-growth-models.html"><a href="week14-lavaan-lab-16-latent-growth-models.html#spline-growth-model"><i class="fa fa-check"></i><b>19.2.5</b> 5. Spline Growth Model</a></li>
+<li class="chapter" data-level="19.2.6" data-path="week14-lavaan-lab-16-latent-growth-models.html"><a href="week14-lavaan-lab-16-latent-growth-models.html#model-comparison"><i class="fa fa-check"></i><b>19.2.6</b> Model Comparison</a></li>
+<li class="chapter" data-level="19.2.7" data-path="week14-lavaan-lab-16-latent-growth-models.html"><a href="week14-lavaan-lab-16-latent-growth-models.html#final-model-spline-growth-model-with-a-binary-treatment-predictor"><i class="fa fa-check"></i><b>19.2.7</b> 6. Final Model: Spline Growth Model with a binary treatment predictor</a></li>
+</ul></li>
+<li class="chapter" data-level="19.3" data-path="week14-lavaan-lab-16-latent-growth-models.html"><a href="week14-lavaan-lab-16-latent-growth-models.html#part-iii-lgm-on-latent-variables"><i class="fa fa-check"></i><b>19.3</b> PART III: LGM on Latent Variables</a>
+<ul>
+<li class="chapter" data-level="19.3.1" data-path="week14-lavaan-lab-16-latent-growth-models.html"><a href="week14-lavaan-lab-16-latent-growth-models.html#example"><i class="fa fa-check"></i><b>19.3.1</b> Example</a></li>
+<li class="chapter" data-level="19.3.2" data-path="week14-lavaan-lab-16-latent-growth-models.html"><a href="week14-lavaan-lab-16-latent-growth-models.html#exercise"><i class="fa fa-check"></i><b>19.3.2</b> Exercise</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="week15-lavaan-lab-17-second-order-and-bifactor-models.html"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models.html"><i class="fa fa-check"></i><b>20</b> Week15: Lavaan Lab 17 Second-order and Bifactor Models</a>
+<ul>
+<li class="chapter" data-level="20.1" data-path="week15-lavaan-lab-17-second-order-and-bifactor-models.html"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models.html#part-i-unidimensional-model"><i class="fa fa-check"></i><b>20.1</b> PART I: Unidimensional model</a></li>
+<li class="chapter" data-level="20.2" data-path="week15-lavaan-lab-17-second-order-and-bifactor-models.html"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models.html#part-ii-correlated-factors-model"><i class="fa fa-check"></i><b>20.2</b> PART II: Correlated factors model</a></li>
+<li class="chapter" data-level="20.3" data-path="week15-lavaan-lab-17-second-order-and-bifactor-models.html"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models.html#part-iii-second-order-factor-model"><i class="fa fa-check"></i><b>20.3</b> PART III: Second-order factor Model</a></li>
+<li class="chapter" data-level="20.4" data-path="week15-lavaan-lab-17-second-order-and-bifactor-models.html"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models.html#part-iv-bifactor-model"><i class="fa fa-check"></i><b>20.4</b> PART IV: Bifactor Model</a></li>
+<li class="chapter" data-level="20.5" data-path="week15-lavaan-lab-17-second-order-and-bifactor-models.html"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models.html#part-v-model-comparison"><i class="fa fa-check"></i><b>20.5</b> PART V: Model Comparison</a></li>
+<li class="chapter" data-level="20.6" data-path="week15-lavaan-lab-17-second-order-and-bifactor-models.html"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models.html#exercise-odd-scale"><i class="fa fa-check"></i><b>20.6</b> Exercise: ODD Scale</a></li>
+</ul></li>
+<li class="chapter" data-level="21" data-path="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html"><i class="fa fa-check"></i><b>21</b> Week15: Lavaan Lab 17 Second-order and Bifactor Models</a>
+<ul>
+<li class="chapter" data-level="21.1" data-path="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#part-i-unidimensional-model-1"><i class="fa fa-check"></i><b>21.1</b> PART I: Unidimensional model</a></li>
+<li class="chapter" data-level="21.2" data-path="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#part-ii-correlated-factors-model-1"><i class="fa fa-check"></i><b>21.2</b> PART II: Correlated factors model</a></li>
+<li class="chapter" data-level="21.3" data-path="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#part-iii-second-order-factor-model-1"><i class="fa fa-check"></i><b>21.3</b> PART III: Second-order factor Model</a></li>
+<li class="chapter" data-level="21.4" data-path="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#part-iv-bifactor-model-1"><i class="fa fa-check"></i><b>21.4</b> PART IV: Bifactor Model</a></li>
+<li class="chapter" data-level="21.5" data-path="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#part-v-model-comparison-1"><i class="fa fa-check"></i><b>21.5</b> PART V: Model Comparison</a></li>
+<li class="chapter" data-level="21.6" data-path="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#exercise-odd-scale-1"><i class="fa fa-check"></i><b>21.6</b> Exercise: ODD Scale</a></li>
+</ul></li>
+<li class="chapter" data-level="22" data-path="week14-lavaan-lab-16-latent-growth-models-1.html"><a href="week14-lavaan-lab-16-latent-growth-models-1.html"><i class="fa fa-check"></i><b>22</b> Week14: Lavaan Lab 16 Latent Growth Models</a>
+<ul>
+<li class="chapter" data-level="22.1" data-path="week14-lavaan-lab-16-latent-growth-models-1.html"><a href="week14-lavaan-lab-16-latent-growth-models-1.html#part-i-spaghetti-plot-1"><i class="fa fa-check"></i><b>22.1</b> PART I: Spaghetti Plot</a></li>
+<li class="chapter" data-level="22.2" data-path="week14-lavaan-lab-16-latent-growth-models-1.html"><a href="week14-lavaan-lab-16-latent-growth-models-1.html#part-ii-growth-models-1"><i class="fa fa-check"></i><b>22.2</b> PART II: Growth Models</a>
+<ul>
+<li class="chapter" data-level="22.2.1" data-path="week14-lavaan-lab-16-latent-growth-models-1.html"><a href="week14-lavaan-lab-16-latent-growth-models-1.html#no-growth-model-1"><i class="fa fa-check"></i><b>22.2.1</b> 1. No growth model</a></li>
+<li class="chapter" data-level="22.2.2" data-path="week14-lavaan-lab-16-latent-growth-models-1.html"><a href="week14-lavaan-lab-16-latent-growth-models-1.html#linear-growth-model-1"><i class="fa fa-check"></i><b>22.2.2</b> 2. Linear growth model</a></li>
+<li class="chapter" data-level="22.2.3" data-path="week14-lavaan-lab-16-latent-growth-models-1.html"><a href="week14-lavaan-lab-16-latent-growth-models-1.html#quadratic-growth-model-1"><i class="fa fa-check"></i><b>22.2.3</b> 3. Quadratic growth model</a></li>
+<li class="chapter" data-level="22.2.4" data-path="week14-lavaan-lab-16-latent-growth-models-1.html"><a href="week14-lavaan-lab-16-latent-growth-models-1.html#latent-basis-growth-model-extension-of-linear-growth-model-1"><i class="fa fa-check"></i><b>22.2.4</b> 4. Latent basis growth model (extension of linear growth model)</a></li>
+<li class="chapter" data-level="22.2.5" data-path="week14-lavaan-lab-16-latent-growth-models-1.html"><a href="week14-lavaan-lab-16-latent-growth-models-1.html#spline-growth-model-1"><i class="fa fa-check"></i><b>22.2.5</b> 5. Spline Growth Model</a></li>
+<li class="chapter" data-level="22.2.6" data-path="week14-lavaan-lab-16-latent-growth-models-1.html"><a href="week14-lavaan-lab-16-latent-growth-models-1.html#model-comparison-1"><i class="fa fa-check"></i><b>22.2.6</b> Model Comparison</a></li>
+<li class="chapter" data-level="22.2.7" data-path="week14-lavaan-lab-16-latent-growth-models-1.html"><a href="week14-lavaan-lab-16-latent-growth-models-1.html#final-model-spline-growth-model-with-a-binary-treatment-predictor-1"><i class="fa fa-check"></i><b>22.2.7</b> 6. Final Model: Spline Growth Model with a binary treatment predictor</a></li>
+</ul></li>
+<li class="chapter" data-level="22.3" data-path="week14-lavaan-lab-16-latent-growth-models-1.html"><a href="week14-lavaan-lab-16-latent-growth-models-1.html#part-iii-lgm-on-latent-variables-1"><i class="fa fa-check"></i><b>22.3</b> PART III: LGM on Latent Variables</a>
+<ul>
+<li class="chapter" data-level="22.3.1" data-path="week14-lavaan-lab-16-latent-growth-models-1.html"><a href="week14-lavaan-lab-16-latent-growth-models-1.html#example-1"><i class="fa fa-check"></i><b>22.3.1</b> Example</a></li>
+<li class="chapter" data-level="22.3.2" data-path="week14-lavaan-lab-16-latent-growth-models-1.html"><a href="week14-lavaan-lab-16-latent-growth-models-1.html#exercise-1"><i class="fa fa-check"></i><b>22.3.2</b> Exercise</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">EPSY:579 R Cookbook for SEM</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="week15-lavaan-lab-17-second-order-and-bifactor-models-1" class="section level1 hasAnchor" number="21">
+<h1><span class="header-section-number">Chapter 21</span> Week15: Lavaan Lab 17 Second-order and Bifactor Models<a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#week15-lavaan-lab-17-second-order-and-bifactor-models-1" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>In this lab, we will evaluate the dimensionality of ISMI-29 by fitting and comparing the following four models:</p>
+<ol style="list-style-type: decimal">
+<li>Unidimensional model (one-factor CFA)</li>
+<li>Correlated factors model (multi-factor CFA)</li>
+<li>Second-order factor model</li>
+<li>Bifactor model</li>
+</ol>
+<p>Load up the lavaan and semPlot libraries:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span>
+<span id="cb1-2"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(semPlot)</span></code></pre></div>
+<ul>
+<li>In this lab, we will work with the ISMI-29 data that are collected using Internalized Stigma of Mental Illness Scale</li>
+<li>758 participants and 29 items</li>
+<li>Let’s read in the dataset:</li>
+</ul>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb2-1" aria-hidden="true" tabindex="-1"></a>ISMI29 <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">&#39;ISMI-29 n758 (Hammer 16).csv&#39;</span>, <span class="at">header =</span> F)</span></code></pre></div>
+<p>Take a look at the dataset:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ISMI29)</span></code></pre></div>
+<pre><code>##   V1 V2 V3 V4 V5 V6 V7 V8 V9 V10 V11 V12 V13 V14 V15 V16 V17 V18 V19 V20 V21
+## 1  1  1  2  1  1  1  1  1  1   1   1   1   1   1   1   2   2   1   2   1   2
+## 2  4  4  4  3  4  4  2  2  1   1   2   2   3   2   2   3   3   2   3   3   2
+## 3  4  4  3  1  1  1  2  1  2   1   3   2   1   3   3   3   3   3   3   3   3
+## 4  1  1  2  1  1  3  2  1  1   1   1   1   1   3   2   1   1   1   2   1   3
+## 5  3  3  4  1  1  3  3  2  2   1   1   1   1   2   1   1   1   1   1   2   1
+## 6  2  2  3  2  2  3  2  1  2   1   1   1   1   1   1   1   1   1   3   2   2
+##   V22 V23 V24 V25 V26 V27 V28 V29
+## 1   1   1   2   1   1   2   2   2
+## 2   2   4   2   2   4   4   1   2
+## 3   1   3   2   2   4   3   1   2
+## 4   1   2   1   1   1   1   1   2
+## 5   1   1   1   2   3   1   2   2
+## 6   2   4   1   2   3   1   1   3</code></pre>
+<p>sample size:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb5-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(ISMI29)</span>
+<span id="cb5-2"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb5-2" aria-hidden="true" tabindex="-1"></a>n <span class="co">#758</span></span></code></pre></div>
+<pre><code>## [1] 758</code></pre>
+<p>Factor structure:</p>
+<ul>
+<li>Item1-6: Alienation “Having a mental illness has spoiled my life.”</li>
+<li>Item7-13: Stereotype Endorsement “Mentally ill people tend to be violent”</li>
+<li>Item14-18: Discrimination Experience “People discriminate against me because I have a mental illness”</li>
+<li>Item19-24: Social Withdrawal “I don’t talk about myself as much because I don’t want to burden others with my mental illness”</li>
+<li>Item25-29: *Stigma Resistance (*reverse-coded) “I can have a good, fulfilling life, despite my mental illness”</li>
+</ul>
+<!------------------------------>
+<div id="part-i-unidimensional-model-1" class="section level2 hasAnchor" number="21.1">
+<h2><span class="header-section-number">21.1</span> PART I: Unidimensional model<a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#part-i-unidimensional-model-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<!------------------------------>
+<p>Write out syntax for a one-factor CFA model:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb7-1" aria-hidden="true" tabindex="-1"></a>uni.model <span class="ot">=</span> <span class="st">&#39;</span></span>
+<span id="cb7-2"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="st">ISMI =~ V1+V2+V3+V4+V5+V6+V7+V8+V9+V10+V11+V12+V13+V14+V15+V16+V17+V18+V19+</span></span>
+<span id="cb7-3"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="st">        V20+V21+V22+V23+V24+V25+V26+V27+V28+V29</span></span>
+<span id="cb7-4"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span></code></pre></div>
+<p>Fit the model:</p>
+<ul>
+<li>It is recommended to fix the variances of all first- and second-order factors to be 1 (lavaan: std.lv = TRUE) and request standardized solutions;</li>
+</ul>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb8-1" aria-hidden="true" tabindex="-1"></a>uni.model.fit <span class="ot">=</span> <span class="fu">sem</span>(uni.model, </span>
+<span id="cb8-2"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb8-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data=</span>ISMI29, </span>
+<span id="cb8-3"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb8-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">ordered =</span> <span class="fu">colnames</span>(ISMI29), </span>
+<span id="cb8-4"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb8-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">std.lv =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb8-5"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb8-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">fixed.x =</span> F)</span>
+<span id="cb8-6"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(uni.model.fit, <span class="at">standardized =</span> <span class="cn">TRUE</span>, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>## lavaan 0.6-11 ended normally after 15 iterations
+## 
+##   Estimator                                       DWLS
+##   Optimization method                           NLMINB
+##   Number of model parameters                       116
+##                                                       
+##   Number of observations                           758
+##                                                       
+## Model Test User Model:
+##                                               Standard      Robust
+##   Test Statistic                              2140.966    2606.734
+##   Degrees of freedom                               377         377
+##   P-value (Chi-square)                           0.000       0.000
+##   Scaling correction factor                                  0.869
+##   Shift parameter                                          143.934
+##        simple second-order correction                             
+## 
+## Model Test Baseline Model:
+## 
+##   Test statistic                             76016.285   21485.170
+##   Degrees of freedom                               406         406
+##   P-value                                        0.000       0.000
+##   Scaling correction factor                                  3.587
+## 
+## User Model versus Baseline Model:
+## 
+##   Comparative Fit Index (CFI)                    0.977       0.894
+##   Tucker-Lewis Index (TLI)                       0.975       0.886
+##                                                                   
+##   Robust Comparative Fit Index (CFI)                            NA
+##   Robust Tucker-Lewis Index (TLI)                               NA
+## 
+## Root Mean Square Error of Approximation:
+## 
+##   RMSEA                                          0.079       0.088
+##   90 Percent confidence interval - lower         0.075       0.085
+##   90 Percent confidence interval - upper         0.082       0.092
+##   P-value RMSEA &lt;= 0.05                          0.000       0.000
+##                                                                   
+##   Robust RMSEA                                                  NA
+##   90 Percent confidence interval - lower                        NA
+##   90 Percent confidence interval - upper                        NA
+## 
+## Standardized Root Mean Square Residual:
+## 
+##   SRMR                                           0.073       0.073
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                           Robust.sem
+##   Information                                 Expected
+##   Information saturated (h1) model        Unstructured
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   ISMI =~                                                               
+##     V1                0.788    0.016   50.143    0.000    0.788    0.788
+##     V2                0.730    0.018   40.532    0.000    0.730    0.730
+##     V3                0.523    0.027   19.276    0.000    0.523    0.523
+##     V4                0.699    0.019   36.908    0.000    0.699    0.699
+##     V5                0.693    0.020   33.790    0.000    0.693    0.693
+##     V6                0.726    0.018   40.699    0.000    0.726    0.726
+##     V7                0.556    0.027   20.637    0.000    0.556    0.556
+##     V8                0.586    0.032   18.105    0.000    0.586    0.586
+##     V9                0.306    0.038    7.953    0.000    0.306    0.306
+##     V10               0.678    0.026   26.009    0.000    0.678    0.678
+##     V11               0.661    0.025   26.609    0.000    0.661    0.661
+##     V12               0.572    0.034   16.904    0.000    0.572    0.572
+##     V13               0.758    0.023   32.495    0.000    0.758    0.758
+##     V14               0.660    0.022   29.922    0.000    0.660    0.660
+##     V15               0.654    0.023   28.747    0.000    0.654    0.654
+##     V16               0.738    0.018   40.911    0.000    0.738    0.738
+##     V17               0.707    0.020   35.246    0.000    0.707    0.707
+##     V18               0.764    0.017   44.135    0.000    0.764    0.764
+##     V19               0.583    0.025   23.420    0.000    0.583    0.583
+##     V20               0.768    0.016   46.920    0.000    0.768    0.768
+##     V21               0.773    0.017   46.637    0.000    0.773    0.773
+##     V22               0.744    0.018   40.995    0.000    0.744    0.744
+##     V23               0.710    0.020   35.129    0.000    0.710    0.710
+##     V24               0.739    0.019   39.098    0.000    0.739    0.739
+##     V25               0.071    0.038    1.893    0.058    0.071    0.071
+##     V26               0.728    0.019   37.856    0.000    0.728    0.728
+##     V27               0.665    0.024   27.941    0.000    0.665    0.665
+##     V28               0.359    0.038    9.485    0.000    0.359    0.359
+##     V29               0.213    0.035    5.994    0.000    0.213    0.213
+## 
+## Intercepts:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .V1                0.000                               0.000    0.000
+##    .V2                0.000                               0.000    0.000
+##    .V3                0.000                               0.000    0.000
+##    .V4                0.000                               0.000    0.000
+##    .V5                0.000                               0.000    0.000
+##    .V6                0.000                               0.000    0.000
+##    .V7                0.000                               0.000    0.000
+##    .V8                0.000                               0.000    0.000
+##    .V9                0.000                               0.000    0.000
+##    .V10               0.000                               0.000    0.000
+##    .V11               0.000                               0.000    0.000
+##    .V12               0.000                               0.000    0.000
+##    .V13               0.000                               0.000    0.000
+##    .V14               0.000                               0.000    0.000
+##    .V15               0.000                               0.000    0.000
+##    .V16               0.000                               0.000    0.000
+##    .V17               0.000                               0.000    0.000
+##    .V18               0.000                               0.000    0.000
+##    .V19               0.000                               0.000    0.000
+##    .V20               0.000                               0.000    0.000
+##    .V21               0.000                               0.000    0.000
+##    .V22               0.000                               0.000    0.000
+##    .V23               0.000                               0.000    0.000
+##    .V24               0.000                               0.000    0.000
+##    .V25               0.000                               0.000    0.000
+##    .V26               0.000                               0.000    0.000
+##    .V27               0.000                               0.000    0.000
+##    .V28               0.000                               0.000    0.000
+##    .V29               0.000                               0.000    0.000
+##     ISMI              0.000                               0.000    0.000
+## 
+## Thresholds:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##     V1|t1            -0.980    0.054  -17.991    0.000   -0.980   -0.980
+##     V1|t2            -0.099    0.046   -2.178    0.029   -0.099   -0.099
+##     V1|t3             1.046    0.056   18.722    0.000    1.046    1.046
+##     V2|t1            -0.903    0.053  -17.036    0.000   -0.903   -0.903
+##     V2|t2             0.213    0.046    4.643    0.000    0.213    0.213
+##     V2|t3             1.202    0.060   20.103    0.000    1.202    1.202
+##     V3|t1            -1.149    0.058  -19.687    0.000   -1.149   -1.149
+##     V3|t2            -0.070    0.046   -1.524    0.127   -0.070   -0.070
+##     V3|t3             1.175    0.059   19.899    0.000    1.175    1.175
+##     V4|t1            -0.985    0.055  -18.053    0.000   -0.985   -0.985
+##     V4|t2            -0.066    0.046   -1.452    0.147   -0.066   -0.066
+##     V4|t3             1.058    0.056   18.840    0.000    1.058    1.058
+##     V5|t1            -0.785    0.051  -15.374    0.000   -0.785   -0.785
+##     V5|t2            -0.046    0.046   -1.016    0.309   -0.046   -0.046
+##     V5|t3             1.029    0.056   18.542    0.000    1.029    1.029
+##     V6|t1            -0.758    0.051  -14.965    0.000   -0.758   -0.758
+##     V6|t2             0.060    0.046    1.307    0.191    0.060    0.060
+##     V6|t3             1.202    0.060   20.103    0.000    1.202    1.202
+##     V7|t1            -0.685    0.050  -13.793    0.000   -0.685   -0.685
+##     V7|t2             0.537    0.048   11.189    0.000    0.537    0.537
+##     V7|t3             1.711    0.080   21.292    0.000    1.711    1.711
+##     V8|t1             0.404    0.047    8.614    0.000    0.404    0.404
+##     V8|t2             1.606    0.075   21.452    0.000    1.606    1.606
+##     V8|t3             2.183    0.118   18.488    0.000    2.183    2.183
+##     V9|t1             0.264    0.046    5.729    0.000    0.264    0.264
+##     V9|t2             1.711    0.080   21.292    0.000    1.711    1.711
+##     V9|t3             2.656    0.194   13.656    0.000    2.656    2.656
+##     V10|t1            0.261    0.046    5.656    0.000    0.261    0.261
+##     V10|t2            1.429    0.067   21.257    0.000    1.429    1.429
+##     V10|t3            2.149    0.114   18.786    0.000    2.149    2.149
+##     V11|t1            0.073    0.046    1.597    0.110    0.073    0.073
+##     V11|t2            1.319    0.063   20.826    0.000    1.319    1.319
+##     V11|t3            2.261    0.127   17.776    0.000    2.261    2.261
+##     V12|t1            0.507    0.048   10.619    0.000    0.507    0.507
+##     V12|t2            1.839    0.088   20.845    0.000    1.839    1.839
+##     V12|t3            2.413    0.148   16.268    0.000    2.413    2.413
+##     V13|t1            0.288    0.046    6.235    0.000    0.288    0.288
+##     V13|t2            1.438    0.068   21.282    0.000    1.438    1.438
+##     V13|t3            2.031    0.103   19.706    0.000    2.031    2.031
+##     V14|t1           -0.632    0.049  -12.885    0.000   -0.632   -0.632
+##     V14|t2            0.496    0.048   10.405    0.000    0.496    0.496
+##     V14|t3            1.476    0.069   21.369    0.000    1.476    1.476
+##     V15|t1           -0.401    0.047   -8.542    0.000   -0.401   -0.401
+##     V15|t2            0.771    0.051   15.170    0.000    0.771    0.771
+##     V15|t3            1.726    0.081   21.255    0.000    1.726    1.726
+##     V16|t1           -0.557    0.048  -11.544    0.000   -0.557   -0.557
+##     V16|t2            0.534    0.048   11.118    0.000    0.534    0.534
+##     V16|t3            1.549    0.072   21.455    0.000    1.549    1.549
+##     V17|t1           -0.285    0.046   -6.162    0.000   -0.285   -0.285
+##     V17|t2            0.803    0.051   15.644    0.000    0.803    0.803
+##     V17|t3            1.771    0.084   21.114    0.000    1.771    1.771
+##     V18|t1           -0.437    0.047   -9.260    0.000   -0.437   -0.437
+##     V18|t2            0.632    0.049   12.885    0.000    0.632    0.632
+##     V18|t3            1.726    0.081   21.255    0.000    1.726    1.726
+##     V19|t1           -1.243    0.061  -20.393    0.000   -1.243   -1.243
+##     V19|t2           -0.210    0.046   -4.570    0.000   -0.210   -0.210
+##     V19|t3            0.888    0.053   16.840    0.000    0.888    0.888
+##     V20|t1           -0.664    0.049  -13.445    0.000   -0.664   -0.664
+##     V20|t2            0.278    0.046    6.018    0.000    0.278    0.278
+##     V20|t3            1.251    0.061   20.439    0.000    1.251    1.251
+##     V21|t1           -0.727    0.050  -14.485    0.000   -0.727   -0.727
+##     V21|t2            0.433    0.047    9.189    0.000    0.433    0.433
+##     V21|t3            1.517    0.071   21.429    0.000    1.517    1.517
+##     V22|t1           -0.261    0.046   -5.656    0.000   -0.261   -0.261
+##     V22|t2            0.758    0.051   14.965    0.000    0.758    0.758
+##     V22|t3            1.656    0.077   21.400    0.000    1.656    1.656
+##     V23|t1           -0.572    0.048  -11.827    0.000   -0.572   -0.572
+##     V23|t2            0.440    0.047    9.332    0.000    0.440    0.440
+##     V23|t3            1.447    0.068   21.306    0.000    1.447    1.447
+##     V24|t1           -0.323    0.046   -6.957    0.000   -0.323   -0.323
+##     V24|t2            0.789    0.051   15.441    0.000    0.789    0.789
+##     V24|t3            1.571    0.073   21.461    0.000    1.571    1.571
+##     V25|t1           -0.873    0.052  -16.644    0.000   -0.873   -0.873
+##     V25|t2            0.437    0.047    9.260    0.000    0.437    0.437
+##     V25|t3            1.420    0.067   21.231    0.000    1.420    1.420
+##     V26|t1           -1.001    0.055  -18.238    0.000   -1.001   -1.001
+##     V26|t2            0.306    0.046    6.596    0.000    0.306    0.306
+##     V26|t3            1.236    0.061   20.346    0.000    1.236    1.236
+##     V27|t1           -0.481    0.048  -10.120    0.000   -0.481   -0.481
+##     V27|t2            0.854    0.052   16.380    0.000    0.854    0.854
+##     V27|t3            1.683    0.079   21.354    0.000    1.683    1.683
+##     V28|t1            0.254    0.046    5.512    0.000    0.254    0.254
+##     V28|t2            1.656    0.077   21.400    0.000    1.656    1.656
+##     V28|t3            1.982    0.099   20.046    0.000    1.982    1.982
+##     V29|t1           -0.698    0.050  -14.001    0.000   -0.698   -0.698
+##     V29|t2            0.619    0.049   12.674    0.000    0.619    0.619
+##     V29|t3            1.756    0.083   21.166    0.000    1.756    1.756
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .V1                0.379                               0.379    0.379
+##    .V2                0.467                               0.467    0.467
+##    .V3                0.727                               0.727    0.727
+##    .V4                0.511                               0.511    0.511
+##    .V5                0.520                               0.520    0.520
+##    .V6                0.473                               0.473    0.473
+##    .V7                0.691                               0.691    0.691
+##    .V8                0.656                               0.656    0.656
+##    .V9                0.907                               0.907    0.907
+##    .V10               0.541                               0.541    0.541
+##    .V11               0.563                               0.563    0.563
+##    .V12               0.672                               0.672    0.672
+##    .V13               0.425                               0.425    0.425
+##    .V14               0.564                               0.564    0.564
+##    .V15               0.573                               0.573    0.573
+##    .V16               0.455                               0.455    0.455
+##    .V17               0.500                               0.500    0.500
+##    .V18               0.416                               0.416    0.416
+##    .V19               0.660                               0.660    0.660
+##    .V20               0.410                               0.410    0.410
+##    .V21               0.402                               0.402    0.402
+##    .V22               0.447                               0.447    0.447
+##    .V23               0.495                               0.495    0.495
+##    .V24               0.453                               0.453    0.453
+##    .V25               0.995                               0.995    0.995
+##    .V26               0.470                               0.470    0.470
+##    .V27               0.558                               0.558    0.558
+##    .V28               0.871                               0.871    0.871
+##    .V29               0.955                               0.955    0.955
+##     ISMI              1.000                               1.000    1.000
+## 
+## Scales y*:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##     V1                1.000                               1.000    1.000
+##     V2                1.000                               1.000    1.000
+##     V3                1.000                               1.000    1.000
+##     V4                1.000                               1.000    1.000
+##     V5                1.000                               1.000    1.000
+##     V6                1.000                               1.000    1.000
+##     V7                1.000                               1.000    1.000
+##     V8                1.000                               1.000    1.000
+##     V9                1.000                               1.000    1.000
+##     V10               1.000                               1.000    1.000
+##     V11               1.000                               1.000    1.000
+##     V12               1.000                               1.000    1.000
+##     V13               1.000                               1.000    1.000
+##     V14               1.000                               1.000    1.000
+##     V15               1.000                               1.000    1.000
+##     V16               1.000                               1.000    1.000
+##     V17               1.000                               1.000    1.000
+##     V18               1.000                               1.000    1.000
+##     V19               1.000                               1.000    1.000
+##     V20               1.000                               1.000    1.000
+##     V21               1.000                               1.000    1.000
+##     V22               1.000                               1.000    1.000
+##     V23               1.000                               1.000    1.000
+##     V24               1.000                               1.000    1.000
+##     V25               1.000                               1.000    1.000
+##     V26               1.000                               1.000    1.000
+##     V27               1.000                               1.000    1.000
+##     V28               1.000                               1.000    1.000
+##     V29               1.000                               1.000    1.000</code></pre>
+<p>Plot the path diagram:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(uni.model.fit, <span class="at">what =</span> <span class="st">&#39;std&#39;</span>, <span class="at">fade =</span> F)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<!------------------------------>
+</div>
+<div id="part-ii-correlated-factors-model-1" class="section level2 hasAnchor" number="21.2">
+<h2><span class="header-section-number">21.2</span> PART II: Correlated factors model<a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#part-ii-correlated-factors-model-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<!------------------------------>
+<p>Write out syntax for a five-factor CFA model:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb11-1" aria-hidden="true" tabindex="-1"></a>cor.fac.model <span class="ot">=</span> <span class="st">&#39;</span></span>
+<span id="cb11-2"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="st">Alienation =~ V1+V2+V3+V4+V5+V6</span></span>
+<span id="cb11-3"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="st">Stereotype =~ V7+V8+V9+V10+V11+V12+V13</span></span>
+<span id="cb11-4"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="st">Discrimination =~ V14+V15+V16+V17+V18</span></span>
+<span id="cb11-5"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="st">Withdrawal =~ V19+V20+V21+V22+V23+V24</span></span>
+<span id="cb11-6"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="st">Stigma =~ V25+V26+V27+V28+V29</span></span>
+<span id="cb11-7"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb12-1" aria-hidden="true" tabindex="-1"></a>cor.fac.model.fit <span class="ot">=</span> <span class="fu">sem</span>(cor.fac.model, </span>
+<span id="cb12-2"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb12-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">data=</span>ISMI29, </span>
+<span id="cb12-3"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb12-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">ordered =</span> <span class="fu">colnames</span>(ISMI29), </span>
+<span id="cb12-4"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb12-4" aria-hidden="true" tabindex="-1"></a>                        <span class="at">std.lv =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb12-5"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb12-5" aria-hidden="true" tabindex="-1"></a>                        <span class="at">fixed.x =</span> F)</span>
+<span id="cb12-6"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(cor.fac.model.fit, <span class="at">standardized =</span> <span class="cn">TRUE</span>, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>## lavaan 0.6-11 ended normally after 43 iterations
+## 
+##   Estimator                                       DWLS
+##   Optimization method                           NLMINB
+##   Number of model parameters                       126
+##                                                       
+##   Number of observations                           758
+##                                                       
+## Model Test User Model:
+##                                               Standard      Robust
+##   Test Statistic                              1340.188    1751.387
+##   Degrees of freedom                               367         367
+##   P-value (Chi-square)                           0.000       0.000
+##   Scaling correction factor                                  0.829
+##   Shift parameter                                          133.939
+##        simple second-order correction                             
+## 
+## Model Test Baseline Model:
+## 
+##   Test statistic                             76016.285   21485.170
+##   Degrees of freedom                               406         406
+##   P-value                                        0.000       0.000
+##   Scaling correction factor                                  3.587
+## 
+## User Model versus Baseline Model:
+## 
+##   Comparative Fit Index (CFI)                    0.987       0.934
+##   Tucker-Lewis Index (TLI)                       0.986       0.927
+##                                                                   
+##   Robust Comparative Fit Index (CFI)                            NA
+##   Robust Tucker-Lewis Index (TLI)                               NA
+## 
+## Root Mean Square Error of Approximation:
+## 
+##   RMSEA                                          0.059       0.071
+##   90 Percent confidence interval - lower         0.056       0.067
+##   90 Percent confidence interval - upper         0.063       0.074
+##   P-value RMSEA &lt;= 0.05                          0.000       0.000
+##                                                                   
+##   Robust RMSEA                                                  NA
+##   90 Percent confidence interval - lower                        NA
+##   90 Percent confidence interval - upper                        NA
+## 
+## Standardized Root Mean Square Residual:
+## 
+##   SRMR                                           0.059       0.059
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                           Robust.sem
+##   Information                                 Expected
+##   Information saturated (h1) model        Unstructured
+## 
+## Latent Variables:
+##                     Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   Alienation =~                                                          
+##     V1                 0.839    0.016   52.254    0.000    0.839    0.839
+##     V2                 0.776    0.018   42.466    0.000    0.776    0.776
+##     V3                 0.556    0.028   19.804    0.000    0.556    0.556
+##     V4                 0.743    0.019   39.776    0.000    0.743    0.743
+##     V5                 0.735    0.020   36.553    0.000    0.735    0.735
+##     V6                 0.773    0.018   43.805    0.000    0.773    0.773
+##   Stereotype =~                                                          
+##     V7                 0.614    0.028   21.657    0.000    0.614    0.614
+##     V8                 0.643    0.034   19.107    0.000    0.643    0.643
+##     V9                 0.342    0.041    8.341    0.000    0.342    0.342
+##     V10                0.741    0.026   28.172    0.000    0.741    0.741
+##     V11                0.724    0.025   29.166    0.000    0.724    0.724
+##     V12                0.627    0.035   18.158    0.000    0.627    0.627
+##     V13                0.830    0.023   36.031    0.000    0.830    0.830
+##   Discrimination =~                                                      
+##     V14                0.727    0.021   34.282    0.000    0.727    0.727
+##     V15                0.720    0.022   32.614    0.000    0.720    0.720
+##     V16                0.809    0.016   50.107    0.000    0.809    0.809
+##     V17                0.776    0.019   41.474    0.000    0.776    0.776
+##     V18                0.853    0.019   45.026    0.000    0.853    0.853
+##   Withdrawal =~                                                          
+##     V19                0.609    0.026   23.873    0.000    0.609    0.609
+##     V20                0.801    0.016   50.440    0.000    0.801    0.801
+##     V21                0.808    0.017   48.511    0.000    0.808    0.808
+##     V22                0.776    0.018   43.680    0.000    0.776    0.776
+##     V23                0.743    0.021   36.183    0.000    0.743    0.743
+##     V24                0.771    0.019   40.946    0.000    0.771    0.771
+##   Stigma =~                                                              
+##     V25                0.090    0.042    2.159    0.031    0.090    0.090
+##     V26                0.814    0.020   40.736    0.000    0.814    0.814
+##     V27                0.739    0.024   30.998    0.000    0.739    0.739
+##     V28                0.406    0.040   10.062    0.000    0.406    0.406
+##     V29                0.249    0.038    6.479    0.000    0.249    0.249
+## 
+## Covariances:
+##                     Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   Alienation ~~                                                          
+##     Stereotype         0.798    0.021   37.898    0.000    0.798    0.798
+##     Discrimination     0.767    0.019   41.097    0.000    0.767    0.767
+##     Withdrawal         0.876    0.014   60.655    0.000    0.876    0.876
+##     Stigma             0.868    0.019   46.044    0.000    0.868    0.868
+##   Stereotype ~~                                                          
+##     Discrimination     0.731    0.023   31.608    0.000    0.731    0.731
+##     Withdrawal         0.825    0.019   44.132    0.000    0.825    0.825
+##     Stigma             0.937    0.017   53.800    0.000    0.937    0.937
+##   Discrimination ~~                                                      
+##     Withdrawal         0.868    0.014   62.437    0.000    0.868    0.868
+##     Stigma             0.688    0.028   24.773    0.000    0.688    0.688
+##   Withdrawal ~~                                                          
+##     Stigma             0.755    0.024   31.564    0.000    0.755    0.755
+## 
+## Intercepts:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .V1                0.000                               0.000    0.000
+##    .V2                0.000                               0.000    0.000
+##    .V3                0.000                               0.000    0.000
+##    .V4                0.000                               0.000    0.000
+##    .V5                0.000                               0.000    0.000
+##    .V6                0.000                               0.000    0.000
+##    .V7                0.000                               0.000    0.000
+##    .V8                0.000                               0.000    0.000
+##    .V9                0.000                               0.000    0.000
+##    .V10               0.000                               0.000    0.000
+##    .V11               0.000                               0.000    0.000
+##    .V12               0.000                               0.000    0.000
+##    .V13               0.000                               0.000    0.000
+##    .V14               0.000                               0.000    0.000
+##    .V15               0.000                               0.000    0.000
+##    .V16               0.000                               0.000    0.000
+##    .V17               0.000                               0.000    0.000
+##    .V18               0.000                               0.000    0.000
+##    .V19               0.000                               0.000    0.000
+##    .V20               0.000                               0.000    0.000
+##    .V21               0.000                               0.000    0.000
+##    .V22               0.000                               0.000    0.000
+##    .V23               0.000                               0.000    0.000
+##    .V24               0.000                               0.000    0.000
+##    .V25               0.000                               0.000    0.000
+##    .V26               0.000                               0.000    0.000
+##    .V27               0.000                               0.000    0.000
+##    .V28               0.000                               0.000    0.000
+##    .V29               0.000                               0.000    0.000
+##     Alienation        0.000                               0.000    0.000
+##     Stereotype        0.000                               0.000    0.000
+##     Discrimination    0.000                               0.000    0.000
+##     Withdrawal        0.000                               0.000    0.000
+##     Stigma            0.000                               0.000    0.000
+## 
+## Thresholds:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##     V1|t1            -0.980    0.054  -17.991    0.000   -0.980   -0.980
+##     V1|t2            -0.099    0.046   -2.178    0.029   -0.099   -0.099
+##     V1|t3             1.046    0.056   18.722    0.000    1.046    1.046
+##     V2|t1            -0.903    0.053  -17.036    0.000   -0.903   -0.903
+##     V2|t2             0.213    0.046    4.643    0.000    0.213    0.213
+##     V2|t3             1.202    0.060   20.103    0.000    1.202    1.202
+##     V3|t1            -1.149    0.058  -19.687    0.000   -1.149   -1.149
+##     V3|t2            -0.070    0.046   -1.524    0.127   -0.070   -0.070
+##     V3|t3             1.175    0.059   19.899    0.000    1.175    1.175
+##     V4|t1            -0.985    0.055  -18.053    0.000   -0.985   -0.985
+##     V4|t2            -0.066    0.046   -1.452    0.147   -0.066   -0.066
+##     V4|t3             1.058    0.056   18.840    0.000    1.058    1.058
+##     V5|t1            -0.785    0.051  -15.374    0.000   -0.785   -0.785
+##     V5|t2            -0.046    0.046   -1.016    0.309   -0.046   -0.046
+##     V5|t3             1.029    0.056   18.542    0.000    1.029    1.029
+##     V6|t1            -0.758    0.051  -14.965    0.000   -0.758   -0.758
+##     V6|t2             0.060    0.046    1.307    0.191    0.060    0.060
+##     V6|t3             1.202    0.060   20.103    0.000    1.202    1.202
+##     V7|t1            -0.685    0.050  -13.793    0.000   -0.685   -0.685
+##     V7|t2             0.537    0.048   11.189    0.000    0.537    0.537
+##     V7|t3             1.711    0.080   21.292    0.000    1.711    1.711
+##     V8|t1             0.404    0.047    8.614    0.000    0.404    0.404
+##     V8|t2             1.606    0.075   21.452    0.000    1.606    1.606
+##     V8|t3             2.183    0.118   18.488    0.000    2.183    2.183
+##     V9|t1             0.264    0.046    5.729    0.000    0.264    0.264
+##     V9|t2             1.711    0.080   21.292    0.000    1.711    1.711
+##     V9|t3             2.656    0.194   13.656    0.000    2.656    2.656
+##     V10|t1            0.261    0.046    5.656    0.000    0.261    0.261
+##     V10|t2            1.429    0.067   21.257    0.000    1.429    1.429
+##     V10|t3            2.149    0.114   18.786    0.000    2.149    2.149
+##     V11|t1            0.073    0.046    1.597    0.110    0.073    0.073
+##     V11|t2            1.319    0.063   20.826    0.000    1.319    1.319
+##     V11|t3            2.261    0.127   17.776    0.000    2.261    2.261
+##     V12|t1            0.507    0.048   10.619    0.000    0.507    0.507
+##     V12|t2            1.839    0.088   20.845    0.000    1.839    1.839
+##     V12|t3            2.413    0.148   16.268    0.000    2.413    2.413
+##     V13|t1            0.288    0.046    6.235    0.000    0.288    0.288
+##     V13|t2            1.438    0.068   21.282    0.000    1.438    1.438
+##     V13|t3            2.031    0.103   19.706    0.000    2.031    2.031
+##     V14|t1           -0.632    0.049  -12.885    0.000   -0.632   -0.632
+##     V14|t2            0.496    0.048   10.405    0.000    0.496    0.496
+##     V14|t3            1.476    0.069   21.369    0.000    1.476    1.476
+##     V15|t1           -0.401    0.047   -8.542    0.000   -0.401   -0.401
+##     V15|t2            0.771    0.051   15.170    0.000    0.771    0.771
+##     V15|t3            1.726    0.081   21.255    0.000    1.726    1.726
+##     V16|t1           -0.557    0.048  -11.544    0.000   -0.557   -0.557
+##     V16|t2            0.534    0.048   11.118    0.000    0.534    0.534
+##     V16|t3            1.549    0.072   21.455    0.000    1.549    1.549
+##     V17|t1           -0.285    0.046   -6.162    0.000   -0.285   -0.285
+##     V17|t2            0.803    0.051   15.644    0.000    0.803    0.803
+##     V17|t3            1.771    0.084   21.114    0.000    1.771    1.771
+##     V18|t1           -0.437    0.047   -9.260    0.000   -0.437   -0.437
+##     V18|t2            0.632    0.049   12.885    0.000    0.632    0.632
+##     V18|t3            1.726    0.081   21.255    0.000    1.726    1.726
+##     V19|t1           -1.243    0.061  -20.393    0.000   -1.243   -1.243
+##     V19|t2           -0.210    0.046   -4.570    0.000   -0.210   -0.210
+##     V19|t3            0.888    0.053   16.840    0.000    0.888    0.888
+##     V20|t1           -0.664    0.049  -13.445    0.000   -0.664   -0.664
+##     V20|t2            0.278    0.046    6.018    0.000    0.278    0.278
+##     V20|t3            1.251    0.061   20.439    0.000    1.251    1.251
+##     V21|t1           -0.727    0.050  -14.485    0.000   -0.727   -0.727
+##     V21|t2            0.433    0.047    9.189    0.000    0.433    0.433
+##     V21|t3            1.517    0.071   21.429    0.000    1.517    1.517
+##     V22|t1           -0.261    0.046   -5.656    0.000   -0.261   -0.261
+##     V22|t2            0.758    0.051   14.965    0.000    0.758    0.758
+##     V22|t3            1.656    0.077   21.400    0.000    1.656    1.656
+##     V23|t1           -0.572    0.048  -11.827    0.000   -0.572   -0.572
+##     V23|t2            0.440    0.047    9.332    0.000    0.440    0.440
+##     V23|t3            1.447    0.068   21.306    0.000    1.447    1.447
+##     V24|t1           -0.323    0.046   -6.957    0.000   -0.323   -0.323
+##     V24|t2            0.789    0.051   15.441    0.000    0.789    0.789
+##     V24|t3            1.571    0.073   21.461    0.000    1.571    1.571
+##     V25|t1           -0.873    0.052  -16.644    0.000   -0.873   -0.873
+##     V25|t2            0.437    0.047    9.260    0.000    0.437    0.437
+##     V25|t3            1.420    0.067   21.231    0.000    1.420    1.420
+##     V26|t1           -1.001    0.055  -18.238    0.000   -1.001   -1.001
+##     V26|t2            0.306    0.046    6.596    0.000    0.306    0.306
+##     V26|t3            1.236    0.061   20.346    0.000    1.236    1.236
+##     V27|t1           -0.481    0.048  -10.120    0.000   -0.481   -0.481
+##     V27|t2            0.854    0.052   16.380    0.000    0.854    0.854
+##     V27|t3            1.683    0.079   21.354    0.000    1.683    1.683
+##     V28|t1            0.254    0.046    5.512    0.000    0.254    0.254
+##     V28|t2            1.656    0.077   21.400    0.000    1.656    1.656
+##     V28|t3            1.982    0.099   20.046    0.000    1.982    1.982
+##     V29|t1           -0.698    0.050  -14.001    0.000   -0.698   -0.698
+##     V29|t2            0.619    0.049   12.674    0.000    0.619    0.619
+##     V29|t3            1.756    0.083   21.166    0.000    1.756    1.756
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .V1                0.297                               0.297    0.297
+##    .V2                0.398                               0.398    0.398
+##    .V3                0.690                               0.690    0.690
+##    .V4                0.449                               0.449    0.449
+##    .V5                0.460                               0.460    0.460
+##    .V6                0.403                               0.403    0.403
+##    .V7                0.623                               0.623    0.623
+##    .V8                0.586                               0.586    0.586
+##    .V9                0.883                               0.883    0.883
+##    .V10               0.451                               0.451    0.451
+##    .V11               0.476                               0.476    0.476
+##    .V12               0.607                               0.607    0.607
+##    .V13               0.311                               0.311    0.311
+##    .V14               0.471                               0.471    0.471
+##    .V15               0.481                               0.481    0.481
+##    .V16               0.346                               0.346    0.346
+##    .V17               0.398                               0.398    0.398
+##    .V18               0.272                               0.272    0.272
+##    .V19               0.629                               0.629    0.629
+##    .V20               0.359                               0.359    0.359
+##    .V21               0.347                               0.347    0.347
+##    .V22               0.398                               0.398    0.398
+##    .V23               0.448                               0.448    0.448
+##    .V24               0.405                               0.405    0.405
+##    .V25               0.992                               0.992    0.992
+##    .V26               0.337                               0.337    0.337
+##    .V27               0.454                               0.454    0.454
+##    .V28               0.835                               0.835    0.835
+##    .V29               0.938                               0.938    0.938
+##     Alienation        1.000                               1.000    1.000
+##     Stereotype        1.000                               1.000    1.000
+##     Discrimination    1.000                               1.000    1.000
+##     Withdrawal        1.000                               1.000    1.000
+##     Stigma            1.000                               1.000    1.000
+## 
+## Scales y*:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##     V1                1.000                               1.000    1.000
+##     V2                1.000                               1.000    1.000
+##     V3                1.000                               1.000    1.000
+##     V4                1.000                               1.000    1.000
+##     V5                1.000                               1.000    1.000
+##     V6                1.000                               1.000    1.000
+##     V7                1.000                               1.000    1.000
+##     V8                1.000                               1.000    1.000
+##     V9                1.000                               1.000    1.000
+##     V10               1.000                               1.000    1.000
+##     V11               1.000                               1.000    1.000
+##     V12               1.000                               1.000    1.000
+##     V13               1.000                               1.000    1.000
+##     V14               1.000                               1.000    1.000
+##     V15               1.000                               1.000    1.000
+##     V16               1.000                               1.000    1.000
+##     V17               1.000                               1.000    1.000
+##     V18               1.000                               1.000    1.000
+##     V19               1.000                               1.000    1.000
+##     V20               1.000                               1.000    1.000
+##     V21               1.000                               1.000    1.000
+##     V22               1.000                               1.000    1.000
+##     V23               1.000                               1.000    1.000
+##     V24               1.000                               1.000    1.000
+##     V25               1.000                               1.000    1.000
+##     V26               1.000                               1.000    1.000
+##     V27               1.000                               1.000    1.000
+##     V28               1.000                               1.000    1.000
+##     V29               1.000                               1.000    1.000</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(cor.fac.model.fit, <span class="at">what =</span> <span class="st">&#39;std&#39;</span>, <span class="at">fade =</span> F)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<!------------------------------>
+</div>
+<div id="part-iii-second-order-factor-model-1" class="section level2 hasAnchor" number="21.3">
+<h2><span class="header-section-number">21.3</span> PART III: Second-order factor Model<a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#part-iii-second-order-factor-model-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<!------------------------------>
+<p>Write out syntax for a five-factor second-order CFA model:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb15-1" aria-hidden="true" tabindex="-1"></a>secondfac.model <span class="ot">=</span> <span class="st">&#39;</span></span>
+<span id="cb15-2"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="st">Alienation =~ V1+V2+V3+V4+V5+V6</span></span>
+<span id="cb15-3"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="st">Stereotype =~ V7+V8+V9+V10+V11+V12+V13</span></span>
+<span id="cb15-4"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="st">Discrimination =~ V14+V15+V16+V17+V18</span></span>
+<span id="cb15-5"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="st">Withdrawal =~ V19+V20+V21+V22+V23+V24</span></span>
+<span id="cb15-6"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="st">Stigma =~ V25+V26+V27+V28+V29</span></span>
+<span id="cb15-7"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-8"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="st"># Second-order factor ISMI</span></span>
+<span id="cb15-9"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="st">ISMI =~ Alienation + Stereotype + Discrimination + Withdrawal + Stigma</span></span>
+<span id="cb15-10"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb16-1" aria-hidden="true" tabindex="-1"></a>secondfac.model.fit <span class="ot">=</span> <span class="fu">sem</span>(secondfac.model, </span>
+<span id="cb16-2"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb16-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">data=</span>ISMI29, </span>
+<span id="cb16-3"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb16-3" aria-hidden="true" tabindex="-1"></a>                          <span class="at">ordered =</span> <span class="fu">colnames</span>(ISMI29), </span>
+<span id="cb16-4"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb16-4" aria-hidden="true" tabindex="-1"></a>                          <span class="at">std.lv =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb16-5"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb16-5" aria-hidden="true" tabindex="-1"></a>                          <span class="at">fixed.x =</span> F)</span>
+<span id="cb16-6"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(secondfac.model.fit, <span class="at">standardized =</span> <span class="cn">TRUE</span>, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>## lavaan 0.6-11 ended normally after 150 iterations
+## 
+##   Estimator                                       DWLS
+##   Optimization method                           NLMINB
+##   Number of model parameters                       121
+##                                                       
+##   Number of observations                           758
+##                                                       
+## Model Test User Model:
+##                                               Standard      Robust
+##   Test Statistic                              1550.644    1966.260
+##   Degrees of freedom                               372         372
+##   P-value (Chi-square)                           0.000       0.000
+##   Scaling correction factor                                  0.848
+##   Shift parameter                                          138.291
+##        simple second-order correction                             
+## 
+## Model Test Baseline Model:
+## 
+##   Test statistic                             76016.285   21485.170
+##   Degrees of freedom                               406         406
+##   P-value                                        0.000       0.000
+##   Scaling correction factor                                  3.587
+## 
+## User Model versus Baseline Model:
+## 
+##   Comparative Fit Index (CFI)                    0.984       0.924
+##   Tucker-Lewis Index (TLI)                       0.983       0.917
+##                                                                   
+##   Robust Comparative Fit Index (CFI)                            NA
+##   Robust Tucker-Lewis Index (TLI)                               NA
+## 
+## Root Mean Square Error of Approximation:
+## 
+##   RMSEA                                          0.065       0.075
+##   90 Percent confidence interval - lower         0.061       0.072
+##   90 Percent confidence interval - upper         0.068       0.079
+##   P-value RMSEA &lt;= 0.05                          0.000       0.000
+##                                                                   
+##   Robust RMSEA                                                  NA
+##   90 Percent confidence interval - lower                        NA
+##   90 Percent confidence interval - upper                        NA
+## 
+## Standardized Root Mean Square Residual:
+## 
+##   SRMR                                           0.064       0.064
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                           Robust.sem
+##   Information                                 Expected
+##   Information saturated (h1) model        Unstructured
+## 
+## Latent Variables:
+##                     Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   Alienation =~                                                          
+##     V1                 0.337    0.022   15.037    0.000    0.839    0.839
+##     V2                 0.312    0.021   15.081    0.000    0.776    0.776
+##     V3                 0.223    0.017   13.259    0.000    0.556    0.556
+##     V4                 0.298    0.019   15.597    0.000    0.742    0.742
+##     V5                 0.295    0.019   15.793    0.000    0.735    0.735
+##     V6                 0.310    0.020   15.515    0.000    0.772    0.772
+##   Stereotype =~                                                          
+##     V7                 0.279    0.020   13.715    0.000    0.613    0.613
+##     V8                 0.292    0.022   13.523    0.000    0.643    0.643
+##     V9                 0.155    0.020    7.585    0.000    0.340    0.340
+##     V10                0.336    0.022   15.118    0.000    0.739    0.739
+##     V11                0.330    0.022   15.229    0.000    0.725    0.725
+##     V12                0.284    0.021   13.434    0.000    0.625    0.625
+##     V13                0.379    0.024   15.594    0.000    0.833    0.833
+##   Discrimination =~                                                      
+##     V14                0.377    0.018   20.832    0.000    0.727    0.727
+##     V15                0.373    0.018   20.422    0.000    0.720    0.720
+##     V16                0.420    0.019   22.444    0.000    0.810    0.810
+##     V17                0.402    0.018   21.813    0.000    0.776    0.776
+##     V18                0.442    0.024   18.275    0.000    0.853    0.853
+##   Withdrawal =~                                                          
+##     V19                0.185    0.019    9.612    0.000    0.609    0.609
+##     V20                0.243    0.023   10.420    0.000    0.801    0.801
+##     V21                0.245    0.024   10.093    0.000    0.809    0.809
+##     V22                0.235    0.023   10.395    0.000    0.775    0.775
+##     V23                0.225    0.023    9.963    0.000    0.743    0.743
+##     V24                0.234    0.023   10.186    0.000    0.772    0.772
+##   Stigma =~                                                              
+##     V25                0.036    0.018    1.967    0.049    0.082    0.082
+##     V26                0.357    0.031   11.708    0.000    0.815    0.815
+##     V27                0.325    0.027   11.913    0.000    0.742    0.742
+##     V28                0.175    0.022    8.005    0.000    0.400    0.400
+##     V29                0.105    0.018    5.830    0.000    0.241    0.241
+##   ISMI =~                                                                
+##     Alienation         2.281    0.168   13.578    0.000    0.916    0.916
+##     Stereotype         1.958    0.147   13.316    0.000    0.891    0.891
+##     Discrimination     1.651    0.104   15.930    0.000    0.855    0.855
+##     Withdrawal         3.144    0.332    9.469    0.000    0.953    0.953
+##     Stigma             2.050    0.195   10.535    0.000    0.899    0.899
+## 
+## Intercepts:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .V1                0.000                               0.000    0.000
+##    .V2                0.000                               0.000    0.000
+##    .V3                0.000                               0.000    0.000
+##    .V4                0.000                               0.000    0.000
+##    .V5                0.000                               0.000    0.000
+##    .V6                0.000                               0.000    0.000
+##    .V7                0.000                               0.000    0.000
+##    .V8                0.000                               0.000    0.000
+##    .V9                0.000                               0.000    0.000
+##    .V10               0.000                               0.000    0.000
+##    .V11               0.000                               0.000    0.000
+##    .V12               0.000                               0.000    0.000
+##    .V13               0.000                               0.000    0.000
+##    .V14               0.000                               0.000    0.000
+##    .V15               0.000                               0.000    0.000
+##    .V16               0.000                               0.000    0.000
+##    .V17               0.000                               0.000    0.000
+##    .V18               0.000                               0.000    0.000
+##    .V19               0.000                               0.000    0.000
+##    .V20               0.000                               0.000    0.000
+##    .V21               0.000                               0.000    0.000
+##    .V22               0.000                               0.000    0.000
+##    .V23               0.000                               0.000    0.000
+##    .V24               0.000                               0.000    0.000
+##    .V25               0.000                               0.000    0.000
+##    .V26               0.000                               0.000    0.000
+##    .V27               0.000                               0.000    0.000
+##    .V28               0.000                               0.000    0.000
+##    .V29               0.000                               0.000    0.000
+##    .Alienation        0.000                               0.000    0.000
+##    .Stereotype        0.000                               0.000    0.000
+##    .Discrimination    0.000                               0.000    0.000
+##    .Withdrawal        0.000                               0.000    0.000
+##    .Stigma            0.000                               0.000    0.000
+##     ISMI              0.000                               0.000    0.000
+## 
+## Thresholds:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##     V1|t1            -0.980    0.054  -17.991    0.000   -0.980   -0.980
+##     V1|t2            -0.099    0.046   -2.178    0.029   -0.099   -0.099
+##     V1|t3             1.046    0.056   18.722    0.000    1.046    1.046
+##     V2|t1            -0.903    0.053  -17.036    0.000   -0.903   -0.903
+##     V2|t2             0.213    0.046    4.643    0.000    0.213    0.213
+##     V2|t3             1.202    0.060   20.103    0.000    1.202    1.202
+##     V3|t1            -1.149    0.058  -19.687    0.000   -1.149   -1.149
+##     V3|t2            -0.070    0.046   -1.524    0.127   -0.070   -0.070
+##     V3|t3             1.175    0.059   19.899    0.000    1.175    1.175
+##     V4|t1            -0.985    0.055  -18.053    0.000   -0.985   -0.985
+##     V4|t2            -0.066    0.046   -1.452    0.147   -0.066   -0.066
+##     V4|t3             1.058    0.056   18.840    0.000    1.058    1.058
+##     V5|t1            -0.785    0.051  -15.374    0.000   -0.785   -0.785
+##     V5|t2            -0.046    0.046   -1.016    0.309   -0.046   -0.046
+##     V5|t3             1.029    0.056   18.542    0.000    1.029    1.029
+##     V6|t1            -0.758    0.051  -14.965    0.000   -0.758   -0.758
+##     V6|t2             0.060    0.046    1.307    0.191    0.060    0.060
+##     V6|t3             1.202    0.060   20.103    0.000    1.202    1.202
+##     V7|t1            -0.685    0.050  -13.793    0.000   -0.685   -0.685
+##     V7|t2             0.537    0.048   11.189    0.000    0.537    0.537
+##     V7|t3             1.711    0.080   21.292    0.000    1.711    1.711
+##     V8|t1             0.404    0.047    8.614    0.000    0.404    0.404
+##     V8|t2             1.606    0.075   21.452    0.000    1.606    1.606
+##     V8|t3             2.183    0.118   18.488    0.000    2.183    2.183
+##     V9|t1             0.264    0.046    5.729    0.000    0.264    0.264
+##     V9|t2             1.711    0.080   21.292    0.000    1.711    1.711
+##     V9|t3             2.656    0.194   13.656    0.000    2.656    2.656
+##     V10|t1            0.261    0.046    5.656    0.000    0.261    0.261
+##     V10|t2            1.429    0.067   21.257    0.000    1.429    1.429
+##     V10|t3            2.149    0.114   18.786    0.000    2.149    2.149
+##     V11|t1            0.073    0.046    1.597    0.110    0.073    0.073
+##     V11|t2            1.319    0.063   20.826    0.000    1.319    1.319
+##     V11|t3            2.261    0.127   17.776    0.000    2.261    2.261
+##     V12|t1            0.507    0.048   10.619    0.000    0.507    0.507
+##     V12|t2            1.839    0.088   20.845    0.000    1.839    1.839
+##     V12|t3            2.413    0.148   16.268    0.000    2.413    2.413
+##     V13|t1            0.288    0.046    6.235    0.000    0.288    0.288
+##     V13|t2            1.438    0.068   21.282    0.000    1.438    1.438
+##     V13|t3            2.031    0.103   19.706    0.000    2.031    2.031
+##     V14|t1           -0.632    0.049  -12.885    0.000   -0.632   -0.632
+##     V14|t2            0.496    0.048   10.405    0.000    0.496    0.496
+##     V14|t3            1.476    0.069   21.369    0.000    1.476    1.476
+##     V15|t1           -0.401    0.047   -8.542    0.000   -0.401   -0.401
+##     V15|t2            0.771    0.051   15.170    0.000    0.771    0.771
+##     V15|t3            1.726    0.081   21.255    0.000    1.726    1.726
+##     V16|t1           -0.557    0.048  -11.544    0.000   -0.557   -0.557
+##     V16|t2            0.534    0.048   11.118    0.000    0.534    0.534
+##     V16|t3            1.549    0.072   21.455    0.000    1.549    1.549
+##     V17|t1           -0.285    0.046   -6.162    0.000   -0.285   -0.285
+##     V17|t2            0.803    0.051   15.644    0.000    0.803    0.803
+##     V17|t3            1.771    0.084   21.114    0.000    1.771    1.771
+##     V18|t1           -0.437    0.047   -9.260    0.000   -0.437   -0.437
+##     V18|t2            0.632    0.049   12.885    0.000    0.632    0.632
+##     V18|t3            1.726    0.081   21.255    0.000    1.726    1.726
+##     V19|t1           -1.243    0.061  -20.393    0.000   -1.243   -1.243
+##     V19|t2           -0.210    0.046   -4.570    0.000   -0.210   -0.210
+##     V19|t3            0.888    0.053   16.840    0.000    0.888    0.888
+##     V20|t1           -0.664    0.049  -13.445    0.000   -0.664   -0.664
+##     V20|t2            0.278    0.046    6.018    0.000    0.278    0.278
+##     V20|t3            1.251    0.061   20.439    0.000    1.251    1.251
+##     V21|t1           -0.727    0.050  -14.485    0.000   -0.727   -0.727
+##     V21|t2            0.433    0.047    9.189    0.000    0.433    0.433
+##     V21|t3            1.517    0.071   21.429    0.000    1.517    1.517
+##     V22|t1           -0.261    0.046   -5.656    0.000   -0.261   -0.261
+##     V22|t2            0.758    0.051   14.965    0.000    0.758    0.758
+##     V22|t3            1.656    0.077   21.400    0.000    1.656    1.656
+##     V23|t1           -0.572    0.048  -11.827    0.000   -0.572   -0.572
+##     V23|t2            0.440    0.047    9.332    0.000    0.440    0.440
+##     V23|t3            1.447    0.068   21.306    0.000    1.447    1.447
+##     V24|t1           -0.323    0.046   -6.957    0.000   -0.323   -0.323
+##     V24|t2            0.789    0.051   15.441    0.000    0.789    0.789
+##     V24|t3            1.571    0.073   21.461    0.000    1.571    1.571
+##     V25|t1           -0.873    0.052  -16.644    0.000   -0.873   -0.873
+##     V25|t2            0.437    0.047    9.260    0.000    0.437    0.437
+##     V25|t3            1.420    0.067   21.231    0.000    1.420    1.420
+##     V26|t1           -1.001    0.055  -18.238    0.000   -1.001   -1.001
+##     V26|t2            0.306    0.046    6.596    0.000    0.306    0.306
+##     V26|t3            1.236    0.061   20.346    0.000    1.236    1.236
+##     V27|t1           -0.481    0.048  -10.120    0.000   -0.481   -0.481
+##     V27|t2            0.854    0.052   16.380    0.000    0.854    0.854
+##     V27|t3            1.683    0.079   21.354    0.000    1.683    1.683
+##     V28|t1            0.254    0.046    5.512    0.000    0.254    0.254
+##     V28|t2            1.656    0.077   21.400    0.000    1.656    1.656
+##     V28|t3            1.982    0.099   20.046    0.000    1.982    1.982
+##     V29|t1           -0.698    0.050  -14.001    0.000   -0.698   -0.698
+##     V29|t2            0.619    0.049   12.674    0.000    0.619    0.619
+##     V29|t3            1.756    0.083   21.166    0.000    1.756    1.756
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .V1                0.295                               0.295    0.295
+##    .V2                0.398                               0.398    0.398
+##    .V3                0.691                               0.691    0.691
+##    .V4                0.449                               0.449    0.449
+##    .V5                0.460                               0.460    0.460
+##    .V6                0.403                               0.403    0.403
+##    .V7                0.624                               0.624    0.624
+##    .V8                0.587                               0.587    0.587
+##    .V9                0.885                               0.885    0.885
+##    .V10               0.453                               0.453    0.453
+##    .V11               0.475                               0.475    0.475
+##    .V12               0.610                               0.610    0.610
+##    .V13               0.307                               0.307    0.307
+##    .V14               0.472                               0.472    0.472
+##    .V15               0.482                               0.482    0.482
+##    .V16               0.344                               0.344    0.344
+##    .V17               0.397                               0.397    0.397
+##    .V18               0.273                               0.273    0.273
+##    .V19               0.629                               0.629    0.629
+##    .V20               0.359                               0.359    0.359
+##    .V21               0.346                               0.346    0.346
+##    .V22               0.399                               0.399    0.399
+##    .V23               0.449                               0.449    0.449
+##    .V24               0.404                               0.404    0.404
+##    .V25               0.993                               0.993    0.993
+##    .V26               0.336                               0.336    0.336
+##    .V27               0.450                               0.450    0.450
+##    .V28               0.840                               0.840    0.840
+##    .V29               0.942                               0.942    0.942
+##    .Alienation        1.000                               0.161    0.161
+##    .Stereotype        1.000                               0.207    0.207
+##    .Discrimination    1.000                               0.268    0.268
+##    .Withdrawal        1.000                               0.092    0.092
+##    .Stigma            1.000                               0.192    0.192
+##     ISMI              1.000                               1.000    1.000
+## 
+## Scales y*:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##     V1                1.000                               1.000    1.000
+##     V2                1.000                               1.000    1.000
+##     V3                1.000                               1.000    1.000
+##     V4                1.000                               1.000    1.000
+##     V5                1.000                               1.000    1.000
+##     V6                1.000                               1.000    1.000
+##     V7                1.000                               1.000    1.000
+##     V8                1.000                               1.000    1.000
+##     V9                1.000                               1.000    1.000
+##     V10               1.000                               1.000    1.000
+##     V11               1.000                               1.000    1.000
+##     V12               1.000                               1.000    1.000
+##     V13               1.000                               1.000    1.000
+##     V14               1.000                               1.000    1.000
+##     V15               1.000                               1.000    1.000
+##     V16               1.000                               1.000    1.000
+##     V17               1.000                               1.000    1.000
+##     V18               1.000                               1.000    1.000
+##     V19               1.000                               1.000    1.000
+##     V20               1.000                               1.000    1.000
+##     V21               1.000                               1.000    1.000
+##     V22               1.000                               1.000    1.000
+##     V23               1.000                               1.000    1.000
+##     V24               1.000                               1.000    1.000
+##     V25               1.000                               1.000    1.000
+##     V26               1.000                               1.000    1.000
+##     V27               1.000                               1.000    1.000
+##     V28               1.000                               1.000    1.000
+##     V29               1.000                               1.000    1.000</code></pre>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(secondfac.model.fit, <span class="at">what =</span> <span class="st">&#39;std&#39;</span>, <span class="at">fade =</span> F)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<!------------------------------>
+</div>
+<div id="part-iv-bifactor-model-1" class="section level2 hasAnchor" number="21.4">
+<h2><span class="header-section-number">21.4</span> PART IV: Bifactor Model<a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#part-iv-bifactor-model-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<!------------------------------>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb19-1" aria-hidden="true" tabindex="-1"></a>bifac.model <span class="ot">=</span> <span class="st">&#39;</span></span>
+<span id="cb19-2"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="st"># specific factors</span></span>
+<span id="cb19-3"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="st">Alienation =~ V1+V2+V3+V4+V5+V6</span></span>
+<span id="cb19-4"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="st">Stereotype =~ V7+V8+V9+V10+V11+V12+V13</span></span>
+<span id="cb19-5"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="st">Discrimination =~ V14+V15+V16+V17+V18</span></span>
+<span id="cb19-6"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="st">Withdrawal =~ V19+V20+V21+V22+V23+V24</span></span>
+<span id="cb19-7"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="st">Stigma =~ V25+V26+V27+V28+V29</span></span>
+<span id="cb19-8"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb19-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-9"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="st"># general factor GEN</span></span>
+<span id="cb19-10"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="st">GEN =~ V1+V2+V3+V4+V5+V6+V7+V8+V9+V10+V11+V12+V13+V14+V15+V16+V17+V18+V19+</span></span>
+<span id="cb19-11"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="st">      V20+V21+V22+V23+V24+V25+V26+V27+V28+V29</span></span>
+<span id="cb19-12"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span></code></pre></div>
+<p>When using sem() to fit a bifactor model, make sure to turn on</p>
+<ul>
+<li>orthogonal = TRUE to ensure that all specific factors and general factors are uncorrelated</li>
+<li>otherwise, you’ll get an error/warning saying that the model is not identified.</li>
+</ul>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb20-1" aria-hidden="true" tabindex="-1"></a>bifac.model.fit <span class="ot">=</span> <span class="fu">sem</span>(bifac.model, </span>
+<span id="cb20-2"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb20-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">data=</span>ISMI29, </span>
+<span id="cb20-3"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb20-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">ordered =</span> <span class="fu">colnames</span>(ISMI29), </span>
+<span id="cb20-4"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb20-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">std.lv =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb20-5"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb20-5" aria-hidden="true" tabindex="-1"></a>                      <span class="at">fixed.x =</span> F,</span>
+<span id="cb20-6"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb20-6" aria-hidden="true" tabindex="-1"></a>                      <span class="at">orthogonal =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(bifac.model.fit, <span class="at">standardized =</span> <span class="cn">TRUE</span>, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>## lavaan 0.6-11 ended normally after 75 iterations
+## 
+##   Estimator                                       DWLS
+##   Optimization method                           NLMINB
+##   Number of model parameters                       145
+##                                                       
+##   Number of observations                           758
+##                                                       
+## Model Test User Model:
+##                                               Standard      Robust
+##   Test Statistic                              1062.671    1472.549
+##   Degrees of freedom                               348         348
+##   P-value (Chi-square)                           0.000       0.000
+##   Scaling correction factor                                  0.788
+##   Shift parameter                                          123.999
+##        simple second-order correction                             
+## 
+## Model Test Baseline Model:
+## 
+##   Test statistic                             76016.285   21485.170
+##   Degrees of freedom                               406         406
+##   P-value                                        0.000       0.000
+##   Scaling correction factor                                  3.587
+## 
+## User Model versus Baseline Model:
+## 
+##   Comparative Fit Index (CFI)                    0.991       0.947
+##   Tucker-Lewis Index (TLI)                       0.989       0.938
+##                                                                   
+##   Robust Comparative Fit Index (CFI)                            NA
+##   Robust Tucker-Lewis Index (TLI)                               NA
+## 
+## Root Mean Square Error of Approximation:
+## 
+##   RMSEA                                          0.052       0.065
+##   90 Percent confidence interval - lower         0.049       0.062
+##   90 Percent confidence interval - upper         0.056       0.069
+##   P-value RMSEA &lt;= 0.05                          0.165       0.000
+##                                                                   
+##   Robust RMSEA                                                  NA
+##   90 Percent confidence interval - lower                        NA
+##   90 Percent confidence interval - upper                        NA
+## 
+## Standardized Root Mean Square Residual:
+## 
+##   SRMR                                           0.054       0.054
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                           Robust.sem
+##   Information                                 Expected
+##   Information saturated (h1) model        Unstructured
+## 
+## Latent Variables:
+##                     Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   Alienation =~                                                          
+##     V1                 0.085    0.035    2.439    0.015    0.085    0.085
+##     V2                 0.147    0.036    4.126    0.000    0.147    0.147
+##     V3                 0.040    0.045    0.898    0.369    0.040    0.040
+##     V4                 0.474    0.038   12.601    0.000    0.474    0.474
+##     V5                 0.527    0.039   13.557    0.000    0.527    0.527
+##     V6                 0.393    0.035   11.194    0.000    0.393    0.393
+##   Stereotype =~                                                          
+##     V7                 0.116    0.047    2.479    0.013    0.116    0.116
+##     V8                 0.210    0.049    4.272    0.000    0.210    0.210
+##     V9                 0.438    0.057    7.744    0.000    0.438    0.438
+##     V10                0.274    0.042    6.544    0.000    0.274    0.274
+##     V11                0.398    0.037   10.611    0.000    0.398    0.398
+##     V12                0.563    0.056   10.012    0.000    0.563    0.563
+##     V13                0.271    0.038    7.086    0.000    0.271    0.271
+##   Discrimination =~                                                      
+##     V14                0.495    0.032   15.564    0.000    0.495    0.495
+##     V15                0.477    0.033   14.494    0.000    0.477    0.477
+##     V16                0.554    0.032   17.388    0.000    0.554    0.554
+##     V17                0.482    0.033   14.625    0.000    0.482    0.482
+##     V18               -0.032    0.032   -1.008    0.313   -0.032   -0.032
+##   Withdrawal =~                                                          
+##     V19                0.172    0.048    3.606    0.000    0.172    0.172
+##     V20                0.465    0.058    8.050    0.000    0.465    0.465
+##     V21                0.082    0.040    2.054    0.040    0.082    0.082
+##     V22                0.358    0.052    6.888    0.000    0.358    0.358
+##     V23                0.107    0.046    2.330    0.020    0.107    0.107
+##     V24                0.218    0.042    5.185    0.000    0.218    0.218
+##   Stigma =~                                                              
+##     V25                0.404    0.066    6.138    0.000    0.404    0.404
+##     V26                0.056    0.040    1.414    0.157    0.056    0.056
+##     V27                0.291    0.048    6.086    0.000    0.291    0.291
+##     V28                0.483    0.067    7.201    0.000    0.483    0.483
+##     V29                0.349    0.061    5.752    0.000    0.349    0.349
+##   GEN =~                                                                 
+##     V1                 0.797    0.016   49.723    0.000    0.797    0.797
+##     V2                 0.730    0.019   39.263    0.000    0.730    0.730
+##     V3                 0.532    0.028   19.069    0.000    0.532    0.532
+##     V4                 0.657    0.022   30.128    0.000    0.657    0.657
+##     V5                 0.646    0.023   27.532    0.000    0.646    0.646
+##     V6                 0.697    0.020   34.749    0.000    0.697    0.697
+##     V7                 0.561    0.028   20.047    0.000    0.561    0.561
+##     V8                 0.581    0.034   17.084    0.000    0.581    0.581
+##     V9                 0.267    0.041    6.586    0.000    0.267    0.267
+##     V10                0.666    0.028   23.951    0.000    0.666    0.666
+##     V11                0.638    0.026   24.148    0.000    0.638    0.638
+##     V12                0.521    0.038   13.851    0.000    0.521    0.521
+##     V13                0.750    0.025   30.069    0.000    0.750    0.750
+##     V14                0.600    0.026   23.101    0.000    0.600    0.600
+##     V15                0.595    0.027   22.367    0.000    0.595    0.595
+##     V16                0.667    0.023   28.805    0.000    0.667    0.667
+##     V17                0.647    0.024   26.442    0.000    0.647    0.647
+##     V18                0.787    0.017   45.401    0.000    0.787    0.787
+##     V19                0.581    0.026   22.230    0.000    0.581    0.581
+##     V20                0.743    0.019   39.129    0.000    0.743    0.743
+##     V21                0.785    0.018   44.861    0.000    0.785    0.785
+##     V22                0.723    0.021   34.234    0.000    0.723    0.723
+##     V23                0.718    0.021   33.856    0.000    0.718    0.718
+##     V24                0.735    0.020   36.129    0.000    0.735    0.735
+##     V25                0.056    0.039    1.451    0.147    0.056    0.056
+##     V26                0.742    0.020   37.899    0.000    0.742    0.742
+##     V27                0.673    0.024   27.596    0.000    0.673    0.673
+##     V28                0.351    0.039    8.996    0.000    0.351    0.351
+##     V29                0.206    0.037    5.619    0.000    0.206    0.206
+## 
+## Covariances:
+##                     Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   Alienation ~~                                                          
+##     Stereotype         0.000                               0.000    0.000
+##     Discrimination     0.000                               0.000    0.000
+##     Withdrawal         0.000                               0.000    0.000
+##     Stigma             0.000                               0.000    0.000
+##     GEN                0.000                               0.000    0.000
+##   Stereotype ~~                                                          
+##     Discrimination     0.000                               0.000    0.000
+##     Withdrawal         0.000                               0.000    0.000
+##     Stigma             0.000                               0.000    0.000
+##     GEN                0.000                               0.000    0.000
+##   Discrimination ~~                                                      
+##     Withdrawal         0.000                               0.000    0.000
+##     Stigma             0.000                               0.000    0.000
+##     GEN                0.000                               0.000    0.000
+##   Withdrawal ~~                                                          
+##     Stigma             0.000                               0.000    0.000
+##     GEN                0.000                               0.000    0.000
+##   Stigma ~~                                                              
+##     GEN                0.000                               0.000    0.000
+## 
+## Intercepts:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .V1                0.000                               0.000    0.000
+##    .V2                0.000                               0.000    0.000
+##    .V3                0.000                               0.000    0.000
+##    .V4                0.000                               0.000    0.000
+##    .V5                0.000                               0.000    0.000
+##    .V6                0.000                               0.000    0.000
+##    .V7                0.000                               0.000    0.000
+##    .V8                0.000                               0.000    0.000
+##    .V9                0.000                               0.000    0.000
+##    .V10               0.000                               0.000    0.000
+##    .V11               0.000                               0.000    0.000
+##    .V12               0.000                               0.000    0.000
+##    .V13               0.000                               0.000    0.000
+##    .V14               0.000                               0.000    0.000
+##    .V15               0.000                               0.000    0.000
+##    .V16               0.000                               0.000    0.000
+##    .V17               0.000                               0.000    0.000
+##    .V18               0.000                               0.000    0.000
+##    .V19               0.000                               0.000    0.000
+##    .V20               0.000                               0.000    0.000
+##    .V21               0.000                               0.000    0.000
+##    .V22               0.000                               0.000    0.000
+##    .V23               0.000                               0.000    0.000
+##    .V24               0.000                               0.000    0.000
+##    .V25               0.000                               0.000    0.000
+##    .V26               0.000                               0.000    0.000
+##    .V27               0.000                               0.000    0.000
+##    .V28               0.000                               0.000    0.000
+##    .V29               0.000                               0.000    0.000
+##     Alienation        0.000                               0.000    0.000
+##     Stereotype        0.000                               0.000    0.000
+##     Discrimination    0.000                               0.000    0.000
+##     Withdrawal        0.000                               0.000    0.000
+##     Stigma            0.000                               0.000    0.000
+##     GEN               0.000                               0.000    0.000
+## 
+## Thresholds:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##     V1|t1            -0.980    0.054  -17.991    0.000   -0.980   -0.980
+##     V1|t2            -0.099    0.046   -2.178    0.029   -0.099   -0.099
+##     V1|t3             1.046    0.056   18.722    0.000    1.046    1.046
+##     V2|t1            -0.903    0.053  -17.036    0.000   -0.903   -0.903
+##     V2|t2             0.213    0.046    4.643    0.000    0.213    0.213
+##     V2|t3             1.202    0.060   20.103    0.000    1.202    1.202
+##     V3|t1            -1.149    0.058  -19.687    0.000   -1.149   -1.149
+##     V3|t2            -0.070    0.046   -1.524    0.127   -0.070   -0.070
+##     V3|t3             1.175    0.059   19.899    0.000    1.175    1.175
+##     V4|t1            -0.985    0.055  -18.053    0.000   -0.985   -0.985
+##     V4|t2            -0.066    0.046   -1.452    0.147   -0.066   -0.066
+##     V4|t3             1.058    0.056   18.840    0.000    1.058    1.058
+##     V5|t1            -0.785    0.051  -15.374    0.000   -0.785   -0.785
+##     V5|t2            -0.046    0.046   -1.016    0.309   -0.046   -0.046
+##     V5|t3             1.029    0.056   18.542    0.000    1.029    1.029
+##     V6|t1            -0.758    0.051  -14.965    0.000   -0.758   -0.758
+##     V6|t2             0.060    0.046    1.307    0.191    0.060    0.060
+##     V6|t3             1.202    0.060   20.103    0.000    1.202    1.202
+##     V7|t1            -0.685    0.050  -13.793    0.000   -0.685   -0.685
+##     V7|t2             0.537    0.048   11.189    0.000    0.537    0.537
+##     V7|t3             1.711    0.080   21.292    0.000    1.711    1.711
+##     V8|t1             0.404    0.047    8.614    0.000    0.404    0.404
+##     V8|t2             1.606    0.075   21.452    0.000    1.606    1.606
+##     V8|t3             2.183    0.118   18.488    0.000    2.183    2.183
+##     V9|t1             0.264    0.046    5.729    0.000    0.264    0.264
+##     V9|t2             1.711    0.080   21.292    0.000    1.711    1.711
+##     V9|t3             2.656    0.194   13.656    0.000    2.656    2.656
+##     V10|t1            0.261    0.046    5.656    0.000    0.261    0.261
+##     V10|t2            1.429    0.067   21.257    0.000    1.429    1.429
+##     V10|t3            2.149    0.114   18.786    0.000    2.149    2.149
+##     V11|t1            0.073    0.046    1.597    0.110    0.073    0.073
+##     V11|t2            1.319    0.063   20.826    0.000    1.319    1.319
+##     V11|t3            2.261    0.127   17.776    0.000    2.261    2.261
+##     V12|t1            0.507    0.048   10.619    0.000    0.507    0.507
+##     V12|t2            1.839    0.088   20.845    0.000    1.839    1.839
+##     V12|t3            2.413    0.148   16.268    0.000    2.413    2.413
+##     V13|t1            0.288    0.046    6.235    0.000    0.288    0.288
+##     V13|t2            1.438    0.068   21.282    0.000    1.438    1.438
+##     V13|t3            2.031    0.103   19.706    0.000    2.031    2.031
+##     V14|t1           -0.632    0.049  -12.885    0.000   -0.632   -0.632
+##     V14|t2            0.496    0.048   10.405    0.000    0.496    0.496
+##     V14|t3            1.476    0.069   21.369    0.000    1.476    1.476
+##     V15|t1           -0.401    0.047   -8.542    0.000   -0.401   -0.401
+##     V15|t2            0.771    0.051   15.170    0.000    0.771    0.771
+##     V15|t3            1.726    0.081   21.255    0.000    1.726    1.726
+##     V16|t1           -0.557    0.048  -11.544    0.000   -0.557   -0.557
+##     V16|t2            0.534    0.048   11.118    0.000    0.534    0.534
+##     V16|t3            1.549    0.072   21.455    0.000    1.549    1.549
+##     V17|t1           -0.285    0.046   -6.162    0.000   -0.285   -0.285
+##     V17|t2            0.803    0.051   15.644    0.000    0.803    0.803
+##     V17|t3            1.771    0.084   21.114    0.000    1.771    1.771
+##     V18|t1           -0.437    0.047   -9.260    0.000   -0.437   -0.437
+##     V18|t2            0.632    0.049   12.885    0.000    0.632    0.632
+##     V18|t3            1.726    0.081   21.255    0.000    1.726    1.726
+##     V19|t1           -1.243    0.061  -20.393    0.000   -1.243   -1.243
+##     V19|t2           -0.210    0.046   -4.570    0.000   -0.210   -0.210
+##     V19|t3            0.888    0.053   16.840    0.000    0.888    0.888
+##     V20|t1           -0.664    0.049  -13.445    0.000   -0.664   -0.664
+##     V20|t2            0.278    0.046    6.018    0.000    0.278    0.278
+##     V20|t3            1.251    0.061   20.439    0.000    1.251    1.251
+##     V21|t1           -0.727    0.050  -14.485    0.000   -0.727   -0.727
+##     V21|t2            0.433    0.047    9.189    0.000    0.433    0.433
+##     V21|t3            1.517    0.071   21.429    0.000    1.517    1.517
+##     V22|t1           -0.261    0.046   -5.656    0.000   -0.261   -0.261
+##     V22|t2            0.758    0.051   14.965    0.000    0.758    0.758
+##     V22|t3            1.656    0.077   21.400    0.000    1.656    1.656
+##     V23|t1           -0.572    0.048  -11.827    0.000   -0.572   -0.572
+##     V23|t2            0.440    0.047    9.332    0.000    0.440    0.440
+##     V23|t3            1.447    0.068   21.306    0.000    1.447    1.447
+##     V24|t1           -0.323    0.046   -6.957    0.000   -0.323   -0.323
+##     V24|t2            0.789    0.051   15.441    0.000    0.789    0.789
+##     V24|t3            1.571    0.073   21.461    0.000    1.571    1.571
+##     V25|t1           -0.873    0.052  -16.644    0.000   -0.873   -0.873
+##     V25|t2            0.437    0.047    9.260    0.000    0.437    0.437
+##     V25|t3            1.420    0.067   21.231    0.000    1.420    1.420
+##     V26|t1           -1.001    0.055  -18.238    0.000   -1.001   -1.001
+##     V26|t2            0.306    0.046    6.596    0.000    0.306    0.306
+##     V26|t3            1.236    0.061   20.346    0.000    1.236    1.236
+##     V27|t1           -0.481    0.048  -10.120    0.000   -0.481   -0.481
+##     V27|t2            0.854    0.052   16.380    0.000    0.854    0.854
+##     V27|t3            1.683    0.079   21.354    0.000    1.683    1.683
+##     V28|t1            0.254    0.046    5.512    0.000    0.254    0.254
+##     V28|t2            1.656    0.077   21.400    0.000    1.656    1.656
+##     V28|t3            1.982    0.099   20.046    0.000    1.982    1.982
+##     V29|t1           -0.698    0.050  -14.001    0.000   -0.698   -0.698
+##     V29|t2            0.619    0.049   12.674    0.000    0.619    0.619
+##     V29|t3            1.756    0.083   21.166    0.000    1.756    1.756
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .V1                0.358                               0.358    0.358
+##    .V2                0.445                               0.445    0.445
+##    .V3                0.715                               0.715    0.715
+##    .V4                0.343                               0.343    0.343
+##    .V5                0.305                               0.305    0.305
+##    .V6                0.360                               0.360    0.360
+##    .V7                0.672                               0.672    0.672
+##    .V8                0.618                               0.618    0.618
+##    .V9                0.736                               0.736    0.736
+##    .V10               0.482                               0.482    0.482
+##    .V11               0.435                               0.435    0.435
+##    .V12               0.411                               0.411    0.411
+##    .V13               0.364                               0.364    0.364
+##    .V14               0.395                               0.395    0.395
+##    .V15               0.419                               0.419    0.419
+##    .V16               0.248                               0.248    0.248
+##    .V17               0.348                               0.348    0.348
+##    .V18               0.379                               0.379    0.379
+##    .V19               0.633                               0.633    0.633
+##    .V20               0.232                               0.232    0.232
+##    .V21               0.377                               0.377    0.377
+##    .V22               0.349                               0.349    0.349
+##    .V23               0.473                               0.473    0.473
+##    .V24               0.413                               0.413    0.413
+##    .V25               0.833                               0.833    0.833
+##    .V26               0.446                               0.446    0.446
+##    .V27               0.462                               0.462    0.462
+##    .V28               0.643                               0.643    0.643
+##    .V29               0.836                               0.836    0.836
+##     Alienation        1.000                               1.000    1.000
+##     Stereotype        1.000                               1.000    1.000
+##     Discrimination    1.000                               1.000    1.000
+##     Withdrawal        1.000                               1.000    1.000
+##     Stigma            1.000                               1.000    1.000
+##     GEN               1.000                               1.000    1.000
+## 
+## Scales y*:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##     V1                1.000                               1.000    1.000
+##     V2                1.000                               1.000    1.000
+##     V3                1.000                               1.000    1.000
+##     V4                1.000                               1.000    1.000
+##     V5                1.000                               1.000    1.000
+##     V6                1.000                               1.000    1.000
+##     V7                1.000                               1.000    1.000
+##     V8                1.000                               1.000    1.000
+##     V9                1.000                               1.000    1.000
+##     V10               1.000                               1.000    1.000
+##     V11               1.000                               1.000    1.000
+##     V12               1.000                               1.000    1.000
+##     V13               1.000                               1.000    1.000
+##     V14               1.000                               1.000    1.000
+##     V15               1.000                               1.000    1.000
+##     V16               1.000                               1.000    1.000
+##     V17               1.000                               1.000    1.000
+##     V18               1.000                               1.000    1.000
+##     V19               1.000                               1.000    1.000
+##     V20               1.000                               1.000    1.000
+##     V21               1.000                               1.000    1.000
+##     V22               1.000                               1.000    1.000
+##     V23               1.000                               1.000    1.000
+##     V24               1.000                               1.000    1.000
+##     V25               1.000                               1.000    1.000
+##     V26               1.000                               1.000    1.000
+##     V27               1.000                               1.000    1.000
+##     V28               1.000                               1.000    1.000
+##     V29               1.000                               1.000    1.000</code></pre>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(bifac.model.fit, <span class="at">what =</span> <span class="st">&#39;std&#39;</span>, <span class="at">fade =</span> F)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<!------------------------------>
+</div>
+<div id="part-v-model-comparison-1" class="section level2 hasAnchor" number="21.5">
+<h2><span class="header-section-number">21.5</span> PART V: Model Comparison<a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#part-v-model-comparison-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<!------------------------------>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb24-1" aria-hidden="true" tabindex="-1"></a>UniFactor <span class="ot">=</span> <span class="fu">fitMeasures</span>(uni.model.fit, <span class="at">fit.measures =</span> <span class="fu">c</span>(<span class="st">&quot;chisq.scaled&quot;</span>, <span class="st">&quot;df.scaled&quot;</span>, <span class="st">&quot;pvalue.scaled&quot;</span>, <span class="st">&quot;rmsea.scaled&quot;</span>, <span class="st">&quot;rmsea.ci.lower.scaled&quot;</span>, <span class="st">&quot;rmsea.ci.upper.scaled&quot;</span>, <span class="st">&quot;cfi.scaled&quot;</span>, <span class="st">&quot;tli.scaled&quot;</span>, <span class="st">&quot;srmr_bentler&quot;</span>))</span>
+<span id="cb24-2"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb24-2" aria-hidden="true" tabindex="-1"></a>FiveFactor <span class="ot">=</span> <span class="fu">fitMeasures</span>(cor.fac.model.fit, <span class="at">fit.measures =</span> <span class="fu">c</span>(<span class="st">&quot;chisq.scaled&quot;</span>, <span class="st">&quot;df.scaled&quot;</span>, <span class="st">&quot;pvalue.scaled&quot;</span>, <span class="st">&quot;rmsea.scaled&quot;</span>, <span class="st">&quot;rmsea.ci.lower.scaled&quot;</span>, <span class="st">&quot;rmsea.ci.upper.scaled&quot;</span>, <span class="st">&quot;cfi.scaled&quot;</span>, <span class="st">&quot;tli.scaled&quot;</span>, <span class="st">&quot;srmr_bentler&quot;</span>))</span>
+<span id="cb24-3"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb24-3" aria-hidden="true" tabindex="-1"></a>SecondOrder <span class="ot">=</span> <span class="fu">fitMeasures</span>(secondfac.model.fit, <span class="at">fit.measures =</span> <span class="fu">c</span>(<span class="st">&quot;chisq.scaled&quot;</span>, <span class="st">&quot;df.scaled&quot;</span>, <span class="st">&quot;pvalue.scaled&quot;</span>, <span class="st">&quot;rmsea.scaled&quot;</span>, <span class="st">&quot;rmsea.ci.lower.scaled&quot;</span>, <span class="st">&quot;rmsea.ci.upper.scaled&quot;</span>, <span class="st">&quot;cfi.scaled&quot;</span>, <span class="st">&quot;tli.scaled&quot;</span>, <span class="st">&quot;srmr_bentler&quot;</span>))</span>
+<span id="cb24-4"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb24-4" aria-hidden="true" tabindex="-1"></a>Bifactor <span class="ot">=</span> <span class="fu">fitMeasures</span>(bifac.model.fit, <span class="at">fit.measures =</span> <span class="fu">c</span>(<span class="st">&quot;chisq.scaled&quot;</span>, <span class="st">&quot;df.scaled&quot;</span>, <span class="st">&quot;pvalue.scaled&quot;</span>, <span class="st">&quot;rmsea.scaled&quot;</span>, <span class="st">&quot;rmsea.ci.lower.scaled&quot;</span>, <span class="st">&quot;rmsea.ci.upper.scaled&quot;</span>, <span class="st">&quot;cfi.scaled&quot;</span>, <span class="st">&quot;tli.scaled&quot;</span>, <span class="st">&quot;srmr_bentler&quot;</span>))</span>
+<span id="cb24-5"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">cbind</span>(UniFactor, FiveFactor, SecondOrder, Bifactor), <span class="dv">3</span>)</span></code></pre></div>
+<pre><code>##                       UniFactor FiveFactor SecondOrder Bifactor
+## chisq.scaled           2606.734   1751.387    1966.260 1472.549
+## df.scaled               377.000    367.000     372.000  348.000
+## pvalue.scaled             0.000      0.000       0.000    0.000
+## rmsea.scaled              0.088      0.071       0.075    0.065
+## rmsea.ci.lower.scaled     0.085      0.067       0.072    0.062
+## rmsea.ci.upper.scaled     0.092      0.074       0.079    0.069
+## cfi.scaled                0.894      0.934       0.924    0.947
+## tli.scaled                0.886      0.927       0.917    0.938</code></pre>
+<p>Bifactor model wins!</p>
+<!------------------------------>
+</div>
+<div id="exercise-odd-scale-1" class="section level2 hasAnchor" number="21.6">
+<h2><span class="header-section-number">21.6</span> Exercise: ODD Scale<a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#exercise-odd-scale-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<!------------------------------>
+<p>Let’s bring our Holzinger and Swineford Dataset back:</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(HolzingerSwineford1939)</span></code></pre></div>
+<pre><code>##   id sex ageyr agemo  school grade       x1   x2    x3       x4   x5        x6
+## 1  1   1    13     1 Pasteur     7 3.333333 7.75 0.375 2.333333 5.75 1.2857143
+## 2  2   2    13     7 Pasteur     7 5.333333 5.25 2.125 1.666667 3.00 1.2857143
+## 3  3   2    13     1 Pasteur     7 4.500000 5.25 1.875 1.000000 1.75 0.4285714
+## 4  4   1    13     2 Pasteur     7 5.333333 7.75 3.000 2.666667 4.50 2.4285714
+## 5  5   2    12     2 Pasteur     7 4.833333 4.75 0.875 2.666667 4.00 2.5714286
+## 6  6   2    14     1 Pasteur     7 5.333333 5.00 2.250 1.000000 3.00 0.8571429
+##         x7   x8       x9
+## 1 3.391304 5.75 6.361111
+## 2 3.782609 6.25 7.916667
+## 3 3.260870 3.90 4.416667
+## 4 3.000000 5.30 4.861111
+## 5 3.695652 6.30 5.916667
+## 6 4.347826 6.65 7.500000</code></pre>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb28-1" aria-hidden="true" tabindex="-1"></a>?HolzingerSwineford1939</span></code></pre></div>
+<p>This dataset has 301 cases with 9 mental ability items.</p>
+<p><strong>Assignment: Could you use the four models above to examine the dimensionality of this ODD Subscale?</strong></p>
+<p>Here is a factor structure that you may need:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb29-1" aria-hidden="true" tabindex="-1"></a>cor.fac.HS.model <span class="ot">=</span> <span class="st">&#39;</span></span>
+<span id="cb29-2"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="st">visual  =~ x1 + x2 + x3</span></span>
+<span id="cb29-3"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="st">textual =~ x4 + x5 + x6</span></span>
+<span id="cb29-4"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="st">speed   =~ x7 + x8 + x9</span></span>
+<span id="cb29-5"><a href="week15-lavaan-lab-17-second-order-and-bifactor-models-1.html#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span></code></pre></div>
+<p>Good luck!</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="week15-lavaan-lab-17-second-order-and-bifactor-models.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="week14-lavaan-lab-16-latent-growth-models-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
