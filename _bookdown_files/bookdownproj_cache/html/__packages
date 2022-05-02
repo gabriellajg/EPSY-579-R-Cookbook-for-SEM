@@ -14,3 +14,8 @@ sem
 MASS
 rsem
 parameters
+minpack.lm
+rgl
+robustbase
+Matrix
+qpcR

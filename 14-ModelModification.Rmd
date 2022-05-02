@@ -35,7 +35,7 @@ fixedIndTwoFacSyntax <- "
 Fit the two-factor model:
 
 ```{r}
-fixedIndTwoFacRun = sem(model = fixedIndTwoFacSyntax, 
+fixedIndTwoFacRun = lavaan::sem(model = fixedIndTwoFacSyntax, 
                         data = cfaData, 
                         fixed.x=FALSE)
 ```
@@ -102,7 +102,8 @@ mod1 <- "
 ```
 
 ```{r}
-mod1_fit <- sem(mod1, data = cfaData, std.lv = TRUE, fixed.x=FALSE)
+mod1_fit <- lavaan::sem(mod1, data = cfaData, 
+                        std.lv = TRUE, fixed.x=FALSE)
 
 summary(mod1_fit, fit.measures = T, standardized = T)
 ```
@@ -134,7 +135,8 @@ mod2_1 <- "
 ```
 
 ```{r}
-mod2_1_fit <- sem(mod2_1, data = cfaData, std.lv = TRUE, fixed.x=FALSE)
+mod2_1_fit <- lavaan::sem(mod2_1, data = cfaData, 
+                          std.lv = TRUE, fixed.x=FALSE)
 
 summary(mod2_1_fit, fit.measures = T, standardized = T)
 ```
@@ -160,7 +162,8 @@ mod2_2 <- "
 ```
 
 ```{r}
-mod2_2_fit <- sem(mod2_2, data = cfaData, std.lv = TRUE, fixed.x=FALSE)
+mod2_2_fit <- lavaan::sem(mod2_2, data = cfaData, 
+                          std.lv = TRUE, fixed.x=FALSE)
 
 summary(mod2_2_fit, fit.measures = T, standardized = T)
 ```
@@ -194,7 +197,7 @@ mod3 <- "
 ```
 
 ```{r}
-mod3_fit <- sem(mod3, data = cfaData, std.lv = TRUE, fixed.x = FALSE)
+mod3_fit <- lavaan::sem(mod3, data = cfaData, std.lv = TRUE, fixed.x = FALSE)
 
 summary(mod3_fit, fit.measures = T, standardized = T)
 ```

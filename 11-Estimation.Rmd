@@ -34,7 +34,7 @@ one_fac_syntax <- "
 Request Unweighted Least Squares (ULS):
 
 ```{r}
-one_fac_fit2 <- sem(one_fac_syntax, 
+one_fac_fit2 <- lavaan::sem(one_fac_syntax, 
                     sample.cov = S_3fac, 
                     sample.nobs = n, 
                     estimator = "ULS", 
@@ -78,7 +78,7 @@ fixedIndTwoFacSyntax <- "
 ```
 
 ```{r}
-two_fac_fit_uls <- sem(fixedIndTwoFacSyntax, 
+two_fac_fit_uls <- lavaan::sem(fixedIndTwoFacSyntax, 
                        data = cfaData, 
                        fixed.x = FALSE,
                        estimator = "ULS")
@@ -143,7 +143,7 @@ T_uls
 ### ML Estimation
 
 ```{r}
-two_fac_fit_ml <- sem(fixedIndTwoFacSyntax, 
+two_fac_fit_ml <- lavaan::sem(fixedIndTwoFacSyntax, 
                        data = cfaData, 
                        fixed.x = FALSE,
                        estimator = "ML")
@@ -152,7 +152,7 @@ two_fac_fit_ml <- sem(fixedIndTwoFacSyntax,
 ### WLS Estimation
 
 ```{r}
-two_fac_fit_wls <- sem(fixedIndTwoFacSyntax, 
+two_fac_fit_wls <- lavaan::sem(fixedIndTwoFacSyntax, 
                       data = cfaData, 
                       fixed.x = FALSE,
                       estimator = "WLS")
@@ -196,7 +196,7 @@ one_fac_syntax <- "
 ML Estimation:
 
 ```{r}
-one_fac_fit_new <- sem(one_fac_syntax, 
+one_fac_fit_new <- lavaan::sem(one_fac_syntax, 
                     sample.cov = S_3fac_new, 
                     sample.nobs = n, 
                     estimator = "ML", 
@@ -226,7 +226,7 @@ one_fac_syntax_const <- "
 ML Estimation:
 
 ```{r}
-one_fac_fit_new2 <- sem(one_fac_syntax_const, 
+one_fac_fit_new2 <- lavaan::sem(one_fac_syntax_const, 
                        sample.cov = S_3fac_new, 
                        sample.nobs = n, 
                        fixed.x = FALSE)

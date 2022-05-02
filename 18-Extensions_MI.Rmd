@@ -48,7 +48,7 @@ srSyntax <- "
 ```
 
 ```{r}
-PartialInvFit <- sem(srSyntax, 
+PartialInvFit <- lavaan::sem(srSyntax, 
                  data = affectData, 
                  fixed.x=FALSE,
                  estimator = 'MLR',
@@ -99,7 +99,7 @@ srSyntaxMIMIC0 <- "
 ```
 
 ```{r}
-MIMICmodel <- sem(srSyntaxMIMIC0, 
+MIMICmodel <- lavaan::sem(srSyntaxMIMIC0, 
                  data = affectData, 
                  fixed.x=FALSE,
                  estimator = 'MLR') 
@@ -143,7 +143,7 @@ srSyntaxMIMICLoading <- "
 Note that you don't need group=, group.equal=, or group.partial= in the following function (why?): 
 
 ```{r}
-MIMICloading <- sem(srSyntaxMIMICLoading, 
+MIMICloading <- lavaan::sem(srSyntaxMIMICLoading, 
                  data = affectData, 
                  fixed.x=FALSE,
                  estimator = 'MLR') 
@@ -200,7 +200,7 @@ srSyntaxMIMICInt <- "
 ```
 
 ```{r}
-MIMICintercept <- sem(srSyntaxMIMICInt, 
+MIMICintercept <- lavaan::sem(srSyntaxMIMICInt, 
                        data = affectData,
                        fixed.x=FALSE,
                        estimator = 'MLR') 
@@ -238,7 +238,7 @@ cfaSyntaxMIMIC <- "
 ```
 
 ```{r}
-MIMICmean <- sem(cfaSyntaxMIMIC, 
+MIMICmean <- lavaan::sem(cfaSyntaxMIMIC, 
                  data = affectData,
                  fixed.x=FALSE,
                  estimator = 'MLR') 

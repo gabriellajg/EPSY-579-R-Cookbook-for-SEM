@@ -1,0 +1,337 @@
+# Week16: Lavaan Lab 19 Multilevel SEM
+
+In this lab, we will:
+    
++ build a multilevel CFA model 
++ add covariates at both the between and the within level
+
+Load up the lavaan library:
+
+```{r, message=FALSE}
+library(lavaan)
+```
+
+Let's read in a Mplus example dataset from an online location
+
+```{r}
+Data <- read.table("http://statmodel.com/usersguide/chap9/ex9.6.dat")
+names(Data) <- c("y1", "y2", "y3", "y4", "x1", "x2", "w", "clus")
+```
+
+Take a look at the matrix:
+
+```{r}
+head(Data)
+dim(Data)
+length(unique(Data$clus))
+```
+
++ there are 1000 individual observations in 110 clusters
++ cluster sizes: 5, 10, 15
++ 4 measures at the within level y1, y2, y3, y4
++ 2 covariates at the within level: x1, x2
++ 1 covariate at the between level: w
+
+<!------------------------------>
+## PART I: Multilevel CFA 1: within-only construct
+<!------------------------------>
+
+This model specifies the latent variable only at the within level:
+
+```{r}
+model1 <- '
+  level: 1
+    fw =~ y1 + y2 + y3 + y4
+
+  level: 2
+    y1 ~~ y1 + y2 + y3 + y4
+    y2 ~~ y2 + y2 + y3
+    y3 ~~ y3 + y4
+    y4 ~~ y4
+
+    # all variances and covariances are freely estimated
+'
+```
+
+Fit the model:
+
+```{r}
+model1fit <- lavaan::sem(model1, data = Data, 
+                         cluster = "clus",
+                         estimator = 'MLR',
+                         fixed.x = FALSE)
+
+lavaan::summary(model1fit, fit.measures = T, standardized = T)
+```
+
+<!------------------------------>
+## PART II: Multilevel CFA 2: Between-only construct
+<!------------------------------>
+
++ Example: construct reflects self-reported ‘school climate’ measured by a questionnaire filled in by the school principles
++ We will only have one response for each school 
++ We may collect other variables from students/teachers in the schools though
+
+Note that the following model syntax:
+
+```{r, eval=FALSE}
+model2.wrong <- '
+  level: 1
+  # perhaps other level-1 variables
+
+  level: 2
+    fb =~ y1 + y2 + y3 + y4
+'
+
+model2fit <- lavaan::sem(model2.wrong, data = Data, 
+                         cluster = "clus",
+                         estimator = 'MLR',
+                         fixed.x = FALSE)
+```
+
+```{r, eval=FALSE}
+Error in lav_partable_vnames(tmp.lav, type = "ov", level = tmp.level.values[l]) : lavaan ERROR: level column does not contain value `1'
+```
+
+won't work because there is nothing at level 1. Instead, specify this model just like a regular CFA model:
+
+```{r}
+model2 <- '
+    fb =~ y1 + y2 + y3 + y4
+'
+```
+
+
+Fit the model:
+
+```{r}
+model2fit <- lavaan::sem(model2, data = Data, 
+                         cluster = "clus",
+                         estimator = 'MLR',
+                         fixed.x = FALSE)
+
+lavaan::summary(model2fit, fit.measures = T, standardized = T)
+```
+
+
+<!------------------------------>
+## PART III: Multilevel CFA 3: Shared cross-level construct
+<!------------------------------>
+
++ This model specifies the latent variable both at the within and the between level;
++ However, the latent variable only makes sense at the between level so SEM model is only built at the between level;
++ The indicators are correlated at the within level; 
+
+```{r m3}
+model3 <- '
+  level: 1
+    y1 ~~ y1 + y2 + y3 + y4
+    y2 ~~ y2 + y2 + y3
+    y3 ~~ y3 + y4
+    y4 ~~ y4
+
+  level: 2
+    fs =~ y1 + y2 + y3 + y4
+
+ # Fix Significant Heywood Cases
+  y2 ~~ v2*y2
+  y4 ~~ v4*y4
+  v2 > 0
+  v4 > 0 
+'
+```
+
+Fit the model:
+
+```{r m3fit}
+model3fit <- lavaan::sem(model3, data = Data, 
+                         cluster = "clus",
+                         estimator = 'MLR',
+                         fixed.x = FALSE)
+
+lavaan::summary(model3fit, standardized = T, fit.measures = T)
+```
+
+
+<!------------------------------>
+## PART IV: Multilevel CFA 4: Configural construct
+<!------------------------------>
+
++ Model 4a specifies the latent variable both at the within and the between level;
++ The CFA at each level should have the same factor structure, but not necessarily the same parameter estimates;
+
+```{r}
+model4a <- '
+  level: 1
+    fw =~ y1 + y2 + y3 + y4
+
+  level: 2
+    fb =~ y1 + y2 + y3 + y4
+'
+
+model4afit <- lavaan::sem(model4a, data = Data, 
+                         cluster = "clus",
+                         estimator = 'MLR',
+                         fixed.x = FALSE)
+
+lavaan::summary(model4afit, fit.measures = T, standardized = T)
+```
+
++ Model 4b specifies the same CFA at each level and requires the same factor loadings;
+
+```{r}
+model4b <- '
+  level: 1
+    fw =~ a*y1 + b*y2 + c*y3 + d*y4
+
+  level: 2
+    fb =~ a*y1 + b*y2 + c*y3 + d*y4
+'
+
+model4bfit <- lavaan::sem(model4b, data = Data, 
+                         cluster = "clus",
+                         estimator = 'MLR',
+                         fixed.x = FALSE)
+
+lavaan::summary(model4bfit, fit.measures = T, standardized = T)
+```
+
+
+<!------------------------------>
+## PART V: Multilevel CFA 5: Shared + Configural construct
+<!------------------------------>
+
++ This model specifies the latent variable both at the within and the between level;
++ The CFA at each level should have the same factor structure, but not necessarily the same parameter estimates;
+
+```{r}
+model5 <- '
+  level: 1
+    fw =~ a*y1 + b*y2 + c*y3 + d*y4
+
+  level: 2
+    fb =~ a*y1 + b*y2 + c*y3 + d*y4   # configural
+    fs =~ y1 + y2 + y3 + y4           # shared
+    
+    # fb and fs must be orthogonal
+    fs ~~ 0*fb
+'
+
+model5fit <- lavaan::sem(model5, data = Data, 
+                         cluster = "clus",
+                         estimator = 'MLR',
+                         fixed.x = FALSE)
+
+lavaan::summary(model5fit, fit.measures = T, standardized = T)
+```
+
+
+<!------------------------------>
+## PART VI: Model Comparison 
+<!------------------------------>
+
+```{r}
+m1 = fitMeasures(model1fit, fit.measures = c("chisq.scaled", "df.scaled", "pvalue.scaled", "rmsea.robust", "rmsea.ci.lower.robust", "rmsea.ci.upper.robust", "cfi.robust", "tli.robust", "srmr_within", "srmr_between"))
+m2 = fitMeasures(model2fit, fit.measures = c("chisq.scaled", "df.scaled", "pvalue.scaled", "rmsea.robust", "rmsea.ci.lower.robust", "rmsea.ci.upper.robust", "cfi.robust", "tli.robust", "srmr_within", "srmr_between"))
+m3 = fitMeasures(model3fit, fit.measures = c("chisq.scaled", "df.scaled", "pvalue.scaled", "rmsea.robust", "rmsea.ci.lower.robust", "rmsea.ci.upper.robust", "cfi.robust", "tli.robust", "srmr_within", "srmr_between"))
+m4a = fitMeasures(model4afit, fit.measures = c("chisq.scaled", "df.scaled", "pvalue.scaled", "rmsea.robust", "rmsea.ci.lower.robust", "rmsea.ci.upper.robust", "cfi.robust", "tli.robust", "srmr_within", "srmr_between"))
+m4b = fitMeasures(model4bfit, fit.measures = c("chisq.scaled", "df.scaled", "pvalue.scaled", "rmsea.robust", "rmsea.ci.lower.robust", "rmsea.ci.upper.robust", "cfi.robust", "tli.robust", "srmr_within", "srmr_between"))
+m5 = fitMeasures(model5fit, fit.measures = c("chisq.scaled", "df.scaled", "pvalue.scaled", "rmsea.robust", "rmsea.ci.lower.robust", "rmsea.ci.upper.robust", "cfi.robust", "tli.robust", "srmr_within", "srmr_between"))
+```
+```{r,message=FALSE}
+#install.packages('qpcR')
+library(qpcR)
+round(qpcR:::cbind.na(m1, m2, m3, m4a, m4b, m5), 3)
+```
+
+The final model goes to (drumroll)...model4b!
+
+<!------------------------------>
+## PART VII: Adding Covariates to Multilevel SEM
+<!------------------------------>
+
+### Model A: Adding a within-only covariate
+
+```{r}
+model4wCovA <- '
+  level: 1
+    fw =~ a*y1 + b*y2 + c*y3 + d*y4
+    fw ~ x1
+
+  level: 2
+    fb =~ a*y1 + b*y2 + c*y3 + d*y4
+'
+
+model4wCovAfit <- lavaan::sem(model4wCovA, data = Data, 
+                              cluster = "clus", 
+                              estimator = 'MLR',
+                              fixed.x = FALSE)
+
+lavaan::summary(model4wCovAfit, fit.measures = T, standardized = T)
+```
+
+### Model B: Adding a between-only covariate
+
+```{r}
+model4wCovB <- '
+  level: 1
+    fw =~ a*y1 + b*y2 + c*y3 + d*y4
+
+  level: 2
+    fb =~ a*y1 + b*y2 + c*y3 + d*y4
+    fb ~ w
+'
+
+model4wCovBfit <- lavaan::sem(model4wCovB, data = Data, 
+                              cluster = "clus", 
+                              estimator = 'MLR',
+                              fixed.x = FALSE)
+
+lavaan::summary(model4wCovBfit, fit.measures = T, standardized = T)
+```
+
+### Model C: Adding a covariate at both levels
+
+```{r}
+model4wCovC <- '
+  level: 1
+    fw =~ a*y1 + b*y2 + c*y3 + d*y4
+    fw ~ x1
+
+  level: 2
+    fb =~ a*y1 + b*y2 + c*y3 + d*y4
+    fb ~ x1
+'
+
+model4wCovCfit <- lavaan::sem(model4wCovC, data = Data, 
+                              cluster = "clus", 
+                              estimator = 'MLR',
+                              fixed.x = FALSE)
+
+lavaan::summary(model4wCovCfit, fit.measures = T, standardized = T)
+```
+
+
+<!------------------------------>
+## PART VII: Final Model
+<!------------------------------>
+
+```{r}
+modelFinal <- '
+  level: 1
+    fw =~ a*y1 + b*y2 + c*y3 + d*y4
+    fw ~ x1 + x2
+
+  level: 2
+    fb =~ a*y1 + b*y2 + c*y3 + d*y4
+    fb ~ w
+'
+
+modelFinalfit <- lavaan::sem(modelFinal, data = Data, 
+                              cluster = "clus", 
+                              estimator = 'MLR',
+                              fixed.x = FALSE)
+
+lavaan::summary(modelFinalfit, fit.measures = T, standardized = T)
+```
+

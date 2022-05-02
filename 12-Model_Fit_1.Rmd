@@ -36,7 +36,7 @@ fixedIndTwoFacSyntax <- "
 Fit the model regularly:
 
 ```{r}
-fixedIndTwoFacRun = sem(model = fixedIndTwoFacSyntax, 
+fixedIndTwoFacRun = lavaan::sem(model = fixedIndTwoFacSyntax, 
                         data = cfaData, 
                         fixed.x=FALSE)
 
@@ -53,7 +53,7 @@ fixedIndTwoFacRun
 Satorra and Bentler (1994, 2001) proposed two robust corrections for non-normally distributed data: 
 
 ```{r}
-two_fac_fit_M <- sem(fixedIndTwoFacSyntax, 
+two_fac_fit_M <- lavaan::sem(fixedIndTwoFacSyntax, 
                      data = cfaData, 
                      fixed.x=FALSE,
                      estimator = "MLM")
@@ -71,7 +71,7 @@ two_fac_fit_M
 + estimator = "MLMV" returns another version of Mean- and variance adjusted statistic but does not change the degrees of freedom 
 
 ```{r}
-two_fac_fit_MV <- sem(fixedIndTwoFacSyntax, 
+two_fac_fit_MV <- lavaan::sem(fixedIndTwoFacSyntax, 
                       data = cfaData, 
                       fixed.x=FALSE,
                       estimator = "MLMVS")
@@ -91,7 +91,7 @@ Please see a complete list of estimators here: http://lavaan.ugent.be/tutorial/e
 Just like T_M and T_MV, T_MLR also corrects for nonnormality. Since MLR works for both complete and incomplete data, T_MLR is more popular in practice:
 
 ```{r}
-two_fac_fit_MLR <- sem(fixedIndTwoFacSyntax, 
+two_fac_fit_MLR <- lavaan::sem(fixedIndTwoFacSyntax, 
                       data = cfaData, 
                       fixed.x=FALSE,
                       estimator = "MLR")
@@ -132,7 +132,7 @@ OneFacSyntax <- "
 	eta1 =~ glad + happy + cheerful + satisfied + content + comfortable  
 "
 
-one_fac_fit = sem(model = OneFacSyntax, 
+one_fac_fit = lavaan::sem(model = OneFacSyntax, 
                   data = cfaData, 
                   fixed.x=FALSE) 
 ```
@@ -217,7 +217,7 @@ OrthFacSyntax <- "
 Fit Model 2: 
 
 ```{r}
-OrthFac_fit <- sem(model = OrthFacSyntax, 
+OrthFac_fit <- lavaan::sem(model = OrthFacSyntax, 
                    data = cfaData, 
                    fixed.x = F)
 ```
@@ -254,7 +254,8 @@ CrossLoadingSyntax <- "
 Fit Model 3: 
 
 ```{r}
-CrossLoading_fit <- sem(model = CrossLoadingSyntax, data = cfaData, fixed.x = F)
+CrossLoading_fit <- lavaan::sem(model = CrossLoadingSyntax, 
+                                data = cfaData, fixed.x = F)
 ```
 
 Plot Model 3: 
@@ -291,7 +292,8 @@ CorrUniSyntax <-"
 Fit Model 4: 
 
 ```{r}
-CorrUni_fit <- sem(model= CorrUniSyntax, data = cfaData, fixed.x = F)
+CorrUni_fit <- lavaan::sem(model= CorrUniSyntax, 
+                           data = cfaData, fixed.x = F)
 ```
 
 Plot Model 4: 

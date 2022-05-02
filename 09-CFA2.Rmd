@@ -309,7 +309,7 @@ fixedFacTwoFacSyntax <- "
 To fix the variance of the latent variable to 1, add std.lv=T to sem() function: 
 
 ```{r}
-fixedFacTwoFacRun = sem(model = fixedFacTwoFacSyntax, 
+fixedFacTwoFacRun = lavaan::sem(model = fixedFacTwoFacSyntax, 
                         data = cfaData, 
                         fixed.x=FALSE, 
                         std.lv=T)

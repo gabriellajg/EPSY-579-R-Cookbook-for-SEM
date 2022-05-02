@@ -57,7 +57,7 @@ cfaSyn <- "
 Fit the one-factor model:
 
 ```{r}
-mlrFit <- sem(cfaSyn, 
+mlrFit <- lavaan::sem(cfaSyn, 
               data = nnorm_dat, 
               fixed.x = FALSE,
               estimator = "mlr")
@@ -91,7 +91,7 @@ oddOneFac = '
 + ordered = c( #NAMES OF ORDINAL INDICATORS#)
 
 ```{r}
-oneFacFit <- sem(oddOneFac, 
+oneFacFit <- lavaan::sem(oddOneFac, 
                  data = odd,
                  ordered=c('odd1','odd2','odd3','odd4','odd5','odd6','odd7','odd8'), 
                  fixed.x = FALSE) 
@@ -108,7 +108,7 @@ summary(oneFacFit, fit.measures = T)
 + Unfortunately you cannot use missing = 'fiml' for categorical data:
 
 ```{r}
-FitMessy <- sem(oddOneFac, 
+FitMessy <- lavaan::sem(oddOneFac, 
                 data = odd,
                 ordered=c('odd1','odd2','odd3','odd4','odd5','odd6','odd7','odd8'), 
                 fixed.x = FALSE,
@@ -123,7 +123,7 @@ FitMessy
 + But you cannot use missing = 'fiml' together with MLR for nonnormal data:
 
 ```{r}
-FitMessy <- sem(oddOneFac, 
+FitMessy <- lavaan::sem(oddOneFac, 
                 data = nnorm_dat,
                 #ordered=c('odd1','odd2','odd3','odd4','odd5','odd6','odd7','odd8'), 
                 fixed.x = FALSE,

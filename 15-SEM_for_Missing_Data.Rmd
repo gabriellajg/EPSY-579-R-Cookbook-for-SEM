@@ -117,7 +117,7 @@ HS.model <- ' visual  =~ x1 + x2 + x3
 Left untreated, the default in sem() is listwise deletion: 
 
 ```{r}
-fit.listwise <- sem(HS.model, 
+fit.listwise <- lavaan::sem(HS.model, 
                     data = data_miss, 
                     fixed.x = FALSE)
 
@@ -132,7 +132,7 @@ summary(fit.listwise, fit.measures = TRUE)
 ### FIML
 
 ```{r}
-fit.fiml <- sem(HS.model, 
+fit.fiml <- lavaan::sem(HS.model, 
                 data = data_miss, 
                 missing = 'fiml',
                 fixed.x = FALSE)

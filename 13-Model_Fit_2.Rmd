@@ -35,7 +35,7 @@ fixedIndTwoFacSyntax <- "
 Fit the model regularly:
 
 ```{r}
-fixedIndTwoFacRun = sem(model = fixedIndTwoFacSyntax, 
+fixedIndTwoFacRun = lavaan::sem(model = fixedIndTwoFacSyntax, 
                         data = cfaData, 
                         fixed.x=FALSE)
 ```
@@ -120,7 +120,7 @@ baselineM0 <- "
 	content ~~ content
 	comfortable ~~ comfortable
 "
-base_fit <- sem(baselineM0, data = cfaData, fixed.x = FALSE)
+base_fit <- lavaan::sem(baselineM0, data = cfaData, fixed.x = FALSE)
 base_fit
 ```
 
@@ -226,7 +226,7 @@ twofa.model <- "
 ### PART III: Fit the two-factor model
 
 ```{r}
-new_fit = sem(twofa.model, data = affectData_new, fixed.x=FALSE)
+new_fit = lavaan::sem(twofa.model, data = affectData_new, fixed.x=FALSE)
 summary(new_fit, standardized = T, fit.measures = T)
 ```
 

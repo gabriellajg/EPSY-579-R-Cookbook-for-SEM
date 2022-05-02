@@ -87,7 +87,7 @@ Here we named the fitted object 'srRun2'.
 We add std.lv=T to fix all latent factor variances to 1: 
 
 ```{r}
-srRun2 = sem(model = srSyntax, 
+srRun2 = lavaan::sem(model = srSyntax, 
             data = cfaData, 
             fixed.x=FALSE,
             std.lv=T)
