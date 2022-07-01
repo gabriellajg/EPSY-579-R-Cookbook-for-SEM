@@ -1,6 +1,7 @@
 course
-r-exercises
-week4_1-lavaan-lab-1-path-analysis-model
+into-to-r-101
+r-as-a-calculator
+lavaan-lab-1-path-analysis-model
 reading-in-and-working-with-realistic-datasets-in-r
 to-begin-we-will-read-the-file-that-we-will-use-for-our-sem-lab-eatingdisordersimdata.csv.
 or-you-could-nest-the-file.choose-function-inside-the-read.csv-function
@@ -24,7 +25,7 @@ part-iii-summarizing-our-analysis
 plotting-sem-model
 customize-it-your-way
 exercise-how-would-you-fit-the-model-in-saunders-et-al.-2016
-week4_2-lavaan-lab-2-mediation-and-indirect-effects
+lavaan-lab-2-mediation-and-indirect-effects
 reading-in-and-working-with-realistic-datasets-in-r-1
 using-lavaan-for-mediation-models---preacher-hayess
 part-i-follow-the-two-equations-of-m-dietse-y-bulimia
@@ -239,3 +240,6 @@ model-a-adding-a-within-only-covariate
 model-b-adding-a-between-only-covariate
 model-c-adding-a-covariate-at-both-levels
 part-vii-final-model
+into-to-r
+formal-rules-for-indexing-objects-in-r
+examples

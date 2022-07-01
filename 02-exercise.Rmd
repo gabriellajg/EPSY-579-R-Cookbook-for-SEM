@@ -1,1 +1,219 @@
-# R Exercises
+# Into to R
+
+In this lab, we will learn the basic operations of R. 
+
+Let's first meet the commenter in R: 
+
+\#\: I am a comment, indicated by a number sign (also called a pound sign, or, a hashtag).
+
+<!------------------------------>
+## R as a calculator
+<!------------------------------>
+
+In many ways, R is just a fancy calculator: 
+
+```{r}
+2 + 3
+```
+
+* To run this command ON A MAC, highlight it and press COMMAND+ENTER.
+
+* ON A PC, press CTRL+R.
+
+1. If you 'run' the comments, it will automatically run the next executable line 
+2. comments after the command will show in the console as well
+
+* In R, you can perform:
+
+```{r, results='hide'}
+2 + 1 #addition
+7 - 3 #subtraction
+2 * 4 #multiplication
+8 / 2 #division
+```
+
+You can also work with exponents:
+
+```{r, results='hide'}
+4^2 #4 to the 2nd power
+4**2 #same thing
+```
+
+Square Root:
+
+```{r, results='hide'}
+sqrt(16)
+```
+
+And perform a variety of other operations.
+
+Here's a helpful table:
+
+```{r, eval=FALSE}
+Arithmetic Operators
+
+#===========#==================#===========#
+# Operator  #   Meaning        # Example   #
+#===========#==================#===========#
+#    +      #   Addition       # 2 + 2     #
+#-----------#------------------#-----------#
+#    -      #   Subtraction    # 5 - 3     #
+#-----------#------------------#-----------#
+#    *      # Multiplication   # 3 * 4     #
+#-----------#------------------#-----------#
+#    /      #   Division       # 12 / 3    #
+#-----------#------------------#-----------#
+#  ^ or **  #    Power         # 3^3; 2**4 #
+#-----------#------------------#-----------#
+#  sqrt()   #   square root    # sqrt(16)  #
+#-----------#------------------#-----------#
+#  abs()    # absolute value   # abs(-5)   #
+#-----------#------------------#-----------#
+```
+Like any calculator, order of operations counts in R:
+
+```{r, results='hide'}
+3*6+5/4
+(3*6)+(5/4) #same
+
+3*(6+5)/4   #different
+3*((6+5)/4) #same as above
+```
+
+* Remember PEMDAS?
+* (Parentheses, Exponents, Multiplication, Division, Addition, Subtraction)
+* Given two or more operations in a single expression, PEMDAS tells you the order of the calculation. 
+
+<!------------------------------>
+## Formal Rules for Indexing Objects in R
+<!------------------------------>
+
+* There are many clever ways to index and retrieve subsets of objects in R, as we shall see, but all of them boil down to 3 formal rules.
+
+1. By supplying a vector of integers indicating the number(s) of the elements/rows/columns to be subsetted.
+a. A vector of POSITIVE INTEGERS indicates the elements to be selected.
+
+* Vectors can be indexed:
+
+```{r,results='hide'}
+stringvec <- c("Chen", "Julia", "Lee", "Mike", "Winston", "Coach")
+stringvec[c(1,2,3)]
+```
+
+b. A vector of NEGATIVE INTEGERS indicates the elements NOT to be selected (to be removed).
+
+```{r,results='hide'}
+stringvec[c(-1,-2,-3)]
+```
+
+2. By supplying a character vector indicating the names() of the elements/rows/columns to be selected.
+* (row/colnames for table objects).
+
+3. By supplying a logical vector of TRUE and FALSE (T and F) of the same length as the vector or dimension to be subsetted. 
+
+In this case, elements flagged as TRUE will be selected and those flagged as FALSE will be omitted.
+
+COROLLARY: A vector may be indexed in any of these three ways 
+OR BY SUPPLYING AS AN INDEX ANY OBJECT OR OPERATION THAT RETURNS ONE OF THESE THREE THINGS.
+
+Let us demonstrate each of these things in turn:
+
+<!------------------------------>
+## Examples
+<!------------------------------>
+
+1a. Positive integers indicating element numbers.
+
+```{r,results='hide'}
+stringvec[c(1,3,5)] #Returns 1st, 3rd, and 5th elements
+```
+
+1b. Negative integers indicating element numbers to be omitted:
+
+```{r,results='hide'}
+stringvec[-c(2,4,6)]
+```
+
+* Note that this is because
+
+```{r,results='hide'}
+-c(2,4,6)
+```
+
+* Negates all three numbers.
+
+* Also note that:
+
+```{r,results='hide',eval=FALSE}
+stringvec[c(1,-2,3)]
+```
+
+* Returns an error.
+* this is because selecting certain (positive) numbers already implies omitting others, so the negative integer is confusing and redundant.
+
+2. Character vector corresponding to element names.
+
+* Let's give our object some names:
+
+```{r,results='hide'}
+names(stringvec) <- paste("Friend", 1:length(stringvec), sep="")
+stringvec
+
+stringvec["Friend1"]
+stringvec[c("Friend3","Friend5")]
+stringvec[paste("Friend", c(1, 2, 5), sep="")]
+```
+
+3.	Logical Vector:
+
+* Let's say we want to select "Chen", "Lee", "Winston", and "Coach".
+
+```{r,results='hide'}
+stringvec[c(T, F, T, F, T, T)]
+```
+
+* Now let's create a vector that stores each character's gender:
+
+```{r,results='hide'}
+gender <- factor(c(1, 2, 1, 2, 1, 1), levels = c(1,2), labels = c("Male", "Female"))
+```
+
+* Now we can select "Chen", "Lee", "Winston", and "Coach" by simply entering:
+
+```{r,results='hide'}
+stringvec[gender == "Male"]
+```
+
+* Or we could select Julia and Mike using:
+
+```{r,results='hide'}
+stringvec[gender == "Female"]
+```
+
+* We could get even more creative ...
+
+```{r,results='hide'}
+stringvec[(gender == "Female" | stringvec == "Chen")]
+```
+
+* Why do all of these things work and actually return sensible results?
+* It's because they all return logical vectors of the appropriate length, with
+#TRUE values in the slots we want.
+* We can demonstrate this by running these commands outside of the braces:
+
+```{r,results='hide'}
+gender == "Male"
+gender == "Female"
+```
+
+* Even though this is a completely separate variable, these commands return logical vectors of the appropriate length,
+* with TRUE and FALSE values in the appropriate places.
+
+```{r,results='hide'}
+(gender == "Female" | stringvec == "Chen")
+```
+
+* Here again, same thing.
+
+* Although different types of objects we will discuss have different numbers of dimensions and different formats,
+*  if you remember these THREE WAYS TO SUBSET AN OBJECT (integers = element index, characters = element name, logical = flag element as TRUE), you will be a master at subsetting any object in R.
