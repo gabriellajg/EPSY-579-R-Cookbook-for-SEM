@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 17 Week13_1: Lavaan Lab 14 Measurement Invariance | R Cookbook for Structural Equation Modeling</title>
   <meta name="description" content="Chapter 17 Week13_1: Lavaan Lab 14 Measurement Invariance | R Cookbook for Structural Equation Modeling" />
-  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.28 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 17 Week13_1: Lavaan Lab 14 Measurement Invariance | R Cookbook for Structural Equation Modeling" />
   <meta property="og:type" content="book" />
@@ -20,6 +20,7 @@
   
   
 
+<meta name="author" content="Ge Jiang" />
 
 
 
@@ -135,9 +136,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Course</a></li>
-<li class="chapter" data-level="2" data-path="into-to-r-101.html"><a href="into-to-r-101.html"><i class="fa fa-check"></i><b>2</b> Into to R: 101</a>
+<li class="chapter" data-level="2" data-path="into-to-r.html"><a href="into-to-r.html"><i class="fa fa-check"></i><b>2</b> Into to R</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="into-to-r-101.html"><a href="into-to-r-101.html#r-as-a-calculator"><i class="fa fa-check"></i><b>2.1</b> 1. R as a calculator</a></li>
+<li class="chapter" data-level="2.1" data-path="into-to-r.html"><a href="into-to-r.html#r-as-a-calculator"><i class="fa fa-check"></i><b>2.1</b> R as a calculator</a></li>
+<li class="chapter" data-level="2.2" data-path="into-to-r.html"><a href="into-to-r.html#assigning-objects-and-basic-data-entry"><i class="fa fa-check"></i><b>2.2</b> Assigning Objects and Basic Data Entry</a></li>
+<li class="chapter" data-level="2.3" data-path="into-to-r.html"><a href="into-to-r.html#removing-an-object-from-the-workspace"><i class="fa fa-check"></i><b>2.3</b> Removing an object from the workspace</a></li>
+<li class="chapter" data-level="2.4" data-path="into-to-r.html"><a href="into-to-r.html#formal-rules-for-indexing-objects-in-r"><i class="fa fa-check"></i><b>2.4</b> Formal Rules for Indexing Objects in R</a></li>
+<li class="chapter" data-level="2.5" data-path="into-to-r.html"><a href="into-to-r.html#examples"><i class="fa fa-check"></i><b>2.5</b> Examples</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="lavaan-lab-1-path-analysis-model.html"><a href="lavaan-lab-1-path-analysis-model.html"><i class="fa fa-check"></i><b>3</b> Lavaan Lab 1 Path Analysis Model</a>
 <ul>
@@ -502,17 +507,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">Chapter 17</span> Week13_1: Lavaan Lab 14 Measurement Invariance<a href="week13_1-lavaan-lab-14-measurement-invariance.html#week13_1-lavaan-lab-14-measurement-invariance" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>For this lab, we will run the MG-CFA analyses in class using simulated data based on Todd Little’s positive affect example.</p>
 <p>Load up the lavaan library:</p>
-<div class="sourceCode" id="cb561"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb561-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb561-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span></code></pre></div>
+<div class="sourceCode" id="cb610"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb610-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb610-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span></code></pre></div>
 <p>and the dataset:</p>
-<div class="sourceCode" id="cb562"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb562-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb562-1" aria-hidden="true" tabindex="-1"></a>affectData <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;cfaInclassData.csv&quot;</span>, <span class="at">header =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb611"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb611-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb611-1" aria-hidden="true" tabindex="-1"></a>affectData <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;cfaInclassData.csv&quot;</span>, <span class="at">header =</span> T)</span></code></pre></div>
 <p>For demonstration purposes, let’s first simulate a grouping variable called school:</p>
-<div class="sourceCode" id="cb563"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb563-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb563-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">555</span>)</span>
-<span id="cb563-2"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb563-2" aria-hidden="true" tabindex="-1"></a>affectData<span class="sc">$</span>school <span class="ot">=</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&#39;public&#39;</span>, <span class="st">&#39;private&#39;</span>), <span class="fu">nrow</span>(affectData), <span class="at">replace =</span> T)</span>
-<span id="cb563-3"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb563-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(affectData<span class="sc">$</span>school)</span></code></pre></div>
+<div class="sourceCode" id="cb612"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb612-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb612-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">555</span>)</span>
+<span id="cb612-2"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb612-2" aria-hidden="true" tabindex="-1"></a>affectData<span class="sc">$</span>school <span class="ot">=</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&#39;public&#39;</span>, <span class="st">&#39;private&#39;</span>), <span class="fu">nrow</span>(affectData), <span class="at">replace =</span> T)</span>
+<span id="cb612-3"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb612-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(affectData<span class="sc">$</span>school)</span></code></pre></div>
 <pre><code>## 
 ## private  public 
 ##     513     487</code></pre>
-<div class="sourceCode" id="cb565"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb565-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb565-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(affectData)</span></code></pre></div>
+<div class="sourceCode" id="cb614"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb614-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb614-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(affectData)</span></code></pre></div>
 <pre><code>##   ID        glad   cheerful      happy  satisfied    content comfortable  school
 ## 1  1  0.13521092  0.5413297 -0.1041445 -0.5777446  0.8645383  0.02935020 private
 ## 2  2 -0.29116043  0.2434081  0.6671535  2.0763730 -0.7382832  1.05439183  public
@@ -526,37 +531,37 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">17.1</span> PART I: Multi-Group Analyses, Done Incorrectly<a href="week13_1-lavaan-lab-14-measurement-invariance.html#part-i-multi-group-analyses-done-incorrectly" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!------------------------------>
 <p>Syntax for an SR model (it doesn’t matter whether the model is for CFA or SR, the test of MI only applies to the CFA part):</p>
-<div class="sourceCode" id="cb567"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb567-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb567-1" aria-hidden="true" tabindex="-1"></a>srSyntax <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
-<span id="cb567-2"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb567-2" aria-hidden="true" tabindex="-1"></a><span class="st">    posAffect =~ glad + happy + cheerful </span></span>
-<span id="cb567-3"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb567-3" aria-hidden="true" tabindex="-1"></a><span class="st">    satisfaction =~ satisfied + content + comfortable </span></span>
-<span id="cb567-4"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb567-4" aria-hidden="true" tabindex="-1"></a><span class="st">    </span></span>
-<span id="cb567-5"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb567-5" aria-hidden="true" tabindex="-1"></a><span class="st">    # Structural Regression: beta</span></span>
-<span id="cb567-6"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb567-6" aria-hidden="true" tabindex="-1"></a><span class="st">    satisfaction ~ posAffect</span></span>
-<span id="cb567-7"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb567-7" aria-hidden="true" tabindex="-1"></a><span class="st">    &quot;</span></span></code></pre></div>
-<div class="sourceCode" id="cb568"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb568-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb568-1" aria-hidden="true" tabindex="-1"></a>MGsrRunWRONG <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(srSyntax, </span>
-<span id="cb568-2"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb568-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> affectData, </span>
-<span id="cb568-3"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb568-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">fixed.x=</span><span class="cn">FALSE</span>,</span>
-<span id="cb568-4"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb568-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">group =</span> <span class="st">&quot;school&quot;</span>, <span class="co"># group indicator</span></span>
-<span id="cb568-5"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb568-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">estimator =</span> <span class="st">&quot;MLR&quot;</span>) <span class="co"># use MLR as a go-to estimation method</span></span>
-<span id="cb568-6"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb568-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb568-7"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb568-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(MGsrRunWRONG, <span class="at">standardized =</span> T, <span class="at">fit.measures =</span> T)</span></code></pre></div>
-<pre><code>## lavaan 0.6-11 ended normally after 31 iterations
+<div class="sourceCode" id="cb616"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb616-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb616-1" aria-hidden="true" tabindex="-1"></a>srSyntax <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
+<span id="cb616-2"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb616-2" aria-hidden="true" tabindex="-1"></a><span class="st">    posAffect =~ glad + happy + cheerful </span></span>
+<span id="cb616-3"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb616-3" aria-hidden="true" tabindex="-1"></a><span class="st">    satisfaction =~ satisfied + content + comfortable </span></span>
+<span id="cb616-4"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb616-4" aria-hidden="true" tabindex="-1"></a><span class="st">    </span></span>
+<span id="cb616-5"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb616-5" aria-hidden="true" tabindex="-1"></a><span class="st">    # Structural Regression: beta</span></span>
+<span id="cb616-6"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb616-6" aria-hidden="true" tabindex="-1"></a><span class="st">    satisfaction ~ posAffect</span></span>
+<span id="cb616-7"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb616-7" aria-hidden="true" tabindex="-1"></a><span class="st">    &quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb617"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb617-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb617-1" aria-hidden="true" tabindex="-1"></a>MGsrRunWRONG <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(srSyntax, </span>
+<span id="cb617-2"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb617-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> affectData, </span>
+<span id="cb617-3"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb617-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">fixed.x=</span><span class="cn">FALSE</span>,</span>
+<span id="cb617-4"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb617-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">group =</span> <span class="st">&quot;school&quot;</span>, <span class="co"># group indicator</span></span>
+<span id="cb617-5"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb617-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">estimator =</span> <span class="st">&quot;MLR&quot;</span>) <span class="co"># use MLR as a go-to estimation method</span></span>
+<span id="cb617-6"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb617-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb617-7"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb617-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(MGsrRunWRONG, <span class="at">standardized =</span> T, <span class="at">fit.measures =</span> T)</span></code></pre></div>
+<pre><code>## lavaan 0.6-12 ended normally after 31 iterations
 ## 
 ##   Estimator                                         ML
 ##   Optimization method                           NLMINB
 ##   Number of model parameters                        38
-##                                                       
+## 
 ##   Number of observations per group:                   
 ##     private                                        513
 ##     public                                         487
-##                                                       
+## 
 ## Model Test User Model:
-##                                                Standard      Robust
-##   Test Statistic                                 11.920      11.709
-##   Degrees of freedom                                 16          16
-##   P-value (Chi-square)                            0.749       0.764
-##   Scaling correction factor                                   1.018
-##        Yuan-Bentler correction (Mplus variant)                     
+##                                               Standard      Robust
+##   Test Statistic                                11.920      11.709
+##   Degrees of freedom                                16          16
+##   P-value (Chi-square)                           0.749       0.764
+##   Scaling correction factor                                  1.018
+##     Yuan-Bentler correction (Mplus variant)                       
 ##   Test statistic for each group:
 ##     private                                      4.201       4.126
 ##     public                                       7.719       7.583
@@ -691,15 +696,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##    .comfortable       0.405    0.040   10.259    0.000    0.405    0.433
 ##     posAffect         0.414    0.058    7.152    0.000    1.000    1.000
 ##    .satisfaction      0.428    0.053    8.110    0.000    0.762    0.762</code></pre>
-<div class="sourceCode" id="cb570"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb570-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb570-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(semPlot)</span>
-<span id="cb570-2"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb570-2" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(MGsrRunWRONG, <span class="at">what=</span><span class="st">&#39;est&#39;</span>, </span>
-<span id="cb570-3"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb570-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">nCharNodes =</span> <span class="dv">0</span>,</span>
-<span id="cb570-4"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb570-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">nCharEdges =</span> <span class="dv">0</span>, <span class="co"># don&#39;t limit variable name lengths</span></span>
-<span id="cb570-5"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb570-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">edge.label.cex=</span><span class="fl">0.6</span>, </span>
-<span id="cb570-6"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb570-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">curvePivot =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb570-7"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb570-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">curve =</span> <span class="fl">1.5</span>, <span class="co"># pull covariances&#39; curves out a little</span></span>
-<span id="cb570-8"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb570-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">fade=</span><span class="cn">FALSE</span>)</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-324-1.png" width="672" /><img src="bookdownproj_files/figure-html/unnamed-chunk-324-2.png" width="672" /></p>
+<div class="sourceCode" id="cb619"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb619-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb619-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(semPlot)</span>
+<span id="cb619-2"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb619-2" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(MGsrRunWRONG, <span class="at">what=</span><span class="st">&#39;est&#39;</span>, </span>
+<span id="cb619-3"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb619-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">nCharNodes =</span> <span class="dv">0</span>,</span>
+<span id="cb619-4"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb619-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">nCharEdges =</span> <span class="dv">0</span>, <span class="co"># don&#39;t limit variable name lengths</span></span>
+<span id="cb619-5"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb619-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">edge.label.cex=</span><span class="fl">0.6</span>, </span>
+<span id="cb619-6"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb619-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">curvePivot =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb619-7"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb619-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">curve =</span> <span class="fl">1.5</span>, <span class="co"># pull covariances&#39; curves out a little</span></span>
+<span id="cb619-8"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb619-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">fade=</span><span class="cn">FALSE</span>)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-356-1.png" width="672" /><img src="bookdownproj_files/figure-html/unnamed-chunk-356-2.png" width="672" /></p>
 <!------------------------------>
 </div>
 <div id="part-ii-testing-measurement-invariance" class="section level2 hasAnchor" number="17.2">
@@ -708,12 +713,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="step-1-configural-invariance" class="section level3 hasAnchor" number="17.2.1">
 <h3><span class="header-section-number">17.2.1</span> step 1: Configural invariance<a href="week13_1-lavaan-lab-14-measurement-invariance.html#step-1-configural-invariance" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>If you simply use the MGsrRunWRONG synatx above, you are just testing configural invariance:</p>
-<div class="sourceCode" id="cb571"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb571-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb571-1" aria-hidden="true" tabindex="-1"></a>configuralFit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(srSyntax, </span>
-<span id="cb571-2"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb571-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> affectData, </span>
-<span id="cb571-3"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb571-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">fixed.x=</span><span class="cn">FALSE</span>,</span>
-<span id="cb571-4"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb571-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">group =</span> <span class="st">&quot;school&quot;</span>, <span class="co"># group indicator</span></span>
-<span id="cb571-5"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb571-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">estimator =</span> <span class="st">&quot;MLR&quot;</span>) <span class="co"># use MLR as a go-to estimation method</span></span>
-<span id="cb571-6"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb571-6" aria-hidden="true" tabindex="-1"></a><span class="co">#summary(configuralFit, standardized = T, fit.measures = T)</span></span></code></pre></div>
+<div class="sourceCode" id="cb620"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb620-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb620-1" aria-hidden="true" tabindex="-1"></a>configuralFit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(srSyntax, </span>
+<span id="cb620-2"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb620-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> affectData, </span>
+<span id="cb620-3"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb620-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">fixed.x=</span><span class="cn">FALSE</span>,</span>
+<span id="cb620-4"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb620-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">group =</span> <span class="st">&quot;school&quot;</span>, <span class="co"># group indicator</span></span>
+<span id="cb620-5"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb620-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">estimator =</span> <span class="st">&quot;MLR&quot;</span>) <span class="co"># use MLR as a go-to estimation method</span></span>
+<span id="cb620-6"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb620-6" aria-hidden="true" tabindex="-1"></a><span class="co">#summary(configuralFit, standardized = T, fit.measures = T)</span></span></code></pre></div>
 <ul>
 <li>Configural invariance was established due to satisfying model fit;</li>
 </ul>
@@ -721,35 +726,35 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="step-2-metric-weak-invariance" class="section level3 hasAnchor" number="17.2.2">
 <h3><span class="header-section-number">17.2.2</span> step 2: Metric (weak) invariance<a href="week13_1-lavaan-lab-14-measurement-invariance.html#step-2-metric-weak-invariance" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>To test metric invariance, you could manually constraint all factor loadings to be the same using tricks like “posAffect =~ c(lam1, lam1)*glad” but there is a shortcut using “group.equal” argument:</p>
-<div class="sourceCode" id="cb572"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb572-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb572-1" aria-hidden="true" tabindex="-1"></a>metricFit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(srSyntax, </span>
-<span id="cb572-2"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb572-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> affectData, </span>
-<span id="cb572-3"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb572-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">fixed.x=</span><span class="cn">FALSE</span>,</span>
-<span id="cb572-4"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb572-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>,</span>
-<span id="cb572-5"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb572-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">group =</span> <span class="st">&quot;school&quot;</span>, </span>
-<span id="cb572-6"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb572-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">group.equal =</span> <span class="fu">c</span>(<span class="st">&quot;loadings&quot;</span>)) </span></code></pre></div>
+<div class="sourceCode" id="cb621"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb621-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb621-1" aria-hidden="true" tabindex="-1"></a>metricFit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(srSyntax, </span>
+<span id="cb621-2"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb621-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> affectData, </span>
+<span id="cb621-3"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb621-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">fixed.x=</span><span class="cn">FALSE</span>,</span>
+<span id="cb621-4"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb621-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>,</span>
+<span id="cb621-5"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb621-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">group =</span> <span class="st">&quot;school&quot;</span>, </span>
+<span id="cb621-6"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb621-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">group.equal =</span> <span class="fu">c</span>(<span class="st">&quot;loadings&quot;</span>)) </span></code></pre></div>
 <ul>
 <li>so that all factor loadings are fixed to be the same across groups</li>
 <li>More group equality constraints can be added, like “intercepts”, “means”, “residuals”, “residual.covariances”, “lv.variances”, “lv.covariances”, “regressions”</li>
 </ul>
-<div class="sourceCode" id="cb573"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb573-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb573-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(metricFit, <span class="at">standardized =</span> T, <span class="at">fit.measures =</span> T)</span></code></pre></div>
-<pre><code>## lavaan 0.6-10 ended normally after 25 iterations
+<div class="sourceCode" id="cb622"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb622-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb622-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(metricFit, <span class="at">standardized =</span> T, <span class="at">fit.measures =</span> T)</span></code></pre></div>
+<pre><code>## lavaan 0.6-12 ended normally after 25 iterations
 ## 
 ##   Estimator                                         ML
 ##   Optimization method                           NLMINB
 ##   Number of model parameters                        38
 ##   Number of equality constraints                     4
-##                                                       
+## 
 ##   Number of observations per group:                   
 ##     private                                        513
 ##     public                                         487
-##                                                       
+## 
 ## Model Test User Model:
-##                                                Standard      Robust
-##   Test Statistic                                 17.640      17.639
-##   Degrees of freedom                                 20          20
-##   P-value (Chi-square)                            0.611       0.611
-##   Scaling correction factor                                   1.000
-##        Yuan-Bentler correction (Mplus variant)                     
+##                                               Standard      Robust
+##   Test Statistic                                17.640      17.639
+##   Degrees of freedom                                20          20
+##   P-value (Chi-square)                           0.611       0.611
+##   Scaling correction factor                                  1.000
+##     Yuan-Bentler correction (Mplus variant)                       
 ##   Test statistic for each group:
 ##     private                                      6.665       6.665
 ##     public                                      10.975      10.974
@@ -889,7 +894,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>To test whether the equal factor loading assumption caused damage to model fit, we compare metricFit to configuralFit:</li>
 </ul>
 <p>Model comparison:</p>
-<div class="sourceCode" id="cb575"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb575-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb575-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(configuralFit, metricFit)</span></code></pre></div>
+<div class="sourceCode" id="cb624"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb624-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb624-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(configuralFit, metricFit)</span></code></pre></div>
 <pre><code>## Scaled Chi-Squared Difference Test (method = &quot;satorra.bentler.2001&quot;)
 ## 
 ## lavaan NOTE:
@@ -908,31 +913,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="step-3-scalar-strong-invariance" class="section level3 hasAnchor" number="17.2.3">
 <h3><span class="header-section-number">17.2.3</span> step 3: Scalar (strong) Invariance<a href="week13_1-lavaan-lab-14-measurement-invariance.html#step-3-scalar-strong-invariance" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>In this step, both factor loadings and measurement intercepts (of course, including factor structure) are constrained to be equal between the groups:</p>
-<div class="sourceCode" id="cb577"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb577-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb577-1" aria-hidden="true" tabindex="-1"></a>scalarFit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(srSyntax, </span>
-<span id="cb577-2"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb577-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> affectData, </span>
-<span id="cb577-3"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb577-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">fixed.x=</span><span class="cn">FALSE</span>,</span>
-<span id="cb577-4"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb577-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>,</span>
-<span id="cb577-5"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb577-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">group =</span> <span class="st">&quot;school&quot;</span>, </span>
-<span id="cb577-6"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb577-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">group.equal =</span> <span class="fu">c</span>(<span class="st">&quot;loadings&quot;</span>, <span class="st">&quot;intercepts&quot;</span>)) </span>
-<span id="cb577-7"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb577-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(scalarFit, <span class="at">standardized =</span> T, <span class="at">fit.measures =</span> T)</span></code></pre></div>
-<pre><code>## lavaan 0.6-11 ended normally after 32 iterations
+<div class="sourceCode" id="cb626"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb626-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb626-1" aria-hidden="true" tabindex="-1"></a>scalarFit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(srSyntax, </span>
+<span id="cb626-2"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb626-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> affectData, </span>
+<span id="cb626-3"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb626-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">fixed.x=</span><span class="cn">FALSE</span>,</span>
+<span id="cb626-4"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb626-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>,</span>
+<span id="cb626-5"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb626-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">group =</span> <span class="st">&quot;school&quot;</span>, </span>
+<span id="cb626-6"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb626-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">group.equal =</span> <span class="fu">c</span>(<span class="st">&quot;loadings&quot;</span>, <span class="st">&quot;intercepts&quot;</span>)) </span>
+<span id="cb626-7"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb626-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(scalarFit, <span class="at">standardized =</span> T, <span class="at">fit.measures =</span> T)</span></code></pre></div>
+<pre><code>## lavaan 0.6-12 ended normally after 32 iterations
 ## 
 ##   Estimator                                         ML
 ##   Optimization method                           NLMINB
 ##   Number of model parameters                        40
 ##   Number of equality constraints                    10
-##                                                       
+## 
 ##   Number of observations per group:                   
 ##     private                                        513
 ##     public                                         487
-##                                                       
+## 
 ## Model Test User Model:
-##                                                Standard      Robust
-##   Test Statistic                                 20.364      20.360
-##   Degrees of freedom                                 24          24
-##   P-value (Chi-square)                            0.676       0.676
-##   Scaling correction factor                                   1.000
-##        Yuan-Bentler correction (Mplus variant)                     
+##                                               Standard      Robust
+##   Test Statistic                                20.364      20.360
+##   Degrees of freedom                                24          24
+##   P-value (Chi-square)                           0.676       0.676
+##   Scaling correction factor                                  1.000
+##     Yuan-Bentler correction (Mplus variant)                       
 ##   Test statistic for each group:
 ##     private                                      7.764       7.762
 ##     public                                      12.600      12.598
@@ -1068,7 +1073,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##     posAffect         0.453    0.049    9.174    0.000    1.000    1.000
 ##    .satisfaction      0.443    0.049    9.101    0.000    0.758    0.758</code></pre>
 <p>Model comparison:</p>
-<div class="sourceCode" id="cb579"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb579-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb579-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(metricFit, scalarFit)</span></code></pre></div>
+<div class="sourceCode" id="cb628"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb628-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb628-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(metricFit, scalarFit)</span></code></pre></div>
 <pre><code>## Scaled Chi-Squared Difference Test (method = &quot;satorra.bentler.2001&quot;)
 ## 
 ## lavaan NOTE:
@@ -1086,31 +1091,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="step-4-optional-residual-variance-strict-invariance" class="section level3 hasAnchor" number="17.2.4">
 <h3><span class="header-section-number">17.2.4</span> step 4: (Optional) Residual variance (strict) invariance<a href="week13_1-lavaan-lab-14-measurement-invariance.html#step-4-optional-residual-variance-strict-invariance" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb581"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb581-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb581-1" aria-hidden="true" tabindex="-1"></a>resVarFit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(srSyntax, </span>
-<span id="cb581-2"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb581-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> affectData, </span>
-<span id="cb581-3"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb581-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">fixed.x=</span><span class="cn">FALSE</span>,</span>
-<span id="cb581-4"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb581-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>,</span>
-<span id="cb581-5"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb581-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">group =</span> <span class="st">&quot;school&quot;</span>, </span>
-<span id="cb581-6"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb581-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">group.equal =</span> <span class="fu">c</span>(<span class="st">&quot;loadings&quot;</span>, <span class="st">&quot;intercepts&quot;</span>, <span class="st">&quot;residuals&quot;</span>)) </span>
-<span id="cb581-7"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb581-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(resVarFit, <span class="at">standardized =</span> T, <span class="at">fit.measures =</span> T)</span></code></pre></div>
-<pre><code>## lavaan 0.6-11 ended normally after 32 iterations
+<div class="sourceCode" id="cb630"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb630-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb630-1" aria-hidden="true" tabindex="-1"></a>resVarFit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(srSyntax, </span>
+<span id="cb630-2"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb630-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> affectData, </span>
+<span id="cb630-3"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb630-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">fixed.x=</span><span class="cn">FALSE</span>,</span>
+<span id="cb630-4"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb630-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>,</span>
+<span id="cb630-5"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb630-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">group =</span> <span class="st">&quot;school&quot;</span>, </span>
+<span id="cb630-6"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb630-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">group.equal =</span> <span class="fu">c</span>(<span class="st">&quot;loadings&quot;</span>, <span class="st">&quot;intercepts&quot;</span>, <span class="st">&quot;residuals&quot;</span>)) </span>
+<span id="cb630-7"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb630-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(resVarFit, <span class="at">standardized =</span> T, <span class="at">fit.measures =</span> T)</span></code></pre></div>
+<pre><code>## lavaan 0.6-12 ended normally after 32 iterations
 ## 
 ##   Estimator                                         ML
 ##   Optimization method                           NLMINB
 ##   Number of model parameters                        40
 ##   Number of equality constraints                    16
-##                                                       
+## 
 ##   Number of observations per group:                   
 ##     private                                        513
 ##     public                                         487
-##                                                       
+## 
 ## Model Test User Model:
-##                                                Standard      Robust
-##   Test Statistic                                 26.885      26.947
-##   Degrees of freedom                                 30          30
-##   P-value (Chi-square)                            0.629       0.626
-##   Scaling correction factor                                   0.998
-##        Yuan-Bentler correction (Mplus variant)                     
+##                                               Standard      Robust
+##   Test Statistic                                26.885      26.947
+##   Degrees of freedom                                30          30
+##   P-value (Chi-square)                           0.629       0.626
+##   Scaling correction factor                                  0.998
+##     Yuan-Bentler correction (Mplus variant)                       
 ##   Test statistic for each group:
 ##     private                                     11.454      11.481
 ##     public                                      15.430      15.466
@@ -1246,7 +1251,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##     psAffct           0.454    0.050    9.153    0.000    1.000    1.000
 ##    .stsfctn           0.444    0.049    9.141    0.000    0.760    0.760</code></pre>
 <p>Model comparison:</p>
-<div class="sourceCode" id="cb583"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb583-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb583-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(resVarFit, scalarFit)</span></code></pre></div>
+<div class="sourceCode" id="cb632"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb632-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb632-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(resVarFit, scalarFit)</span></code></pre></div>
 <pre><code>## Scaled Chi-Squared Difference Test (method = &quot;satorra.bentler.2001&quot;)
 ## 
 ## lavaan NOTE:
@@ -1270,13 +1275,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="measurementinvariance" class="section level3 hasAnchor" number="17.3.1">
 <h3><span class="header-section-number">17.3.1</span> measurementInvariance()<a href="week13_1-lavaan-lab-14-measurement-invariance.html#measurementinvariance" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>There is a shortcut function in package ‘semTools’ that performsinvariance testing in one place, but unfornately it will soon retire…</p>
-<div class="sourceCode" id="cb585"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb585-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb585-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(semTools)</span>
-<span id="cb585-2"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb585-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb585-3"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb585-3" aria-hidden="true" tabindex="-1"></a><span class="fu">measurementInvariance</span>(<span class="at">model =</span> srSyntax, </span>
-<span id="cb585-4"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb585-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">data =</span> affectData, </span>
-<span id="cb585-5"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb585-5" aria-hidden="true" tabindex="-1"></a>                      <span class="at">fixed.x=</span><span class="cn">FALSE</span>,</span>
-<span id="cb585-6"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb585-6" aria-hidden="true" tabindex="-1"></a>                      <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>, </span>
-<span id="cb585-7"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb585-7" aria-hidden="true" tabindex="-1"></a>                      <span class="at">group =</span> <span class="st">&quot;school&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb634"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb634-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb634-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(semTools)</span>
+<span id="cb634-2"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb634-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb634-3"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb634-3" aria-hidden="true" tabindex="-1"></a><span class="fu">measurementInvariance</span>(<span class="at">model =</span> srSyntax, </span>
+<span id="cb634-4"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb634-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">data =</span> affectData, </span>
+<span id="cb634-5"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb634-5" aria-hidden="true" tabindex="-1"></a>                      <span class="at">fixed.x=</span><span class="cn">FALSE</span>,</span>
+<span id="cb634-6"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb634-6" aria-hidden="true" tabindex="-1"></a>                      <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>, </span>
+<span id="cb634-7"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb634-7" aria-hidden="true" tabindex="-1"></a>                      <span class="at">group =</span> <span class="st">&quot;school&quot;</span>)</span></code></pre></div>
 <pre><code>## Warning: The measurementInvariance function is deprecated, and it will cease to be included in future versions of semTools. See help(&#39;semTools-deprecated) for details.</code></pre>
 <pre><code>## 
 ## Measurement invariance models:
@@ -1311,32 +1316,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="measeq.syntax" class="section level3 hasAnchor" number="17.3.2">
 <h3><span class="header-section-number">17.3.2</span> measEq.syntax()<a href="week13_1-lavaan-lab-14-measurement-invariance.html#measeq.syntax" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>To use measEq.syntax() from semTools, we need to use a model syntax for CFA model instead of SR model:</p>
-<div class="sourceCode" id="cb588"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb588-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb588-1" aria-hidden="true" tabindex="-1"></a>cfaSyntax <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
-<span id="cb588-2"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb588-2" aria-hidden="true" tabindex="-1"></a><span class="st">    posAffect =~ glad + happy + cheerful </span></span>
-<span id="cb588-3"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb588-3" aria-hidden="true" tabindex="-1"></a><span class="st">    satisfaction =~ satisfied + content + comfortable </span></span>
-<span id="cb588-4"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb588-4" aria-hidden="true" tabindex="-1"></a><span class="st">    &quot;</span></span></code></pre></div>
-<div class="sourceCode" id="cb589"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb589-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb589-1" aria-hidden="true" tabindex="-1"></a>test.seq <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">weak =</span> <span class="fu">c</span>(<span class="st">&quot;loadings&quot;</span>),</span>
-<span id="cb589-2"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb589-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">strong =</span> <span class="fu">c</span>(<span class="st">&quot;intercepts&quot;</span>),</span>
-<span id="cb589-3"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb589-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">strict =</span> <span class="fu">c</span>(<span class="st">&quot;residuals&quot;</span>))</span>
-<span id="cb589-4"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb589-4" aria-hidden="true" tabindex="-1"></a>meq.list <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
-<span id="cb589-5"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb589-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">0</span><span class="sc">:</span><span class="fu">length</span>(test.seq)) {</span>
-<span id="cb589-6"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb589-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (i <span class="sc">==</span> 0L) {</span>
-<span id="cb589-7"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb589-7" aria-hidden="true" tabindex="-1"></a>    meq.label <span class="ot">&lt;-</span> <span class="st">&quot;configural&quot;</span></span>
-<span id="cb589-8"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb589-8" aria-hidden="true" tabindex="-1"></a>    group.equal <span class="ot">&lt;-</span> <span class="st">&quot;&quot;</span></span>
-<span id="cb589-9"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb589-9" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
-<span id="cb589-10"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb589-10" aria-hidden="true" tabindex="-1"></a>    meq.label <span class="ot">&lt;-</span> <span class="fu">names</span>(test.seq)[i]</span>
-<span id="cb589-11"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb589-11" aria-hidden="true" tabindex="-1"></a>    group.equal <span class="ot">&lt;-</span> <span class="fu">unlist</span>(test.seq[<span class="dv">1</span><span class="sc">:</span>i])</span>
-<span id="cb589-12"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb589-12" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb589-13"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb589-13" aria-hidden="true" tabindex="-1"></a>  meq.list[[meq.label]] <span class="ot">&lt;-</span> <span class="fu">measEq.syntax</span>(<span class="at">configural.model =</span> cfaSyntax,</span>
-<span id="cb589-14"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb589-14" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">data =</span> affectData,</span>
-<span id="cb589-15"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb589-15" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">fixed.x =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb589-16"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb589-16" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>, </span>
-<span id="cb589-17"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb589-17" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">group =</span> <span class="st">&quot;school&quot;</span>,</span>
-<span id="cb589-18"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb589-18" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">group.equal =</span> group.equal,</span>
-<span id="cb589-19"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb589-19" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">return.fit =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb589-20"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb589-20" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<div class="sourceCode" id="cb590"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb590-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb590-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">=</span> <span class="fu">compareFit</span>(meq.list)</span>
-<span id="cb590-2"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb590-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">compareFit</span>(meq.list))</span></code></pre></div>
+<div class="sourceCode" id="cb637"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb637-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb637-1" aria-hidden="true" tabindex="-1"></a>cfaSyntax <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
+<span id="cb637-2"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb637-2" aria-hidden="true" tabindex="-1"></a><span class="st">    posAffect =~ glad + happy + cheerful </span></span>
+<span id="cb637-3"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb637-3" aria-hidden="true" tabindex="-1"></a><span class="st">    satisfaction =~ satisfied + content + comfortable </span></span>
+<span id="cb637-4"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb637-4" aria-hidden="true" tabindex="-1"></a><span class="st">    &quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb638"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb638-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb638-1" aria-hidden="true" tabindex="-1"></a>test.seq <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">weak =</span> <span class="fu">c</span>(<span class="st">&quot;loadings&quot;</span>),</span>
+<span id="cb638-2"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb638-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">strong =</span> <span class="fu">c</span>(<span class="st">&quot;intercepts&quot;</span>),</span>
+<span id="cb638-3"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb638-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">strict =</span> <span class="fu">c</span>(<span class="st">&quot;residuals&quot;</span>))</span>
+<span id="cb638-4"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb638-4" aria-hidden="true" tabindex="-1"></a>meq.list <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb638-5"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb638-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">0</span><span class="sc">:</span><span class="fu">length</span>(test.seq)) {</span>
+<span id="cb638-6"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb638-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (i <span class="sc">==</span> 0L) {</span>
+<span id="cb638-7"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb638-7" aria-hidden="true" tabindex="-1"></a>    meq.label <span class="ot">&lt;-</span> <span class="st">&quot;configural&quot;</span></span>
+<span id="cb638-8"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb638-8" aria-hidden="true" tabindex="-1"></a>    group.equal <span class="ot">&lt;-</span> <span class="st">&quot;&quot;</span></span>
+<span id="cb638-9"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb638-9" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb638-10"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb638-10" aria-hidden="true" tabindex="-1"></a>    meq.label <span class="ot">&lt;-</span> <span class="fu">names</span>(test.seq)[i]</span>
+<span id="cb638-11"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb638-11" aria-hidden="true" tabindex="-1"></a>    group.equal <span class="ot">&lt;-</span> <span class="fu">unlist</span>(test.seq[<span class="dv">1</span><span class="sc">:</span>i])</span>
+<span id="cb638-12"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb638-12" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb638-13"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb638-13" aria-hidden="true" tabindex="-1"></a>  meq.list[[meq.label]] <span class="ot">&lt;-</span> <span class="fu">measEq.syntax</span>(<span class="at">configural.model =</span> cfaSyntax,</span>
+<span id="cb638-14"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb638-14" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">data =</span> affectData,</span>
+<span id="cb638-15"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb638-15" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">fixed.x =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb638-16"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb638-16" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>, </span>
+<span id="cb638-17"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb638-17" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">group =</span> <span class="st">&quot;school&quot;</span>,</span>
+<span id="cb638-18"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb638-18" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">group.equal =</span> group.equal,</span>
+<span id="cb638-19"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb638-19" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">return.fit =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb638-20"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb638-20" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb639"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb639-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb639-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">=</span> <span class="fu">compareFit</span>(meq.list)</span>
+<span id="cb639-2"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb639-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">compareFit</span>(meq.list))</span></code></pre></div>
 <pre><code>## ################### Nested Model Comparison #########################
 ## Scaled Chi-Squared Difference Test (method = &quot;satorra.bentler.2001&quot;)
 ## 
@@ -1375,33 +1380,33 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <div id="statistical-test-of-equal-factor-means" class="section level3 hasAnchor" number="17.4.1">
 <h3><span class="header-section-number">17.4.1</span> Statistical Test of Equal Factor Means:<a href="week13_1-lavaan-lab-14-measurement-invariance.html#statistical-test-of-equal-factor-means" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb592"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb592-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb592-1" aria-hidden="true" tabindex="-1"></a>equalMeanfit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(cfaSyntax, </span>
-<span id="cb592-2"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb592-2" aria-hidden="true" tabindex="-1"></a>                    affectData, </span>
-<span id="cb592-3"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb592-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">fixed.x =</span> <span class="cn">FALSE</span>, </span>
-<span id="cb592-4"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb592-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>, </span>
-<span id="cb592-5"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb592-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">group =</span> <span class="st">&quot;school&quot;</span>, </span>
-<span id="cb592-6"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb592-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">group.equal =</span> <span class="fu">c</span>(<span class="st">&quot;loadings&quot;</span>, <span class="st">&quot;intercepts&quot;</span>, <span class="st">&quot;residuals&quot;</span>, </span>
-<span id="cb592-7"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb592-7" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">&quot;means&quot;</span>))</span>
-<span id="cb592-8"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb592-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb592-9"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb592-9" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(equalMeanfit, <span class="at">standardized =</span> T, <span class="at">fit.measures =</span> T)</span></code></pre></div>
-<pre><code>## lavaan 0.6-11 ended normally after 28 iterations
+<div class="sourceCode" id="cb641"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb641-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb641-1" aria-hidden="true" tabindex="-1"></a>equalMeanfit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(cfaSyntax, </span>
+<span id="cb641-2"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb641-2" aria-hidden="true" tabindex="-1"></a>                    affectData, </span>
+<span id="cb641-3"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb641-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">fixed.x =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb641-4"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb641-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>, </span>
+<span id="cb641-5"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb641-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">group =</span> <span class="st">&quot;school&quot;</span>, </span>
+<span id="cb641-6"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb641-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">group.equal =</span> <span class="fu">c</span>(<span class="st">&quot;loadings&quot;</span>, <span class="st">&quot;intercepts&quot;</span>, <span class="st">&quot;residuals&quot;</span>, </span>
+<span id="cb641-7"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb641-7" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">&quot;means&quot;</span>))</span>
+<span id="cb641-8"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb641-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb641-9"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb641-9" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(equalMeanfit, <span class="at">standardized =</span> T, <span class="at">fit.measures =</span> T)</span></code></pre></div>
+<pre><code>## lavaan 0.6-12 ended normally after 28 iterations
 ## 
 ##   Estimator                                         ML
 ##   Optimization method                           NLMINB
 ##   Number of model parameters                        38
 ##   Number of equality constraints                    16
-##                                                       
+## 
 ##   Number of observations per group:                   
 ##     private                                        513
 ##     public                                         487
-##                                                       
+## 
 ## Model Test User Model:
-##                                                Standard      Robust
-##   Test Statistic                                 31.333      31.415
-##   Degrees of freedom                                 32          32
-##   P-value (Chi-square)                            0.500       0.496
-##   Scaling correction factor                                   0.997
-##        Yuan-Bentler correction (Mplus variant)                     
+##                                               Standard      Robust
+##   Test Statistic                                31.333      31.415
+##   Degrees of freedom                                32          32
+##   P-value (Chi-square)                           0.500       0.496
+##   Scaling correction factor                                  0.997
+##     Yuan-Bentler correction (Mplus variant)                       
 ##   Test statistic for each group:
 ##     private                                     13.747      13.784
 ##     public                                      17.585      17.632
@@ -1536,7 +1541,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##    .cmfrtbl (.12.)    0.401    0.027   14.918    0.000    0.401    0.449
 ##     psAffct           0.454    0.050    9.164    0.000    1.000    1.000
 ##     stsfctn           0.585    0.057   10.290    0.000    1.000    1.000</code></pre>
-<div class="sourceCode" id="cb594"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb594-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb594-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(resVarFit, equalMeanfit)</span></code></pre></div>
+<div class="sourceCode" id="cb643"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb643-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb643-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(resVarFit, equalMeanfit)</span></code></pre></div>
 <pre><code>## Scaled Chi-Squared Difference Test (method = &quot;satorra.bentler.2001&quot;)
 ## 
 ## lavaan NOTE:
@@ -1557,33 +1562,33 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li>Note that we used srSyntax here because we need to define the regression coefficient between PA and satisfaction:</li>
 </ul>
-<div class="sourceCode" id="cb596"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb596-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb596-1" aria-hidden="true" tabindex="-1"></a>equalBetafit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(srSyntax, </span>
-<span id="cb596-2"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb596-2" aria-hidden="true" tabindex="-1"></a>                    affectData, </span>
-<span id="cb596-3"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb596-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">fixed.x =</span> <span class="cn">FALSE</span>, </span>
-<span id="cb596-4"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb596-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>, </span>
-<span id="cb596-5"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb596-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">group =</span> <span class="st">&quot;school&quot;</span>, </span>
-<span id="cb596-6"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb596-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">group.equal =</span> <span class="fu">c</span>(<span class="st">&quot;loadings&quot;</span>, <span class="st">&quot;intercepts&quot;</span>, <span class="st">&quot;residuals&quot;</span>,</span>
-<span id="cb596-7"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb596-7" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">&quot;regressions&quot;</span>))</span>
-<span id="cb596-8"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb596-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb596-9"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb596-9" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(equalBetafit, <span class="at">standardized =</span> T, <span class="at">fit.measures =</span> T)</span></code></pre></div>
-<pre><code>## lavaan 0.6-11 ended normally after 30 iterations
+<div class="sourceCode" id="cb645"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb645-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb645-1" aria-hidden="true" tabindex="-1"></a>equalBetafit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(srSyntax, </span>
+<span id="cb645-2"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb645-2" aria-hidden="true" tabindex="-1"></a>                    affectData, </span>
+<span id="cb645-3"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb645-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">fixed.x =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb645-4"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb645-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>, </span>
+<span id="cb645-5"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb645-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">group =</span> <span class="st">&quot;school&quot;</span>, </span>
+<span id="cb645-6"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb645-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">group.equal =</span> <span class="fu">c</span>(<span class="st">&quot;loadings&quot;</span>, <span class="st">&quot;intercepts&quot;</span>, <span class="st">&quot;residuals&quot;</span>,</span>
+<span id="cb645-7"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb645-7" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">&quot;regressions&quot;</span>))</span>
+<span id="cb645-8"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb645-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb645-9"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb645-9" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(equalBetafit, <span class="at">standardized =</span> T, <span class="at">fit.measures =</span> T)</span></code></pre></div>
+<pre><code>## lavaan 0.6-12 ended normally after 30 iterations
 ## 
 ##   Estimator                                         ML
 ##   Optimization method                           NLMINB
 ##   Number of model parameters                        40
 ##   Number of equality constraints                    17
-##                                                       
+## 
 ##   Number of observations per group:                   
 ##     private                                        513
 ##     public                                         487
-##                                                       
+## 
 ## Model Test User Model:
-##                                                Standard      Robust
-##   Test Statistic                                 26.937      26.888
-##   Degrees of freedom                                 31          31
-##   P-value (Chi-square)                            0.675       0.678
-##   Scaling correction factor                                   1.002
-##        Yuan-Bentler correction (Mplus variant)                     
+##                                               Standard      Robust
+##   Test Statistic                                26.937      26.888
+##   Degrees of freedom                                31          31
+##   P-value (Chi-square)                           0.675       0.678
+##   Scaling correction factor                                  1.002
+##     Yuan-Bentler correction (Mplus variant)                       
 ##   Test statistic for each group:
 ##     private                                     11.496      11.476
 ##     public                                      15.441      15.413
@@ -1718,7 +1723,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##    .cmfrtbl (.13.)    0.402    0.027   15.067    0.000    0.402    0.453
 ##     psAffct           0.454    0.049    9.228    0.000    1.000    1.000
 ##    .stsfctn           0.445    0.048    9.293    0.000    0.767    0.767</code></pre>
-<div class="sourceCode" id="cb598"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb598-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb598-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(resVarFit, equalBetafit)</span></code></pre></div>
+<div class="sourceCode" id="cb647"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb647-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb647-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(resVarFit, equalBetafit)</span></code></pre></div>
 <pre><code>## Scaled Chi-Squared Difference Test (method = &quot;satorra.bentler.2001&quot;)
 ## 
 ## lavaan NOTE:
@@ -1803,7 +1808,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

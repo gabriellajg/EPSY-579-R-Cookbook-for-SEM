@@ -85,6 +85,108 @@ Like any calculator, order of operations counts in R:
 * Given two or more operations in a single expression, PEMDAS tells you the order of the calculation. 
 
 <!------------------------------>
+## Assigning Objects and Basic Data Entry
+<!------------------------------>
+
+Run these commands:
+
+```{r}
+a <- 3   # <- assigns a value to a name on the right.
+b = 4    # =  also assigns a value to a name on the right;
+```
+
+These lines have assigned the numbers 3 and 6 to the labels a and b, respectively.
+
+Now try running these lines, which simply display the contents of a and b:
+
+```{r}
+a
+b
+```
+
+Now try running these lines, to call A and B:
+
+```{r, eval=FALSE}
+A
+B
+```
+
+* Returns:
+* Error: object 'A' not found
+* Error: object 'B' not found
+ 
+* Why?
+* Because R is caSE-seNSitivE
+
+We can perform the same operations on a and b as above:
+
+```{r}
+a + b
+```
+
+* We can also assign more than one number to a label, to form a numeric vector.
+* This is accomplished with the c() function, which concatenates a string of values separated by commas.
+```{r}
+vec <- c(1, 3, 5, 7, 9)
+vec
+```
+
+separated by spaces, not commas
+
+```{r}
+vec2 <- c(2, 4, 6, 8, 10)
+vec2
+```
+
+You can similarly perform mathematical operations on these vectors. 
+Here are some basic ones:
+
+```{r}
+vec + vec2 #vector addition
+
+vec*2 #scalar multiplication. 
+vec*a #scalar multiplication. 
+```
+
+ELEMENTWISE multiplication:
+
+```{r}
+vec*vec2
+```
+
+ELEMENTWISE division:
+
+```{r}
+vec/vec2
+```
+
+<!------------------------------>
+## Removing an object from the workspace
+<!------------------------------>
+
+* You can remove objects using the function (rm)
+* For example: remember the object a that we created earlier?
+
+```{r}
+a
+```
+
+let's remove it:
+
+```{r}
+rm(a)
+```
+
+Now try to call a:
+
+```{r, eval=FALSE}
+a
+```
+
+Error: object 'a' not found.
+
+
+<!------------------------------>
 ## Formal Rules for Indexing Objects in R
 <!------------------------------>
 

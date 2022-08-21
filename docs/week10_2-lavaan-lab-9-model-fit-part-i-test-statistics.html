@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 12 Week10_2: Lavaan Lab 9 Model Fit Part I (Test Statistics) | R Cookbook for Structural Equation Modeling</title>
   <meta name="description" content="Chapter 12 Week10_2: Lavaan Lab 9 Model Fit Part I (Test Statistics) | R Cookbook for Structural Equation Modeling" />
-  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.28 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 12 Week10_2: Lavaan Lab 9 Model Fit Part I (Test Statistics) | R Cookbook for Structural Equation Modeling" />
   <meta property="og:type" content="book" />
@@ -20,6 +20,7 @@
   
   
 
+<meta name="author" content="Ge Jiang" />
 
 
 
@@ -135,9 +136,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Course</a></li>
-<li class="chapter" data-level="2" data-path="into-to-r-101.html"><a href="into-to-r-101.html"><i class="fa fa-check"></i><b>2</b> Into to R: 101</a>
+<li class="chapter" data-level="2" data-path="into-to-r.html"><a href="into-to-r.html"><i class="fa fa-check"></i><b>2</b> Into to R</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="into-to-r-101.html"><a href="into-to-r-101.html#r-as-a-calculator"><i class="fa fa-check"></i><b>2.1</b> 1. R as a calculator</a></li>
+<li class="chapter" data-level="2.1" data-path="into-to-r.html"><a href="into-to-r.html#r-as-a-calculator"><i class="fa fa-check"></i><b>2.1</b> R as a calculator</a></li>
+<li class="chapter" data-level="2.2" data-path="into-to-r.html"><a href="into-to-r.html#assigning-objects-and-basic-data-entry"><i class="fa fa-check"></i><b>2.2</b> Assigning Objects and Basic Data Entry</a></li>
+<li class="chapter" data-level="2.3" data-path="into-to-r.html"><a href="into-to-r.html#removing-an-object-from-the-workspace"><i class="fa fa-check"></i><b>2.3</b> Removing an object from the workspace</a></li>
+<li class="chapter" data-level="2.4" data-path="into-to-r.html"><a href="into-to-r.html#formal-rules-for-indexing-objects-in-r"><i class="fa fa-check"></i><b>2.4</b> Formal Rules for Indexing Objects in R</a></li>
+<li class="chapter" data-level="2.5" data-path="into-to-r.html"><a href="into-to-r.html#examples"><i class="fa fa-check"></i><b>2.5</b> Examples</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="lavaan-lab-1-path-analysis-model.html"><a href="lavaan-lab-1-path-analysis-model.html"><i class="fa fa-check"></i><b>3</b> Lavaan Lab 1 Path Analysis Model</a>
 <ul>
@@ -506,34 +511,34 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>how to compare nested models using chi-square difference test.</li>
 </ul>
 <p>Load up the lavaan and semPlot libraries:</p>
-<div class="sourceCode" id="cb403"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb403-1"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb403-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span>
-<span id="cb403-2"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb403-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(semPlot)</span></code></pre></div>
+<div class="sourceCode" id="cb450"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb450-1"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb450-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span>
+<span id="cb450-2"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb450-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(semPlot)</span></code></pre></div>
 <!------------------------------>
 <div id="part-i-robust-ml-on-the-positive-affect-example" class="section level2 hasAnchor" number="12.1">
 <h2><span class="header-section-number">12.1</span> PART I: Robust ML on the Positive Affect Example<a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#part-i-robust-ml-on-the-positive-affect-example" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!------------------------------>
 <p>Let’s read this dataset in:</p>
-<div class="sourceCode" id="cb404"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb404-1"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb404-1" aria-hidden="true" tabindex="-1"></a>cfaData<span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;cfaInclassData.csv&quot;</span>, <span class="at">header =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb451"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb451-1"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb451-1" aria-hidden="true" tabindex="-1"></a>cfaData<span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;cfaInclassData.csv&quot;</span>, <span class="at">header =</span> T)</span></code></pre></div>
 <p>Write out syntax for a two-factor CFA model:</p>
-<div class="sourceCode" id="cb405"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb405-1"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb405-1" aria-hidden="true" tabindex="-1"></a>fixedIndTwoFacSyntax <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
-<span id="cb405-2"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb405-2" aria-hidden="true" tabindex="-1"></a><span class="st">    #Factor Specification   </span></span>
-<span id="cb405-3"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb405-3" aria-hidden="true" tabindex="-1"></a><span class="st">    posAffect =~ glad + happy + cheerful </span></span>
-<span id="cb405-4"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb405-4" aria-hidden="true" tabindex="-1"></a><span class="st">    satisfaction =~ satisfied + content + comfortable</span></span>
-<span id="cb405-5"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb405-5" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb452"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb452-1"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb452-1" aria-hidden="true" tabindex="-1"></a>fixedIndTwoFacSyntax <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
+<span id="cb452-2"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb452-2" aria-hidden="true" tabindex="-1"></a><span class="st">    #Factor Specification   </span></span>
+<span id="cb452-3"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb452-3" aria-hidden="true" tabindex="-1"></a><span class="st">    posAffect =~ glad + happy + cheerful </span></span>
+<span id="cb452-4"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb452-4" aria-hidden="true" tabindex="-1"></a><span class="st">    satisfaction =~ satisfied + content + comfortable</span></span>
+<span id="cb452-5"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb452-5" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
 <p>Fit the model regularly:</p>
-<div class="sourceCode" id="cb406"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb406-1"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb406-1" aria-hidden="true" tabindex="-1"></a>fixedIndTwoFacRun <span class="ot">=</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> fixedIndTwoFacSyntax, </span>
-<span id="cb406-2"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb406-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">data =</span> cfaData, </span>
-<span id="cb406-3"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb406-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">fixed.x=</span><span class="cn">FALSE</span>)</span>
-<span id="cb406-4"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb406-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb406-5"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb406-5" aria-hidden="true" tabindex="-1"></a>fixedIndTwoFacRun</span></code></pre></div>
-<pre><code>## lavaan 0.6-11 ended normally after 24 iterations
+<div class="sourceCode" id="cb453"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb453-1"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb453-1" aria-hidden="true" tabindex="-1"></a>fixedIndTwoFacRun <span class="ot">=</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> fixedIndTwoFacSyntax, </span>
+<span id="cb453-2"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb453-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">data =</span> cfaData, </span>
+<span id="cb453-3"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb453-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">fixed.x=</span><span class="cn">FALSE</span>)</span>
+<span id="cb453-4"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb453-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb453-5"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb453-5" aria-hidden="true" tabindex="-1"></a>fixedIndTwoFacRun</span></code></pre></div>
+<pre><code>## lavaan 0.6-12 ended normally after 24 iterations
 ## 
 ##   Estimator                                         ML
 ##   Optimization method                           NLMINB
 ##   Number of model parameters                        13
-##                                                       
+## 
 ##   Number of observations                          1000
-##                                                       
+## 
 ## Model Test User Model:
 ##                                                       
 ##   Test statistic                                 2.957
@@ -549,27 +554,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="mean-corrected-statistic-t_m" class="section level3 hasAnchor" number="12.1.1">
 <h3><span class="header-section-number">12.1.1</span> Mean corrected statistic (T_M)<a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#mean-corrected-statistic-t_m" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Satorra and Bentler (1994, 2001) proposed two robust corrections for non-normally distributed data:</p>
-<div class="sourceCode" id="cb408"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb408-1"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb408-1" aria-hidden="true" tabindex="-1"></a>two_fac_fit_M <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(fixedIndTwoFacSyntax, </span>
-<span id="cb408-2"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb408-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">data =</span> cfaData, </span>
-<span id="cb408-3"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb408-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">fixed.x=</span><span class="cn">FALSE</span>,</span>
-<span id="cb408-4"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb408-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">estimator =</span> <span class="st">&quot;MLM&quot;</span>)</span>
-<span id="cb408-5"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb408-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb408-6"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb408-6" aria-hidden="true" tabindex="-1"></a>two_fac_fit_M</span></code></pre></div>
-<pre><code>## lavaan 0.6-11 ended normally after 24 iterations
+<div class="sourceCode" id="cb455"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb455-1"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb455-1" aria-hidden="true" tabindex="-1"></a>two_fac_fit_M <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(fixedIndTwoFacSyntax, </span>
+<span id="cb455-2"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb455-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">data =</span> cfaData, </span>
+<span id="cb455-3"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb455-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">fixed.x=</span><span class="cn">FALSE</span>,</span>
+<span id="cb455-4"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb455-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">estimator =</span> <span class="st">&quot;MLM&quot;</span>)</span>
+<span id="cb455-5"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb455-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb455-6"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb455-6" aria-hidden="true" tabindex="-1"></a>two_fac_fit_M</span></code></pre></div>
+<pre><code>## lavaan 0.6-12 ended normally after 24 iterations
 ## 
 ##   Estimator                                         ML
 ##   Optimization method                           NLMINB
 ##   Number of model parameters                        13
-##                                                       
+## 
 ##   Number of observations                          1000
-##                                                       
+## 
 ## Model Test User Model:
 ##                                               Standard      Robust
 ##   Test Statistic                                 2.957       2.891
 ##   Degrees of freedom                                 8           8
 ##   P-value (Chi-square)                           0.937       0.941
 ##   Scaling correction factor                                  1.023
-##        Satorra-Bentler correction</code></pre>
+##     Satorra-Bentler correction</code></pre>
 <ul>
 <li>T_M = 2.891</li>
 <li>df_M = 8</li>
@@ -582,28 +587,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>estimator = “MLMVS” returns the Mean- and variance adjusted statistic with an updated degrees of freedom (recommended)</li>
 <li>estimator = “MLMV” returns another version of Mean- and variance adjusted statistic but does not change the degrees of freedom</li>
 </ul>
-<div class="sourceCode" id="cb410"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb410-1"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb410-1" aria-hidden="true" tabindex="-1"></a>two_fac_fit_MV <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(fixedIndTwoFacSyntax, </span>
-<span id="cb410-2"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb410-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">data =</span> cfaData, </span>
-<span id="cb410-3"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb410-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">fixed.x=</span><span class="cn">FALSE</span>,</span>
-<span id="cb410-4"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb410-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">estimator =</span> <span class="st">&quot;MLMVS&quot;</span>)</span>
-<span id="cb410-5"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb410-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb410-6"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb410-6" aria-hidden="true" tabindex="-1"></a><span class="co">#summary(two_fac_fit_MV, standardized = T)</span></span>
-<span id="cb410-7"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb410-7" aria-hidden="true" tabindex="-1"></a>two_fac_fit_MV</span></code></pre></div>
-<pre><code>## lavaan 0.6-11 ended normally after 24 iterations
+<div class="sourceCode" id="cb457"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb457-1"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb457-1" aria-hidden="true" tabindex="-1"></a>two_fac_fit_MV <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(fixedIndTwoFacSyntax, </span>
+<span id="cb457-2"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb457-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">data =</span> cfaData, </span>
+<span id="cb457-3"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb457-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">fixed.x=</span><span class="cn">FALSE</span>,</span>
+<span id="cb457-4"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb457-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">estimator =</span> <span class="st">&quot;MLMVS&quot;</span>)</span>
+<span id="cb457-5"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb457-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb457-6"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb457-6" aria-hidden="true" tabindex="-1"></a><span class="co">#summary(two_fac_fit_MV, standardized = T)</span></span>
+<span id="cb457-7"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb457-7" aria-hidden="true" tabindex="-1"></a>two_fac_fit_MV</span></code></pre></div>
+<pre><code>## lavaan 0.6-12 ended normally after 24 iterations
 ## 
 ##   Estimator                                         ML
 ##   Optimization method                           NLMINB
 ##   Number of model parameters                        13
-##                                                       
+## 
 ##   Number of observations                          1000
-##                                                       
+## 
 ## Model Test User Model:
 ##                                               Standard      Robust
 ##   Test Statistic                                 2.957       2.842
 ##   Degrees of freedom                                 8       7.864
 ##   P-value (Chi-square)                           0.937       0.939
 ##   Scaling correction factor                                  1.041
-##        mean and variance adjusted correction</code></pre>
+##     mean and variance adjusted correction</code></pre>
 <ul>
 <li>T_MV = 2.842</li>
 <li>df_MV = 7.864</li>
@@ -614,27 +619,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="yuan-bentler-test-statistic-t_mlr" class="section level3 hasAnchor" number="12.1.3">
 <h3><span class="header-section-number">12.1.3</span> Yuan-Bentler test statistic (T_MLR)<a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#yuan-bentler-test-statistic-t_mlr" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Just like T_M and T_MV, T_MLR also corrects for nonnormality. Since MLR works for both complete and incomplete data, T_MLR is more popular in practice:</p>
-<div class="sourceCode" id="cb412"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb412-1"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb412-1" aria-hidden="true" tabindex="-1"></a>two_fac_fit_MLR <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(fixedIndTwoFacSyntax, </span>
-<span id="cb412-2"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb412-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">data =</span> cfaData, </span>
-<span id="cb412-3"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb412-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">fixed.x=</span><span class="cn">FALSE</span>,</span>
-<span id="cb412-4"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb412-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">estimator =</span> <span class="st">&quot;MLR&quot;</span>)</span>
-<span id="cb412-5"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb412-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb412-6"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb412-6" aria-hidden="true" tabindex="-1"></a>two_fac_fit_MLR</span></code></pre></div>
-<pre><code>## lavaan 0.6-11 ended normally after 24 iterations
+<div class="sourceCode" id="cb459"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb459-1"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb459-1" aria-hidden="true" tabindex="-1"></a>two_fac_fit_MLR <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(fixedIndTwoFacSyntax, </span>
+<span id="cb459-2"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb459-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">data =</span> cfaData, </span>
+<span id="cb459-3"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb459-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">fixed.x=</span><span class="cn">FALSE</span>,</span>
+<span id="cb459-4"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb459-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">estimator =</span> <span class="st">&quot;MLR&quot;</span>)</span>
+<span id="cb459-5"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb459-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb459-6"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb459-6" aria-hidden="true" tabindex="-1"></a>two_fac_fit_MLR</span></code></pre></div>
+<pre><code>## lavaan 0.6-12 ended normally after 24 iterations
 ## 
 ##   Estimator                                         ML
 ##   Optimization method                           NLMINB
 ##   Number of model parameters                        13
-##                                                       
+## 
 ##   Number of observations                          1000
-##                                                       
+## 
 ## Model Test User Model:
-##                                                Standard      Robust
-##   Test Statistic                                  2.957       2.897
-##   Degrees of freedom                                  8           8
-##   P-value (Chi-square)                            0.937       0.941
-##   Scaling correction factor                                   1.021
-##        Yuan-Bentler correction (Mplus variant)</code></pre>
+##                                               Standard      Robust
+##   Test Statistic                                 2.957       2.897
+##   Degrees of freedom                                 8           8
+##   P-value (Chi-square)                           0.937       0.941
+##   Scaling correction factor                                  1.021
+##     Yuan-Bentler correction (Mplus variant)</code></pre>
 <ul>
 <li>T_MLR = 2.897</li>
 <li>df_MLR = 8</li>
@@ -643,11 +648,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="small-sample-correction---f-test" class="section level3 hasAnchor" number="12.1.4">
 <h3><span class="header-section-number">12.1.4</span> Small sample correction - F test<a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#small-sample-correction---f-test" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb414"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb414-1"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb414-1" aria-hidden="true" tabindex="-1"></a>F_ratio <span class="ot">=</span> <span class="fl">2.957</span><span class="sc">/</span><span class="dv">8</span></span></code></pre></div>
+<div class="sourceCode" id="cb461"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb461-1"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb461-1" aria-hidden="true" tabindex="-1"></a>F_ratio <span class="ot">=</span> <span class="fl">2.957</span><span class="sc">/</span><span class="dv">8</span></span></code></pre></div>
 <p>referred to an F(df, N-1) distribution:</p>
-<div class="sourceCode" id="cb415"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb415-1"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb415-1" aria-hidden="true" tabindex="-1"></a>?pf</span>
-<span id="cb415-2"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb415-2" aria-hidden="true" tabindex="-1"></a>p_val_F <span class="ot">=</span> <span class="dv">1</span><span class="sc">-</span><span class="fu">pf</span>(F_ratio, <span class="dv">8</span>, <span class="dv">1000-1</span>)</span>
-<span id="cb415-3"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb415-3" aria-hidden="true" tabindex="-1"></a>p_val_F</span></code></pre></div>
+<div class="sourceCode" id="cb462"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb462-1"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb462-1" aria-hidden="true" tabindex="-1"></a>?pf</span>
+<span id="cb462-2"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb462-2" aria-hidden="true" tabindex="-1"></a>p_val_F <span class="ot">=</span> <span class="dv">1</span><span class="sc">-</span><span class="fu">pf</span>(F_ratio, <span class="dv">8</span>, <span class="dv">1000-1</span>)</span>
+<span id="cb462-3"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb462-3" aria-hidden="true" tabindex="-1"></a>p_val_F</span></code></pre></div>
 <pre><code>## [1] 0.936751</code></pre>
 <p>which is very similar to the three p-values given above given a large sample size in this study N = 1000.</p>
 <!------------------------------>
@@ -659,24 +664,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>We can compare the fit of the two-factor model to that of a one-factor model because the one-factor model is nested in the two-factor model.</p>
 <div id="one-factor-model" class="section level3 hasAnchor" number="12.2.1">
 <h3><span class="header-section-number">12.2.1</span> One-factor model<a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#one-factor-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb417"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb417-1"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb417-1" aria-hidden="true" tabindex="-1"></a>OneFacSyntax <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
-<span id="cb417-2"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb417-2" aria-hidden="true" tabindex="-1"></a><span class="st">    #Factor Specification   </span></span>
-<span id="cb417-3"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb417-3" aria-hidden="true" tabindex="-1"></a><span class="st">    eta1 =~ glad + happy + cheerful + satisfied + content + comfortable  </span></span>
-<span id="cb417-4"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb417-4" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span>
-<span id="cb417-5"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb417-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb417-6"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb417-6" aria-hidden="true" tabindex="-1"></a>one_fac_fit <span class="ot">=</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> OneFacSyntax, </span>
-<span id="cb417-7"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb417-7" aria-hidden="true" tabindex="-1"></a>                  <span class="at">data =</span> cfaData, </span>
-<span id="cb417-8"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb417-8" aria-hidden="true" tabindex="-1"></a>                  <span class="at">fixed.x=</span><span class="cn">FALSE</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb464"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb464-1"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb464-1" aria-hidden="true" tabindex="-1"></a>OneFacSyntax <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
+<span id="cb464-2"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb464-2" aria-hidden="true" tabindex="-1"></a><span class="st">    #Factor Specification   </span></span>
+<span id="cb464-3"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb464-3" aria-hidden="true" tabindex="-1"></a><span class="st">    eta1 =~ glad + happy + cheerful + satisfied + content + comfortable  </span></span>
+<span id="cb464-4"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb464-4" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span>
+<span id="cb464-5"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb464-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb464-6"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb464-6" aria-hidden="true" tabindex="-1"></a>one_fac_fit <span class="ot">=</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> OneFacSyntax, </span>
+<span id="cb464-7"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb464-7" aria-hidden="true" tabindex="-1"></a>                  <span class="at">data =</span> cfaData, </span>
+<span id="cb464-8"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb464-8" aria-hidden="true" tabindex="-1"></a>                  <span class="at">fixed.x=</span><span class="cn">FALSE</span>) </span></code></pre></div>
 <p>request standardized = T to check standardized loadings - item reliability</p>
-<div class="sourceCode" id="cb418"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb418-1"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb418-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(one_fac_fit, <span class="at">standardized =</span> T)</span></code></pre></div>
-<pre><code>## lavaan 0.6-11 ended normally after 31 iterations
+<div class="sourceCode" id="cb465"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb465-1"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb465-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(one_fac_fit, <span class="at">standardized =</span> T)</span></code></pre></div>
+<pre><code>## lavaan 0.6-12 ended normally after 31 iterations
 ## 
 ##   Estimator                                         ML
 ##   Optimization method                           NLMINB
 ##   Number of model parameters                        12
-##                                                       
+## 
 ##   Number of observations                          1000
-##                                                       
+## 
 ## Model Test User Model:
 ##                                                       
 ##   Test statistic                               592.661
@@ -712,21 +717,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Only the last three standardized loadings are larger than 0.6</li>
 <li>The first three indicators are not reliable indicators of the new latent variable eta1</li>
 </ul>
-<div class="sourceCode" id="cb420"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb420-1"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb420-1" aria-hidden="true" tabindex="-1"></a>Model Test User Model<span class="sc">:</span></span>
-<span id="cb420-2"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb420-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb420-3"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb420-3" aria-hidden="true" tabindex="-1"></a>  Test statistic                               <span class="fl">592.661</span></span>
-<span id="cb420-4"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb420-4" aria-hidden="true" tabindex="-1"></a>  Degrees of freedom                                 <span class="dv">9</span></span>
-<span id="cb420-5"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb420-5" aria-hidden="true" tabindex="-1"></a>  P<span class="sc">-</span><span class="fu">value</span> (Chi<span class="sc">-</span>square)                           <span class="fl">0.000</span></span></code></pre></div>
+<div class="sourceCode" id="cb467"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb467-1"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb467-1" aria-hidden="true" tabindex="-1"></a>Model Test User Model<span class="sc">:</span></span>
+<span id="cb467-2"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb467-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb467-3"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb467-3" aria-hidden="true" tabindex="-1"></a>  Test statistic                               <span class="fl">592.661</span></span>
+<span id="cb467-4"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb467-4" aria-hidden="true" tabindex="-1"></a>  Degrees of freedom                                 <span class="dv">9</span></span>
+<span id="cb467-5"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb467-5" aria-hidden="true" tabindex="-1"></a>  P<span class="sc">-</span><span class="fu">value</span> (Chi<span class="sc">-</span>square)                           <span class="fl">0.000</span></span></code></pre></div>
 <ul>
 <li>The chi-square statistic is very large and significant for this one-factor model…poor fit</li>
 </ul>
 </div>
 <div id="plotting" class="section level3 hasAnchor" number="12.2.2">
 <h3><span class="header-section-number">12.2.2</span> Plotting<a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#plotting" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb421"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb421-1"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb421-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(fixedIndTwoFacRun, <span class="at">what =</span> <span class="st">&quot;std&quot;</span>, <span class="at">fade=</span> F)</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-231-1.png" width="672" /></p>
-<div class="sourceCode" id="cb422"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb422-1"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb422-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(one_fac_fit, <span class="at">what =</span> <span class="st">&quot;std&quot;</span>, <span class="at">fade=</span> F)</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-231-2.png" width="672" /></p>
+<div class="sourceCode" id="cb468"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb468-1"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb468-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(fixedIndTwoFacRun, <span class="at">what =</span> <span class="st">&quot;std&quot;</span>, <span class="at">fade=</span> F)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-263-1.png" width="672" /></p>
+<div class="sourceCode" id="cb469"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb469-1"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb469-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(one_fac_fit, <span class="at">what =</span> <span class="st">&quot;std&quot;</span>, <span class="at">fade=</span> F)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-263-2.png" width="672" /></p>
 </div>
 <div id="comparing-nested-models" class="section level3 hasAnchor" number="12.2.3">
 <h3><span class="header-section-number">12.2.3</span> Comparing Nested Models<a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#comparing-nested-models" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -736,7 +741,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Here we use anova() function to perform chi-square difference test</li>
 <li>Note that the order of the models in anova() doesn’t matter</li>
 </ul>
-<div class="sourceCode" id="cb423"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb423-1"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb423-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(one_fac_fit, fixedIndTwoFacRun)</span></code></pre></div>
+<div class="sourceCode" id="cb470"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb470-1"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb470-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(one_fac_fit, fixedIndTwoFacRun)</span></code></pre></div>
 <pre><code>## Chi-Squared Difference Test
 ## 
 ##                   Df   AIC   BIC    Chisq Chisq diff Df diff Pr(&gt;Chisq)    
@@ -744,13 +749,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## one_fac_fit        9 15580 15639 592.6611      589.7       1  &lt; 2.2e-16 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<div class="sourceCode" id="cb425"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb425-1"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb425-1" aria-hidden="true" tabindex="-1"></a>Chi<span class="sc">-</span>Squared Difference Test</span>
-<span id="cb425-2"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb425-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb425-3"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb425-3" aria-hidden="true" tabindex="-1"></a>                  Df   AIC   BIC    Chisq Chisq diff Df diff <span class="fu">Pr</span>(<span class="sc">&gt;</span>Chisq)    </span>
-<span id="cb425-4"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb425-4" aria-hidden="true" tabindex="-1"></a>fixedIndTwoFacRun  <span class="dv">8</span> <span class="dv">14992</span> <span class="dv">15056</span>   <span class="fl">2.9575</span>                                  </span>
-<span id="cb425-5"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb425-5" aria-hidden="true" tabindex="-1"></a>one_fac_fit        <span class="dv">9</span> <span class="dv">15580</span> <span class="dv">15639</span> <span class="fl">592.6611</span>      <span class="fl">589.7</span>       <span class="dv">1</span>  <span class="sc">&lt;</span> <span class="fl">2.2e-16</span> <span class="sc">**</span><span class="er">*</span></span>
-<span id="cb425-6"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb425-6" aria-hidden="true" tabindex="-1"></a> <span class="sc">---</span></span>
-<span id="cb425-7"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb425-7" aria-hidden="true" tabindex="-1"></a> Signif. codes<span class="sc">:</span>  <span class="dv">0</span> ‘<span class="sc">**</span><span class="er">*</span>’ <span class="fl">0.001</span> ‘<span class="sc">**</span>’ <span class="fl">0.01</span> ‘<span class="sc">*</span>’ <span class="fl">0.05</span> ‘.’ <span class="fl">0.1</span> ‘ ’ <span class="dv">1</span></span></code></pre></div>
+<div class="sourceCode" id="cb472"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb472-1"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb472-1" aria-hidden="true" tabindex="-1"></a>Chi<span class="sc">-</span>Squared Difference Test</span>
+<span id="cb472-2"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb472-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb472-3"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb472-3" aria-hidden="true" tabindex="-1"></a>                  Df   AIC   BIC    Chisq Chisq diff Df diff <span class="fu">Pr</span>(<span class="sc">&gt;</span>Chisq)    </span>
+<span id="cb472-4"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb472-4" aria-hidden="true" tabindex="-1"></a>fixedIndTwoFacRun  <span class="dv">8</span> <span class="dv">14992</span> <span class="dv">15056</span>   <span class="fl">2.9575</span>                                  </span>
+<span id="cb472-5"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb472-5" aria-hidden="true" tabindex="-1"></a>one_fac_fit        <span class="dv">9</span> <span class="dv">15580</span> <span class="dv">15639</span> <span class="fl">592.6611</span>      <span class="fl">589.7</span>       <span class="dv">1</span>  <span class="sc">&lt;</span> <span class="fl">2.2e-16</span> <span class="sc">**</span><span class="er">*</span></span>
+<span id="cb472-6"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb472-6" aria-hidden="true" tabindex="-1"></a> <span class="sc">---</span></span>
+<span id="cb472-7"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb472-7" aria-hidden="true" tabindex="-1"></a> Signif. codes<span class="sc">:</span>  <span class="dv">0</span> ‘<span class="sc">**</span><span class="er">*</span>’ <span class="fl">0.001</span> ‘<span class="sc">**</span>’ <span class="fl">0.01</span> ‘<span class="sc">*</span>’ <span class="fl">0.05</span> ‘.’ <span class="fl">0.1</span> ‘ ’ <span class="dv">1</span></span></code></pre></div>
 <ul>
 <li>The model on top is the base model and the model at the bottom is the restricted model.</li>
 <li>The restricted model always fits worse than the base model.</li>
@@ -774,23 +779,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="model-2-orthogonal-factors" class="section level3 hasAnchor" number="12.3.2">
 <h3><span class="header-section-number">12.3.2</span> Model 2: Orthogonal Factors<a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#model-2-orthogonal-factors" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb426"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb426-1"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb426-1" aria-hidden="true" tabindex="-1"></a>OrthFacSyntax <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
-<span id="cb426-2"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb426-2" aria-hidden="true" tabindex="-1"></a><span class="st">    #Factor Specification   </span></span>
-<span id="cb426-3"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb426-3" aria-hidden="true" tabindex="-1"></a><span class="st">    posAffect =~ glad + happy + cheerful </span></span>
-<span id="cb426-4"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb426-4" aria-hidden="true" tabindex="-1"></a><span class="st">    satisfaction =~ satisfied + content + comfortable</span></span>
-<span id="cb426-5"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb426-5" aria-hidden="true" tabindex="-1"></a><span class="st">    </span></span>
-<span id="cb426-6"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb426-6" aria-hidden="true" tabindex="-1"></a><span class="st">    #Orthogonal Factors: no covariance </span></span>
-<span id="cb426-7"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb426-7" aria-hidden="true" tabindex="-1"></a><span class="st">    posAffect ~~ 0*satisfaction</span></span>
-<span id="cb426-8"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb426-8" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb473"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb473-1"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb473-1" aria-hidden="true" tabindex="-1"></a>OrthFacSyntax <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
+<span id="cb473-2"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb473-2" aria-hidden="true" tabindex="-1"></a><span class="st">    #Factor Specification   </span></span>
+<span id="cb473-3"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb473-3" aria-hidden="true" tabindex="-1"></a><span class="st">    posAffect =~ glad + happy + cheerful </span></span>
+<span id="cb473-4"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb473-4" aria-hidden="true" tabindex="-1"></a><span class="st">    satisfaction =~ satisfied + content + comfortable</span></span>
+<span id="cb473-5"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb473-5" aria-hidden="true" tabindex="-1"></a><span class="st">    </span></span>
+<span id="cb473-6"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb473-6" aria-hidden="true" tabindex="-1"></a><span class="st">    #Orthogonal Factors: no covariance </span></span>
+<span id="cb473-7"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb473-7" aria-hidden="true" tabindex="-1"></a><span class="st">    posAffect ~~ 0*satisfaction</span></span>
+<span id="cb473-8"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb473-8" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
 <p>Fit Model 2:</p>
-<div class="sourceCode" id="cb427"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb427-1"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb427-1" aria-hidden="true" tabindex="-1"></a>OrthFac_fit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> OrthFacSyntax, </span>
-<span id="cb427-2"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb427-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">data =</span> cfaData, </span>
-<span id="cb427-3"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb427-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">fixed.x =</span> F)</span></code></pre></div>
+<div class="sourceCode" id="cb474"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb474-1"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb474-1" aria-hidden="true" tabindex="-1"></a>OrthFac_fit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> OrthFacSyntax, </span>
+<span id="cb474-2"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb474-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">data =</span> cfaData, </span>
+<span id="cb474-3"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb474-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">fixed.x =</span> F)</span></code></pre></div>
 <p>Plot Model 2:</p>
-<div class="sourceCode" id="cb428"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb428-1"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb428-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(OrthFac_fit, <span class="at">what =</span> <span class="st">&quot;std&quot;</span>, <span class="at">fade=</span> F)</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-236-1.png" width="672" /></p>
+<div class="sourceCode" id="cb475"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb475-1"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb475-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(OrthFac_fit, <span class="at">what =</span> <span class="st">&quot;std&quot;</span>, <span class="at">fade=</span> F)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-268-1.png" width="672" /></p>
 <p>chi-square difference test:</p>
-<div class="sourceCode" id="cb429"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb429-1"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb429-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(fixedIndTwoFacRun, OrthFac_fit)</span></code></pre></div>
+<div class="sourceCode" id="cb476"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb476-1"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb476-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(fixedIndTwoFacRun, OrthFac_fit)</span></code></pre></div>
 <pre><code>## Chi-Squared Difference Test
 ## 
 ##                   Df   AIC   BIC    Chisq Chisq diff Df diff Pr(&gt;Chisq)    
@@ -806,21 +811,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="model-3-cross-loading" class="section level3 hasAnchor" number="12.3.3">
 <h3><span class="header-section-number">12.3.3</span> Model 3: Cross loading<a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#model-3-cross-loading" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb431"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb431-1"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb431-1" aria-hidden="true" tabindex="-1"></a>CrossLoadingSyntax <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
-<span id="cb431-2"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb431-2" aria-hidden="true" tabindex="-1"></a><span class="st">    #Factor Specification   </span></span>
-<span id="cb431-3"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb431-3" aria-hidden="true" tabindex="-1"></a><span class="st">    # cross loading: satisfied load on both latent variables</span></span>
-<span id="cb431-4"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb431-4" aria-hidden="true" tabindex="-1"></a><span class="st">    # try to avoid using satisfied as the marker variable</span></span>
-<span id="cb431-5"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb431-5" aria-hidden="true" tabindex="-1"></a><span class="st">    posAffect =~ glad + satisfied + happy + cheerful </span></span>
-<span id="cb431-6"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb431-6" aria-hidden="true" tabindex="-1"></a><span class="st">    satisfaction =~ satisfied + content + comfortable</span></span>
-<span id="cb431-7"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb431-7" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb478"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb478-1"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb478-1" aria-hidden="true" tabindex="-1"></a>CrossLoadingSyntax <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
+<span id="cb478-2"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb478-2" aria-hidden="true" tabindex="-1"></a><span class="st">    #Factor Specification   </span></span>
+<span id="cb478-3"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb478-3" aria-hidden="true" tabindex="-1"></a><span class="st">    # cross loading: satisfied load on both latent variables</span></span>
+<span id="cb478-4"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb478-4" aria-hidden="true" tabindex="-1"></a><span class="st">    # try to avoid using satisfied as the marker variable</span></span>
+<span id="cb478-5"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb478-5" aria-hidden="true" tabindex="-1"></a><span class="st">    posAffect =~ glad + satisfied + happy + cheerful </span></span>
+<span id="cb478-6"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb478-6" aria-hidden="true" tabindex="-1"></a><span class="st">    satisfaction =~ satisfied + content + comfortable</span></span>
+<span id="cb478-7"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb478-7" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
 <p>Fit Model 3:</p>
-<div class="sourceCode" id="cb432"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb432-1"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb432-1" aria-hidden="true" tabindex="-1"></a>CrossLoading_fit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> CrossLoadingSyntax, </span>
-<span id="cb432-2"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb432-2" aria-hidden="true" tabindex="-1"></a>                                <span class="at">data =</span> cfaData, <span class="at">fixed.x =</span> F)</span></code></pre></div>
+<div class="sourceCode" id="cb479"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb479-1"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb479-1" aria-hidden="true" tabindex="-1"></a>CrossLoading_fit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> CrossLoadingSyntax, </span>
+<span id="cb479-2"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb479-2" aria-hidden="true" tabindex="-1"></a>                                <span class="at">data =</span> cfaData, <span class="at">fixed.x =</span> F)</span></code></pre></div>
 <p>Plot Model 3:</p>
-<div class="sourceCode" id="cb433"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb433-1"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb433-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(CrossLoading_fit, <span class="at">what =</span> <span class="st">&quot;std&quot;</span>, <span class="at">fade=</span> F)</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-240-1.png" width="672" /></p>
+<div class="sourceCode" id="cb480"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb480-1"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb480-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(CrossLoading_fit, <span class="at">what =</span> <span class="st">&quot;std&quot;</span>, <span class="at">fade=</span> F)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-272-1.png" width="672" /></p>
 <p>chi-square difference test:</p>
-<div class="sourceCode" id="cb434"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb434-1"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb434-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(fixedIndTwoFacRun, CrossLoading_fit)</span></code></pre></div>
+<div class="sourceCode" id="cb481"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb481-1"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb481-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(fixedIndTwoFacRun, CrossLoading_fit)</span></code></pre></div>
 <pre><code>## Chi-Squared Difference Test
 ## 
 ##                   Df   AIC   BIC  Chisq Chisq diff Df diff Pr(&gt;Chisq)
@@ -835,22 +840,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="model-4-correlated-unique-factors" class="section level3 hasAnchor" number="12.3.4">
 <h3><span class="header-section-number">12.3.4</span> Model 4: Correlated Unique Factors<a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#model-4-correlated-unique-factors" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb436"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb436-1"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb436-1" aria-hidden="true" tabindex="-1"></a>CorrUniSyntax <span class="ot">&lt;-</span><span class="st">&quot;</span></span>
-<span id="cb436-2"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb436-2" aria-hidden="true" tabindex="-1"></a><span class="st">    #Factor Specification   </span></span>
-<span id="cb436-3"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb436-3" aria-hidden="true" tabindex="-1"></a><span class="st">    posAffect =~ glad + happy + cheerful </span></span>
-<span id="cb436-4"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb436-4" aria-hidden="true" tabindex="-1"></a><span class="st">    satisfaction =~ satisfied + content + comfortable</span></span>
-<span id="cb436-5"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb436-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb436-6"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb436-6" aria-hidden="true" tabindex="-1"></a><span class="st">  # correlated error </span></span>
-<span id="cb436-7"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb436-7" aria-hidden="true" tabindex="-1"></a><span class="st">    glad ~~ satisfied</span></span>
-<span id="cb436-8"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb436-8" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb483"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb483-1"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb483-1" aria-hidden="true" tabindex="-1"></a>CorrUniSyntax <span class="ot">&lt;-</span><span class="st">&quot;</span></span>
+<span id="cb483-2"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb483-2" aria-hidden="true" tabindex="-1"></a><span class="st">    #Factor Specification   </span></span>
+<span id="cb483-3"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb483-3" aria-hidden="true" tabindex="-1"></a><span class="st">    posAffect =~ glad + happy + cheerful </span></span>
+<span id="cb483-4"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb483-4" aria-hidden="true" tabindex="-1"></a><span class="st">    satisfaction =~ satisfied + content + comfortable</span></span>
+<span id="cb483-5"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb483-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb483-6"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb483-6" aria-hidden="true" tabindex="-1"></a><span class="st">  # correlated error </span></span>
+<span id="cb483-7"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb483-7" aria-hidden="true" tabindex="-1"></a><span class="st">    glad ~~ satisfied</span></span>
+<span id="cb483-8"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb483-8" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
 <p>Fit Model 4:</p>
-<div class="sourceCode" id="cb437"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb437-1"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb437-1" aria-hidden="true" tabindex="-1"></a>CorrUni_fit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model=</span> CorrUniSyntax, </span>
-<span id="cb437-2"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb437-2" aria-hidden="true" tabindex="-1"></a>                           <span class="at">data =</span> cfaData, <span class="at">fixed.x =</span> F)</span></code></pre></div>
+<div class="sourceCode" id="cb484"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb484-1"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb484-1" aria-hidden="true" tabindex="-1"></a>CorrUni_fit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model=</span> CorrUniSyntax, </span>
+<span id="cb484-2"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb484-2" aria-hidden="true" tabindex="-1"></a>                           <span class="at">data =</span> cfaData, <span class="at">fixed.x =</span> F)</span></code></pre></div>
 <p>Plot Model 4:</p>
-<div class="sourceCode" id="cb438"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb438-1"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb438-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(CorrUni_fit, <span class="at">what =</span> <span class="st">&quot;std&quot;</span>, <span class="at">fade=</span> F)</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-244-1.png" width="672" /></p>
+<div class="sourceCode" id="cb485"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb485-1"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb485-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(CorrUni_fit, <span class="at">what =</span> <span class="st">&quot;std&quot;</span>, <span class="at">fade=</span> F)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-276-1.png" width="672" /></p>
 <p>chi-square difference test:</p>
-<div class="sourceCode" id="cb439"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb439-1"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb439-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(fixedIndTwoFacRun, CorrUni_fit)</span></code></pre></div>
+<div class="sourceCode" id="cb486"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb486-1"><a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html#cb486-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(fixedIndTwoFacRun, CorrUni_fit)</span></code></pre></div>
 <pre><code>## Chi-Squared Difference Test
 ## 
 ##                   Df   AIC   BIC  Chisq Chisq diff Df diff Pr(&gt;Chisq)
@@ -932,7 +937,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

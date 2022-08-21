@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 10 Week8_2: Lavaan Lab 7 Two-factor SR Model | R Cookbook for Structural Equation Modeling</title>
   <meta name="description" content="Chapter 10 Week8_2: Lavaan Lab 7 Two-factor SR Model | R Cookbook for Structural Equation Modeling" />
-  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.28 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 10 Week8_2: Lavaan Lab 7 Two-factor SR Model | R Cookbook for Structural Equation Modeling" />
   <meta property="og:type" content="book" />
@@ -20,6 +20,7 @@
   
   
 
+<meta name="author" content="Ge Jiang" />
 
 
 
@@ -135,9 +136,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Course</a></li>
-<li class="chapter" data-level="2" data-path="into-to-r-101.html"><a href="into-to-r-101.html"><i class="fa fa-check"></i><b>2</b> Into to R: 101</a>
+<li class="chapter" data-level="2" data-path="into-to-r.html"><a href="into-to-r.html"><i class="fa fa-check"></i><b>2</b> Into to R</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="into-to-r-101.html"><a href="into-to-r-101.html#r-as-a-calculator"><i class="fa fa-check"></i><b>2.1</b> 1. R as a calculator</a></li>
+<li class="chapter" data-level="2.1" data-path="into-to-r.html"><a href="into-to-r.html#r-as-a-calculator"><i class="fa fa-check"></i><b>2.1</b> R as a calculator</a></li>
+<li class="chapter" data-level="2.2" data-path="into-to-r.html"><a href="into-to-r.html#assigning-objects-and-basic-data-entry"><i class="fa fa-check"></i><b>2.2</b> Assigning Objects and Basic Data Entry</a></li>
+<li class="chapter" data-level="2.3" data-path="into-to-r.html"><a href="into-to-r.html#removing-an-object-from-the-workspace"><i class="fa fa-check"></i><b>2.3</b> Removing an object from the workspace</a></li>
+<li class="chapter" data-level="2.4" data-path="into-to-r.html"><a href="into-to-r.html#formal-rules-for-indexing-objects-in-r"><i class="fa fa-check"></i><b>2.4</b> Formal Rules for Indexing Objects in R</a></li>
+<li class="chapter" data-level="2.5" data-path="into-to-r.html"><a href="into-to-r.html#examples"><i class="fa fa-check"></i><b>2.5</b> Examples</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="lavaan-lab-1-path-analysis-model.html"><a href="lavaan-lab-1-path-analysis-model.html"><i class="fa fa-check"></i><b>3</b> Lavaan Lab 1 Path Analysis Model</a>
 <ul>
@@ -504,9 +509,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">10.1</span> Data Prep<a href="week8_2-lavaan-lab-7-two-factor-sr-model.html#data-prep-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Again, we use cfaInClassData.csv in this lab</p>
 <p>Let’s read this dataset in:</p>
-<div class="sourceCode" id="cb352"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb352-1"><a href="week8_2-lavaan-lab-7-two-factor-sr-model.html#cb352-1" aria-hidden="true" tabindex="-1"></a>cfaData<span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;cfaInclassData.csv&quot;</span>, <span class="at">header =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb399"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb399-1"><a href="week8_2-lavaan-lab-7-two-factor-sr-model.html#cb399-1" aria-hidden="true" tabindex="-1"></a>cfaData<span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;cfaInclassData.csv&quot;</span>, <span class="at">header =</span> T)</span></code></pre></div>
 <p>Load up the lavaan library:</p>
-<div class="sourceCode" id="cb353"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb353-1"><a href="week8_2-lavaan-lab-7-two-factor-sr-model.html#cb353-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span></code></pre></div>
+<div class="sourceCode" id="cb400"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb400-1"><a href="week8_2-lavaan-lab-7-two-factor-sr-model.html#cb400-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span></code></pre></div>
 <!------------------------------>
 </div>
 <div id="part-i-two-factor-sr-fixed-loading" class="section level2 hasAnchor" number="10.2">
@@ -515,28 +520,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="fixed-loading-aka-marker-variable-method.-2" class="section level3 hasAnchor" number="10.2.1">
 <h3><span class="header-section-number">10.2.1</span> Fixed Loading, AKA Marker Variable method.<a href="week8_2-lavaan-lab-7-two-factor-sr-model.html#fixed-loading-aka-marker-variable-method.-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Let’s write up the model syntax for the structural regression (SR) model with two factors:</p>
-<div class="sourceCode" id="cb354"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb354-1"><a href="week8_2-lavaan-lab-7-two-factor-sr-model.html#cb354-1" aria-hidden="true" tabindex="-1"></a>srSyntax <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
-<span id="cb354-2"><a href="week8_2-lavaan-lab-7-two-factor-sr-model.html#cb354-2" aria-hidden="true" tabindex="-1"></a><span class="st">    #Factor Specification   </span></span>
-<span id="cb354-3"><a href="week8_2-lavaan-lab-7-two-factor-sr-model.html#cb354-3" aria-hidden="true" tabindex="-1"></a><span class="st">    posAffect =~ glad + cheerful + happy  </span></span>
-<span id="cb354-4"><a href="week8_2-lavaan-lab-7-two-factor-sr-model.html#cb354-4" aria-hidden="true" tabindex="-1"></a><span class="st">    satisfaction =~ satisfied + content + comfortable </span></span>
-<span id="cb354-5"><a href="week8_2-lavaan-lab-7-two-factor-sr-model.html#cb354-5" aria-hidden="true" tabindex="-1"></a><span class="st">    </span></span>
-<span id="cb354-6"><a href="week8_2-lavaan-lab-7-two-factor-sr-model.html#cb354-6" aria-hidden="true" tabindex="-1"></a><span class="st">    #Structural Regression!</span></span>
-<span id="cb354-7"><a href="week8_2-lavaan-lab-7-two-factor-sr-model.html#cb354-7" aria-hidden="true" tabindex="-1"></a><span class="st">    satisfaction ~ posAffect</span></span>
-<span id="cb354-8"><a href="week8_2-lavaan-lab-7-two-factor-sr-model.html#cb354-8" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb401"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb401-1"><a href="week8_2-lavaan-lab-7-two-factor-sr-model.html#cb401-1" aria-hidden="true" tabindex="-1"></a>srSyntax <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
+<span id="cb401-2"><a href="week8_2-lavaan-lab-7-two-factor-sr-model.html#cb401-2" aria-hidden="true" tabindex="-1"></a><span class="st">    #Factor Specification   </span></span>
+<span id="cb401-3"><a href="week8_2-lavaan-lab-7-two-factor-sr-model.html#cb401-3" aria-hidden="true" tabindex="-1"></a><span class="st">    posAffect =~ glad + cheerful + happy  </span></span>
+<span id="cb401-4"><a href="week8_2-lavaan-lab-7-two-factor-sr-model.html#cb401-4" aria-hidden="true" tabindex="-1"></a><span class="st">    satisfaction =~ satisfied + content + comfortable </span></span>
+<span id="cb401-5"><a href="week8_2-lavaan-lab-7-two-factor-sr-model.html#cb401-5" aria-hidden="true" tabindex="-1"></a><span class="st">    </span></span>
+<span id="cb401-6"><a href="week8_2-lavaan-lab-7-two-factor-sr-model.html#cb401-6" aria-hidden="true" tabindex="-1"></a><span class="st">    #Structural Regression!</span></span>
+<span id="cb401-7"><a href="week8_2-lavaan-lab-7-two-factor-sr-model.html#cb401-7" aria-hidden="true" tabindex="-1"></a><span class="st">    satisfaction ~ posAffect</span></span>
+<span id="cb401-8"><a href="week8_2-lavaan-lab-7-two-factor-sr-model.html#cb401-8" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
 <p>Here we named the fitted object ‘srRun’ to see our output:</p>
-<div class="sourceCode" id="cb355"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb355-1"><a href="week8_2-lavaan-lab-7-two-factor-sr-model.html#cb355-1" aria-hidden="true" tabindex="-1"></a>srRun <span class="ot">=</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> srSyntax, </span>
-<span id="cb355-2"><a href="week8_2-lavaan-lab-7-two-factor-sr-model.html#cb355-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> cfaData, </span>
-<span id="cb355-3"><a href="week8_2-lavaan-lab-7-two-factor-sr-model.html#cb355-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">fixed.x=</span><span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb402"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb402-1"><a href="week8_2-lavaan-lab-7-two-factor-sr-model.html#cb402-1" aria-hidden="true" tabindex="-1"></a>srRun <span class="ot">=</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> srSyntax, </span>
+<span id="cb402-2"><a href="week8_2-lavaan-lab-7-two-factor-sr-model.html#cb402-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> cfaData, </span>
+<span id="cb402-3"><a href="week8_2-lavaan-lab-7-two-factor-sr-model.html#cb402-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">fixed.x=</span><span class="cn">FALSE</span>)</span></code></pre></div>
 <p>Get a summary using summary() function, add standardized=T to request standardized parameter estimates:</p>
-<div class="sourceCode" id="cb356"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb356-1"><a href="week8_2-lavaan-lab-7-two-factor-sr-model.html#cb356-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(srRun, <span class="at">standardized =</span> T)</span></code></pre></div>
-<pre><code>## lavaan 0.6-11 ended normally after 22 iterations
+<div class="sourceCode" id="cb403"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb403-1"><a href="week8_2-lavaan-lab-7-two-factor-sr-model.html#cb403-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(srRun, <span class="at">standardized =</span> T)</span></code></pre></div>
+<pre><code>## lavaan 0.6-12 ended normally after 22 iterations
 ## 
 ##   Estimator                                         ML
 ##   Optimization method                           NLMINB
 ##   Number of model parameters                        13
-##                                                       
+## 
 ##   Number of observations                          1000
-##                                                       
+## 
 ## Model Test User Model:
 ##                                                       
 ##   Test statistic                                 2.957
@@ -582,14 +587,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>satisfaction is also removed under “Variances”</li>
 </ul>
 <p>Instead, in the Regressions section:</p>
-<div class="sourceCode" id="cb358"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb358-1"><a href="week8_2-lavaan-lab-7-two-factor-sr-model.html#cb358-1" aria-hidden="true" tabindex="-1"></a>Regressions<span class="sc">:</span></span>
-<span id="cb358-2"><a href="week8_2-lavaan-lab-7-two-factor-sr-model.html#cb358-2" aria-hidden="true" tabindex="-1"></a>                   Estimate  Std.Err  z<span class="sc">-</span>value  <span class="fu">P</span>(<span class="sc">&gt;</span><span class="er">|</span>z<span class="sc">|</span>)   Std.lv  Std.all</span>
-<span id="cb358-3"><a href="week8_2-lavaan-lab-7-two-factor-sr-model.html#cb358-3" aria-hidden="true" tabindex="-1"></a>  satisfaction <span class="sc">~</span>                                                        </span>
-<span id="cb358-4"><a href="week8_2-lavaan-lab-7-two-factor-sr-model.html#cb358-4" aria-hidden="true" tabindex="-1"></a>    posAffect         <span class="fl">0.544</span>    <span class="fl">0.047</span>   <span class="fl">11.490</span>    <span class="fl">0.000</span>    <span class="fl">0.488</span>    <span class="fl">0.488</span></span></code></pre></div>
+<div class="sourceCode" id="cb405"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb405-1"><a href="week8_2-lavaan-lab-7-two-factor-sr-model.html#cb405-1" aria-hidden="true" tabindex="-1"></a>Regressions<span class="sc">:</span></span>
+<span id="cb405-2"><a href="week8_2-lavaan-lab-7-two-factor-sr-model.html#cb405-2" aria-hidden="true" tabindex="-1"></a>                   Estimate  Std.Err  z<span class="sc">-</span>value  <span class="fu">P</span>(<span class="sc">&gt;</span><span class="er">|</span>z<span class="sc">|</span>)   Std.lv  Std.all</span>
+<span id="cb405-3"><a href="week8_2-lavaan-lab-7-two-factor-sr-model.html#cb405-3" aria-hidden="true" tabindex="-1"></a>  satisfaction <span class="sc">~</span>                                                        </span>
+<span id="cb405-4"><a href="week8_2-lavaan-lab-7-two-factor-sr-model.html#cb405-4" aria-hidden="true" tabindex="-1"></a>    posAffect         <span class="fl">0.544</span>    <span class="fl">0.047</span>   <span class="fl">11.490</span>    <span class="fl">0.000</span>    <span class="fl">0.488</span>    <span class="fl">0.488</span></span></code></pre></div>
 <p>returns the regression slope of posAffect (b = 0.544). One-unit change in posAffect is leading to one-unit change in satisfaction.</p>
-<div class="sourceCode" id="cb359"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb359-1"><a href="week8_2-lavaan-lab-7-two-factor-sr-model.html#cb359-1" aria-hidden="true" tabindex="-1"></a>Variances<span class="sc">:</span></span>
-<span id="cb359-2"><a href="week8_2-lavaan-lab-7-two-factor-sr-model.html#cb359-2" aria-hidden="true" tabindex="-1"></a>                   Estimate  Std.Err  z<span class="sc">-</span>value  <span class="fu">P</span>(<span class="sc">&gt;</span><span class="er">|</span>z<span class="sc">|</span>)   Std.lv  Std.all</span>
-<span id="cb359-3"><a href="week8_2-lavaan-lab-7-two-factor-sr-model.html#cb359-3" aria-hidden="true" tabindex="-1"></a>   .satisfaction      <span class="fl">0.455</span>    <span class="fl">0.038</span>   <span class="fl">11.869</span>    <span class="fl">0.000</span>    <span class="fl">0.762</span>    <span class="fl">0.762</span></span></code></pre></div>
+<div class="sourceCode" id="cb406"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb406-1"><a href="week8_2-lavaan-lab-7-two-factor-sr-model.html#cb406-1" aria-hidden="true" tabindex="-1"></a>Variances<span class="sc">:</span></span>
+<span id="cb406-2"><a href="week8_2-lavaan-lab-7-two-factor-sr-model.html#cb406-2" aria-hidden="true" tabindex="-1"></a>                   Estimate  Std.Err  z<span class="sc">-</span>value  <span class="fu">P</span>(<span class="sc">&gt;</span><span class="er">|</span>z<span class="sc">|</span>)   Std.lv  Std.all</span>
+<span id="cb406-3"><a href="week8_2-lavaan-lab-7-two-factor-sr-model.html#cb406-3" aria-hidden="true" tabindex="-1"></a>   .satisfaction      <span class="fl">0.455</span>    <span class="fl">0.038</span>   <span class="fl">11.869</span>    <span class="fl">0.000</span>    <span class="fl">0.762</span>    <span class="fl">0.762</span></span></code></pre></div>
 <p>returns the disturbance variance of satisfaction (sigma_(d_2)^2, not psi_2!)</p>
 <!------------------------------>
 </div>
@@ -601,19 +606,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">10.3.1</span> Fixed Factor Method<a href="week8_2-lavaan-lab-7-two-factor-sr-model.html#fixed-factor-method-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Here we named the fitted object ‘srRun2’.</p>
 <p>We add std.lv=T to fix all latent factor variances to 1:</p>
-<div class="sourceCode" id="cb360"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb360-1"><a href="week8_2-lavaan-lab-7-two-factor-sr-model.html#cb360-1" aria-hidden="true" tabindex="-1"></a>srRun2 <span class="ot">=</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> srSyntax, </span>
-<span id="cb360-2"><a href="week8_2-lavaan-lab-7-two-factor-sr-model.html#cb360-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> cfaData, </span>
-<span id="cb360-3"><a href="week8_2-lavaan-lab-7-two-factor-sr-model.html#cb360-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">fixed.x=</span><span class="cn">FALSE</span>,</span>
-<span id="cb360-4"><a href="week8_2-lavaan-lab-7-two-factor-sr-model.html#cb360-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">std.lv=</span>T)</span>
-<span id="cb360-5"><a href="week8_2-lavaan-lab-7-two-factor-sr-model.html#cb360-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(srRun2, <span class="at">standardized =</span> T)</span></code></pre></div>
-<pre><code>## lavaan 0.6-11 ended normally after 17 iterations
+<div class="sourceCode" id="cb407"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb407-1"><a href="week8_2-lavaan-lab-7-two-factor-sr-model.html#cb407-1" aria-hidden="true" tabindex="-1"></a>srRun2 <span class="ot">=</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> srSyntax, </span>
+<span id="cb407-2"><a href="week8_2-lavaan-lab-7-two-factor-sr-model.html#cb407-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> cfaData, </span>
+<span id="cb407-3"><a href="week8_2-lavaan-lab-7-two-factor-sr-model.html#cb407-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">fixed.x=</span><span class="cn">FALSE</span>,</span>
+<span id="cb407-4"><a href="week8_2-lavaan-lab-7-two-factor-sr-model.html#cb407-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">std.lv=</span>T)</span>
+<span id="cb407-5"><a href="week8_2-lavaan-lab-7-two-factor-sr-model.html#cb407-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(srRun2, <span class="at">standardized =</span> T)</span></code></pre></div>
+<pre><code>## lavaan 0.6-12 ended normally after 17 iterations
 ## 
 ##   Estimator                                         ML
 ##   Optimization method                           NLMINB
 ##   Number of model parameters                        13
-##                                                       
+## 
 ##   Number of observations                          1000
-##                                                       
+## 
 ## Model Test User Model:
 ##                                                       
 ##   Test statistic                                 2.957
@@ -737,7 +742,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

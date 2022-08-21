@@ -1,3 +1,9 @@
+### Course
+
+This site is supposed to serve as a repository for R codes used in lab sessions of a graduate-level method course EPSY 579. 
+
+*Disclaimer: Opinions are my own and not the views of my employer.
+
 ### Render the book
 
 - [ ] 1. Install **bookdown** with `install.packages("bookdown")`. If you already have it, update to the [latest version](https://CRAN.R-project.org/package=bookdown).

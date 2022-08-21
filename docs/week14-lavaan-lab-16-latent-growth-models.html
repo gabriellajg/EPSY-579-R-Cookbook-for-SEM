@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 19 Week14: Lavaan Lab 16 Latent Growth Models | R Cookbook for Structural Equation Modeling</title>
   <meta name="description" content="Chapter 19 Week14: Lavaan Lab 16 Latent Growth Models | R Cookbook for Structural Equation Modeling" />
-  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.28 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 19 Week14: Lavaan Lab 16 Latent Growth Models | R Cookbook for Structural Equation Modeling" />
   <meta property="og:type" content="book" />
@@ -20,6 +20,7 @@
   
   
 
+<meta name="author" content="Ge Jiang" />
 
 
 
@@ -135,9 +136,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Course</a></li>
-<li class="chapter" data-level="2" data-path="into-to-r-101.html"><a href="into-to-r-101.html"><i class="fa fa-check"></i><b>2</b> Into to R: 101</a>
+<li class="chapter" data-level="2" data-path="into-to-r.html"><a href="into-to-r.html"><i class="fa fa-check"></i><b>2</b> Into to R</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="into-to-r-101.html"><a href="into-to-r-101.html#r-as-a-calculator"><i class="fa fa-check"></i><b>2.1</b> 1. R as a calculator</a></li>
+<li class="chapter" data-level="2.1" data-path="into-to-r.html"><a href="into-to-r.html#r-as-a-calculator"><i class="fa fa-check"></i><b>2.1</b> R as a calculator</a></li>
+<li class="chapter" data-level="2.2" data-path="into-to-r.html"><a href="into-to-r.html#assigning-objects-and-basic-data-entry"><i class="fa fa-check"></i><b>2.2</b> Assigning Objects and Basic Data Entry</a></li>
+<li class="chapter" data-level="2.3" data-path="into-to-r.html"><a href="into-to-r.html#removing-an-object-from-the-workspace"><i class="fa fa-check"></i><b>2.3</b> Removing an object from the workspace</a></li>
+<li class="chapter" data-level="2.4" data-path="into-to-r.html"><a href="into-to-r.html#formal-rules-for-indexing-objects-in-r"><i class="fa fa-check"></i><b>2.4</b> Formal Rules for Indexing Objects in R</a></li>
+<li class="chapter" data-level="2.5" data-path="into-to-r.html"><a href="into-to-r.html#examples"><i class="fa fa-check"></i><b>2.5</b> Examples</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="lavaan-lab-1-path-analysis-model.html"><a href="lavaan-lab-1-path-analysis-model.html"><i class="fa fa-check"></i><b>3</b> Lavaan Lab 1 Path Analysis Model</a>
 <ul>
@@ -508,23 +513,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>run growth models on latent variables.</li>
 </ul>
 <p>Load up the lavaan library:</p>
-<div class="sourceCode" id="cb665"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb665-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb665-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span></code></pre></div>
+<div class="sourceCode" id="cb714"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb714-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb714-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span></code></pre></div>
 <p>We will also need ggplot2, semPlot, and semTools. Install them if you haven’t:</p>
-<div class="sourceCode" id="cb666"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb666-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb666-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages(&quot;ggplot2&quot;)</span></span>
-<span id="cb666-2"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb666-2" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages(&quot;semPlot&quot;)</span></span>
-<span id="cb666-3"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb666-3" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages(&quot;semTools&quot;)</span></span>
-<span id="cb666-4"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb666-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb666-5"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb666-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(semPlot)</span>
-<span id="cb666-6"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb666-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(semTools)</span></code></pre></div>
+<div class="sourceCode" id="cb715"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb715-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb715-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages(&quot;ggplot2&quot;)</span></span>
+<span id="cb715-2"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb715-2" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages(&quot;semPlot&quot;)</span></span>
+<span id="cb715-3"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb715-3" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages(&quot;semTools&quot;)</span></span>
+<span id="cb715-4"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb715-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb715-5"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb715-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(semPlot)</span>
+<span id="cb715-6"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb715-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(semTools)</span></code></pre></div>
 <ul>
 <li>For this lab, we will work with a simulated dataset # based on an example from McCoach &amp; Kaniskan (2010).</li>
 <li>The main DV is Oral Reading Fluency (ORF) and is measured over 4 time points (Fall and Spring, 2 consecutive years)</li>
 <li>N = 277 Elementary students.</li>
 <li>Let’s read in the dataset:</li>
 </ul>
-<div class="sourceCode" id="cb667"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb667-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb667-1" aria-hidden="true" tabindex="-1"></a>orf <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;readingSimData.csv&quot;</span>, <span class="at">header =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb716"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb716-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb716-1" aria-hidden="true" tabindex="-1"></a>orf <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;readingSimData.csv&quot;</span>, <span class="at">header =</span> T)</span></code></pre></div>
 <p>Take a look at the dataset:</p>
-<div class="sourceCode" id="cb668"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb668-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb668-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(orf)</span></code></pre></div>
+<div class="sourceCode" id="cb717"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb717-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb717-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(orf)</span></code></pre></div>
 <pre><code>##   id treatmentDummy      orf1      orf2      orf3      orf4
 ## 1  1              0 133.93092 157.81992 178.74260 151.28058
 ## 2  2              0 191.84038 185.91922 192.02037 175.53109
@@ -533,15 +538,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 5  5              0  46.27449  60.32287  35.20089  65.97300
 ## 6  6              0 166.39739 194.00734 166.40298 169.77082</code></pre>
 <p>sample size:</p>
-<div class="sourceCode" id="cb670"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb670-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb670-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(orf)</span>
-<span id="cb670-2"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb670-2" aria-hidden="true" tabindex="-1"></a>n <span class="co">#277, just like the McCoach paper.</span></span></code></pre></div>
+<div class="sourceCode" id="cb719"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb719-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb719-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(orf)</span>
+<span id="cb719-2"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb719-2" aria-hidden="true" tabindex="-1"></a>n <span class="co">#277, just like the McCoach paper.</span></span></code></pre></div>
 <pre><code>## [1] 277</code></pre>
 <p>sample means and cov matrix</p>
-<div class="sourceCode" id="cb672"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb672-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb672-1" aria-hidden="true" tabindex="-1"></a>orfNames <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;orf&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>)</span>
-<span id="cb672-2"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb672-2" aria-hidden="true" tabindex="-1"></a>(samMeans <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">apply</span>(orf[,orfNames], <span class="dv">2</span>, mean), <span class="dv">3</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb721"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb721-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb721-1" aria-hidden="true" tabindex="-1"></a>orfNames <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;orf&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>)</span>
+<span id="cb721-2"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb721-2" aria-hidden="true" tabindex="-1"></a>(samMeans <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">apply</span>(orf[,orfNames], <span class="dv">2</span>, mean), <span class="dv">3</span>))</span></code></pre></div>
 <pre><code>##    orf1    orf2    orf3    orf4 
 ## 108.651 134.685 136.560 163.744</code></pre>
-<div class="sourceCode" id="cb674"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb674-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb674-1" aria-hidden="true" tabindex="-1"></a>(samCov <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">cov</span>(orf[,orfNames])<span class="sc">*</span>((n<span class="dv">-1</span>)<span class="sc">/</span>n), <span class="dv">3</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb723"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb723-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb723-1" aria-hidden="true" tabindex="-1"></a>(samCov <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">cov</span>(orf[,orfNames])<span class="sc">*</span>((n<span class="dv">-1</span>)<span class="sc">/</span>n), <span class="dv">3</span>))</span></code></pre></div>
 <pre><code>##          orf1     orf2     orf3     orf4
 ## orf1 1989.243 1680.066 1718.200 1758.556
 ## orf2 1680.066 1817.077 1769.452 1823.106
@@ -553,8 +558,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!------------------------------>
 <p>For more details, check out <a href="https://www.r-bloggers.com/my-commonly-done-ggplot2-graphs/" class="uri">https://www.r-bloggers.com/my-commonly-done-ggplot2-graphs/</a></p>
 <p>First, let’s use reshape() to convert wide format to long format for plotting:</p>
-<div class="sourceCode" id="cb676"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb676-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb676-1" aria-hidden="true" tabindex="-1"></a>growthDataLong <span class="ot">&lt;-</span> <span class="fu">reshape</span>(orf, <span class="at">varying =</span> <span class="fu">paste0</span>(<span class="st">&quot;orf&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>), <span class="at">sep =</span> <span class="st">&quot;&quot;</span>, <span class="at">direction =</span> <span class="st">&quot;long&quot;</span>)</span>
-<span id="cb676-2"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb676-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(growthDataLong)</span></code></pre></div>
+<div class="sourceCode" id="cb725"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb725-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb725-1" aria-hidden="true" tabindex="-1"></a>growthDataLong <span class="ot">&lt;-</span> <span class="fu">reshape</span>(orf, <span class="at">varying =</span> <span class="fu">paste0</span>(<span class="st">&quot;orf&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>), <span class="at">sep =</span> <span class="st">&quot;&quot;</span>, <span class="at">direction =</span> <span class="st">&quot;long&quot;</span>)</span>
+<span id="cb725-2"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb725-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(growthDataLong)</span></code></pre></div>
 <pre><code>##     id treatmentDummy time       orf
 ## 1.1  1              0    1 133.93092
 ## 2.1  2              0    1 191.84038
@@ -563,25 +568,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 5.1  5              0    1  46.27449
 ## 6.1  6              0    1 166.39739</code></pre>
 <p>Plot trajectory of individual with id=1</p>
-<div class="sourceCode" id="cb678"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb678-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb678-1" aria-hidden="true" tabindex="-1"></a>tspag_id1 <span class="ot">=</span> <span class="fu">ggplot</span>(growthDataLong[growthDataLong<span class="sc">$</span>id<span class="sc">==</span><span class="dv">1</span>, ], <span class="fu">aes</span>(<span class="at">x=</span>time, <span class="at">y=</span>orf)) <span class="sc">+</span> </span>
-<span id="cb678-2"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb678-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
-<span id="cb678-3"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb678-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Observation Time Point&quot;</span>) <span class="sc">+</span></span>
-<span id="cb678-4"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb678-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Y&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb678-5"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb678-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="sc">-</span><span class="dv">40</span>, <span class="dv">300</span>) <span class="sc">+</span> </span>
-<span id="cb678-6"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb678-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Spaghetti plot&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb678-7"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb678-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">colour =</span> <span class="fu">factor</span>(id))</span>
-<span id="cb678-8"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb678-8" aria-hidden="true" tabindex="-1"></a>tspag_id1</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-391-1.png" width="672" /></p>
+<div class="sourceCode" id="cb727"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb727-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb727-1" aria-hidden="true" tabindex="-1"></a>tspag_id1 <span class="ot">=</span> <span class="fu">ggplot</span>(growthDataLong[growthDataLong<span class="sc">$</span>id<span class="sc">==</span><span class="dv">1</span>, ], <span class="fu">aes</span>(<span class="at">x=</span>time, <span class="at">y=</span>orf)) <span class="sc">+</span> </span>
+<span id="cb727-2"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb727-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
+<span id="cb727-3"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb727-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Observation Time Point&quot;</span>) <span class="sc">+</span></span>
+<span id="cb727-4"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb727-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Y&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb727-5"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb727-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="sc">-</span><span class="dv">40</span>, <span class="dv">300</span>) <span class="sc">+</span> </span>
+<span id="cb727-6"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb727-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Spaghetti plot&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb727-7"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb727-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">colour =</span> <span class="fu">factor</span>(id))</span>
+<span id="cb727-8"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb727-8" aria-hidden="true" tabindex="-1"></a>tspag_id1</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-423-1.png" width="672" /></p>
 <p>plot trajectory of everyone</p>
-<div class="sourceCode" id="cb679"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb679-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb679-1" aria-hidden="true" tabindex="-1"></a>tspag <span class="ot">=</span> <span class="fu">ggplot</span>(growthDataLong, <span class="fu">aes</span>(<span class="at">x=</span>time, <span class="at">y=</span>orf)) <span class="sc">+</span> </span>
-<span id="cb679-2"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb679-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> </span>
-<span id="cb679-3"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb679-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Observation Time Point&quot;</span>) <span class="sc">+</span></span>
-<span id="cb679-4"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb679-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Y&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb679-5"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb679-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="sc">-</span><span class="dv">40</span>, <span class="dv">300</span>) <span class="sc">+</span> </span>
-<span id="cb679-6"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb679-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Spaghetti plot&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb679-7"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb679-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">colour =</span> <span class="fu">factor</span>(id))</span>
-<span id="cb679-8"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb679-8" aria-hidden="true" tabindex="-1"></a>tspag</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-392-1.png" width="672" /></p>
+<div class="sourceCode" id="cb728"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb728-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb728-1" aria-hidden="true" tabindex="-1"></a>tspag <span class="ot">=</span> <span class="fu">ggplot</span>(growthDataLong, <span class="fu">aes</span>(<span class="at">x=</span>time, <span class="at">y=</span>orf)) <span class="sc">+</span> </span>
+<span id="cb728-2"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb728-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> </span>
+<span id="cb728-3"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb728-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Observation Time Point&quot;</span>) <span class="sc">+</span></span>
+<span id="cb728-4"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb728-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Y&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb728-5"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb728-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="sc">-</span><span class="dv">40</span>, <span class="dv">300</span>) <span class="sc">+</span> </span>
+<span id="cb728-6"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb728-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Spaghetti plot&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb728-7"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb728-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">colour =</span> <span class="fu">factor</span>(id))</span>
+<span id="cb728-8"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb728-8" aria-hidden="true" tabindex="-1"></a>tspag</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-424-1.png" width="672" /></p>
 <!------------------------------>
 </div>
 <div id="part-ii-growth-models" class="section level2 hasAnchor" number="19.2">
@@ -594,20 +599,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Intercept loads on all variables with fixed loadings of 1.0</li>
 <li>Use a*VAR1 to fix the coefficient of VAR1 at a:</li>
 </ul>
-<div class="sourceCode" id="cb680"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb680-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb680-1" aria-hidden="true" tabindex="-1"></a>noGrowthSyn <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
-<span id="cb680-2"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb680-2" aria-hidden="true" tabindex="-1"></a><span class="st">    #Specify Latent Intercept</span></span>
-<span id="cb680-3"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb680-3" aria-hidden="true" tabindex="-1"></a><span class="st">    I =~ 1*orf1 + 1*orf2 + 1*orf3 + 1*orf4</span></span>
-<span id="cb680-4"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb680-4" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
-<div class="sourceCode" id="cb681"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb681-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb681-1" aria-hidden="true" tabindex="-1"></a>noGrowthFit <span class="ot">&lt;-</span> <span class="fu">growth</span>(noGrowthSyn, <span class="at">data =</span> orf, <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb681-2"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb681-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(noGrowthFit, <span class="at">fit.measures =</span> T)</span></code></pre></div>
-<pre><code>## lavaan 0.6-10 ended normally after 80 iterations
+<div class="sourceCode" id="cb729"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb729-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb729-1" aria-hidden="true" tabindex="-1"></a>noGrowthSyn <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
+<span id="cb729-2"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb729-2" aria-hidden="true" tabindex="-1"></a><span class="st">    #Specify Latent Intercept</span></span>
+<span id="cb729-3"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb729-3" aria-hidden="true" tabindex="-1"></a><span class="st">    I =~ 1*orf1 + 1*orf2 + 1*orf3 + 1*orf4</span></span>
+<span id="cb729-4"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb729-4" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb730"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb730-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb730-1" aria-hidden="true" tabindex="-1"></a>noGrowthFit <span class="ot">&lt;-</span> <span class="fu">growth</span>(noGrowthSyn, <span class="at">data =</span> orf, <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb730-2"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb730-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(noGrowthFit, <span class="at">fit.measures =</span> T)</span></code></pre></div>
+<pre><code>## lavaan 0.6-12 ended normally after 80 iterations
 ## 
 ##   Estimator                                         ML
 ##   Optimization method                           NLMINB
 ##   Number of model parameters                         6
-##                                                       
+## 
 ##   Number of observations                           277
-##                                                       
+## 
 ## Model Test User Model:
 ##                                                       
 ##   Test statistic                               622.276
@@ -674,8 +679,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##    .orf3            312.013   38.482    8.108    0.000
 ##    .orf4           1412.090  126.348   11.176    0.000
 ##     I              1746.714  154.599   11.298    0.000</code></pre>
-<div class="sourceCode" id="cb683"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb683-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb683-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(noGrowthFit, <span class="at">what=</span><span class="st">&#39;est&#39;</span>, <span class="at">fade=</span> F)</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-395-1.png" width="672" /></p>
+<div class="sourceCode" id="cb732"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb732-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb732-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(noGrowthFit, <span class="at">what=</span><span class="st">&#39;est&#39;</span>, <span class="at">fade=</span> F)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-427-1.png" width="672" /></p>
 </div>
 <div id="linear-growth-model" class="section level3 hasAnchor" number="19.2.2">
 <h3><span class="header-section-number">19.2.2</span> 2. Linear growth model<a href="week14-lavaan-lab-16-latent-growth-models.html#linear-growth-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -684,21 +689,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Slope loads on all variables with fixed loadings of t = 0, 1, 2, …, t-1</li>
 <li>t must start from 0</li>
 </ul>
-<div class="sourceCode" id="cb684"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb684-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb684-1" aria-hidden="true" tabindex="-1"></a>linearGrowthSyn <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
-<span id="cb684-2"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb684-2" aria-hidden="true" tabindex="-1"></a><span class="st">    #Specify Latent Intercept and Slope</span></span>
-<span id="cb684-3"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb684-3" aria-hidden="true" tabindex="-1"></a><span class="st">    I =~ 1*orf1 + 1*orf2 + 1*orf3 + 1*orf4</span></span>
-<span id="cb684-4"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb684-4" aria-hidden="true" tabindex="-1"></a><span class="st">    S =~ 0*orf1 + 1*orf2 + 2*orf3 + 3*orf4</span></span>
-<span id="cb684-5"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb684-5" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
-<div class="sourceCode" id="cb685"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb685-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb685-1" aria-hidden="true" tabindex="-1"></a>linearGrowthFit <span class="ot">&lt;-</span> <span class="fu">growth</span>(linearGrowthSyn, <span class="at">data =</span> orf, <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb685-2"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb685-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(linearGrowthFit, <span class="at">fit.measures =</span> T)</span></code></pre></div>
-<pre><code>## lavaan 0.6-10 ended normally after 160 iterations
+<div class="sourceCode" id="cb733"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb733-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb733-1" aria-hidden="true" tabindex="-1"></a>linearGrowthSyn <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
+<span id="cb733-2"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb733-2" aria-hidden="true" tabindex="-1"></a><span class="st">    #Specify Latent Intercept and Slope</span></span>
+<span id="cb733-3"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb733-3" aria-hidden="true" tabindex="-1"></a><span class="st">    I =~ 1*orf1 + 1*orf2 + 1*orf3 + 1*orf4</span></span>
+<span id="cb733-4"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb733-4" aria-hidden="true" tabindex="-1"></a><span class="st">    S =~ 0*orf1 + 1*orf2 + 2*orf3 + 3*orf4</span></span>
+<span id="cb733-5"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb733-5" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb734"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb734-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb734-1" aria-hidden="true" tabindex="-1"></a>linearGrowthFit <span class="ot">&lt;-</span> <span class="fu">growth</span>(linearGrowthSyn, <span class="at">data =</span> orf, <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb734-2"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb734-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(linearGrowthFit, <span class="at">fit.measures =</span> T)</span></code></pre></div>
+<pre><code>## lavaan 0.6-12 ended normally after 160 iterations
 ## 
 ##   Estimator                                         ML
 ##   Optimization method                           NLMINB
 ##   Number of model parameters                         9
-##                                                       
+## 
 ##   Number of observations                           277
-##                                                       
+## 
 ## Model Test User Model:
 ##                                                       
 ##   Test statistic                               159.802
@@ -777,8 +782,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##    .orf4            168.261   48.428    3.474    0.001
 ##     I              1698.098  159.067   10.675    0.000
 ##     S                70.482   11.729    6.009    0.000</code></pre>
-<div class="sourceCode" id="cb687"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb687-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb687-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(linearGrowthFit, <span class="at">what=</span><span class="st">&#39;est&#39;</span>, <span class="at">fade=</span> F)</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-398-1.png" width="672" /></p>
+<div class="sourceCode" id="cb736"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb736-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb736-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(linearGrowthFit, <span class="at">what=</span><span class="st">&#39;est&#39;</span>, <span class="at">fade=</span> F)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-430-1.png" width="672" /></p>
 </div>
 <div id="quadratic-growth-model" class="section level3 hasAnchor" number="19.2.3">
 <h3><span class="header-section-number">19.2.3</span> 3. Quadratic growth model<a href="week14-lavaan-lab-16-latent-growth-models.html#quadratic-growth-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -788,14 +793,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Quadratic loads on all variables with fixed loadings of t^2 = 0, 1, 4, …, (t-1)^2</li>
 <li>Quadratic has no variance and covariances</li>
 </ul>
-<div class="sourceCode" id="cb688"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb688-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb688-1" aria-hidden="true" tabindex="-1"></a>quadGrowthSyn <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
-<span id="cb688-2"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb688-2" aria-hidden="true" tabindex="-1"></a><span class="st">    #int and slope factors</span></span>
-<span id="cb688-3"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb688-3" aria-hidden="true" tabindex="-1"></a><span class="st">    I =~ 1*orf1 + 1*orf2 + 1*orf3 + 1*orf4</span></span>
-<span id="cb688-4"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb688-4" aria-hidden="true" tabindex="-1"></a><span class="st">    S =~ 0*orf1 + 1*orf2 + 2*orf3 + 3*orf4</span></span>
-<span id="cb688-5"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb688-5" aria-hidden="true" tabindex="-1"></a><span class="st">    #quadratic factor = slope^2</span></span>
-<span id="cb688-6"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb688-6" aria-hidden="true" tabindex="-1"></a><span class="st">    quadS =~ 0*orf1 + 1*orf2 + 4*orf3 + 9*orf4</span></span>
-<span id="cb688-7"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb688-7" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
-<div class="sourceCode" id="cb689"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb689-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb689-1" aria-hidden="true" tabindex="-1"></a>quadGrowthFit <span class="ot">&lt;-</span> <span class="fu">growth</span>(quadGrowthSyn, <span class="at">data =</span> orf, <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb737"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb737-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb737-1" aria-hidden="true" tabindex="-1"></a>quadGrowthSyn <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
+<span id="cb737-2"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb737-2" aria-hidden="true" tabindex="-1"></a><span class="st">    #int and slope factors</span></span>
+<span id="cb737-3"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb737-3" aria-hidden="true" tabindex="-1"></a><span class="st">    I =~ 1*orf1 + 1*orf2 + 1*orf3 + 1*orf4</span></span>
+<span id="cb737-4"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb737-4" aria-hidden="true" tabindex="-1"></a><span class="st">    S =~ 0*orf1 + 1*orf2 + 2*orf3 + 3*orf4</span></span>
+<span id="cb737-5"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb737-5" aria-hidden="true" tabindex="-1"></a><span class="st">    #quadratic factor = slope^2</span></span>
+<span id="cb737-6"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb737-6" aria-hidden="true" tabindex="-1"></a><span class="st">    quadS =~ 0*orf1 + 1*orf2 + 4*orf3 + 9*orf4</span></span>
+<span id="cb737-7"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb737-7" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb738"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb738-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb738-1" aria-hidden="true" tabindex="-1"></a>quadGrowthFit <span class="ot">&lt;-</span> <span class="fu">growth</span>(quadGrowthSyn, <span class="at">data =</span> orf, <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <pre><code>## Warning in lav_object_post_check(object): lavaan WARNING: some estimated ov variances are negative</code></pre>
 <pre><code>## Warning in lav_object_post_check(object): lavaan WARNING: some estimated lv variances are negative</code></pre>
 <p>If you get the following warning messages:</p>
@@ -804,28 +809,28 @@ lavaan WARNING: some estimated ov variances are negative</p>
 <ul>
 <li>Use var1~~0*var2 to fix the (co)variances at 0</li>
 </ul>
-<div class="sourceCode" id="cb692"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb692-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb692-1" aria-hidden="true" tabindex="-1"></a>quadGrowthSyn_noQuad <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
-<span id="cb692-2"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb692-2" aria-hidden="true" tabindex="-1"></a><span class="st">    #int and slope factors</span></span>
-<span id="cb692-3"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb692-3" aria-hidden="true" tabindex="-1"></a><span class="st">    I =~ 1*orf1 + 1*orf2 + 1*orf3 + 1*orf4</span></span>
-<span id="cb692-4"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb692-4" aria-hidden="true" tabindex="-1"></a><span class="st">    S =~ 0*orf1 + 1*orf2 + 2*orf3 + 3*orf4</span></span>
-<span id="cb692-5"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb692-5" aria-hidden="true" tabindex="-1"></a><span class="st">    #quadratic factor = slope^2</span></span>
-<span id="cb692-6"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb692-6" aria-hidden="true" tabindex="-1"></a><span class="st">    quadS =~ 0*orf1 + 1*orf2 + 4*orf3 + 9*orf4</span></span>
-<span id="cb692-7"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb692-7" aria-hidden="true" tabindex="-1"></a><span class="st">    </span></span>
-<span id="cb692-8"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb692-8" aria-hidden="true" tabindex="-1"></a><span class="st">    quadS ~~ 0*quadS #restrict quadratic variance to 0</span></span>
-<span id="cb692-9"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb692-9" aria-hidden="true" tabindex="-1"></a><span class="st">    quadS ~~ 0*I #restrict quadratic covariance with I to 0</span></span>
-<span id="cb692-10"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb692-10" aria-hidden="true" tabindex="-1"></a><span class="st">    quadS ~~ 0*S #restrict quadratic covariance with S to 0</span></span>
-<span id="cb692-11"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb692-11" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
-<div class="sourceCode" id="cb693"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb693-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb693-1" aria-hidden="true" tabindex="-1"></a>quadGrowthNoquadFit <span class="ot">&lt;-</span> <span class="fu">growth</span>(quadGrowthSyn_noQuad, </span>
-<span id="cb693-2"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb693-2" aria-hidden="true" tabindex="-1"></a>                              <span class="at">data =</span> orf, <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb693-3"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb693-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(quadGrowthNoquadFit, <span class="at">fit.measures =</span> T)</span></code></pre></div>
-<pre><code>## lavaan 0.6-10 ended normally after 170 iterations
+<div class="sourceCode" id="cb741"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb741-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb741-1" aria-hidden="true" tabindex="-1"></a>quadGrowthSyn_noQuad <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
+<span id="cb741-2"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb741-2" aria-hidden="true" tabindex="-1"></a><span class="st">    #int and slope factors</span></span>
+<span id="cb741-3"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb741-3" aria-hidden="true" tabindex="-1"></a><span class="st">    I =~ 1*orf1 + 1*orf2 + 1*orf3 + 1*orf4</span></span>
+<span id="cb741-4"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb741-4" aria-hidden="true" tabindex="-1"></a><span class="st">    S =~ 0*orf1 + 1*orf2 + 2*orf3 + 3*orf4</span></span>
+<span id="cb741-5"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb741-5" aria-hidden="true" tabindex="-1"></a><span class="st">    #quadratic factor = slope^2</span></span>
+<span id="cb741-6"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb741-6" aria-hidden="true" tabindex="-1"></a><span class="st">    quadS =~ 0*orf1 + 1*orf2 + 4*orf3 + 9*orf4</span></span>
+<span id="cb741-7"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb741-7" aria-hidden="true" tabindex="-1"></a><span class="st">    </span></span>
+<span id="cb741-8"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb741-8" aria-hidden="true" tabindex="-1"></a><span class="st">    quadS ~~ 0*quadS #restrict quadratic variance to 0</span></span>
+<span id="cb741-9"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb741-9" aria-hidden="true" tabindex="-1"></a><span class="st">    quadS ~~ 0*I #restrict quadratic covariance with I to 0</span></span>
+<span id="cb741-10"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb741-10" aria-hidden="true" tabindex="-1"></a><span class="st">    quadS ~~ 0*S #restrict quadratic covariance with S to 0</span></span>
+<span id="cb741-11"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb741-11" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb742"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb742-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb742-1" aria-hidden="true" tabindex="-1"></a>quadGrowthNoquadFit <span class="ot">&lt;-</span> <span class="fu">growth</span>(quadGrowthSyn_noQuad, </span>
+<span id="cb742-2"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb742-2" aria-hidden="true" tabindex="-1"></a>                              <span class="at">data =</span> orf, <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb742-3"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb742-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(quadGrowthNoquadFit, <span class="at">fit.measures =</span> T)</span></code></pre></div>
+<pre><code>## lavaan 0.6-12 ended normally after 170 iterations
 ## 
 ##   Estimator                                         ML
 ##   Optimization method                           NLMINB
 ##   Number of model parameters                        10
-##                                                       
+## 
 ##   Number of observations                           277
-##                                                       
+## 
 ## Model Test User Model:
 ##                                                       
 ##   Test statistic                               159.759
@@ -915,8 +920,8 @@ lavaan WARNING: some estimated ov variances are negative</p>
 ##    .orf4            167.167   48.238    3.465    0.001
 ##     I              1697.894  159.144   10.669    0.000
 ##     S                70.527   11.730    6.013    0.000</code></pre>
-<div class="sourceCode" id="cb695"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb695-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb695-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(quadGrowthNoquadFit, <span class="at">what=</span><span class="st">&#39;est&#39;</span>, <span class="at">fade=</span> F)</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-403-1.png" width="672" /></p>
+<div class="sourceCode" id="cb744"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb744-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb744-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(quadGrowthNoquadFit, <span class="at">what=</span><span class="st">&#39;est&#39;</span>, <span class="at">fade=</span> F)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-435-1.png" width="672" /></p>
 </div>
 <div id="latent-basis-growth-model-extension-of-linear-growth-model" class="section level3 hasAnchor" number="19.2.4">
 <h3><span class="header-section-number">19.2.4</span> 4. Latent basis growth model (extension of linear growth model)<a href="week14-lavaan-lab-16-latent-growth-models.html#latent-basis-growth-model-extension-of-linear-growth-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -924,25 +929,25 @@ lavaan WARNING: some estimated ov variances are negative</p>
 <li>Intercept loads on all variables with fixed loadings of 1.0</li>
 <li>Slope loads on all variables with free loadings between 0 and t-1</li>
 </ul>
-<div class="sourceCode" id="cb696"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb696-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb696-1" aria-hidden="true" tabindex="-1"></a>latentBasisSyn <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
-<span id="cb696-2"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb696-2" aria-hidden="true" tabindex="-1"></a><span class="st">    #Int and slope specification</span></span>
-<span id="cb696-3"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb696-3" aria-hidden="true" tabindex="-1"></a><span class="st">    I =~ 1*orf1 + 1*orf2 + 1*orf3 + 1*orf4</span></span>
-<span id="cb696-4"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb696-4" aria-hidden="true" tabindex="-1"></a><span class="st">    </span></span>
-<span id="cb696-5"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb696-5" aria-hidden="true" tabindex="-1"></a><span class="st">    #orf2 and orf3 are free in the latent basis specification</span></span>
-<span id="cb696-6"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb696-6" aria-hidden="true" tabindex="-1"></a><span class="st">    S =~ 0*orf1 + alpha1*orf2 + alpha2*orf3 + 3*orf4</span></span>
-<span id="cb696-7"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb696-7" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
-<div class="sourceCode" id="cb697"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb697-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb697-1" aria-hidden="true" tabindex="-1"></a>latentBasisFit <span class="ot">&lt;-</span> <span class="fu">growth</span>(latentBasisSyn, </span>
-<span id="cb697-2"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb697-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">data =</span> orf, </span>
-<span id="cb697-3"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb697-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb697-4"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb697-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(latentBasisFit, <span class="at">fit.measures =</span> T)</span></code></pre></div>
-<pre><code>## lavaan 0.6-10 ended normally after 180 iterations
+<div class="sourceCode" id="cb745"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb745-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb745-1" aria-hidden="true" tabindex="-1"></a>latentBasisSyn <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
+<span id="cb745-2"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb745-2" aria-hidden="true" tabindex="-1"></a><span class="st">    #Int and slope specification</span></span>
+<span id="cb745-3"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb745-3" aria-hidden="true" tabindex="-1"></a><span class="st">    I =~ 1*orf1 + 1*orf2 + 1*orf3 + 1*orf4</span></span>
+<span id="cb745-4"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb745-4" aria-hidden="true" tabindex="-1"></a><span class="st">    </span></span>
+<span id="cb745-5"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb745-5" aria-hidden="true" tabindex="-1"></a><span class="st">    #orf2 and orf3 are free in the latent basis specification</span></span>
+<span id="cb745-6"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb745-6" aria-hidden="true" tabindex="-1"></a><span class="st">    S =~ 0*orf1 + alpha1*orf2 + alpha2*orf3 + 3*orf4</span></span>
+<span id="cb745-7"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb745-7" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb746"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb746-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb746-1" aria-hidden="true" tabindex="-1"></a>latentBasisFit <span class="ot">&lt;-</span> <span class="fu">growth</span>(latentBasisSyn, </span>
+<span id="cb746-2"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb746-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">data =</span> orf, </span>
+<span id="cb746-3"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb746-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb746-4"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb746-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(latentBasisFit, <span class="at">fit.measures =</span> T)</span></code></pre></div>
+<pre><code>## lavaan 0.6-12 ended normally after 180 iterations
 ## 
 ##   Estimator                                         ML
 ##   Optimization method                           NLMINB
 ##   Number of model parameters                        11
-##                                                       
+## 
 ##   Number of observations                           277
-##                                                       
+## 
 ## Model Test User Model:
 ##                                                       
 ##   Test statistic                                41.591
@@ -1021,11 +1026,11 @@ lavaan WARNING: some estimated ov variances are negative</p>
 ##    .orf4            193.173   49.612    3.894    0.000
 ##     I              1688.625  159.099   10.614    0.000
 ##     S                67.573   12.843    5.261    0.000</code></pre>
-<div class="sourceCode" id="cb699"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb699-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb699-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(latentBasisFit, <span class="at">what=</span><span class="st">&#39;est&#39;</span>, <span class="at">fade=</span> F)</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-406-1.png" width="672" /></p>
+<div class="sourceCode" id="cb748"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb748-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb748-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(latentBasisFit, <span class="at">what=</span><span class="st">&#39;est&#39;</span>, <span class="at">fade=</span> F)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-438-1.png" width="672" /></p>
 <p>RMSEA failed us…
 one approach is to use model modification indices:</p>
-<div class="sourceCode" id="cb700"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb700-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb700-1" aria-hidden="true" tabindex="-1"></a><span class="fu">modindices</span>(latentBasisFit,<span class="at">sort. =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb749"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb749-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb749-1" aria-hidden="true" tabindex="-1"></a><span class="fu">modindices</span>(latentBasisFit,<span class="at">sort. =</span> T)</span></code></pre></div>
 <pre><code>##     lhs op  rhs     mi      epc  sepc.lv sepc.all sepc.nox
 ## 27 orf3 ~~ orf4 37.677  285.256  285.256    1.398    1.398
 ## 17 orf2 ~1      37.648   21.985   21.985    0.491    0.491
@@ -1045,32 +1050,32 @@ one approach is to use model modification indices:</p>
 </div>
 <div id="spline-growth-model" class="section level3 hasAnchor" number="19.2.5">
 <h3><span class="header-section-number">19.2.5</span> 5. Spline Growth Model<a href="week14-lavaan-lab-16-latent-growth-models.html#spline-growth-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb702"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb702-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb702-1" aria-hidden="true" tabindex="-1"></a>splineGrowthSyn <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
-<span id="cb702-2"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb702-2" aria-hidden="true" tabindex="-1"></a><span class="st">    #Specify Latent Intercept and Slope</span></span>
-<span id="cb702-3"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb702-3" aria-hidden="true" tabindex="-1"></a><span class="st">    I =~ 1*orf1 + 1*orf2 + 1*orf3 + 1*orf4</span></span>
-<span id="cb702-4"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb702-4" aria-hidden="true" tabindex="-1"></a><span class="st">    S =~ 0*orf1 + 1*orf2 + 2*orf3 + 3*orf4</span></span>
-<span id="cb702-5"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb702-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb702-6"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb702-6" aria-hidden="true" tabindex="-1"></a><span class="st">    #summer is the spline variable</span></span>
-<span id="cb702-7"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb702-7" aria-hidden="true" tabindex="-1"></a><span class="st">    summer =~ 0*orf1 + 0*orf2 + 1*orf3 + 1*orf4</span></span>
-<span id="cb702-8"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb702-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb702-9"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb702-9" aria-hidden="true" tabindex="-1"></a><span class="st">    #Summer gets a mean but no variance</span></span>
-<span id="cb702-10"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb702-10" aria-hidden="true" tabindex="-1"></a><span class="st">    summer ~ 1</span></span>
-<span id="cb702-11"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb702-11" aria-hidden="true" tabindex="-1"></a><span class="st">    summer ~~ 0*summer</span></span>
-<span id="cb702-12"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb702-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb702-13"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb702-13" aria-hidden="true" tabindex="-1"></a><span class="st">    #Summer is uncorrelated with I and S</span></span>
-<span id="cb702-14"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb702-14" aria-hidden="true" tabindex="-1"></a><span class="st">    summer ~~ 0*I </span></span>
-<span id="cb702-15"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb702-15" aria-hidden="true" tabindex="-1"></a><span class="st">    summer ~~ 0*S </span></span>
-<span id="cb702-16"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb702-16" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
-<div class="sourceCode" id="cb703"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb703-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb703-1" aria-hidden="true" tabindex="-1"></a>splineGrowthFit <span class="ot">&lt;-</span> <span class="fu">growth</span>(splineGrowthSyn, <span class="at">data =</span> orf, <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb703-2"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb703-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(splineGrowthFit, <span class="at">fit.measures =</span> T)</span></code></pre></div>
-<pre><code>## lavaan 0.6-10 ended normally after 167 iterations
+<div class="sourceCode" id="cb751"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb751-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb751-1" aria-hidden="true" tabindex="-1"></a>splineGrowthSyn <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
+<span id="cb751-2"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb751-2" aria-hidden="true" tabindex="-1"></a><span class="st">    #Specify Latent Intercept and Slope</span></span>
+<span id="cb751-3"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb751-3" aria-hidden="true" tabindex="-1"></a><span class="st">    I =~ 1*orf1 + 1*orf2 + 1*orf3 + 1*orf4</span></span>
+<span id="cb751-4"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb751-4" aria-hidden="true" tabindex="-1"></a><span class="st">    S =~ 0*orf1 + 1*orf2 + 2*orf3 + 3*orf4</span></span>
+<span id="cb751-5"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb751-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb751-6"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb751-6" aria-hidden="true" tabindex="-1"></a><span class="st">    #summer is the spline variable</span></span>
+<span id="cb751-7"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb751-7" aria-hidden="true" tabindex="-1"></a><span class="st">    summer =~ 0*orf1 + 0*orf2 + 1*orf3 + 1*orf4</span></span>
+<span id="cb751-8"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb751-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb751-9"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb751-9" aria-hidden="true" tabindex="-1"></a><span class="st">    #Summer gets a mean but no variance</span></span>
+<span id="cb751-10"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb751-10" aria-hidden="true" tabindex="-1"></a><span class="st">    summer ~ 1</span></span>
+<span id="cb751-11"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb751-11" aria-hidden="true" tabindex="-1"></a><span class="st">    summer ~~ 0*summer</span></span>
+<span id="cb751-12"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb751-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb751-13"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb751-13" aria-hidden="true" tabindex="-1"></a><span class="st">    #Summer is uncorrelated with I and S</span></span>
+<span id="cb751-14"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb751-14" aria-hidden="true" tabindex="-1"></a><span class="st">    summer ~~ 0*I </span></span>
+<span id="cb751-15"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb751-15" aria-hidden="true" tabindex="-1"></a><span class="st">    summer ~~ 0*S </span></span>
+<span id="cb751-16"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb751-16" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb752"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb752-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb752-1" aria-hidden="true" tabindex="-1"></a>splineGrowthFit <span class="ot">&lt;-</span> <span class="fu">growth</span>(splineGrowthSyn, <span class="at">data =</span> orf, <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb752-2"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb752-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(splineGrowthFit, <span class="at">fit.measures =</span> T)</span></code></pre></div>
+<pre><code>## lavaan 0.6-12 ended normally after 167 iterations
 ## 
 ##   Estimator                                         ML
 ##   Optimization method                           NLMINB
 ##   Number of model parameters                        10
-##                                                       
+## 
 ##   Number of observations                           277
-##                                                       
+## 
 ## Model Test User Model:
 ##                                                       
 ##   Test statistic                                 8.029
@@ -1160,12 +1165,12 @@ one approach is to use model modification indices:</p>
 ##    .orf4            219.241   42.313    5.181    0.000
 ##     I              1670.038  155.803   10.719    0.000
 ##     S                65.687   10.741    6.116    0.000</code></pre>
-<div class="sourceCode" id="cb705"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb705-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb705-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(splineGrowthFit, <span class="at">what=</span><span class="st">&#39;est&#39;</span>, <span class="at">fade=</span> F)</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-410-1.png" width="672" /></p>
+<div class="sourceCode" id="cb754"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb754-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb754-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(splineGrowthFit, <span class="at">what=</span><span class="st">&#39;est&#39;</span>, <span class="at">fade=</span> F)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-442-1.png" width="672" /></p>
 </div>
 <div id="model-comparison" class="section level3 hasAnchor" number="19.2.6">
 <h3><span class="header-section-number">19.2.6</span> Model Comparison<a href="week14-lavaan-lab-16-latent-growth-models.html#model-comparison" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb706"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb706-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb706-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lavTestLRT</span>(noGrowthFit, linearGrowthFit)</span></code></pre></div>
+<div class="sourceCode" id="cb755"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb755-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb755-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lavTestLRT</span>(noGrowthFit, linearGrowthFit)</span></code></pre></div>
 <pre><code>## Chi-Squared Difference Test
 ## 
 ##                 Df   AIC   BIC  Chisq Chisq diff Df diff Pr(&gt;Chisq)    
@@ -1176,7 +1181,7 @@ one approach is to use model modification indices:</p>
 <ul>
 <li>Linear Growth Model fits significantly better than No Growth Model</li>
 </ul>
-<div class="sourceCode" id="cb708"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb708-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb708-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lavTestLRT</span>(linearGrowthFit, quadGrowthNoquadFit)</span></code></pre></div>
+<div class="sourceCode" id="cb757"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb757-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb757-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lavTestLRT</span>(linearGrowthFit, quadGrowthNoquadFit)</span></code></pre></div>
 <pre><code>## Chi-Squared Difference Test
 ## 
 ##                     Df   AIC   BIC  Chisq Chisq diff Df diff Pr(&gt;Chisq)
@@ -1185,7 +1190,7 @@ one approach is to use model modification indices:</p>
 <ul>
 <li>Linear Growth Model fits almost the same as the Quadratic Growth Model (keep linear model due to parsimony principle)</li>
 </ul>
-<div class="sourceCode" id="cb710"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb710-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb710-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lavTestLRT</span>(linearGrowthFit, latentBasisFit)</span></code></pre></div>
+<div class="sourceCode" id="cb759"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb759-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb759-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lavTestLRT</span>(linearGrowthFit, latentBasisFit)</span></code></pre></div>
 <pre><code>## Chi-Squared Difference Test
 ## 
 ##                 Df   AIC   BIC   Chisq Chisq diff Df diff Pr(&gt;Chisq)    
@@ -1196,7 +1201,7 @@ one approach is to use model modification indices:</p>
 <ul>
 <li>Latent Basis Model fits significantly better than Linear Growth Model</li>
 </ul>
-<div class="sourceCode" id="cb712"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb712-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb712-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lavTestLRT</span>(linearGrowthFit, splineGrowthFit)</span></code></pre></div>
+<div class="sourceCode" id="cb761"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb761-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb761-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lavTestLRT</span>(linearGrowthFit, splineGrowthFit)</span></code></pre></div>
 <pre><code>## Chi-Squared Difference Test
 ## 
 ##                 Df   AIC   BIC    Chisq Chisq diff Df diff Pr(&gt;Chisq)    
@@ -1210,48 +1215,50 @@ one approach is to use model modification indices:</p>
 </div>
 <div id="final-model-spline-growth-model-with-a-binary-treatment-predictor" class="section level3 hasAnchor" number="19.2.7">
 <h3><span class="header-section-number">19.2.7</span> 6. Final Model: Spline Growth Model with a binary treatment predictor<a href="week14-lavaan-lab-16-latent-growth-models.html#final-model-spline-growth-model-with-a-binary-treatment-predictor" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb714"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb714-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb714-1" aria-hidden="true" tabindex="-1"></a>splineGrowthTreatmentPredictorSyn <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
-<span id="cb714-2"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb714-2" aria-hidden="true" tabindex="-1"></a><span class="st">    #Specify Latent Intercept and Slope</span></span>
-<span id="cb714-3"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb714-3" aria-hidden="true" tabindex="-1"></a><span class="st">    I =~ 1*orf1 + 1*orf2 + 1*orf3 + 1*orf4</span></span>
-<span id="cb714-4"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb714-4" aria-hidden="true" tabindex="-1"></a><span class="st">    S =~ 0*orf1 + 1*orf2 + 2*orf3 + 3*orf4</span></span>
-<span id="cb714-5"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb714-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb714-6"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb714-6" aria-hidden="true" tabindex="-1"></a><span class="st">    #summer is the spline variable</span></span>
-<span id="cb714-7"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb714-7" aria-hidden="true" tabindex="-1"></a><span class="st">    summer =~ 0*orf1 + 0*orf2 + 1*orf3 + 1*orf4</span></span>
-<span id="cb714-8"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb714-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb714-9"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb714-9" aria-hidden="true" tabindex="-1"></a><span class="st">    #Summer gets a mean but no variance</span></span>
-<span id="cb714-10"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb714-10" aria-hidden="true" tabindex="-1"></a><span class="st">    summer ~~ 0*summer</span></span>
-<span id="cb714-11"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb714-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb714-12"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb714-12" aria-hidden="true" tabindex="-1"></a><span class="st">    #Summer is uncorrelated with I and S</span></span>
-<span id="cb714-13"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb714-13" aria-hidden="true" tabindex="-1"></a><span class="st">    summer ~~ 0*I </span></span>
-<span id="cb714-14"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb714-14" aria-hidden="true" tabindex="-1"></a><span class="st">    summer ~~ 0*S </span></span>
-<span id="cb714-15"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb714-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb714-16"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb714-16" aria-hidden="true" tabindex="-1"></a><span class="st">    #Intercept, Slope, and Summer regressed on (predicted by) treatment</span></span>
-<span id="cb714-17"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb714-17" aria-hidden="true" tabindex="-1"></a><span class="st">    I ~ treatmentDummy</span></span>
-<span id="cb714-18"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb714-18" aria-hidden="true" tabindex="-1"></a><span class="st">    S ~ treatmentDummy</span></span>
-<span id="cb714-19"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb714-19" aria-hidden="true" tabindex="-1"></a><span class="st">    summer ~ treatmentDummy</span></span>
-<span id="cb714-20"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb714-20" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb763"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb763-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb763-1" aria-hidden="true" tabindex="-1"></a>splineGrowthTreatmentPredictorSyn <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
+<span id="cb763-2"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb763-2" aria-hidden="true" tabindex="-1"></a><span class="st">    #Specify Latent Intercept and Slope</span></span>
+<span id="cb763-3"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb763-3" aria-hidden="true" tabindex="-1"></a><span class="st">    I =~ 1*orf1 + 1*orf2 + 1*orf3 + 1*orf4</span></span>
+<span id="cb763-4"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb763-4" aria-hidden="true" tabindex="-1"></a><span class="st">    S =~ 0*orf1 + 1*orf2 + 2*orf3 + 3*orf4</span></span>
+<span id="cb763-5"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb763-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb763-6"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb763-6" aria-hidden="true" tabindex="-1"></a><span class="st">    #summer is the spline variable</span></span>
+<span id="cb763-7"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb763-7" aria-hidden="true" tabindex="-1"></a><span class="st">    summer =~ 0*orf1 + 0*orf2 + 1*orf3 + 1*orf4</span></span>
+<span id="cb763-8"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb763-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb763-9"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb763-9" aria-hidden="true" tabindex="-1"></a><span class="st">    #Summer gets a mean but no variance</span></span>
+<span id="cb763-10"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb763-10" aria-hidden="true" tabindex="-1"></a><span class="st">    summer ~~ 0*summer</span></span>
+<span id="cb763-11"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb763-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb763-12"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb763-12" aria-hidden="true" tabindex="-1"></a><span class="st">    #Summer is uncorrelated with I and S</span></span>
+<span id="cb763-13"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb763-13" aria-hidden="true" tabindex="-1"></a><span class="st">    summer ~~ 0*I </span></span>
+<span id="cb763-14"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb763-14" aria-hidden="true" tabindex="-1"></a><span class="st">    summer ~~ 0*S </span></span>
+<span id="cb763-15"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb763-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb763-16"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb763-16" aria-hidden="true" tabindex="-1"></a><span class="st">    #Intercept, Slope, and Summer regressed on (predicted by) treatment</span></span>
+<span id="cb763-17"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb763-17" aria-hidden="true" tabindex="-1"></a><span class="st">    I ~ treatmentDummy</span></span>
+<span id="cb763-18"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb763-18" aria-hidden="true" tabindex="-1"></a><span class="st">    S ~ treatmentDummy</span></span>
+<span id="cb763-19"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb763-19" aria-hidden="true" tabindex="-1"></a><span class="st">    summer ~ treatmentDummy</span></span>
+<span id="cb763-20"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb763-20" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
 <ul>
 <li>When including external predictors, we need to turn on fixed.x = T…</li>
 <li>otherwise you’ll get a warning message and misleading model fit:</li>
 </ul>
-<div class="sourceCode" id="cb715"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb715-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb715-1" aria-hidden="true" tabindex="-1"></a><span class="co"># do not do this:</span></span>
-<span id="cb715-2"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb715-2" aria-hidden="true" tabindex="-1"></a>splineGrowthTreatPredictorFit <span class="ot">&lt;-</span> <span class="fu">growth</span>(splineGrowthTreatmentPredictorSyn, </span>
-<span id="cb715-3"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb715-3" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">data =</span> orf, </span>
-<span id="cb715-4"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb715-4" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">fixed.x =</span> F) <span class="co"># &lt;- Here</span></span></code></pre></div>
+<div class="sourceCode" id="cb764"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb764-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb764-1" aria-hidden="true" tabindex="-1"></a><span class="co"># do not do this:</span></span>
+<span id="cb764-2"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb764-2" aria-hidden="true" tabindex="-1"></a>splineGrowthTreatPredictorFit <span class="ot">&lt;-</span> <span class="fu">growth</span>(splineGrowthTreatmentPredictorSyn, </span>
+<span id="cb764-3"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb764-3" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">data =</span> orf, </span>
+<span id="cb764-4"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb764-4" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">fixed.x =</span> F) <span class="co"># &lt;- Here</span></span></code></pre></div>
 <pre><code>## Warning in lav_data_full(data = data, group = group, cluster = cluster, : lavaan WARNING: some observed variances are (at least) a factor 1000 times larger than others; use varTable(fit) to investigate</code></pre>
+<pre><code>## Warning in lav_partable_check(lavpartable, categorical = lavoptions$.categorical, : lavaan WARNING: automatically added intercepts are set to zero:
+##     [treatmentDummy]</code></pre>
 <p>Instead, turn on fixed.x = T:</p>
-<div class="sourceCode" id="cb717"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb717-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb717-1" aria-hidden="true" tabindex="-1"></a>splineGrowthTreatPredictorFit <span class="ot">&lt;-</span> <span class="fu">growth</span>(splineGrowthTreatmentPredictorSyn, </span>
-<span id="cb717-2"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb717-2" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">data =</span> orf, </span>
-<span id="cb717-3"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb717-3" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">fixed.x =</span> T) <span class="co"># &lt;- Here</span></span>
-<span id="cb717-4"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb717-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(splineGrowthTreatPredictorFit, <span class="at">fit.measures =</span> T)</span></code></pre></div>
-<pre><code>## lavaan 0.6-10 ended normally after 216 iterations
+<div class="sourceCode" id="cb767"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb767-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb767-1" aria-hidden="true" tabindex="-1"></a>splineGrowthTreatPredictorFit <span class="ot">&lt;-</span> <span class="fu">growth</span>(splineGrowthTreatmentPredictorSyn, </span>
+<span id="cb767-2"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb767-2" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">data =</span> orf, </span>
+<span id="cb767-3"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb767-3" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">fixed.x =</span> T) <span class="co"># &lt;- Here</span></span>
+<span id="cb767-4"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb767-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(splineGrowthTreatPredictorFit, <span class="at">fit.measures =</span> T)</span></code></pre></div>
+<pre><code>## lavaan 0.6-12 ended normally after 216 iterations
 ## 
 ##   Estimator                                         ML
 ##   Optimization method                           NLMINB
 ##   Number of model parameters                        13
-##                                                       
+## 
 ##   Number of observations                           277
-##                                                       
+## 
 ## Model Test User Model:
 ##                                                       
 ##   Test statistic                                 8.288
@@ -1350,8 +1357,8 @@ one approach is to use model modification indices:</p>
 ##    .orf4            206.315   31.878    6.472    0.000
 ##    .I              1678.279  155.946   10.762    0.000
 ##    .S                 5.773    6.112    0.944    0.345</code></pre>
-<div class="sourceCode" id="cb719"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb719-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb719-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(splineGrowthTreatPredictorFit, <span class="at">what=</span><span class="st">&#39;est&#39;</span>, <span class="at">fade=</span> F)</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-418-1.png" width="672" /></p>
+<div class="sourceCode" id="cb769"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb769-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb769-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(splineGrowthTreatPredictorFit, <span class="at">what=</span><span class="st">&#39;est&#39;</span>, <span class="at">fade=</span> F)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-450-1.png" width="672" /></p>
 <!------------------------------>
 </div>
 </div>
@@ -1370,8 +1377,8 @@ one approach is to use model modification indices:</p>
 <li>Use std.lv = TRUE as the scaling method in growth()</li>
 </ol>
 <p>For this example, we will use the dataset exLong from package semTools:</p>
-<div class="sourceCode" id="cb720"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb720-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb720-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(exLong)</span>
-<span id="cb720-2"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb720-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(exLong)</span></code></pre></div>
+<div class="sourceCode" id="cb770"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb770-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb770-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(exLong)</span>
+<span id="cb770-2"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb770-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(exLong)</span></code></pre></div>
 <pre><code>##      sex       y1t1       y2t1        y3t1       y1t2        y2t2      y3t2      y1t3       y2t3       y3t3
 ## 1 female  2.7625423  2.2812510  2.49656014  2.9499400  1.12338865 2.1505466  1.912824  1.9625734  2.4403812
 ## 2 female  0.2707267 -0.7830365 -0.23554656  0.4631038  0.37536412 2.0283960  2.112440  0.4326280  2.6352259
@@ -1379,58 +1386,58 @@ one approach is to use model modification indices:</p>
 ## 4 female -1.0227953 -1.3454733  0.04899156  1.9530137 -1.03357363 2.7817132  1.249376 -0.5369589  2.3371304
 ## 5 female  0.7385408 -0.6027341  0.42557808 -0.2027779 -0.34937717 1.1865013  1.425101  1.8539630  2.0861627
 ## 6 female  0.5864878 -0.4659974  0.10691644  0.7869085 -0.31982170 0.4825864 -1.201912 -2.0090700 -0.8366951</code></pre>
-<div class="sourceCode" id="cb722"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb722-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb722-1" aria-hidden="true" tabindex="-1"></a>?exLong</span></code></pre></div>
+<div class="sourceCode" id="cb772"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb772-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb772-1" aria-hidden="true" tabindex="-1"></a>?exLong</span></code></pre></div>
 <p>The syntax for linear growth model with latent variables:</p>
-<div class="sourceCode" id="cb723"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb723-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb723-1" aria-hidden="true" tabindex="-1"></a>exLinearGrowthsyn <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
-<span id="cb723-2"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb723-2" aria-hidden="true" tabindex="-1"></a><span class="st">  </span></span>
-<span id="cb723-3"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb723-3" aria-hidden="true" tabindex="-1"></a><span class="st">  # Use the loadings over time (i.e., metric invariance)</span></span>
-<span id="cb723-4"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb723-4" aria-hidden="true" tabindex="-1"></a><span class="st">  f_t1 =~ lamb1*y1t1 + lamb2*y2t1 + lamb3*y3t1</span></span>
-<span id="cb723-5"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb723-5" aria-hidden="true" tabindex="-1"></a><span class="st">  f_t2 =~ lamb1*y1t2 + lamb2*y2t2 + lamb3*y3t2</span></span>
-<span id="cb723-6"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb723-6" aria-hidden="true" tabindex="-1"></a><span class="st">  f_t3 =~ lamb1*y1t3 + lamb2*y2t3 + lamb3*y3t3</span></span>
-<span id="cb723-7"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb723-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb723-8"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb723-8" aria-hidden="true" tabindex="-1"></a><span class="st">  #Int and slope specification</span></span>
-<span id="cb723-9"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb723-9" aria-hidden="true" tabindex="-1"></a><span class="st">    I =~ 1*f_t1 + 1*f_t2 + 1*f_t3</span></span>
-<span id="cb723-10"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb723-10" aria-hidden="true" tabindex="-1"></a><span class="st">    S =~ 0*f_t1 + 1*f_t2 + 2*f_t3</span></span>
-<span id="cb723-11"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb723-11" aria-hidden="true" tabindex="-1"></a><span class="st">    </span></span>
-<span id="cb723-12"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb723-12" aria-hidden="true" tabindex="-1"></a><span class="st">    # Add intercepts for all indicators EXCEPT for marker indicators</span></span>
-<span id="cb723-13"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb723-13" aria-hidden="true" tabindex="-1"></a><span class="st">  y2t1 ~ 1</span></span>
-<span id="cb723-14"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb723-14" aria-hidden="true" tabindex="-1"></a><span class="st">  y3t1 ~ 1</span></span>
-<span id="cb723-15"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb723-15" aria-hidden="true" tabindex="-1"></a><span class="st">  y2t2 ~ 1</span></span>
-<span id="cb723-16"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb723-16" aria-hidden="true" tabindex="-1"></a><span class="st">  y3t2 ~ 1</span></span>
-<span id="cb723-17"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb723-17" aria-hidden="true" tabindex="-1"></a><span class="st">    y2t3 ~ 1</span></span>
-<span id="cb723-18"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb723-18" aria-hidden="true" tabindex="-1"></a><span class="st">  y3t3 ~ 1</span></span>
-<span id="cb723-19"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb723-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb723-20"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb723-20" aria-hidden="true" tabindex="-1"></a><span class="st">    # Add correlated residuals for repeated measures of the same indicators</span></span>
-<span id="cb723-21"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb723-21" aria-hidden="true" tabindex="-1"></a><span class="st">    y1t1 ~~ y1t2</span></span>
-<span id="cb723-22"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb723-22" aria-hidden="true" tabindex="-1"></a><span class="st">    y1t1 ~~ y1t3</span></span>
-<span id="cb723-23"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb723-23" aria-hidden="true" tabindex="-1"></a><span class="st">    y1t2 ~~ y1t3</span></span>
-<span id="cb723-24"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb723-24" aria-hidden="true" tabindex="-1"></a><span class="st">    y2t1 ~~ y2t2</span></span>
-<span id="cb723-25"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb723-25" aria-hidden="true" tabindex="-1"></a><span class="st">    y2t1 ~~ y2t3</span></span>
-<span id="cb723-26"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb723-26" aria-hidden="true" tabindex="-1"></a><span class="st">    y2t2 ~~ y2t3</span></span>
-<span id="cb723-27"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb723-27" aria-hidden="true" tabindex="-1"></a><span class="st">    y3t1 ~~ y3t2</span></span>
-<span id="cb723-28"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb723-28" aria-hidden="true" tabindex="-1"></a><span class="st">    y3t1 ~~ y3t3</span></span>
-<span id="cb723-29"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb723-29" aria-hidden="true" tabindex="-1"></a><span class="st">    y3t2 ~~ y3t3</span></span>
-<span id="cb723-30"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb723-30" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb773"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb773-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb773-1" aria-hidden="true" tabindex="-1"></a>exLinearGrowthsyn <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
+<span id="cb773-2"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb773-2" aria-hidden="true" tabindex="-1"></a><span class="st">  </span></span>
+<span id="cb773-3"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb773-3" aria-hidden="true" tabindex="-1"></a><span class="st">  # Use the loadings over time (i.e., metric invariance)</span></span>
+<span id="cb773-4"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb773-4" aria-hidden="true" tabindex="-1"></a><span class="st">  f_t1 =~ lamb1*y1t1 + lamb2*y2t1 + lamb3*y3t1</span></span>
+<span id="cb773-5"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb773-5" aria-hidden="true" tabindex="-1"></a><span class="st">  f_t2 =~ lamb1*y1t2 + lamb2*y2t2 + lamb3*y3t2</span></span>
+<span id="cb773-6"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb773-6" aria-hidden="true" tabindex="-1"></a><span class="st">  f_t3 =~ lamb1*y1t3 + lamb2*y2t3 + lamb3*y3t3</span></span>
+<span id="cb773-7"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb773-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb773-8"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb773-8" aria-hidden="true" tabindex="-1"></a><span class="st">  #Int and slope specification</span></span>
+<span id="cb773-9"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb773-9" aria-hidden="true" tabindex="-1"></a><span class="st">    I =~ 1*f_t1 + 1*f_t2 + 1*f_t3</span></span>
+<span id="cb773-10"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb773-10" aria-hidden="true" tabindex="-1"></a><span class="st">    S =~ 0*f_t1 + 1*f_t2 + 2*f_t3</span></span>
+<span id="cb773-11"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb773-11" aria-hidden="true" tabindex="-1"></a><span class="st">    </span></span>
+<span id="cb773-12"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb773-12" aria-hidden="true" tabindex="-1"></a><span class="st">    # Add intercepts for all indicators EXCEPT for marker indicators</span></span>
+<span id="cb773-13"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb773-13" aria-hidden="true" tabindex="-1"></a><span class="st">  y2t1 ~ 1</span></span>
+<span id="cb773-14"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb773-14" aria-hidden="true" tabindex="-1"></a><span class="st">  y3t1 ~ 1</span></span>
+<span id="cb773-15"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb773-15" aria-hidden="true" tabindex="-1"></a><span class="st">  y2t2 ~ 1</span></span>
+<span id="cb773-16"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb773-16" aria-hidden="true" tabindex="-1"></a><span class="st">  y3t2 ~ 1</span></span>
+<span id="cb773-17"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb773-17" aria-hidden="true" tabindex="-1"></a><span class="st">    y2t3 ~ 1</span></span>
+<span id="cb773-18"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb773-18" aria-hidden="true" tabindex="-1"></a><span class="st">  y3t3 ~ 1</span></span>
+<span id="cb773-19"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb773-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb773-20"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb773-20" aria-hidden="true" tabindex="-1"></a><span class="st">    # Add correlated residuals for repeated measures of the same indicators</span></span>
+<span id="cb773-21"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb773-21" aria-hidden="true" tabindex="-1"></a><span class="st">    y1t1 ~~ y1t2</span></span>
+<span id="cb773-22"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb773-22" aria-hidden="true" tabindex="-1"></a><span class="st">    y1t1 ~~ y1t3</span></span>
+<span id="cb773-23"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb773-23" aria-hidden="true" tabindex="-1"></a><span class="st">    y1t2 ~~ y1t3</span></span>
+<span id="cb773-24"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb773-24" aria-hidden="true" tabindex="-1"></a><span class="st">    y2t1 ~~ y2t2</span></span>
+<span id="cb773-25"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb773-25" aria-hidden="true" tabindex="-1"></a><span class="st">    y2t1 ~~ y2t3</span></span>
+<span id="cb773-26"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb773-26" aria-hidden="true" tabindex="-1"></a><span class="st">    y2t2 ~~ y2t3</span></span>
+<span id="cb773-27"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb773-27" aria-hidden="true" tabindex="-1"></a><span class="st">    y3t1 ~~ y3t2</span></span>
+<span id="cb773-28"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb773-28" aria-hidden="true" tabindex="-1"></a><span class="st">    y3t1 ~~ y3t3</span></span>
+<span id="cb773-29"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb773-29" aria-hidden="true" tabindex="-1"></a><span class="st">    y3t2 ~~ y3t3</span></span>
+<span id="cb773-30"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb773-30" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
 <p>Use std.lv = TRUE as the scaling method in growth():</p>
-<div class="sourceCode" id="cb724"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb724-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb724-1" aria-hidden="true" tabindex="-1"></a>exLinearGrowthFit <span class="ot">&lt;-</span> <span class="fu">growth</span>(exLinearGrowthsyn, </span>
-<span id="cb724-2"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb724-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">data =</span> exLong, </span>
-<span id="cb724-3"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb724-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">fixed.x =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb724-4"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb724-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">std.lv =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb774"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb774-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb774-1" aria-hidden="true" tabindex="-1"></a>exLinearGrowthFit <span class="ot">&lt;-</span> <span class="fu">growth</span>(exLinearGrowthsyn, </span>
+<span id="cb774-2"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb774-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">data =</span> exLong, </span>
+<span id="cb774-3"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb774-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">fixed.x =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb774-4"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb774-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">std.lv =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>## Warning in lav_model_vcov(lavmodel = lavmodel, lavsamplestats = lavsamplestats, : lavaan WARNING:
 ##     The variance-covariance matrix of the estimated parameters (vcov)
 ##     does not appear to be positive definite! The smallest eigenvalue
-##     (= 6.781266e-18) is close to zero. This may be a symptom that the
+##     (= 4.804423e-18) is close to zero. This may be a symptom that the
 ##     model is not identified.</code></pre>
-<div class="sourceCode" id="cb726"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb726-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb726-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(exLinearGrowthFit, <span class="at">fit.measures =</span> T)</span></code></pre></div>
-<pre><code>## lavaan 0.6-10 ended normally after 38 iterations
+<div class="sourceCode" id="cb776"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb776-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb776-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(exLinearGrowthFit, <span class="at">fit.measures =</span> T)</span></code></pre></div>
+<pre><code>## lavaan 0.6-12 ended normally after 36 iterations
 ## 
 ##   Estimator                                         ML
 ##   Optimization method                           NLMINB
 ##   Number of model parameters                        39
 ##   Number of equality constraints                     6
-##                                                       
+## 
 ##   Number of observations                           200
-##                                                       
+## 
 ## Model Test User Model:
 ##                                                       
 ##   Test statistic                                72.972
@@ -1550,8 +1557,8 @@ one approach is to use model modification indices:</p>
 ##    .f_t3              1.000                           
 ##     I                 1.000                           
 ##     S                 1.000</code></pre>
-<div class="sourceCode" id="cb728"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb728-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb728-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(exLinearGrowthFit, <span class="at">what=</span><span class="st">&#39;est&#39;</span>, <span class="at">fade=</span> F)</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-422-1.png" width="672" /></p>
+<div class="sourceCode" id="cb778"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb778-1"><a href="week14-lavaan-lab-16-latent-growth-models.html#cb778-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(exLinearGrowthFit, <span class="at">what=</span><span class="st">&#39;est&#39;</span>, <span class="at">fade=</span> F)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-454-1.png" width="672" /></p>
 </div>
 <div id="exercise" class="section level3 hasAnchor" number="19.3.2">
 <h3><span class="header-section-number">19.3.2</span> Exercise<a href="week14-lavaan-lab-16-latent-growth-models.html#exercise" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -1626,7 +1633,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');
