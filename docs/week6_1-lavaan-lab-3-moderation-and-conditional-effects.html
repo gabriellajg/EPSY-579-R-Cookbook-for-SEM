@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 13 Week11_1: Lavaan Lab 10 Model Fit Part II (Fit Indices) | R Cookbook for Structural Equation Modeling</title>
-  <meta name="description" content="Chapter 13 Week11_1: Lavaan Lab 10 Model Fit Part II (Fit Indices) | R Cookbook for Structural Equation Modeling" />
+  <title>Chapter 5 Week6_1: Lavaan Lab 3 Moderation and Conditional Effects | R Cookbook for Structural Equation Modeling</title>
+  <meta name="description" content="Chapter 5 Week6_1: Lavaan Lab 3 Moderation and Conditional Effects | R Cookbook for Structural Equation Modeling" />
   <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 13 Week11_1: Lavaan Lab 10 Model Fit Part II (Fit Indices) | R Cookbook for Structural Equation Modeling" />
+  <meta property="og:title" content="Chapter 5 Week6_1: Lavaan Lab 3 Moderation and Conditional Effects | R Cookbook for Structural Equation Modeling" />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 13 Week11_1: Lavaan Lab 10 Model Fit Part II (Fit Indices) | R Cookbook for Structural Equation Modeling" />
+  <meta name="twitter:title" content="Chapter 5 Week6_1: Lavaan Lab 3 Moderation and Conditional Effects | R Cookbook for Structural Equation Modeling" />
   
   
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html"/>
-<link rel="next" href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html"/>
+<link rel="prev" href="lavaan-lab-2-mediation-and-indirect-effects.html"/>
+<link rel="next" href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -503,77 +503,178 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices" class="section level1 hasAnchor" number="13">
-<h1><span class="header-section-number">Chapter 13</span> Week11_1: Lavaan Lab 10 Model Fit Part II (Fit Indices)<a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>In this lab, we will learn:</p>
+<div id="week6_1-lavaan-lab-3-moderation-and-conditional-effects" class="section level1 hasAnchor" number="5">
+<h1><span class="header-section-number">Chapter 5</span> Week6_1: Lavaan Lab 3 Moderation and Conditional Effects<a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#week6_1-lavaan-lab-3-moderation-and-conditional-effects" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>In this lab, we will learn how to:</p>
 <ul>
-<li>how to calculate and interpret global fit indices for SEM models.</li>
-<li>how to compare non-nested models using AIC and BIC.</li>
+<li>how to perform moderation using regression and sem</li>
+<li>test the moderation effects of binary and continuous moderators</li>
+<li>visualize moderation effects.</li>
 </ul>
-<p>Load up the lavaan library:</p>
-<div class="sourceCode" id="cb490"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb490-1"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb490-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span></code></pre></div>
 <!------------------------------>
-<div id="part-i-fit-indices" class="section level2 hasAnchor" number="13.1">
-<h2><span class="header-section-number">13.1</span> PART I: Fit Indices<a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#part-i-fit-indices" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="reading-in-datasets" class="section level2 hasAnchor" number="5.1">
+<h2><span class="header-section-number">5.1</span> Reading-In Datasets<a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#reading-in-datasets" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!------------------------------>
-<p>Let’s read this dataset in:</p>
-<div class="sourceCode" id="cb491"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb491-1"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb491-1" aria-hidden="true" tabindex="-1"></a>cfaData<span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;cfaInclassData.csv&quot;</span>, <span class="at">header =</span> T)</span></code></pre></div>
-<p>Write out syntax for a two-factor CFA model:</p>
-<div class="sourceCode" id="cb492"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb492-1"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb492-1" aria-hidden="true" tabindex="-1"></a>fixedIndTwoFacSyntax <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
-<span id="cb492-2"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb492-2" aria-hidden="true" tabindex="-1"></a><span class="st">    #Factor Specification   </span></span>
-<span id="cb492-3"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb492-3" aria-hidden="true" tabindex="-1"></a><span class="st">    posAffect =~ glad + happy + cheerful </span></span>
-<span id="cb492-4"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb492-4" aria-hidden="true" tabindex="-1"></a><span class="st">    satisfaction =~ satisfied + content + comfortable</span></span>
-<span id="cb492-5"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb492-5" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
-<p>Fit the model regularly:</p>
-<div class="sourceCode" id="cb493"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb493-1"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb493-1" aria-hidden="true" tabindex="-1"></a>fixedIndTwoFacRun <span class="ot">=</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> fixedIndTwoFacSyntax, </span>
-<span id="cb493-2"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb493-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">data =</span> cfaData, </span>
-<span id="cb493-3"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb493-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">fixed.x=</span><span class="cn">FALSE</span>)</span></code></pre></div>
-<p>Request fit indices by adding fit.measures = T in the summary() function:</p>
-<div class="sourceCode" id="cb494"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb494-1"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb494-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fixedIndTwoFacRun, <span class="at">standardized =</span> T, <span class="at">fit.measures =</span> T)</span></code></pre></div>
-<pre><code>## lavaan 0.6-12 ended normally after 24 iterations
+<p>Let’s read this dataset in. Change the file path to whatever directory where you saved the file!</p>
+<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb146-1" aria-hidden="true" tabindex="-1"></a>cbtData <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">&quot;dataInClass.csv&quot;</span>, <span class="at">header =</span> T)</span></code></pre></div>
+<p>Let’s examine this dataset:</p>
+<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb147-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(cbtData)</span></code></pre></div>
+<pre><code>##   ID              CBT CBTDummy NeedCog NegThoughts Depression NeedCogCont
+## 1  1    CBT Treatment        1       0  -4.1453029  -5.802172   0.0182802
+## 2  2 Information Only        0       1   2.1775218   5.496665   1.4238703
+## 3  3    CBT Treatment        1       0  -1.5551349  -1.950566  -1.0151726
+## 4  4 Information Only        0       0   0.1679286   2.655801  -0.8547152
+## 5  5 Information Only        0       1   2.5103192   6.855488   0.6759705
+## 6  6    CBT Treatment        1       0  -3.1626670  -2.968198  -0.9123426</code></pre>
+<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb149-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(cbtData)</span></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    1000 obs. of  7 variables:
+##  $ ID         : int  1 2 3 4 5 6 7 8 9 10 ...
+##  $ CBT        : chr  &quot;CBT Treatment&quot; &quot;Information Only&quot; &quot;CBT Treatment&quot; &quot;Information Only&quot; ...
+##  $ CBTDummy   : int  1 0 1 0 0 1 1 1 1 0 ...
+##  $ NeedCog    : int  0 1 0 0 1 0 0 0 0 0 ...
+##  $ NegThoughts: num  -4.145 2.178 -1.555 0.168 2.51 ...
+##  $ Depression : num  -5.8 5.5 -1.95 2.66 6.86 ...
+##  $ NeedCogCont: num  0.0183 1.4239 -1.0152 -0.8547 0.676 ...</code></pre>
+<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb151-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colSums</span>(<span class="fu">is.na</span>(cbtData))</span></code></pre></div>
+<pre><code>##          ID         CBT    CBTDummy     NeedCog NegThoughts  Depression NeedCogCont 
+##           0           0           0           0           0           0           0</code></pre>
+<p>Notice that the first two columns are not model variables</p>
+<ul>
+<li>col 1 is a case ID variable.</li>
+<li>col 2 is a factor variable indicating CBT vs. Info-Only treatment.</li>
+</ul>
+<p>Besides,</p>
+<ul>
+<li>col 5 is a variable that measures negative thoughts.</li>
+<li>col 7 is a continuous measure of NeedCog.</li>
+</ul>
+<p>In the first part of this demo, we will work with three variables: CBTDummy, NeedCog, and Depression</p>
+<p>Let’s look at the covariance matrix of the three variables</p>
+<p>Multiple ways to accomplish this:</p>
+<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb153-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cov</span>(cbtData[,<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">5</span>,<span class="dv">7</span>)])</span></code></pre></div>
+<pre><code>##                CBTDummy      NeedCog Depression
+## CBTDummy    0.250250250 -0.008508509 -2.3372519
+## NeedCog    -0.008508509  0.213732733  0.4371738
+## Depression -2.337251860  0.437173798 31.9301427</code></pre>
+<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb155-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cov</span>(cbtData[,<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">6</span>)])</span></code></pre></div>
+<pre><code>##                CBTDummy      NeedCog Depression
+## CBTDummy    0.250250250 -0.008508509 -2.3372519
+## NeedCog    -0.008508509  0.213732733  0.4371738
+## Depression -2.337251860  0.437173798 31.9301427</code></pre>
+<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb157-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cov</span>(cbtData[,<span class="fu">c</span>(<span class="st">&quot;CBTDummy&quot;</span>, <span class="st">&quot;NeedCog&quot;</span>, <span class="st">&quot;Depression&quot;</span>)])</span></code></pre></div>
+<pre><code>##                CBTDummy      NeedCog Depression
+## CBTDummy    0.250250250 -0.008508509 -2.3372519
+## NeedCog    -0.008508509  0.213732733  0.4371738
+## Depression -2.337251860  0.437173798 31.9301427</code></pre>
+<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb159-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(cbtData[,<span class="fu">c</span>(<span class="st">&quot;CBTDummy&quot;</span>, <span class="st">&quot;NeedCog&quot;</span>, <span class="st">&quot;Depression&quot;</span>)])</span></code></pre></div>
+<pre><code>##               CBTDummy     NeedCog Depression
+## CBTDummy    1.00000000 -0.03679007 -0.8268330
+## NeedCog    -0.03679007  1.00000000  0.1673471
+## Depression -0.82683304  0.16734709  1.0000000</code></pre>
+<p>let’s round this to two decimals</p>
+<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb161-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">cov</span>(cbtData[,<span class="fu">c</span>(<span class="st">&quot;CBTDummy&quot;</span>, <span class="st">&quot;NeedCog&quot;</span>, <span class="st">&quot;Depression&quot;</span>)]), <span class="at">digits =</span> <span class="dv">2</span>)</span></code></pre></div>
+<pre><code>##            CBTDummy NeedCog Depression
+## CBTDummy       0.25   -0.01      -2.34
+## NeedCog       -0.01    0.21       0.44
+## Depression    -2.34    0.44      31.93</code></pre>
+<p>What about the means?</p>
+<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb163-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">apply</span>(cbtData[,<span class="fu">c</span>(<span class="st">&quot;CBTDummy&quot;</span>, <span class="st">&quot;NeedCog&quot;</span>, <span class="st">&quot;Depression&quot;</span>)], <span class="dv">2</span>, mean), <span class="dv">2</span>)</span></code></pre></div>
+<pre><code>##   CBTDummy    NeedCog Depression 
+##       0.50       0.31      -1.59</code></pre>
+<p>Although they are not centered, we will proceed because CBTDummy and NeedCog are both binary.</p>
+<!------------------------------>
+</div>
+<div id="interactions-in-regression-using-lm" class="section level2 hasAnchor" number="5.2">
+<h2><span class="header-section-number">5.2</span> Interactions in Regression Using lm()<a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#interactions-in-regression-using-lm" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<!------------------------------>
+<p>In regression course we learned the lm() function, which stands for linear model.</p>
+<p>To include an interaction in regression, simply use an : to create a product in the formula:</p>
+<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb165-1" aria-hidden="true" tabindex="-1"></a>interactionModel <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">formula =</span> Depression <span class="sc">~</span> CBTDummy <span class="sc">+</span> NeedCog <span class="sc">+</span> CBTDummy<span class="sc">:</span>NeedCog, <span class="at">data =</span> cbtData)</span></code></pre></div>
+<p>NOTE: R is very helpful, in that if you just put an asterisk *, it includes all lower-order terms!</p>
+<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb166-1" aria-hidden="true" tabindex="-1"></a>interactionModel <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">formula =</span> Depression <span class="sc">~</span> CBTDummy<span class="sc">*</span>NeedCog, <span class="at">data =</span> cbtData)</span></code></pre></div>
+<p>Let’s look at this interaction model:</p>
+<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb167-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(interactionModel)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = Depression ~ CBTDummy * NeedCog, data = cbtData)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -12.7785  -1.4280   0.0662   1.6252   6.8283 
+## 
+## Coefficients:
+##                  Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)        1.2684     0.1345   9.428   &lt;2e-16 ***
+## CBTDummy          -6.8119     0.1880 -36.240   &lt;2e-16 ***
+## NeedCog            5.5586     0.2356  23.590   &lt;2e-16 ***
+## CBTDummy:NeedCog  -8.0093     0.3384 -23.666   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 2.47 on 996 degrees of freedom
+## Multiple R-squared:  0.8095, Adjusted R-squared:  0.809 
+## F-statistic:  1411 on 3 and 996 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>Let’s interpret this … (In class)</p>
+<!------------------------------>
+</div>
+<div id="interactions-in-lavaan" class="section level2 hasAnchor" number="5.3">
+<h2><span class="header-section-number">5.3</span> Interactions in Lavaan<a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#interactions-in-lavaan" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<!------------------------------>
+<p>Now let us write the same model using lavaan.</p>
+<p>Load the package:</p>
+<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb169-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span></code></pre></div>
+<div id="important-note" class="section level3 hasAnchor" number="5.3.1">
+<h3><span class="header-section-number">5.3.1</span> IMPORTANT NOTE<a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#important-note" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Because lavaan uses the * for assigning coefficient labels, this cannot be used to create interaction terms.</p>
+<p>Instead, we have to create the product term in the dataset first, before running our model.</p>
+<p>This is easy to do.</p>
+<p>General Format:</p>
+<p>existingDataFrame$variableName &lt;- vectorToBeAssignedAsNewVariable</p>
+<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb170-1" aria-hidden="true" tabindex="-1"></a>cbtData<span class="sc">$</span>CBTxNeedCog <span class="ot">&lt;-</span> cbtData<span class="sc">$</span>CBTDummy <span class="sc">*</span> cbtData<span class="sc">$</span>NeedCog</span></code></pre></div>
+<p>You can name the product term arbitrarily:</p>
+<p>cbtData$fourth &lt;- cbtData$CBTDummy * cbtData$NeedCog</p>
+<p>Let’s look at cbtData again:</p>
+<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb171-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(cbtData)</span></code></pre></div>
+<pre><code>##   ID              CBT CBTDummy NeedCog NegThoughts Depression NeedCogCont CBTxNeedCog
+## 1  1    CBT Treatment        1       0  -4.1453029  -5.802172   0.0182802           0
+## 2  2 Information Only        0       1   2.1775218   5.496665   1.4238703           0
+## 3  3    CBT Treatment        1       0  -1.5551349  -1.950566  -1.0151726           0
+## 4  4 Information Only        0       0   0.1679286   2.655801  -0.8547152           0
+## 5  5 Information Only        0       1   2.5103192   6.855488   0.6759705           0
+## 6  6    CBT Treatment        1       0  -3.1626670  -2.968198  -0.9123426           0</code></pre>
+<p>Now you have a new variable called CBTxNeedCog at the end.</p>
+</div>
+<div id="follow-the-equation-of-y-depression" class="section level3 hasAnchor" number="5.3.2">
+<h3><span class="header-section-number">5.3.2</span> Follow the equation of Y (Depression):<a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#follow-the-equation-of-y-depression" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Depression = CBTDummy + NeedCog + CBTDummy*NeedCog + Disturbance</p>
+<p>Let’s write some model syntax (with the labels):</p>
+<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb173-1" aria-hidden="true" tabindex="-1"></a>interactionSyntax <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
+<span id="cb173-2"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb173-2" aria-hidden="true" tabindex="-1"></a><span class="st">  #Regression with interaction</span></span>
+<span id="cb173-3"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb173-3" aria-hidden="true" tabindex="-1"></a><span class="st">  #with labels</span></span>
+<span id="cb173-4"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb173-4" aria-hidden="true" tabindex="-1"></a><span class="st">    Depression ~ b1*CBTDummy + b2*NeedCog + b3*CBTxNeedCog</span></span>
+<span id="cb173-5"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb173-5" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
+<p>let fixed.x=FALSE to print more lines:</p>
+<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb174-1" aria-hidden="true" tabindex="-1"></a>inter_fit1 <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> interactionSyntax, </span>
+<span id="cb174-2"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb174-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">data =</span> cbtData, </span>
+<span id="cb174-3"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb174-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<p>If you’d like lavaan to print means and intercepts, we need to ask sem() to include the meanstructure:</p>
+<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb175-1" aria-hidden="true" tabindex="-1"></a>inter_fit1 <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> interactionSyntax, </span>
+<span id="cb175-2"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb175-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">data =</span> cbtData, </span>
+<span id="cb175-3"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb175-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">fixed.x =</span><span class="cn">FALSE</span>, </span>
+<span id="cb175-4"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb175-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">meanstructure =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb176-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(inter_fit1)</span></code></pre></div>
+<pre><code>## lavaan 0.6-12 ended normally after 41 iterations
 ## 
 ##   Estimator                                         ML
 ##   Optimization method                           NLMINB
-##   Number of model parameters                        13
+##   Number of model parameters                        14
 ## 
 ##   Number of observations                          1000
 ## 
 ## Model Test User Model:
 ##                                                       
-##   Test statistic                                 2.957
-##   Degrees of freedom                                 8
-##   P-value (Chi-square)                           0.937
-## 
-## Model Test Baseline Model:
-## 
-##   Test statistic                              2020.010
-##   Degrees of freedom                                15
-##   P-value                                        0.000
-## 
-## User Model versus Baseline Model:
-## 
-##   Comparative Fit Index (CFI)                    1.000
-##   Tucker-Lewis Index (TLI)                       1.005
-## 
-## Loglikelihood and Information Criteria:
-## 
-##   Loglikelihood user model (H0)              -7483.272
-##   Loglikelihood unrestricted model (H1)      -7481.793
-##                                                       
-##   Akaike (AIC)                               14992.544
-##   Bayesian (BIC)                             15056.345
-##   Sample-size adjusted Bayesian (BIC)        15015.056
-## 
-## Root Mean Square Error of Approximation:
-## 
-##   RMSEA                                          0.000
-##   90 Percent confidence interval - lower         0.000
-##   90 Percent confidence interval - upper         0.009
-##   P-value RMSEA &lt;= 0.05                          1.000
-## 
-## Standardized Root Mean Square Residual:
-## 
-##   SRMR                                           0.007
+##   Test statistic                                 0.000
+##   Degrees of freedom                                 0
 ## 
 ## Parameter Estimates:
 ## 
@@ -581,277 +682,128 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##   Information                                 Expected
 ##   Information saturated (h1) model          Structured
 ## 
-## Latent Variables:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   posAffect =~                                                          
-##     glad              1.000                               0.694    0.706
-##     happy             1.067    0.055   19.294    0.000    0.740    0.758
-##     cheerful          1.112    0.057   19.458    0.000    0.772    0.785
-##   satisfaction =~                                                       
-##     satisfied         1.000                               0.773    0.767
-##     content           1.068    0.052   20.525    0.000    0.826    0.762
-##     comfortable       0.918    0.045   20.336    0.000    0.709    0.746
+## Regressions:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##   Depression ~                                        
+##     CBTDummy  (b1)   -6.812    0.188  -36.312    0.000
+##     NeedCog   (b2)    5.559    0.235   23.637    0.000
+##     CBTxNedCg (b3)   -8.009    0.338  -23.713    0.000
 ## 
 ## Covariances:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   posAffect ~~                                                          
-##     satisfaction      0.262    0.025   10.284    0.000    0.488    0.488
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##   CBTDummy ~~                                         
+##     NeedCog          -0.008    0.007   -1.163    0.245
+##     CBTxNeedCog       0.073    0.006   12.083    0.000
+##   NeedCog ~~                                          
+##     CBTxNeedCog       0.101    0.006   16.630    0.000
+## 
+## Intercepts:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##    .Depression        1.268    0.134    9.446    0.000
+##     CBTDummy          0.500    0.016   31.623    0.000
+##     NeedCog           0.309    0.015   21.147    0.000
+##     CBTxNeedCog       0.146    0.011   13.075    0.000
 ## 
 ## Variances:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .glad              0.484    0.029   16.647    0.000    0.484    0.501
-##    .happy             0.405    0.028   14.389    0.000    0.405    0.425
-##    .cheerful          0.371    0.029   13.004    0.000    0.371    0.384
-##    .satisfied         0.419    0.029   14.326    0.000    0.419    0.412
-##    .content           0.491    0.034   14.542    0.000    0.491    0.419
-##    .comfortable       0.400    0.026   15.315    0.000    0.400    0.443
-##     posAffect         0.482    0.042   11.439    0.000    1.000    1.000
-##     satisfaction      0.597    0.047   12.686    0.000    1.000    1.000</code></pre>
-<div id="rmsea" class="section level3 hasAnchor" number="13.1.1">
-<h3><span class="header-section-number">13.1.1</span> RMSEA<a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#rmsea" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb496"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb496-1"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb496-1" aria-hidden="true" tabindex="-1"></a>Root Mean Square Error of Approximation<span class="sc">:</span></span>
-<span id="cb496-2"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb496-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb496-3"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb496-3" aria-hidden="true" tabindex="-1"></a>  RMSEA                                          <span class="fl">0.000</span></span>
-<span id="cb496-4"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb496-4" aria-hidden="true" tabindex="-1"></a>  <span class="dv">90</span> Percent confidence interval <span class="sc">-</span> lower         <span class="fl">0.000</span></span>
-<span id="cb496-5"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb496-5" aria-hidden="true" tabindex="-1"></a>  <span class="dv">90</span> Percent confidence interval <span class="sc">-</span> upper         <span class="fl">0.009</span></span>
-<span id="cb496-6"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb496-6" aria-hidden="true" tabindex="-1"></a>  P<span class="sc">-</span>value RMSEA <span class="sc">&lt;=</span> <span class="fl">0.05</span>                          <span class="fl">1.000</span></span></code></pre></div>
-<p>reproducing RMSEA:</p>
-<ul>
-<li>T = 2.957</li>
-<li>df = 8</li>
-<li>N = 1000</li>
-<li>RMSEA = sqrt(max(T-df,0)/(N-1)/df) = sqrt(max(2.957-8,0)/(1000-1)/8) = 0</li>
-</ul>
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##    .Depression        6.076    0.272   22.361    0.000
+##     CBTDummy          0.250    0.011   22.361    0.000
+##     NeedCog           0.214    0.010   22.361    0.000
+##     CBTxNeedCog       0.125    0.006   22.361    0.000</code></pre>
+<p>How does this compare to our regression model?</p>
+<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb178-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(interactionModel)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = Depression ~ CBTDummy * NeedCog, data = cbtData)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -12.7785  -1.4280   0.0662   1.6252   6.8283 
+## 
+## Coefficients:
+##                  Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)        1.2684     0.1345   9.428   &lt;2e-16 ***
+## CBTDummy          -6.8119     0.1880 -36.240   &lt;2e-16 ***
+## NeedCog            5.5586     0.2356  23.590   &lt;2e-16 ***
+## CBTDummy:NeedCog  -8.0093     0.3384 -23.666   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 2.47 on 996 degrees of freedom
+## Multiple R-squared:  0.8095, Adjusted R-squared:  0.809 
+## F-statistic:  1411 on 3 and 996 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>Same…but sem is more verbose.</p>
+<!------------------------------>
 </div>
-<div id="srmr" class="section level3 hasAnchor" number="13.1.2">
-<h3><span class="header-section-number">13.1.2</span> SRMR<a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#srmr" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb497"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb497-1"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb497-1" aria-hidden="true" tabindex="-1"></a>Standardized Root Mean Square Residual<span class="sc">:</span></span>
-<span id="cb497-2"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb497-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb497-3"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb497-3" aria-hidden="true" tabindex="-1"></a>  SRMR                                           <span class="fl">0.007</span></span></code></pre></div>
-<p>reproducing SRMR:</p>
-<div class="sourceCode" id="cb498"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb498-1"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb498-1" aria-hidden="true" tabindex="-1"></a>S <span class="ot">=</span> <span class="fu">cov</span>(cfaData[,<span class="sc">-</span><span class="dv">1</span>])</span>
-<span id="cb498-2"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb498-2" aria-hidden="true" tabindex="-1"></a>colnames <span class="ot">=</span> <span class="fu">colnames</span>(S)</span>
-<span id="cb498-3"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb498-3" aria-hidden="true" tabindex="-1"></a>SIGMA <span class="ot">=</span> <span class="fu">fitted</span>(fixedIndTwoFacRun)<span class="sc">$</span>cov[colnames, colnames]</span>
-<span id="cb498-4"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb498-4" aria-hidden="true" tabindex="-1"></a>p <span class="ot">=</span> <span class="fu">ncol</span>(S)</span>
-<span id="cb498-5"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb498-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb498-6"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb498-6" aria-hidden="true" tabindex="-1"></a><span class="co"># use cov2cor() function to convert diff to a correlation matrix and standardize the residuals: </span></span>
-<span id="cb498-7"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb498-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb498-8"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb498-8" aria-hidden="true" tabindex="-1"></a>resd <span class="ot">=</span> <span class="fu">cov2cor</span>(S) <span class="sc">-</span> <span class="fu">cov2cor</span>(SIGMA)</span>
-<span id="cb498-9"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb498-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb498-10"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb498-10" aria-hidden="true" tabindex="-1"></a><span class="co"># keep only the nonduplicated elements:</span></span>
-<span id="cb498-11"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb498-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb498-12"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb498-12" aria-hidden="true" tabindex="-1"></a>resd2 <span class="ot">=</span> <span class="fu">lav_matrix_vech</span>(resd)</span>
-<span id="cb498-13"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb498-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb498-14"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb498-14" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">sum</span>(resd2<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span>(p<span class="sc">*</span>(p<span class="sc">+</span><span class="dv">1</span>)<span class="sc">/</span><span class="dv">2</span>))</span></code></pre></div>
-<pre><code>## [1] 0.006847801</code></pre>
-<ul>
-<li>A small average standardized residual…looks good</li>
-</ul>
 </div>
-<div id="null-model-mo" class="section level3 hasAnchor" number="13.1.3">
-<h3><span class="header-section-number">13.1.3</span> Null Model MO<a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#null-model-mo" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb500"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb500-1"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb500-1" aria-hidden="true" tabindex="-1"></a>Model Test Baseline Model<span class="sc">:</span></span>
-<span id="cb500-2"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb500-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb500-3"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb500-3" aria-hidden="true" tabindex="-1"></a>  Test statistic                              <span class="fl">2020.010</span></span>
-<span id="cb500-4"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb500-4" aria-hidden="true" tabindex="-1"></a>  Degrees of freedom                                <span class="dv">15</span></span>
-<span id="cb500-5"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb500-5" aria-hidden="true" tabindex="-1"></a>  P<span class="sc">-</span>value                                        <span class="fl">0.000</span></span></code></pre></div>
+<div id="visual-inspection-of-interactions" class="section level2 hasAnchor" number="5.4">
+<h2><span class="header-section-number">5.4</span> Visual inspection of interactions<a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#visual-inspection-of-interactions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<!------------------------------>
+<p>One way to plot the interactions is to use the interact_plot() function on the lm() object.</p>
+<p>Install and load the package interactions first:</p>
+<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb180-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(interactions)</span></code></pre></div>
+<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb181-1" aria-hidden="true" tabindex="-1"></a><span class="fu">interact_plot</span>(interactionModel, <span class="at">pred =</span> <span class="st">&quot;CBTDummy&quot;</span>, <span class="at">modx =</span> <span class="st">&quot;NeedCog&quot;</span>)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-113-1.png" width="672" /></p>
+<!------------------------------>
+</div>
+<div id="centering-continuous-moderator" class="section level2 hasAnchor" number="5.5">
+<h2><span class="header-section-number">5.5</span> Centering Continuous Moderator<a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#centering-continuous-moderator" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<!------------------------------>
+<p>Now let’s work with the continuous measure of NeedCog directly:</p>
+<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb182-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(cbtData<span class="sc">$</span>NeedCogCont)</span></code></pre></div>
+<pre><code>## [1] 0.005925852</code></pre>
+<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb184-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(cbtData<span class="sc">$</span>NeedCogCont)</span></code></pre></div>
+<pre><code>## [1] 0.9974319</code></pre>
+<p>NeedCogCont has been standardized already, which is helpful.</p>
+<p>If not, we use scale() function to center a continuous variable</p>
 <ul>
-<li>This is the chi_sq for the baseline model used in the CFI/TLI/comparative fit measures.</li>
-<li>We know what this means now!</li>
-<li>chisquare of the null model: 2020.010</li>
-<li>df of the null model: 15</li>
+<li>Usage: scale(x, center = TRUE, scale = TRUE)</li>
+<li>If you just need to center a variable, you disable scale=FALSE</li>
 </ul>
-<p>reproducing M0:</p>
-<div class="sourceCode" id="cb501"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb501-1"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb501-1" aria-hidden="true" tabindex="-1"></a>baselineM0 <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
-<span id="cb501-2"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb501-2" aria-hidden="true" tabindex="-1"></a><span class="st">    glad ~~ glad</span></span>
-<span id="cb501-3"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb501-3" aria-hidden="true" tabindex="-1"></a><span class="st">    happy ~~ happy</span></span>
-<span id="cb501-4"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb501-4" aria-hidden="true" tabindex="-1"></a><span class="st">    cheerful ~~ cheerful</span></span>
-<span id="cb501-5"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb501-5" aria-hidden="true" tabindex="-1"></a><span class="st">    satisfied ~~ satisfied</span></span>
-<span id="cb501-6"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb501-6" aria-hidden="true" tabindex="-1"></a><span class="st">    content ~~ content</span></span>
-<span id="cb501-7"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb501-7" aria-hidden="true" tabindex="-1"></a><span class="st">    comfortable ~~ comfortable</span></span>
-<span id="cb501-8"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb501-8" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span>
-<span id="cb501-9"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb501-9" aria-hidden="true" tabindex="-1"></a>base_fit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(baselineM0, <span class="at">data =</span> cfaData, <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb501-10"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb501-10" aria-hidden="true" tabindex="-1"></a>base_fit</span></code></pre></div>
-<pre><code>## lavaan 0.6-12 ended normally after 12 iterations
+<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb186-1"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb186-1" aria-hidden="true" tabindex="-1"></a>centeredNeedCog <span class="ot">&lt;-</span> <span class="fu">scale</span>(cbtData<span class="sc">$</span>NeedCogCont, <span class="at">center =</span> <span class="cn">TRUE</span>, <span class="at">scale =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb186-2"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb186-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(centeredNeedCog)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-115-1.png" width="672" /></p>
+<p>For now, we will leave these variables as is in our dataset. But the scale() function is good to know.</p>
+<!------------------------------>
+</div>
+<div id="interactions-in-lavaan-continuous-moderator" class="section level2 hasAnchor" number="5.6">
+<h2><span class="header-section-number">5.6</span> Interactions in Lavaan (Continuous Moderator)<a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#interactions-in-lavaan-continuous-moderator" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<!------------------------------>
+<p>Just like for binary NeedCog moderator, we have to manually create a product term in the dataset first before running our model.</p>
+<p>This is easy to do:</p>
+<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb187-1" aria-hidden="true" tabindex="-1"></a>cbtData<span class="sc">$</span>CBTxNeedCogCont <span class="ot">&lt;-</span> cbtData<span class="sc">$</span>CBTDummy <span class="sc">*</span> cbtData<span class="sc">$</span>NeedCogCont</span></code></pre></div>
+<p>Let’s look at cbtData again:</p>
+<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb188-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(cbtData)</span></code></pre></div>
+<pre><code>##   ID              CBT CBTDummy NeedCog NegThoughts Depression NeedCogCont CBTxNeedCog CBTxNeedCogCont
+## 1  1    CBT Treatment        1       0  -4.1453029  -5.802172   0.0182802           0       0.0182802
+## 2  2 Information Only        0       1   2.1775218   5.496665   1.4238703           0       0.0000000
+## 3  3    CBT Treatment        1       0  -1.5551349  -1.950566  -1.0151726           0      -1.0151726
+## 4  4 Information Only        0       0   0.1679286   2.655801  -0.8547152           0       0.0000000
+## 5  5 Information Only        0       1   2.5103192   6.855488   0.6759705           0       0.0000000
+## 6  6    CBT Treatment        1       0  -3.1626670  -2.968198  -0.9123426           0      -0.9123426</code></pre>
+<p>Time to write some lavaan model syntax (with labels):</p>
+<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb190-1" aria-hidden="true" tabindex="-1"></a>interactionSyntax2 <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
+<span id="cb190-2"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb190-2" aria-hidden="true" tabindex="-1"></a><span class="st">    #Regression</span></span>
+<span id="cb190-3"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb190-3" aria-hidden="true" tabindex="-1"></a><span class="st">    Depression ~ b1*CBTDummy + b2*NeedCogCont + b3*CBTxNeedCogCont </span></span>
+<span id="cb190-4"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb190-4" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
+<p>Let’s ask sem() to include the meanstructure:</p>
+<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb191-1" aria-hidden="true" tabindex="-1"></a>inter_fit2 <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> interactionSyntax2, </span>
+<span id="cb191-2"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb191-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">data =</span> cbtData, </span>
+<span id="cb191-3"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb191-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">fixed.x =</span><span class="cn">FALSE</span>, </span>
+<span id="cb191-4"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb191-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">meanstructure =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb192-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(inter_fit2)</span></code></pre></div>
+<pre><code>## lavaan 0.6-12 ended normally after 35 iterations
 ## 
 ##   Estimator                                         ML
 ##   Optimization method                           NLMINB
-##   Number of model parameters                         6
+##   Number of model parameters                        14
 ## 
 ##   Number of observations                          1000
 ## 
 ## Model Test User Model:
 ##                                                       
-##   Test statistic                              2020.010
-##   Degrees of freedom                                15
-##   P-value (Chi-square)                           0.000</code></pre>
-</div>
-<div id="cfitli" class="section level3 hasAnchor" number="13.1.4">
-<h3><span class="header-section-number">13.1.4</span> CFI/TLI<a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cfitli" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb503"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb503-1"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb503-1" aria-hidden="true" tabindex="-1"></a>User Model versus Baseline Model<span class="sc">:</span></span>
-<span id="cb503-2"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb503-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb503-3"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb503-3" aria-hidden="true" tabindex="-1"></a>  Comparative Fit <span class="fu">Index</span> (CFI)                    <span class="fl">1.000</span></span>
-<span id="cb503-4"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb503-4" aria-hidden="true" tabindex="-1"></a>  Tucker<span class="sc">-</span>Lewis <span class="fu">Index</span> (TLI)                       <span class="fl">1.005</span></span></code></pre></div>
-<ul>
-<li>100% improvement over the null(baseline) model … great fit</li>
-<li>Here TLI is larger than 1 because this is a rare situation with chisquare=2.957&lt;df=8</li>
-<li>numerator of TLI = (2020.010/15-2.957/8) = 134.2977</li>
-<li>denominator of TLI = (2020.010/15-1) = 133.6673</li>
-<li>TLI = 134.2977 / 133.6673 = 1.005</li>
-<li>A TLI that is larger than 1 is no different from TLI = 1</li>
-</ul>
-<p>great overall fit.</p>
-</div>
-<div id="loglikelihood" class="section level3 hasAnchor" number="13.1.5">
-<h3><span class="header-section-number">13.1.5</span> Loglikelihood<a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#loglikelihood" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb504"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb504-1"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb504-1" aria-hidden="true" tabindex="-1"></a>Loglikelihood and Information Criteria<span class="sc">:</span></span>
-<span id="cb504-2"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb504-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb504-3"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb504-3" aria-hidden="true" tabindex="-1"></a>  Loglikelihood user <span class="fu">model</span> (H0)              <span class="sc">-</span><span class="fl">7483.272</span></span>
-<span id="cb504-4"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb504-4" aria-hidden="true" tabindex="-1"></a>  Loglikelihood unrestricted <span class="fu">model</span> (H1)      <span class="sc">-</span><span class="fl">7481.793</span></span></code></pre></div>
-<ul>
-<li>H0 is the loglikelihood of your model (user model … lavaan is kind to clarify this)</li>
-<li>H1 is the saturated model loglikelihood.</li>
-</ul>
-</div>
-<div id="aicbic" class="section level3 hasAnchor" number="13.1.6">
-<h3><span class="header-section-number">13.1.6</span> AIC/BIC<a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#aicbic" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb505"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb505-1"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb505-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Akaike</span> (AIC)                               <span class="fl">14992.544</span></span>
-<span id="cb505-2"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb505-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Bayesian</span> (BIC)                             <span class="fl">15056.345</span></span>
-<span id="cb505-3"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb505-3" aria-hidden="true" tabindex="-1"></a>  Sample<span class="sc">-</span>size adjusted <span class="fu">Bayesian</span> (BIC)        <span class="fl">15015.056</span></span></code></pre></div>
-<ul>
-<li>Penalized -2 LogL</li>
-<li>If these are lower than some other model -&gt; prefer this model.</li>
-<li>If these are higher than some other model -&gt; prefer the other model.</li>
-</ul>
-<p>reproducing AIC/BIC:</p>
-<div class="sourceCode" id="cb506"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb506-1"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb506-1" aria-hidden="true" tabindex="-1"></a>logLik <span class="ot">=</span> <span class="sc">-</span><span class="fl">7483.272</span></span>
-<span id="cb506-2"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb506-2" aria-hidden="true" tabindex="-1"></a>q <span class="ot">=</span> <span class="dv">13</span> <span class="co"># (4 loadings + 6 unique factor variances + 3 factor var/covs)</span></span>
-<span id="cb506-3"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb506-3" aria-hidden="true" tabindex="-1"></a>N <span class="ot">=</span> <span class="dv">1000</span></span>
-<span id="cb506-4"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb506-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb506-5"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb506-5" aria-hidden="true" tabindex="-1"></a>(<span class="at">AIC =</span> <span class="sc">-</span><span class="dv">2</span><span class="sc">*</span>logLik <span class="sc">+</span> <span class="dv">2</span><span class="sc">*</span>q)</span></code></pre></div>
-<pre><code>## [1] 14992.54</code></pre>
-<div class="sourceCode" id="cb508"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb508-1"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb508-1" aria-hidden="true" tabindex="-1"></a>(<span class="at">BIC =</span> <span class="sc">-</span><span class="dv">2</span><span class="sc">*</span>logLik <span class="sc">+</span> <span class="fu">log</span>(N)<span class="sc">*</span>q)</span></code></pre></div>
-<pre><code>## [1] 15056.34</code></pre>
-<!------------------------------>
-</div>
-</div>
-<div id="part-ii-exercise" class="section level2 hasAnchor" number="13.2">
-<h2><span class="header-section-number">13.2</span> PART II: Exercise<a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#part-ii-exercise" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<!------------------------------>
-<p>For this portion, we will run the CFA analyses on a new simulated dataset based on Todd Little’s positive affect example.</p>
-<p>Read in the new dataset:</p>
-<div class="sourceCode" id="cb510"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb510-1"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb510-1" aria-hidden="true" tabindex="-1"></a>affectData_new <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;ChiStatSimDat.csv&quot;</span>, <span class="at">header =</span> T)</span></code></pre></div>
-<p>Examine the dataset:</p>
-<div class="sourceCode" id="cb511"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb511-1"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb511-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(affectData_new)</span></code></pre></div>
-<pre><code>##          glad   cheerful       happy    satisfied    content comfortable
-## 1 -0.88164396 0.08934146 -0.02412456 -0.570588909  0.3525594  0.59309666
-## 2 -0.05250507 0.68355268  0.74157736  0.146592063  0.5393570  1.12686970
-## 3  1.87921754 0.84984042  2.87784843  0.279073394  1.1723201  0.26855073
-## 4 -0.22371928 0.10069522 -0.19760745 -0.063127288 -1.1782493 -0.59893739
-## 5  0.17341853 0.26949455 -0.49326121  0.237083760 -1.0066170 -0.04426791
-## 6 -1.03348018 0.04250862 -1.00909832  0.009657695  0.4366756  0.05996283</code></pre>
-<p>Examine the covariance matrix:</p>
-<div class="sourceCode" id="cb513"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb513-1"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb513-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cov</span>(affectData_new)</span></code></pre></div>
-<pre><code>##                  glad  cheerful     happy satisfied  content comfortable
-## glad        1.4049090 0.9262102 1.3859992 1.1088378 1.200695   0.8715664
-## cheerful    0.9262102 1.1043581 1.0344850 0.8850550 1.053458   0.9513925
-## happy       1.3859992 1.0344850 1.7737439 1.2253205 1.233110   0.9317963
-## satisfied   1.1088378 0.8850550 1.2253205 1.6365917 1.496492   0.8626294
-## content     1.2006950 1.0534583 1.2331099 1.4964919 1.872718   1.0693608
-## comfortable 0.8715664 0.9513925 0.9317963 0.8626294 1.069361   1.3162770</code></pre>
-<p>all positive! (Remember that indicators need to be all positively correlated for CFA models?)</p>
-<div id="part-i-plot-the-distributions-of-all-indicators" class="section level3 hasAnchor" number="13.2.1">
-<h3><span class="header-section-number">13.2.1</span> PART I: Plot the distributions of all indicators<a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#part-i-plot-the-distributions-of-all-indicators" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb515"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb515-1"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb515-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(PerformanceAnalytics)</span>
-<span id="cb515-2"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb515-2" aria-hidden="true" tabindex="-1"></a><span class="fu">chart.Correlation</span>(affectData_new)</span></code></pre></div>
-<pre><code>## Warning in par(usr): argument 1 does not name a graphical parameter
-
-## Warning in par(usr): argument 1 does not name a graphical parameter
-
-## Warning in par(usr): argument 1 does not name a graphical parameter
-
-## Warning in par(usr): argument 1 does not name a graphical parameter
-
-## Warning in par(usr): argument 1 does not name a graphical parameter
-
-## Warning in par(usr): argument 1 does not name a graphical parameter
-
-## Warning in par(usr): argument 1 does not name a graphical parameter
-
-## Warning in par(usr): argument 1 does not name a graphical parameter
-
-## Warning in par(usr): argument 1 does not name a graphical parameter
-
-## Warning in par(usr): argument 1 does not name a graphical parameter
-
-## Warning in par(usr): argument 1 does not name a graphical parameter
-
-## Warning in par(usr): argument 1 does not name a graphical parameter
-
-## Warning in par(usr): argument 1 does not name a graphical parameter
-
-## Warning in par(usr): argument 1 does not name a graphical parameter
-
-## Warning in par(usr): argument 1 does not name a graphical parameter</code></pre>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-295-1.png" width="672" /></p>
-<p>all indicators look roughly normal</p>
-</div>
-<div id="part-ii-write-out-the-model-syntax-for-two-factor-model" class="section level3 hasAnchor" number="13.2.2">
-<h3><span class="header-section-number">13.2.2</span> PART II: Write out the model syntax for two-factor model<a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#part-ii-write-out-the-model-syntax-for-two-factor-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb517"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb517-1"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb517-1" aria-hidden="true" tabindex="-1"></a>twofa.model <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
-<span id="cb517-2"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb517-2" aria-hidden="true" tabindex="-1"></a><span class="st">    #Factor Specification   </span></span>
-<span id="cb517-3"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb517-3" aria-hidden="true" tabindex="-1"></a><span class="st">    posAffect =~ glad + happy + cheerful </span></span>
-<span id="cb517-4"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb517-4" aria-hidden="true" tabindex="-1"></a><span class="st">    satisfaction =~ satisfied + content + comfortable  </span></span>
-<span id="cb517-5"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb517-5" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
-</div>
-<div id="part-iii-fit-the-two-factor-model" class="section level3 hasAnchor" number="13.2.3">
-<h3><span class="header-section-number">13.2.3</span> PART III: Fit the two-factor model<a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#part-iii-fit-the-two-factor-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb518"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb518-1"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb518-1" aria-hidden="true" tabindex="-1"></a>new_fit <span class="ot">=</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(twofa.model, <span class="at">data =</span> affectData_new, <span class="at">fixed.x=</span><span class="cn">FALSE</span>)</span>
-<span id="cb518-2"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb518-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(new_fit, <span class="at">standardized =</span> T, <span class="at">fit.measures =</span> T)</span></code></pre></div>
-<pre><code>## lavaan 0.6-12 ended normally after 29 iterations
-## 
-##   Estimator                                         ML
-##   Optimization method                           NLMINB
-##   Number of model parameters                        13
-## 
-##   Number of observations                           200
-## 
-## Model Test User Model:
-##                                                       
-##   Test statistic                               113.638
-##   Degrees of freedom                                 8
-##   P-value (Chi-square)                           0.000
-## 
-## Model Test Baseline Model:
-## 
-##   Test statistic                              1168.055
-##   Degrees of freedom                                15
-##   P-value                                        0.000
-## 
-## User Model versus Baseline Model:
-## 
-##   Comparative Fit Index (CFI)                    0.908
-##   Tucker-Lewis Index (TLI)                       0.828
-## 
-## Loglikelihood and Information Criteria:
-## 
-##   Loglikelihood user model (H0)              -1413.224
-##   Loglikelihood unrestricted model (H1)      -1356.405
-##                                                       
-##   Akaike (AIC)                                2852.449
-##   Bayesian (BIC)                              2895.327
-##   Sample-size adjusted Bayesian (BIC)         2854.141
-## 
-## Root Mean Square Error of Approximation:
-## 
-##   RMSEA                                          0.257
-##   90 Percent confidence interval - lower         0.216
-##   90 Percent confidence interval - upper         0.300
-##   P-value RMSEA &lt;= 0.05                          0.000
-## 
-## Standardized Root Mean Square Residual:
-## 
-##   SRMR                                           0.070
+##   Test statistic                                 0.000
+##   Degrees of freedom                                 0
 ## 
 ## Parameter Estimates:
 ## 
@@ -859,65 +811,256 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##   Information                                 Expected
 ##   Information saturated (h1) model          Structured
 ## 
-## Latent Variables:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   posAffect =~                                                          
-##     glad              1.000                               1.115    0.943
-##     happy             1.095    0.048   22.882    0.000    1.221    0.919
-##     cheerful          0.763    0.046   16.739    0.000    0.851    0.812
-##   satisfaction =~                                                       
-##     satisfied         1.000                               1.152    0.902
-##     content           1.110    0.054   20.462    0.000    1.278    0.936
-##     comfortable       0.715    0.057   12.548    0.000    0.823    0.719
+## Regressions:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##   Depression ~                                        
+##     CBTDummy  (b1)   -9.245    0.113  -82.096    0.000
+##     NeedCgCnt (b2)    3.305    0.079   42.064    0.000
+##     CBTxNdCgC (b3)   -4.967    0.113  -43.943    0.000
 ## 
 ## Covariances:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   posAffect ~~                                                          
-##     satisfaction      1.104    0.131    8.425    0.000    0.859    0.859
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##   CBTDummy ~~                                         
+##     NeedCogCont      -0.020    0.016   -1.249    0.212
+##     CBTxNeedCogCnt   -0.008    0.011   -0.764    0.445
+##   NeedCogCont ~~                                      
+##     CBTxNeedCogCnt    0.480    0.027   18.055    0.000
+## 
+## Intercepts:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##    .Depression        2.931    0.080   36.794    0.000
+##     CBTDummy          0.500    0.016   31.623    0.000
+##     NeedCogCont       0.006    0.032    0.188    0.851
+##     CBTxNeedCogCnt   -0.017    0.022   -0.764    0.445
 ## 
 ## Variances:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .glad              0.154    0.031    4.966    0.000    0.154    0.110
-##    .happy             0.274    0.043    6.398    0.000    0.274    0.155
-##    .cheerful          0.374    0.042    8.851    0.000    0.374    0.341
-##    .satisfied         0.302    0.047    6.492    0.000    0.302    0.186
-##    .content           0.230    0.048    4.742    0.000    0.230    0.123
-##    .comfortable       0.632    0.068    9.253    0.000    0.632    0.482
-##     posAffect         1.244    0.142    8.790    0.000    1.000    1.000
-##     satisfaction      1.326    0.164    8.093    0.000    1.000    1.000</code></pre>
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##    .Depression        3.166    0.142   22.361    0.000
+##     CBTDummy          0.250    0.011   22.361    0.000
+##     NeedCogCont       0.994    0.044   22.361    0.000
+##     CBTxNeedCogCnt    0.480    0.021   22.361    0.000</code></pre>
+<!------------------------------>
 </div>
-<div id="part-iv-interpret-the-chisquare-statistic-and-fit-indices" class="section level3 hasAnchor" number="13.2.4">
-<h3><span class="header-section-number">13.2.4</span> PART IV: Interpret the chisquare statistic and fit indices<a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#part-iv-interpret-the-chisquare-statistic-and-fit-indices" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb520"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb520-1"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb520-1" aria-hidden="true" tabindex="-1"></a>Model Test User Model<span class="sc">:</span></span>
-<span id="cb520-2"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb520-2" aria-hidden="true" tabindex="-1"></a>                                                      </span>
-<span id="cb520-3"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb520-3" aria-hidden="true" tabindex="-1"></a>  Test statistic                               <span class="fl">113.638</span></span>
-<span id="cb520-4"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb520-4" aria-hidden="true" tabindex="-1"></a>  Degrees of freedom                                 <span class="dv">8</span></span>
-<span id="cb520-5"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb520-5" aria-hidden="true" tabindex="-1"></a>  P<span class="sc">-</span><span class="fu">value</span> (Chi<span class="sc">-</span>square)                           <span class="fl">0.000</span></span></code></pre></div>
+<div id="simple-slopes-analysis" class="section level2 hasAnchor" number="5.7">
+<h2><span class="header-section-number">5.7</span> Simple Slopes Analysis<a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#simple-slopes-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<!------------------------------>
+<p>pick-a-point (Rogosa, 1980) and plot the simple slopes of X at designated levels of Z:</p>
+<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb194-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(cbtData<span class="sc">$</span>NeedCogCont) <span class="co">#0</span></span></code></pre></div>
+<pre><code>## [1] 0.005925852</code></pre>
+<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb196-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(cbtData<span class="sc">$</span>NeedCogCont) <span class="co"># almost 1</span></span></code></pre></div>
+<pre><code>## [1] 0.9974319</code></pre>
+<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb198-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(cbtData<span class="sc">$</span>NeedCogCont) <span class="sc">-</span> <span class="fu">sd</span>(cbtData<span class="sc">$</span>NeedCogCont) <span class="co"># 1sd below the mean</span></span></code></pre></div>
+<pre><code>## [1] -0.991506</code></pre>
+<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb200-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(cbtData<span class="sc">$</span>NeedCogCont) <span class="sc">+</span> <span class="fu">sd</span>(cbtData<span class="sc">$</span>NeedCogCont) <span class="co"># 1sd above the mean</span></span></code></pre></div>
+<pre><code>## [1] 1.003358</code></pre>
+<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb202-1"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb202-1" aria-hidden="true" tabindex="-1"></a>interactionSyntax3 <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
+<span id="cb202-2"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb202-2" aria-hidden="true" tabindex="-1"></a><span class="st">    #Regression</span></span>
+<span id="cb202-3"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb202-3" aria-hidden="true" tabindex="-1"></a><span class="st">    Depression ~ b1*CBTDummy + b2*NeedCogCont + b3*CBTxNeedCogCont #regression coefficient labels</span></span>
+<span id="cb202-4"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb202-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb202-5"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb202-5" aria-hidden="true" tabindex="-1"></a><span class="st">    #Simple Slopes</span></span>
+<span id="cb202-6"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb202-6" aria-hidden="true" tabindex="-1"></a><span class="st">    </span></span>
+<span id="cb202-7"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb202-7" aria-hidden="true" tabindex="-1"></a><span class="st">    SSHigh := b1+b3*1       #Since sd(NeedCogCont) = approximately 1, this is +1 SD</span></span>
+<span id="cb202-8"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb202-8" aria-hidden="true" tabindex="-1"></a><span class="st">    SSMod := b1+b3*0          #at the mean of (centered) NeedCogCont</span></span>
+<span id="cb202-9"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb202-9" aria-hidden="true" tabindex="-1"></a><span class="st">    SSLow := b1+b3*(-1)   #Low Simple Slope is at -1 (1 SD below since SD = 1)</span></span>
+<span id="cb202-10"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb202-10" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb203-1" aria-hidden="true" tabindex="-1"></a>inter_fit3 <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> interactionSyntax3, </span>
+<span id="cb203-2"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb203-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">data =</span> cbtData, </span>
+<span id="cb203-3"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb203-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">fixed.x =</span><span class="cn">FALSE</span>, </span>
+<span id="cb203-4"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb203-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">meanstructure =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb203-5"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb203-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb203-6"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb203-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(inter_fit3)</span></code></pre></div>
+<pre><code>## lavaan 0.6-12 ended normally after 35 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                        14
+## 
+##   Number of observations                          1000
+## 
+## Model Test User Model:
+##                                                       
+##   Test statistic                                 0.000
+##   Degrees of freedom                                 0
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Expected
+##   Information saturated (h1) model          Structured
+## 
+## Regressions:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##   Depression ~                                        
+##     CBTDummy  (b1)   -9.245    0.113  -82.096    0.000
+##     NeedCgCnt (b2)    3.305    0.079   42.064    0.000
+##     CBTxNdCgC (b3)   -4.967    0.113  -43.943    0.000
+## 
+## Covariances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##   CBTDummy ~~                                         
+##     NeedCogCont      -0.020    0.016   -1.249    0.212
+##     CBTxNeedCogCnt   -0.008    0.011   -0.764    0.445
+##   NeedCogCont ~~                                      
+##     CBTxNeedCogCnt    0.480    0.027   18.055    0.000
+## 
+## Intercepts:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##    .Depression        2.931    0.080   36.794    0.000
+##     CBTDummy          0.500    0.016   31.623    0.000
+##     NeedCogCont       0.006    0.032    0.188    0.851
+##     CBTxNeedCogCnt   -0.017    0.022   -0.764    0.445
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##    .Depression        3.166    0.142   22.361    0.000
+##     CBTDummy          0.250    0.011   22.361    0.000
+##     NeedCogCont       0.994    0.044   22.361    0.000
+##     CBTxNeedCogCnt    0.480    0.021   22.361    0.000
+## 
+## Defined Parameters:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##     SSHigh          -14.212    0.159  -89.281    0.000
+##     SSMod            -9.245    0.113  -82.096    0.000
+##     SSLow            -4.279    0.160  -26.755    0.000</code></pre>
+<p>Now we have tests of the simple slopes at low, moderate, and high values of the moderator!</p>
+<p>Along with significance tests.</p>
+<!------------------------------>
+</div>
+<div id="visual-inspection-of-interactions-lm-approach" class="section level2 hasAnchor" number="5.8">
+<h2><span class="header-section-number">5.8</span> Visual inspection of interactions (lm approach)<a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#visual-inspection-of-interactions-lm-approach" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<!------------------------------>
+<p>Interactions in Regression Using lm()</p>
+<p>To include ab interaction in regression, simply use an * to create a product in the formula.</p>
+<div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb205-1"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb205-1" aria-hidden="true" tabindex="-1"></a>interactionModel2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Depression <span class="sc">~</span> CBTDummy<span class="sc">*</span>NeedCogCont, cbtData)</span>
+<span id="cb205-2"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb205-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb205-3"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb205-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(interactionModel2)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = Depression ~ CBTDummy * NeedCogCont, data = cbtData)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -5.7282 -1.1381  0.0649  1.2229  4.4762 
+## 
+## Coefficients:
+##                      Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)           2.93065    0.07981   36.72   &lt;2e-16 ***
+## CBTDummy             -9.24546    0.11284  -81.93   &lt;2e-16 ***
+## NeedCogCont           3.30525    0.07873   41.98   &lt;2e-16 ***
+## CBTDummy:NeedCogCont -4.96674    0.11325  -43.85   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.783 on 996 degrees of freedom
+## Multiple R-squared:  0.9008, Adjusted R-squared:  0.9005 
+## F-statistic:  3013 on 3 and 996 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>pick-a-point (Rogosa, 1980) and plot the simple slopes of X at designated levels of Z:</p>
+<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb207-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(interactions)</span>
+<span id="cb207-2"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb207-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb207-3"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb207-3" aria-hidden="true" tabindex="-1"></a><span class="fu">interact_plot</span>(interactionModel2, <span class="at">pred =</span> <span class="st">&quot;CBTDummy&quot;</span>, <span class="at">modx =</span> <span class="st">&quot;NeedCogCont&quot;</span>)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-125-1.png" width="672" /></p>
+<!------------------------------>
+</div>
+<div id="johnson-neyman-interval" class="section level2 hasAnchor" number="5.9">
+<h2><span class="header-section-number">5.9</span> JOHNSON-NEYMAN INTERVAL<a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#johnson-neyman-interval" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<!------------------------------>
+<div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb208-1"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb208-1" aria-hidden="true" tabindex="-1"></a>interactions<span class="sc">::</span><span class="fu">johnson_neyman</span>(interactionModel2, <span class="at">pred =</span> <span class="st">&quot;CBTDummy&quot;</span>, <span class="at">modx =</span> <span class="st">&quot;NeedCogCont&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.05</span>)</span></code></pre></div>
+<pre><code>## JOHNSON-NEYMAN INTERVAL 
+## 
+## When NeedCogCont is OUTSIDE the interval [-1.96, -1.77], the slope of CBTDummy is p &lt; .05.
+## 
+## Note: The range of observed values of NeedCogCont is [-2.83, 3.31]</code></pre>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-126-1.png" width="672" /></p>
+<!------------------------------>
+</div>
+<div id="exercise-how-framing-affects-justifications-for-giving-or-withholding-aid-to-disaster-victims" class="section level2 hasAnchor" number="5.10">
+<h2><span class="header-section-number">5.10</span> Exercise: How Framing Affects Justifications for Giving or Withholding Aid to Disaster Victims<a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#exercise-how-framing-affects-justifications-for-giving-or-withholding-aid-to-disaster-victims" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<!------------------------------>
+<p>For this exercise, we will use a real dataset in a study by Chapman and Lickel (2016).</p>
+<p>This study was interested in examining the relation between Climate Change and Disasters: How Framing Affects Justifications for Giving or Withholding Aid to Disaster Victims?</p>
+<p>Researchers hypothesizes that Framing a natural disaster as the product of climate change impacts attitudes toward disaster victims and humanitarian relief.</p>
+<p>The predictor is X/Frame:</p>
 <ul>
-<li>113.638 is much larger than df=8 and the p-value is 0.000&lt;0.05,</li>
-<li>This chisquare is too large and the model is a poor fit.</li>
+<li>Participants read a story about a humanitarian crisis caused by a drought in Africa.</li>
+<li>X = 1: Half of the participants were told that the drought was caused by climate change (the climate change condition)</li>
+<li>X = 0: The other half were not told anything about the specific cause of the drought and thus had no reason to believe it wasn’t the result of natural causes (the natural causes condition).</li>
 </ul>
-<div class="sourceCode" id="cb521"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb521-1"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb521-1" aria-hidden="true" tabindex="-1"></a>Root Mean Square Error of Approximation<span class="sc">:</span></span>
-<span id="cb521-2"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb521-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb521-3"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb521-3" aria-hidden="true" tabindex="-1"></a>  RMSEA                                          <span class="fl">0.257</span></span>
-<span id="cb521-4"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb521-4" aria-hidden="true" tabindex="-1"></a>  <span class="dv">90</span> Percent confidence interval <span class="sc">-</span> lower         <span class="fl">0.216</span></span>
-<span id="cb521-5"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb521-5" aria-hidden="true" tabindex="-1"></a>  <span class="dv">90</span> Percent confidence interval <span class="sc">-</span> upper         <span class="fl">0.300</span></span>
-<span id="cb521-6"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb521-6" aria-hidden="true" tabindex="-1"></a>  P<span class="sc">-</span>value RMSEA <span class="sc">&lt;=</span> <span class="fl">0.05</span>                          <span class="fl">0.000</span></span>
-<span id="cb521-7"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb521-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb521-8"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb521-8" aria-hidden="true" tabindex="-1"></a>Standardized Root Mean Square Residual<span class="sc">:</span></span>
-<span id="cb521-9"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb521-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb521-10"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb521-10" aria-hidden="true" tabindex="-1"></a>  SRMR                                           <span class="fl">0.070</span></span>
-<span id="cb521-11"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb521-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb521-12"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb521-12" aria-hidden="true" tabindex="-1"></a>User Model versus Baseline Model<span class="sc">:</span></span>
-<span id="cb521-13"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb521-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb521-14"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb521-14" aria-hidden="true" tabindex="-1"></a>  Comparative Fit <span class="fu">Index</span> (CFI)                    <span class="fl">0.908</span></span>
-<span id="cb521-15"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb521-15" aria-hidden="true" tabindex="-1"></a>  Tucker<span class="sc">-</span>Lewis <span class="fu">Index</span> (TLI)                       <span class="fl">0.828</span></span></code></pre></div>
+<p>The outcome is Y/Donate:</p>
 <ul>
-<li>RMSEA = 0.257 &gt;&gt; 0.1. The lower bound of the confidence interval is also larger than 0.1. This indicates a poor fit.</li>
-<li>P-value RMSEA &lt;= 0.05: sig - close fit null hypothesis rejected.</li>
-<li>SRMR = 0.07 &lt; 0.08, meaning that the average standardized residual between S and Sigma is no larger than 0.08, but SRMR is known to be lenient (i.e., low SRMR =/= good models, but high SRMR = bad models).</li>
-<li>90.8% improvement over the null model … marginal fit</li>
+<li>the participants’ willingness to donate to the victims was assessed using a set of questions.</li>
+<li>Responses were made on a set of 7-point scales, with higher scores reflecting a greater willingness to donate to the victims</li>
 </ul>
+<p>The moderator is W/Skeptic:</p>
+<ul>
+<li>The belief whether climate change is a real phenomenon was also measured.</li>
+</ul>
+<p>The moderation model looks at whether the attribution frame manipulation (X) might have had a different effect on people’s willingness to donate (Y) depending on their climate change skepticism (M)</p>
+<div id="data-prep" class="section level3 hasAnchor" number="5.10.1">
+<h3><span class="header-section-number">5.10.1</span> Data Prep<a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#data-prep" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The following example data are from Chapman and Lickel (2016)</p>
+<p>Also example data in Chapter 12 of Hayes (2017)</p>
+<p>Simply load the .rda into R:</p>
+<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb210-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;disaster.rda&quot;</span>)</span>
+<span id="cb210-2"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb210-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb210-3"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb210-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(disaster)</span></code></pre></div>
+<pre><code>##   id frame donate justify skeptic
+## 1  1     1    5.6    2.95     1.8
+## 2  2     1    4.2    2.85     5.2
+## 3  3     1    4.2    3.00     3.2
+## 4  4     1    4.6    3.30     1.0
+## 5  5     1    3.0    5.00     7.6
+## 6  6     0    5.0    3.20     4.2</code></pre>
+<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb212-1"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb212-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(disaster)</span></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    211 obs. of  5 variables:
+##  $ id     : num  1 2 3 4 5 6 7 8 9 10 ...
+##   ..- attr(*, &quot;format.spss&quot;)= chr &quot;F8.0&quot;
+##   ..- attr(*, &quot;display_width&quot;)= int 6
+##  $ frame  : num  1 1 1 1 1 0 0 1 0 0 ...
+##   ..- attr(*, &quot;label&quot;)= chr &quot;Experimental condition&quot;
+##   ..- attr(*, &quot;format.spss&quot;)= chr &quot;F8.2&quot;
+##   ..- attr(*, &quot;labels&quot;)= Named num [1:2] 0 1
+##   .. ..- attr(*, &quot;names&quot;)= chr [1:2] &quot;naturally caused disaster&quot; &quot;climate change caused disaster&quot;
+##  $ donate : num  5.6 4.2 4.2 4.6 3 5 4.8 6 4.2 4.4 ...
+##   ..- attr(*, &quot;label&quot;)= chr &quot;Positive attitudes toward donating&quot;
+##   ..- attr(*, &quot;format.spss&quot;)= chr &quot;F8.2&quot;
+##   ..- attr(*, &quot;display_width&quot;)= int 9
+##  $ justify: num  2.95 2.85 3 3.3 5 3.2 2.9 1.4 3.25 3.55 ...
+##   ..- attr(*, &quot;label&quot;)= chr &quot;Negative justifications&quot;
+##   ..- attr(*, &quot;format.spss&quot;)= chr &quot;F8.2&quot;
+##   ..- attr(*, &quot;display_width&quot;)= int 10
+##  $ skeptic: num  1.8 5.2 3.2 1 7.6 4.2 4.2 1.2 1.8 8.8 ...
+##   ..- attr(*, &quot;label&quot;)= chr &quot;Climate change skepticism&quot;
+##   ..- attr(*, &quot;format.spss&quot;)= chr &quot;F8.2&quot;</code></pre>
+<p>If you are able to install package processR, you can also view its help page:</p>
+<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb214-1"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb214-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;processR&quot;</span>)</span>
+<span id="cb214-2"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb214-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb214-3"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb214-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(processR)</span>
+<span id="cb214-4"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb214-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb214-5"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb214-5" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(disaster)</span>
+<span id="cb214-6"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb214-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb214-7"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb214-7" aria-hidden="true" tabindex="-1"></a><span class="co"># take a look at the dataset: </span></span>
+<span id="cb214-8"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb214-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb214-9"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb214-9" aria-hidden="true" tabindex="-1"></a>?disaster</span></code></pre></div>
+<p>You probably have to go to <a href="https://www.xquartz.org/" class="uri">https://www.xquartz.org/</a> to download and install X11, which is a server required by many R packages, including processR.</p>
+<p>Now, disaster is a data.frame with 211 obs. of 5 variables:</p>
+<ul>
+<li>id</li>
+<li>frame: Experimental condition. 0 = naturally caused disaster, 1 = climate change caused disaster</li>
+<li>donate: Positive attitudes toward donating</li>
+<li>justify: Negative justifications</li>
+<li>skeptic: Climate change skepticism</li>
+</ul>
+</div>
+<div id="moderation-with-a-binary-moderator" class="section level3 hasAnchor" number="5.10.2">
+<h3><span class="header-section-number">5.10.2</span> Moderation with a binary moderator<a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#moderation-with-a-binary-moderator" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Let me first manually create a binary moderator based on the continuous version of skeptic:</p>
+<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb215-1"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb215-1" aria-hidden="true" tabindex="-1"></a>disaster<span class="sc">$</span>skeptic_b <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(disaster<span class="sc">$</span>skeptic<span class="sc">&lt;</span><span class="dv">3</span>, <span class="dv">0</span>, <span class="dv">1</span>) <span class="co"># low and high levels of skeptism of climate change</span></span>
+<span id="cb215-2"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb215-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(disaster<span class="sc">$</span>skeptic_b)</span></code></pre></div>
+<pre><code>## 
+##   0   1 
+## 112  99</code></pre>
+<p>Next, can you test the moderation effect of skeptic_b on the path from frame to donate? (you can use either lm or lavaan)</p>
+<p>Please interpret the coefficients in the model above and visualize the interaction using interact_plot().</p>
 
 </div>
 </div>
@@ -927,8 +1070,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="lavaan-lab-2-mediation-and-indirect-effects.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

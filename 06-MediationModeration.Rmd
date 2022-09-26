@@ -1,4 +1,4 @@
-# Week6_1: Lavaan Lab 4 Mediated Moderation & Moderated Mediation
+# Week7_1: Lavaan Lab 4 Mediated Moderation & Moderated Mediation
 
 In this lab, we will learn how to: 
 

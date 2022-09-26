@@ -211,7 +211,7 @@ set.seed(2022)
 
 ex4Boot <- lavaan::sem(model = ex4MediationSyntax, data = labData, se = "bootstrap", bootstrap = 1000, fixed.x=FALSE) 
 
-parameterEstimates(ex4Boot, level = 0.95, boot.ci.type="bca.simple")
+parameterEstimates(ex4Boot, level = 0.95, boot.ci.type="bca.simple", standardized = TRUE)
 ```
 
 
@@ -296,6 +296,9 @@ ex5MediationSyntax <- "
 	total5 := b7 + med5
 	med6 := b5*b12
 	total6 := b8 + med6
+	
+	# difference term for significance testing 
+	diff1 := med1 - med4
 "
 ```
 
@@ -314,7 +317,7 @@ set.seed(2022)
 
 ex5Boot <- lavaan::sem(model = ex5MediationSyntax, data = labData, se = "bootstrap", bootstrap = 1000, fixed.x=FALSE) 
 
-parameterEstimates(ex5Boot, level = 0.95, boot.ci.type="bca.simple")
+parameterEstimates(ex5Boot, level = 0.95, boot.ci.type="bca.simple", standardized = TRUE)
 ```
 
 

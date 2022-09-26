@@ -1,4 +1,4 @@
-# Week6_2: R Lab on Disaster Dataset (Chapman and Lickel, 2016)
+# Week7_2: R Lab on Disaster Dataset (Chapman and Lickel, 2016)
 
 
 ## Data Prep

@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 13 Week11_1: Lavaan Lab 10 Model Fit Part II (Fit Indices) | R Cookbook for Structural Equation Modeling</title>
-  <meta name="description" content="Chapter 13 Week11_1: Lavaan Lab 10 Model Fit Part II (Fit Indices) | R Cookbook for Structural Equation Modeling" />
+  <title>Chapter 9 Week9_1: Lavaan Lab 6 Two-factor CFA Model | R Cookbook for Structural Equation Modeling</title>
+  <meta name="description" content="Chapter 9 Week9_1: Lavaan Lab 6 Two-factor CFA Model | R Cookbook for Structural Equation Modeling" />
   <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 13 Week11_1: Lavaan Lab 10 Model Fit Part II (Fit Indices) | R Cookbook for Structural Equation Modeling" />
+  <meta property="og:title" content="Chapter 9 Week9_1: Lavaan Lab 6 Two-factor CFA Model | R Cookbook for Structural Equation Modeling" />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 13 Week11_1: Lavaan Lab 10 Model Fit Part II (Fit Indices) | R Cookbook for Structural Equation Modeling" />
+  <meta name="twitter:title" content="Chapter 9 Week9_1: Lavaan Lab 6 Two-factor CFA Model | R Cookbook for Structural Equation Modeling" />
   
   
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html"/>
-<link rel="next" href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html"/>
+<link rel="prev" href="week8_1-lavaan-lab-5-one-factor-cfa-model.html"/>
+<link rel="next" href="week8_2-lavaan-lab-7-two-factor-sr-model.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -503,33 +503,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices" class="section level1 hasAnchor" number="13">
-<h1><span class="header-section-number">Chapter 13</span> Week11_1: Lavaan Lab 10 Model Fit Part II (Fit Indices)<a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>In this lab, we will learn:</p>
-<ul>
-<li>how to calculate and interpret global fit indices for SEM models.</li>
-<li>how to compare non-nested models using AIC and BIC.</li>
-</ul>
-<p>Load up the lavaan library:</p>
-<div class="sourceCode" id="cb490"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb490-1"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb490-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span></code></pre></div>
-<!------------------------------>
-<div id="part-i-fit-indices" class="section level2 hasAnchor" number="13.1">
-<h2><span class="header-section-number">13.1</span> PART I: Fit Indices<a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#part-i-fit-indices" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<!------------------------------>
+<div id="week9_1-lavaan-lab-6-two-factor-cfa-model" class="section level1 hasAnchor" number="9">
+<h1><span class="header-section-number">Chapter 9</span> Week9_1: Lavaan Lab 6 Two-factor CFA Model<a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#week9_1-lavaan-lab-6-two-factor-cfa-model" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="data-prep-3" class="section level2 hasAnchor" number="9.1">
+<h2><span class="header-section-number">9.1</span> Data Prep<a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#data-prep-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We will continue to use cfaInClassData.csv in this lab.</p>
 <p>Let’s read this dataset in:</p>
-<div class="sourceCode" id="cb491"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb491-1"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb491-1" aria-hidden="true" tabindex="-1"></a>cfaData<span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;cfaInclassData.csv&quot;</span>, <span class="at">header =</span> T)</span></code></pre></div>
-<p>Write out syntax for a two-factor CFA model:</p>
-<div class="sourceCode" id="cb492"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb492-1"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb492-1" aria-hidden="true" tabindex="-1"></a>fixedIndTwoFacSyntax <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
-<span id="cb492-2"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb492-2" aria-hidden="true" tabindex="-1"></a><span class="st">    #Factor Specification   </span></span>
-<span id="cb492-3"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb492-3" aria-hidden="true" tabindex="-1"></a><span class="st">    posAffect =~ glad + happy + cheerful </span></span>
-<span id="cb492-4"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb492-4" aria-hidden="true" tabindex="-1"></a><span class="st">    satisfaction =~ satisfied + content + comfortable</span></span>
-<span id="cb492-5"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb492-5" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
-<p>Fit the model regularly:</p>
-<div class="sourceCode" id="cb493"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb493-1"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb493-1" aria-hidden="true" tabindex="-1"></a>fixedIndTwoFacRun <span class="ot">=</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> fixedIndTwoFacSyntax, </span>
-<span id="cb493-2"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb493-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">data =</span> cfaData, </span>
-<span id="cb493-3"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb493-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">fixed.x=</span><span class="cn">FALSE</span>)</span></code></pre></div>
-<p>Request fit indices by adding fit.measures = T in the summary() function:</p>
-<div class="sourceCode" id="cb494"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb494-1"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb494-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fixedIndTwoFacRun, <span class="at">standardized =</span> T, <span class="at">fit.measures =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb363"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb363-1"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb363-1" aria-hidden="true" tabindex="-1"></a>cfaData<span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;cfaInclassData.csv&quot;</span>, <span class="at">header =</span> T)</span></code></pre></div>
+<p>Load up the lavaan library and run some CFA’s!</p>
+<div class="sourceCode" id="cb364"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb364-1"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb364-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span></code></pre></div>
+<!------------------------------>
+</div>
+<div id="part-i-two-factor-cfa-fixed-loading" class="section level2 hasAnchor" number="9.2">
+<h2><span class="header-section-number">9.2</span> PART I: Two-Factor CFA, Fixed Loading<a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#part-i-two-factor-cfa-fixed-loading" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<!------------------------------>
+<div id="fixed-loading-aka-marker-variable-method.-1" class="section level3 hasAnchor" number="9.2.1">
+<h3><span class="header-section-number">9.2.1</span> Fixed Loading, AKA Marker Variable method.<a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#fixed-loading-aka-marker-variable-method.-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Let’s write up the model syntax for the measurement model with two factors:</p>
+<div class="sourceCode" id="cb365"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb365-1"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb365-1" aria-hidden="true" tabindex="-1"></a>fixedIndTwoFacSyntax <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
+<span id="cb365-2"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb365-2" aria-hidden="true" tabindex="-1"></a><span class="st">    #Factor Specification   </span></span>
+<span id="cb365-3"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb365-3" aria-hidden="true" tabindex="-1"></a><span class="st">    posAffect    =~    glad + happy + cheerful </span></span>
+<span id="cb365-4"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb365-4" aria-hidden="true" tabindex="-1"></a><span class="st">    satisfaction =~ satisfied + content + comfortable</span></span>
+<span id="cb365-5"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb365-5" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
+<p>Here we named the fitted object ‘fixedIndTwoFacRun’ to see our output:</p>
+<div class="sourceCode" id="cb366"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb366-1"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb366-1" aria-hidden="true" tabindex="-1"></a>fixedIndTwoFacRun <span class="ot">=</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> fixedIndTwoFacSyntax, <span class="at">data =</span> cfaData, <span class="at">fixed.x=</span><span class="cn">FALSE</span>)</span></code></pre></div>
+<p>Get a summary using summary() function, add standardized=T to request standardized parameter estimates:</p>
+<div class="sourceCode" id="cb367"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb367-1"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb367-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fixedIndTwoFacRun, <span class="at">standardized=</span>T)</span></code></pre></div>
 <pre><code>## lavaan 0.6-12 ended normally after 24 iterations
 ## 
 ##   Estimator                                         ML
@@ -543,37 +542,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##   Test statistic                                 2.957
 ##   Degrees of freedom                                 8
 ##   P-value (Chi-square)                           0.937
-## 
-## Model Test Baseline Model:
-## 
-##   Test statistic                              2020.010
-##   Degrees of freedom                                15
-##   P-value                                        0.000
-## 
-## User Model versus Baseline Model:
-## 
-##   Comparative Fit Index (CFI)                    1.000
-##   Tucker-Lewis Index (TLI)                       1.005
-## 
-## Loglikelihood and Information Criteria:
-## 
-##   Loglikelihood user model (H0)              -7483.272
-##   Loglikelihood unrestricted model (H1)      -7481.793
-##                                                       
-##   Akaike (AIC)                               14992.544
-##   Bayesian (BIC)                             15056.345
-##   Sample-size adjusted Bayesian (BIC)        15015.056
-## 
-## Root Mean Square Error of Approximation:
-## 
-##   RMSEA                                          0.000
-##   90 Percent confidence interval - lower         0.000
-##   90 Percent confidence interval - upper         0.009
-##   P-value RMSEA &lt;= 0.05                          1.000
-## 
-## Standardized Root Mean Square Residual:
-## 
-##   SRMR                                           0.007
 ## 
 ## Parameter Estimates:
 ## 
@@ -607,251 +575,285 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##    .comfortable       0.400    0.026   15.315    0.000    0.400    0.443
 ##     posAffect         0.482    0.042   11.439    0.000    1.000    1.000
 ##     satisfaction      0.597    0.047   12.686    0.000    1.000    1.000</code></pre>
-<div id="rmsea" class="section level3 hasAnchor" number="13.1.1">
-<h3><span class="header-section-number">13.1.1</span> RMSEA<a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#rmsea" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb496"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb496-1"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb496-1" aria-hidden="true" tabindex="-1"></a>Root Mean Square Error of Approximation<span class="sc">:</span></span>
-<span id="cb496-2"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb496-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb496-3"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb496-3" aria-hidden="true" tabindex="-1"></a>  RMSEA                                          <span class="fl">0.000</span></span>
-<span id="cb496-4"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb496-4" aria-hidden="true" tabindex="-1"></a>  <span class="dv">90</span> Percent confidence interval <span class="sc">-</span> lower         <span class="fl">0.000</span></span>
-<span id="cb496-5"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb496-5" aria-hidden="true" tabindex="-1"></a>  <span class="dv">90</span> Percent confidence interval <span class="sc">-</span> upper         <span class="fl">0.009</span></span>
-<span id="cb496-6"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb496-6" aria-hidden="true" tabindex="-1"></a>  P<span class="sc">-</span>value RMSEA <span class="sc">&lt;=</span> <span class="fl">0.05</span>                          <span class="fl">1.000</span></span></code></pre></div>
-<p>reproducing RMSEA:</p>
+<p>Here is the fun part. Plot the fitted model using semPaths() function from the semPlot package:</p>
+<div class="sourceCode" id="cb369"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb369-1"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb369-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(semPlot)</span>
+<span id="cb369-2"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb369-2" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(fixedIndTwoFacRun)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-200-1.png" width="672" /></p>
+<div class="sourceCode" id="cb370"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb370-1"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb370-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(fixedIndTwoFacRun, <span class="at">what =</span> <span class="st">&#39;est&#39;</span>) <span class="co"># under &quot;Estimate&quot;</span></span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-200-2.png" width="672" /></p>
+<div class="sourceCode" id="cb371"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb371-1"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb371-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">=</span> <span class="dv">8</span> (why?)</span>
+<span id="cb371-2"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb371-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb371-3"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb371-3" aria-hidden="true" tabindex="-1"></a>Latent Variables<span class="sc">:</span></span>
+<span id="cb371-4"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb371-4" aria-hidden="true" tabindex="-1"></a>                     Estimate  Std.Err  z<span class="sc">-</span>value  <span class="fu">P</span>(<span class="sc">&gt;</span><span class="er">|</span>z<span class="sc">|</span>)   Std.lv  Std.all</span>
+<span id="cb371-5"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb371-5" aria-hidden="true" tabindex="-1"></a>  posAffect <span class="ot">=</span><span class="er">~</span>                                        </span>
+<span id="cb371-6"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb371-6" aria-hidden="true" tabindex="-1"></a>     glad              <span class="fl">1.000</span>                               <span class="fl">0.694</span>    <span class="fl">0.706</span></span>
+<span id="cb371-7"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb371-7" aria-hidden="true" tabindex="-1"></a>     happy             <span class="fl">1.067</span>    <span class="fl">0.055</span>   <span class="fl">19.294</span>    <span class="fl">0.000</span>    <span class="fl">0.740</span>    <span class="fl">0.758</span></span>
+<span id="cb371-8"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb371-8" aria-hidden="true" tabindex="-1"></a>     cheerful          <span class="fl">1.112</span>    <span class="fl">0.057</span>   <span class="fl">19.458</span>    <span class="fl">0.000</span>    <span class="fl">0.772</span>    <span class="fl">0.785</span></span>
+<span id="cb371-9"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb371-9" aria-hidden="true" tabindex="-1"></a>   satisfaction <span class="ot">=</span><span class="er">~</span>                                                       </span>
+<span id="cb371-10"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb371-10" aria-hidden="true" tabindex="-1"></a>     satisfied         <span class="fl">1.000</span>                               <span class="fl">0.773</span>    <span class="fl">0.767</span></span>
+<span id="cb371-11"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb371-11" aria-hidden="true" tabindex="-1"></a>     content           <span class="fl">1.068</span>    <span class="fl">0.052</span>   <span class="fl">20.525</span>    <span class="fl">0.000</span>    <span class="fl">0.826</span>    <span class="fl">0.762</span></span>
+<span id="cb371-12"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb371-12" aria-hidden="true" tabindex="-1"></a>     comfortable       <span class="fl">0.918</span>    <span class="fl">0.045</span>   <span class="fl">20.336</span>    <span class="fl">0.000</span>    <span class="fl">0.709</span>    <span class="fl">0.746</span></span></code></pre></div>
+<p>What does this mean?</p>
 <ul>
-<li>T = 2.957</li>
-<li>df = 8</li>
-<li>N = 1000</li>
-<li>RMSEA = sqrt(max(T-df,0)/(N-1)/df) = sqrt(max(2.957-8,0)/(1000-1)/8) = 0</li>
+<li>1 unit change in posAffect (factor) produces:
+<ul>
+<li>1-unit change in “glad” (marker indicator)</li>
+<li>1.067-unit change in “happy” (1.067 times greater than the effect on “glad”)</li>
+<li>1.112-unit change in “cheerful” (1.112 times greater than the effect on “glad”)</li>
+</ul></li>
+<li>1 unit change in satisfaction (factor) produces:
+<ul>
+<li>1-unit change in “satisfied” (marker indicator)</li>
+<li>1.068-unit change in “content” (1.068 times greater than the effect on “satisfied”)</li>
+<li>0.918-unit change in “comfortable” (0.918 times greater than the effect on “satisfied”)</li>
+</ul></li>
+</ul>
+<div class="sourceCode" id="cb372"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb372-1"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb372-1" aria-hidden="true" tabindex="-1"></a>Variances<span class="sc">:</span></span>
+<span id="cb372-2"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb372-2" aria-hidden="true" tabindex="-1"></a>                    Estimate  Std.Err  z<span class="sc">-</span>value  <span class="fu">P</span>(<span class="sc">&gt;</span><span class="er">|</span>z<span class="sc">|</span>)   Std.lv  Std.all</span>
+<span id="cb372-3"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb372-3" aria-hidden="true" tabindex="-1"></a>    .glad              <span class="fl">0.484</span>    <span class="fl">0.029</span>   <span class="fl">16.647</span>    <span class="fl">0.000</span>    <span class="fl">0.484</span>    <span class="fl">0.501</span></span>
+<span id="cb372-4"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb372-4" aria-hidden="true" tabindex="-1"></a>    .happy             <span class="fl">0.405</span>    <span class="fl">0.028</span>   <span class="fl">14.389</span>    <span class="fl">0.000</span>    <span class="fl">0.405</span>    <span class="fl">0.425</span></span>
+<span id="cb372-5"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb372-5" aria-hidden="true" tabindex="-1"></a>    .cheerful          <span class="fl">0.371</span>    <span class="fl">0.029</span>   <span class="fl">13.004</span>    <span class="fl">0.000</span>    <span class="fl">0.371</span>    <span class="fl">0.384</span></span>
+<span id="cb372-6"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb372-6" aria-hidden="true" tabindex="-1"></a>    .satisfied         <span class="fl">0.419</span>    <span class="fl">0.029</span>   <span class="fl">14.326</span>    <span class="fl">0.000</span>    <span class="fl">0.419</span>    <span class="fl">0.412</span></span>
+<span id="cb372-7"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb372-7" aria-hidden="true" tabindex="-1"></a>    .content           <span class="fl">0.491</span>    <span class="fl">0.034</span>   <span class="fl">14.542</span>    <span class="fl">0.000</span>    <span class="fl">0.491</span>    <span class="fl">0.419</span></span>
+<span id="cb372-8"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb372-8" aria-hidden="true" tabindex="-1"></a>    .comfortable       <span class="fl">0.400</span>    <span class="fl">0.026</span>   <span class="fl">15.315</span>    <span class="fl">0.000</span>    <span class="fl">0.400</span>    <span class="fl">0.443</span></span></code></pre></div>
+<ul>
+<li>The leftover unique factor variances remain substantial</li>
+<li>Meaning that none of the indicators is a perfect measure of posAffect or satisfaction</li>
+<li>but they all contribute significantly to the measurement of latent variables (the standardized loadings above larger than 0.6)</li>
+</ul>
+<p>Followed by two factor variances:</p>
+<div class="sourceCode" id="cb373"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb373-1"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb373-1" aria-hidden="true" tabindex="-1"></a>                    Estimate  Std.Err  z<span class="sc">-</span>value  <span class="fu">P</span>(<span class="sc">&gt;</span><span class="er">|</span>z<span class="sc">|</span>)   Std.lv  Std.all</span>
+<span id="cb373-2"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb373-2" aria-hidden="true" tabindex="-1"></a>     posAffect         <span class="fl">0.482</span>    <span class="fl">0.042</span>   <span class="fl">11.439</span>    <span class="fl">0.000</span>    <span class="fl">1.000</span>    <span class="fl">1.000</span></span>
+<span id="cb373-3"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb373-3" aria-hidden="true" tabindex="-1"></a>     satisfaction      <span class="fl">0.597</span>    <span class="fl">0.047</span>   <span class="fl">12.686</span>    <span class="fl">0.000</span>    <span class="fl">1.000</span>    <span class="fl">1.000</span></span></code></pre></div>
+<ul>
+<li>which were freely estimated using Fixed Loading scaling method.</li>
+<li>Both posAffect and satisfaction are variable across participants (sig* according to p-values)</li>
+<li>posAffect seems to be more stable than satisfaction (0.482&lt;0.597).</li>
+</ul>
+<div class="sourceCode" id="cb374"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb374-1"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb374-1" aria-hidden="true" tabindex="-1"></a>Covariances<span class="sc">:</span></span>
+<span id="cb374-2"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb374-2" aria-hidden="true" tabindex="-1"></a>                  Estimate  Std.Err  z<span class="sc">-</span>value  <span class="fu">P</span>(<span class="sc">&gt;</span><span class="er">|</span>z<span class="sc">|</span>)   Std.lv  Std.all</span>
+<span id="cb374-3"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb374-3" aria-hidden="true" tabindex="-1"></a> posAffect <span class="sc">~</span><span class="er">~</span>                                                          </span>
+<span id="cb374-4"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb374-4" aria-hidden="true" tabindex="-1"></a>   satisfaction      <span class="fl">0.262</span>    <span class="fl">0.025</span>   <span class="fl">10.284</span>    <span class="fl">0.000</span>    <span class="fl">0.488</span>    <span class="fl">0.488</span></span></code></pre></div>
+<ul>
+<li>covariance between posAffect and satisfaction is 0.262</li>
+<li>standardized covariance (correlation) between posAffect and satisfaction is 0.488 (sig*)</li>
+<li>0.262/sqrt(0.482)/sqrt(0.597) = 0.488</li>
+<li>posAffect is positively correlated with satisfaction. Participants who have a high level posAffect tend to have a high level of satisfaction.</li>
 </ul>
 </div>
-<div id="srmr" class="section level3 hasAnchor" number="13.1.2">
-<h3><span class="header-section-number">13.1.2</span> SRMR<a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#srmr" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb497"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb497-1"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb497-1" aria-hidden="true" tabindex="-1"></a>Standardized Root Mean Square Residual<span class="sc">:</span></span>
-<span id="cb497-2"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb497-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb497-3"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb497-3" aria-hidden="true" tabindex="-1"></a>  SRMR                                           <span class="fl">0.007</span></span></code></pre></div>
-<p>reproducing SRMR:</p>
-<div class="sourceCode" id="cb498"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb498-1"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb498-1" aria-hidden="true" tabindex="-1"></a>S <span class="ot">=</span> <span class="fu">cov</span>(cfaData[,<span class="sc">-</span><span class="dv">1</span>])</span>
-<span id="cb498-2"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb498-2" aria-hidden="true" tabindex="-1"></a>colnames <span class="ot">=</span> <span class="fu">colnames</span>(S)</span>
-<span id="cb498-3"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb498-3" aria-hidden="true" tabindex="-1"></a>SIGMA <span class="ot">=</span> <span class="fu">fitted</span>(fixedIndTwoFacRun)<span class="sc">$</span>cov[colnames, colnames]</span>
-<span id="cb498-4"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb498-4" aria-hidden="true" tabindex="-1"></a>p <span class="ot">=</span> <span class="fu">ncol</span>(S)</span>
-<span id="cb498-5"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb498-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb498-6"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb498-6" aria-hidden="true" tabindex="-1"></a><span class="co"># use cov2cor() function to convert diff to a correlation matrix and standardize the residuals: </span></span>
-<span id="cb498-7"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb498-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb498-8"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb498-8" aria-hidden="true" tabindex="-1"></a>resd <span class="ot">=</span> <span class="fu">cov2cor</span>(S) <span class="sc">-</span> <span class="fu">cov2cor</span>(SIGMA)</span>
-<span id="cb498-9"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb498-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb498-10"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb498-10" aria-hidden="true" tabindex="-1"></a><span class="co"># keep only the nonduplicated elements:</span></span>
-<span id="cb498-11"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb498-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb498-12"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb498-12" aria-hidden="true" tabindex="-1"></a>resd2 <span class="ot">=</span> <span class="fu">lav_matrix_vech</span>(resd)</span>
-<span id="cb498-13"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb498-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb498-14"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb498-14" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">sum</span>(resd2<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span>(p<span class="sc">*</span>(p<span class="sc">+</span><span class="dv">1</span>)<span class="sc">/</span><span class="dv">2</span>))</span></code></pre></div>
-<pre><code>## [1] 0.006847801</code></pre>
+<div id="how-well-does-this-model-fit-to-the-data" class="section level3 hasAnchor" number="9.2.2">
+<h3><span class="header-section-number">9.2.2</span> How well does this model fit to the data?<a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#how-well-does-this-model-fit-to-the-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The model-implied variance of glad is the sum of:</p>
 <ul>
-<li>A small average standardized residual…looks good</li>
+<li>Tracing 1: lam1*psi1*lam1 = 1.0*0.482*1.0 = 0.482</li>
+<li>Tracing 2: sig2_u1 = sig2_glad = 0.484</li>
+</ul>
+<p>which is 0.966.</p>
+<p>What is the sample variance of glad?</p>
+<ul>
+<li>var(cfaData$glad) = 0.9664733, which is super close to the model-implied one!</li>
+<li>meaning our CFA model is doing a pretty good job at explaining the sample variance of glad.</li>
+</ul>
+<p>The proportion of variance of glad explained by posAffect is:</p>
+<ul>
+<li>Tracing 1 / (Tracing 1+Tracing 2) = 49.9%</li>
+<li>Unexplained: 50.1%</li>
+</ul>
+<p><a href="week14-lavaan-lab-16-latent-growth-models.html#exercise">Exercise</a> What about the model-implied variance of comfortable?</p>
+<ul>
+<li>Tracing 1: 0.918*.597*.918 = .503</li>
+<li>Tracing 2: .400</li>
+<li>Total .903</li>
+<li>Proportion of variance explained: .503/.903</li>
+<li>Sample var: var(cfaData$comfortable) = 0.904</li>
+</ul>
+<p><a href="week14-lavaan-lab-16-latent-growth-models.html#exercise">Exercise</a> What about the model-implied covariance between glad and comfortable? (e.g., cov(y1, y6))</p>
+<ul>
+<li>Tracing 1: 1*.262*.918 = .241</li>
+<li>Sample cov: cov(cfaData<span class="math inline">\(glad, cfaData\)</span>comfortable) = .230</li>
+</ul>
+<p>Overall speaking, how is our model doing at explaining the sample covariance matrix?
+Remember the fitted() function we used during path analysis R labs?</p>
+<p>Apply fitted() function to the fitted object fixedIndTwoFacRun (not on the model syntax fixedIndTwoFacSyntax!!):</p>
+<div class="sourceCode" id="cb375"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb375-1"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb375-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fitted</span>(fixedIndTwoFacRun)</span></code></pre></div>
+<pre><code>## $cov
+##             glad  happy cherfl satsfd contnt cmfrtb
+## glad        0.966                                  
+## happy       0.514 0.953                            
+## cheerful    0.536 0.571 0.967                      
+## satisfied   0.262 0.279 0.291  1.016               
+## content     0.280 0.298 0.311  0.638  1.173        
+## comfortable 0.240 0.256 0.267  0.548  0.586  0.903</code></pre>
+<div class="sourceCode" id="cb377"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb377-1"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb377-1" aria-hidden="true" tabindex="-1"></a>Sigma <span class="ot">&lt;-</span> <span class="fu">fitted</span>(fixedIndTwoFacRun)<span class="sc">$</span>cov</span></code></pre></div>
+<p>How close is Sigma to S?</p>
+<ul>
+<li>Rearrange the rows and columns of Sigma (important!) and take the difference between Sigma and S</li>
+</ul>
+<div class="sourceCode" id="cb378"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb378-1"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb378-1" aria-hidden="true" tabindex="-1"></a>(<span class="at">S =</span> <span class="fu">cov</span>(cfaData[,<span class="sc">-</span><span class="dv">1</span>]))</span></code></pre></div>
+<pre><code>##                  glad  cheerful     happy satisfied   content comfortable
+## glad        0.9664733 0.5370642 0.5123945 0.2781506 0.2813310   0.2295491
+## cheerful    0.5370642 0.9678301 0.5724804 0.2820439 0.3168253   0.2611358
+## happy       0.5123945 0.5724804 0.9537015 0.2851151 0.3127966   0.2438086
+## satisfied   0.2781506 0.2820439 0.2851151 1.0169865 0.6352282   0.5511595
+## content     0.2813310 0.3168253 0.3127966 0.6352282 1.1739185   0.5872279
+## comfortable 0.2295491 0.2611358 0.2438086 0.5511595 0.5872279   0.9042505</code></pre>
+<div class="sourceCode" id="cb380"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb380-1"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb380-1" aria-hidden="true" tabindex="-1"></a>diff <span class="ot">=</span> Sigma[<span class="fu">colnames</span>(S), <span class="fu">colnames</span>(S)] <span class="sc">-</span> S</span>
+<span id="cb380-2"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb380-2" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(diff, <span class="dv">3</span>)</span></code></pre></div>
+<pre><code>##               glad cheerful  happy satisfied content comfortable
+## glad        -0.001   -0.001  0.001    -0.016  -0.002       0.011
+## cheerful    -0.001   -0.001 -0.001     0.009  -0.006       0.006
+## happy        0.001   -0.001 -0.001    -0.006  -0.015       0.012
+## satisfied   -0.016    0.009 -0.006    -0.001   0.003      -0.003
+## content     -0.002   -0.006 -0.015     0.003  -0.001      -0.002
+## comfortable  0.011    0.006  0.012    -0.003  -0.002      -0.001</code></pre>
+<div class="sourceCode" id="cb382"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb382-1"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb382-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">&quot;The difference between S and Sigma ranged between &quot;</span>, <span class="fu">round</span>(<span class="fu">min</span>(diff),<span class="dv">4</span>), <span class="st">&quot; and &quot;</span>, <span class="fu">round</span>(<span class="fu">max</span>(diff),<span class="dv">4</span>), <span class="st">&quot;.&quot;</span>))</span></code></pre></div>
+<pre><code>## [1] &quot;The difference between S and Sigma ranged between -0.0164 and 0.0124.&quot;</code></pre>
+<p>This is the closest Sigma can get to S. Any other set of parameter estimates would yield bigger differences with S.</p>
+<p>Have you wondered about how we obtain the parameter estimates in the output?</p>
+<p>Estimation down the road…</p>
+</div>
+<div id="fundamental-equation-of-sem" class="section level3 hasAnchor" number="9.2.3">
+<h3><span class="header-section-number">9.2.3</span> Fundamental Equation of SEM<a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#fundamental-equation-of-sem" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Just some bonus stuff…</p>
+<p>You can inspect the fitted object using inspect() and save the object as InspFit1.</p>
+<div class="sourceCode" id="cb384"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb384-1"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb384-1" aria-hidden="true" tabindex="-1"></a>InspFit1 <span class="ot">&lt;-</span> <span class="fu">inspect</span>(fixedIndTwoFacRun, <span class="at">what =</span> <span class="st">&quot;est&quot;</span>)</span></code></pre></div>
+<p>Extract Lambda matrix from InspFit1.</p>
+<div class="sourceCode" id="cb385"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb385-1"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb385-1" aria-hidden="true" tabindex="-1"></a>Lambda <span class="ot">&lt;-</span> InspFit1<span class="sc">$</span>lambda</span>
+<span id="cb385-2"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb385-2" aria-hidden="true" tabindex="-1"></a>Lambda</span></code></pre></div>
+<pre><code>##             psAffc stsfct
+## glad         1.000  0.000
+## happy        1.067  0.000
+## cheerful     1.112  0.000
+## satisfied    0.000  1.000
+## content      0.000  1.068
+## comfortable  0.000  0.918</code></pre>
+<p>Extract Psi matrix from InspFit1.</p>
+<div class="sourceCode" id="cb387"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb387-1"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb387-1" aria-hidden="true" tabindex="-1"></a>Psi <span class="ot">&lt;-</span> InspFit1<span class="sc">$</span>psi</span>
+<span id="cb387-2"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb387-2" aria-hidden="true" tabindex="-1"></a>Psi</span></code></pre></div>
+<pre><code>##              psAffc stsfct
+## posAffect    0.482        
+## satisfaction 0.262  0.597</code></pre>
+<p>Extract Theta matrix from InspFit1.</p>
+<div class="sourceCode" id="cb389"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb389-1"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb389-1" aria-hidden="true" tabindex="-1"></a>Theta <span class="ot">&lt;-</span> InspFit1<span class="sc">$</span>theta</span>
+<span id="cb389-2"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb389-2" aria-hidden="true" tabindex="-1"></a>Theta</span></code></pre></div>
+<pre><code>##             glad  happy cherfl satsfd contnt cmfrtb
+## glad        0.484                                  
+## happy       0.000 0.405                            
+## cheerful    0.000 0.000 0.371                      
+## satisfied   0.000 0.000 0.000  0.419               
+## content     0.000 0.000 0.000  0.000  0.491        
+## comfortable 0.000 0.000 0.000  0.000  0.000  0.400</code></pre>
+<p>Use the three matrices above to calculate the model-implied covariance matrix and save is as SIGMA:</p>
+<div class="sourceCode" id="cb391"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb391-1"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb391-1" aria-hidden="true" tabindex="-1"></a>SIGMA <span class="ot">&lt;-</span> Lambda<span class="sc">%*%</span>Psi<span class="sc">%*%</span><span class="fu">t</span>(Lambda)<span class="sc">+</span>Theta</span></code></pre></div>
+<p>A shortcut function to obtain the SIGMA matrix is to use fitted() function, as shown above…</p>
+<div class="sourceCode" id="cb392"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb392-1"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb392-1" aria-hidden="true" tabindex="-1"></a><span class="fu">all.equal</span>(Sigma, SIGMA)</span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+</div>
+<div id="interpretion" class="section level3 hasAnchor" number="9.2.4">
+<h3><span class="header-section-number">9.2.4</span> Interpretion<a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#interpretion" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>How do I interpret the results?</p>
+<ul>
+<li><ol style="list-style-type: decimal">
+<li>Introduce the scaling method I used;</li>
+</ol></li>
+<li><ol start="2" style="list-style-type: decimal">
+<li>Based on the loadings, acknowledge that the indicators are not perfect measures of the latent factors, but they all contribute significantly to the measurement of latent factors (the standardized loadings above larger than 0.6);</li>
+</ol></li>
+<li><ol start="3" style="list-style-type: decimal">
+<li>Report the the proportions of variance explained on each indicator;</li>
+</ol></li>
+<li><ol start="4" style="list-style-type: decimal">
+<li>Describe the discrepancy between S and Sigma (where the main differences lie, and whether the differences are concerning);</li>
+</ol></li>
+<li><ol start="5" style="list-style-type: decimal">
+<li>Interpret the correlation among the latent factors (size, sign, positive/negative, sig/non-sig).</li>
+</ol></li>
 </ul>
 </div>
-<div id="null-model-mo" class="section level3 hasAnchor" number="13.1.3">
-<h3><span class="header-section-number">13.1.3</span> Null Model MO<a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#null-model-mo" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb500"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb500-1"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb500-1" aria-hidden="true" tabindex="-1"></a>Model Test Baseline Model<span class="sc">:</span></span>
-<span id="cb500-2"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb500-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb500-3"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb500-3" aria-hidden="true" tabindex="-1"></a>  Test statistic                              <span class="fl">2020.010</span></span>
-<span id="cb500-4"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb500-4" aria-hidden="true" tabindex="-1"></a>  Degrees of freedom                                <span class="dv">15</span></span>
-<span id="cb500-5"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb500-5" aria-hidden="true" tabindex="-1"></a>  P<span class="sc">-</span>value                                        <span class="fl">0.000</span></span></code></pre></div>
+<div id="standardized-solutions-std.lv-vs.-std.all" class="section level3 hasAnchor" number="9.2.5">
+<h3><span class="header-section-number">9.2.5</span> Standardized solutions: Std.lv vs. Std.all<a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#standardized-solutions-std.lv-vs.-std.all" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Std.lv:</p>
 <ul>
-<li>This is the chi_sq for the baseline model used in the CFI/TLI/comparative fit measures.</li>
-<li>We know what this means now!</li>
-<li>chisquare of the null model: 2020.010</li>
-<li>df of the null model: 15</li>
+<li>This is the solution you’ll get using Fixed Factor Variance Scaling Method;</li>
+<li>All factor variances are fixed as 1.0;</li>
+<li>Factor covariance is the same as factor correlation;</li>
+<li>All factor loadings are freely estimated so that the model-implied covariance matrix remains the same;</li>
+<li>All unique factor variances remain unchanged.</li>
 </ul>
-<p>reproducing M0:</p>
-<div class="sourceCode" id="cb501"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb501-1"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb501-1" aria-hidden="true" tabindex="-1"></a>baselineM0 <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
-<span id="cb501-2"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb501-2" aria-hidden="true" tabindex="-1"></a><span class="st">    glad ~~ glad</span></span>
-<span id="cb501-3"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb501-3" aria-hidden="true" tabindex="-1"></a><span class="st">    happy ~~ happy</span></span>
-<span id="cb501-4"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb501-4" aria-hidden="true" tabindex="-1"></a><span class="st">    cheerful ~~ cheerful</span></span>
-<span id="cb501-5"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb501-5" aria-hidden="true" tabindex="-1"></a><span class="st">    satisfied ~~ satisfied</span></span>
-<span id="cb501-6"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb501-6" aria-hidden="true" tabindex="-1"></a><span class="st">    content ~~ content</span></span>
-<span id="cb501-7"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb501-7" aria-hidden="true" tabindex="-1"></a><span class="st">    comfortable ~~ comfortable</span></span>
-<span id="cb501-8"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb501-8" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span>
-<span id="cb501-9"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb501-9" aria-hidden="true" tabindex="-1"></a>base_fit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(baselineM0, <span class="at">data =</span> cfaData, <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb501-10"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb501-10" aria-hidden="true" tabindex="-1"></a>base_fit</span></code></pre></div>
-<pre><code>## lavaan 0.6-12 ended normally after 12 iterations
-## 
-##   Estimator                                         ML
-##   Optimization method                           NLMINB
-##   Number of model parameters                         6
-## 
-##   Number of observations                          1000
-## 
-## Model Test User Model:
-##                                                       
-##   Test statistic                              2020.010
-##   Degrees of freedom                                15
-##   P-value (Chi-square)                           0.000</code></pre>
-</div>
-<div id="cfitli" class="section level3 hasAnchor" number="13.1.4">
-<h3><span class="header-section-number">13.1.4</span> CFI/TLI<a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cfitli" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb503"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb503-1"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb503-1" aria-hidden="true" tabindex="-1"></a>User Model versus Baseline Model<span class="sc">:</span></span>
-<span id="cb503-2"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb503-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb503-3"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb503-3" aria-hidden="true" tabindex="-1"></a>  Comparative Fit <span class="fu">Index</span> (CFI)                    <span class="fl">1.000</span></span>
-<span id="cb503-4"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb503-4" aria-hidden="true" tabindex="-1"></a>  Tucker<span class="sc">-</span>Lewis <span class="fu">Index</span> (TLI)                       <span class="fl">1.005</span></span></code></pre></div>
+<p>For example, under Std.lv, the model-implied variance of glad is the sum of:</p>
 <ul>
-<li>100% improvement over the null(baseline) model … great fit</li>
-<li>Here TLI is larger than 1 because this is a rare situation with chisquare=2.957&lt;df=8</li>
-<li>numerator of TLI = (2020.010/15-2.957/8) = 134.2977</li>
-<li>denominator of TLI = (2020.010/15-1) = 133.6673</li>
-<li>TLI = 134.2977 / 133.6673 = 1.005</li>
-<li>A TLI that is larger than 1 is no different from TLI = 1</li>
+<li>Tracing 1: lam1*psi1*lam1 = 0.694*1.0*0.694 = 0.482</li>
+<li>Tracing 2: sig2_u1 = sig2_glad = 0.484</li>
+<li>Proportion of variance explained: 0.482/0.966 = 50.1%</li>
 </ul>
-<p>great overall fit.</p>
-</div>
-<div id="loglikelihood" class="section level3 hasAnchor" number="13.1.5">
-<h3><span class="header-section-number">13.1.5</span> Loglikelihood<a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#loglikelihood" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb504"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb504-1"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb504-1" aria-hidden="true" tabindex="-1"></a>Loglikelihood and Information Criteria<span class="sc">:</span></span>
-<span id="cb504-2"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb504-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb504-3"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb504-3" aria-hidden="true" tabindex="-1"></a>  Loglikelihood user <span class="fu">model</span> (H0)              <span class="sc">-</span><span class="fl">7483.272</span></span>
-<span id="cb504-4"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb504-4" aria-hidden="true" tabindex="-1"></a>  Loglikelihood unrestricted <span class="fu">model</span> (H1)      <span class="sc">-</span><span class="fl">7481.793</span></span></code></pre></div>
+<p>which is still 0.966.</p>
+<p><a href="week14-lavaan-lab-16-latent-growth-models.html#exercise">Exercise</a> Why is 0.709 the loading of comfortable under Std.lv?</p>
+<p>Under Std.lv, the model-implied variance of comfortable is the sum of:</p>
 <ul>
-<li>H0 is the loglikelihood of your model (user model … lavaan is kind to clarify this)</li>
-<li>H1 is the saturated model loglikelihood.</li>
+<li>Tracing 1:</li>
+<li>Tracing 2:</li>
+<li>Proportion of variance explained:</li>
 </ul>
-</div>
-<div id="aicbic" class="section level3 hasAnchor" number="13.1.6">
-<h3><span class="header-section-number">13.1.6</span> AIC/BIC<a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#aicbic" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb505"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb505-1"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb505-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Akaike</span> (AIC)                               <span class="fl">14992.544</span></span>
-<span id="cb505-2"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb505-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Bayesian</span> (BIC)                             <span class="fl">15056.345</span></span>
-<span id="cb505-3"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb505-3" aria-hidden="true" tabindex="-1"></a>  Sample<span class="sc">-</span>size adjusted <span class="fu">Bayesian</span> (BIC)        <span class="fl">15015.056</span></span></code></pre></div>
+<p>Std.all:</p>
 <ul>
-<li>Penalized -2 LogL</li>
-<li>If these are lower than some other model -&gt; prefer this model.</li>
-<li>If these are higher than some other model -&gt; prefer the other model.</li>
+<li>All factor variances are fixed as 1.0;</li>
+<li>Factor covariance is the same as factor correlation;</li>
+<li>All factor loadings and unique factor variances are re-estimated so that the model-implied variances of indicators are all 1.0;</li>
 </ul>
-<p>reproducing AIC/BIC:</p>
-<div class="sourceCode" id="cb506"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb506-1"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb506-1" aria-hidden="true" tabindex="-1"></a>logLik <span class="ot">=</span> <span class="sc">-</span><span class="fl">7483.272</span></span>
-<span id="cb506-2"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb506-2" aria-hidden="true" tabindex="-1"></a>q <span class="ot">=</span> <span class="dv">13</span> <span class="co"># (4 loadings + 6 unique factor variances + 3 factor var/covs)</span></span>
-<span id="cb506-3"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb506-3" aria-hidden="true" tabindex="-1"></a>N <span class="ot">=</span> <span class="dv">1000</span></span>
-<span id="cb506-4"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb506-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb506-5"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb506-5" aria-hidden="true" tabindex="-1"></a>(<span class="at">AIC =</span> <span class="sc">-</span><span class="dv">2</span><span class="sc">*</span>logLik <span class="sc">+</span> <span class="dv">2</span><span class="sc">*</span>q)</span></code></pre></div>
-<pre><code>## [1] 14992.54</code></pre>
-<div class="sourceCode" id="cb508"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb508-1"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb508-1" aria-hidden="true" tabindex="-1"></a>(<span class="at">BIC =</span> <span class="sc">-</span><span class="dv">2</span><span class="sc">*</span>logLik <span class="sc">+</span> <span class="fu">log</span>(N)<span class="sc">*</span>q)</span></code></pre></div>
-<pre><code>## [1] 15056.34</code></pre>
+<p>For example, under Std.all, the model-implied variance of glad is the sum of:</p>
+<ul>
+<li>Tracing 1: lam1*psi1*lam1 = 0.706*1.0*0.706 = 0.499</li>
+<li>Tracing 2: sig2_u1 = sig2_glad = 0.501</li>
+</ul>
+<p>which add to 1.0.</p>
+<p><a href="week14-lavaan-lab-16-latent-growth-models.html#exercise">Exercise</a> Why is 0.746 the loading of comfortable under Std.all?</p>
+<p>Under Std.all, the model-implied variance of comfortable is the sum of:</p>
+<ul>
+<li>Tracing 1:</li>
+<li>Tracing 2:</li>
+</ul>
+<p>Why the hassle?</p>
+<ul>
+<li>The solution is fully standardized so that squaring Std.all loadings is equivalent to the proportion of variance explained:</li>
+<li>0.706*0.706 (std.all)</li>
+<li>1.0*0.482*1.0/0.966 (fixed loading)</li>
+<li>0.694*1.0*0.694/0.966 (fixed variance; std.lv)</li>
+<li>= 49.9%</li>
+</ul>
 <!------------------------------>
 </div>
 </div>
-<div id="part-ii-exercise" class="section level2 hasAnchor" number="13.2">
-<h2><span class="header-section-number">13.2</span> PART II: Exercise<a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#part-ii-exercise" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="part-ii-two-factor-cfa-fixed-factor-variance" class="section level2 hasAnchor" number="9.3">
+<h2><span class="header-section-number">9.3</span> PART II: Two-Factor CFA, Fixed Factor Variance<a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#part-ii-two-factor-cfa-fixed-factor-variance" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!------------------------------>
-<p>For this portion, we will run the CFA analyses on a new simulated dataset based on Todd Little’s positive affect example.</p>
-<p>Read in the new dataset:</p>
-<div class="sourceCode" id="cb510"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb510-1"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb510-1" aria-hidden="true" tabindex="-1"></a>affectData_new <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;ChiStatSimDat.csv&quot;</span>, <span class="at">header =</span> T)</span></code></pre></div>
-<p>Examine the dataset:</p>
-<div class="sourceCode" id="cb511"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb511-1"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb511-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(affectData_new)</span></code></pre></div>
-<pre><code>##          glad   cheerful       happy    satisfied    content comfortable
-## 1 -0.88164396 0.08934146 -0.02412456 -0.570588909  0.3525594  0.59309666
-## 2 -0.05250507 0.68355268  0.74157736  0.146592063  0.5393570  1.12686970
-## 3  1.87921754 0.84984042  2.87784843  0.279073394  1.1723201  0.26855073
-## 4 -0.22371928 0.10069522 -0.19760745 -0.063127288 -1.1782493 -0.59893739
-## 5  0.17341853 0.26949455 -0.49326121  0.237083760 -1.0066170 -0.04426791
-## 6 -1.03348018 0.04250862 -1.00909832  0.009657695  0.4366756  0.05996283</code></pre>
-<p>Examine the covariance matrix:</p>
-<div class="sourceCode" id="cb513"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb513-1"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb513-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cov</span>(affectData_new)</span></code></pre></div>
-<pre><code>##                  glad  cheerful     happy satisfied  content comfortable
-## glad        1.4049090 0.9262102 1.3859992 1.1088378 1.200695   0.8715664
-## cheerful    0.9262102 1.1043581 1.0344850 0.8850550 1.053458   0.9513925
-## happy       1.3859992 1.0344850 1.7737439 1.2253205 1.233110   0.9317963
-## satisfied   1.1088378 0.8850550 1.2253205 1.6365917 1.496492   0.8626294
-## content     1.2006950 1.0534583 1.2331099 1.4964919 1.872718   1.0693608
-## comfortable 0.8715664 0.9513925 0.9317963 0.8626294 1.069361   1.3162770</code></pre>
-<p>all positive! (Remember that indicators need to be all positively correlated for CFA models?)</p>
-<div id="part-i-plot-the-distributions-of-all-indicators" class="section level3 hasAnchor" number="13.2.1">
-<h3><span class="header-section-number">13.2.1</span> PART I: Plot the distributions of all indicators<a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#part-i-plot-the-distributions-of-all-indicators" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb515"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb515-1"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb515-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(PerformanceAnalytics)</span>
-<span id="cb515-2"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb515-2" aria-hidden="true" tabindex="-1"></a><span class="fu">chart.Correlation</span>(affectData_new)</span></code></pre></div>
-<pre><code>## Warning in par(usr): argument 1 does not name a graphical parameter
-
-## Warning in par(usr): argument 1 does not name a graphical parameter
-
-## Warning in par(usr): argument 1 does not name a graphical parameter
-
-## Warning in par(usr): argument 1 does not name a graphical parameter
-
-## Warning in par(usr): argument 1 does not name a graphical parameter
-
-## Warning in par(usr): argument 1 does not name a graphical parameter
-
-## Warning in par(usr): argument 1 does not name a graphical parameter
-
-## Warning in par(usr): argument 1 does not name a graphical parameter
-
-## Warning in par(usr): argument 1 does not name a graphical parameter
-
-## Warning in par(usr): argument 1 does not name a graphical parameter
-
-## Warning in par(usr): argument 1 does not name a graphical parameter
-
-## Warning in par(usr): argument 1 does not name a graphical parameter
-
-## Warning in par(usr): argument 1 does not name a graphical parameter
-
-## Warning in par(usr): argument 1 does not name a graphical parameter
-
-## Warning in par(usr): argument 1 does not name a graphical parameter</code></pre>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-295-1.png" width="672" /></p>
-<p>all indicators look roughly normal</p>
-</div>
-<div id="part-ii-write-out-the-model-syntax-for-two-factor-model" class="section level3 hasAnchor" number="13.2.2">
-<h3><span class="header-section-number">13.2.2</span> PART II: Write out the model syntax for two-factor model<a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#part-ii-write-out-the-model-syntax-for-two-factor-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb517"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb517-1"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb517-1" aria-hidden="true" tabindex="-1"></a>twofa.model <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
-<span id="cb517-2"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb517-2" aria-hidden="true" tabindex="-1"></a><span class="st">    #Factor Specification   </span></span>
-<span id="cb517-3"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb517-3" aria-hidden="true" tabindex="-1"></a><span class="st">    posAffect =~ glad + happy + cheerful </span></span>
-<span id="cb517-4"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb517-4" aria-hidden="true" tabindex="-1"></a><span class="st">    satisfaction =~ satisfied + content + comfortable  </span></span>
-<span id="cb517-5"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb517-5" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
-</div>
-<div id="part-iii-fit-the-two-factor-model" class="section level3 hasAnchor" number="13.2.3">
-<h3><span class="header-section-number">13.2.3</span> PART III: Fit the two-factor model<a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#part-iii-fit-the-two-factor-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb518"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb518-1"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb518-1" aria-hidden="true" tabindex="-1"></a>new_fit <span class="ot">=</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(twofa.model, <span class="at">data =</span> affectData_new, <span class="at">fixed.x=</span><span class="cn">FALSE</span>)</span>
-<span id="cb518-2"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb518-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(new_fit, <span class="at">standardized =</span> T, <span class="at">fit.measures =</span> T)</span></code></pre></div>
-<pre><code>## lavaan 0.6-12 ended normally after 29 iterations
+<div id="fixed-factor-method-1" class="section level3 hasAnchor" number="9.3.1">
+<h3><span class="header-section-number">9.3.1</span> Fixed Factor Method<a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#fixed-factor-method-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Keep using the same syntax but assign a new name:</p>
+<div class="sourceCode" id="cb394"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb394-1"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb394-1" aria-hidden="true" tabindex="-1"></a>fixedFacTwoFacSyntax <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
+<span id="cb394-2"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb394-2" aria-hidden="true" tabindex="-1"></a><span class="st">    #Factor Specification   </span></span>
+<span id="cb394-3"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb394-3" aria-hidden="true" tabindex="-1"></a><span class="st">    posAffect =~ glad + happy + cheerful </span></span>
+<span id="cb394-4"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb394-4" aria-hidden="true" tabindex="-1"></a><span class="st">    satisfaction =~ satisfied + content + comfortable</span></span>
+<span id="cb394-5"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb394-5" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
+<p>To fix the variance of the latent variable to 1, add std.lv=T to sem() function:</p>
+<div class="sourceCode" id="cb395"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb395-1"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb395-1" aria-hidden="true" tabindex="-1"></a>fixedFacTwoFacRun <span class="ot">=</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> fixedFacTwoFacSyntax, </span>
+<span id="cb395-2"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb395-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">data =</span> cfaData, </span>
+<span id="cb395-3"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb395-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">fixed.x=</span><span class="cn">FALSE</span>, </span>
+<span id="cb395-4"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb395-4" aria-hidden="true" tabindex="-1"></a>                        <span class="at">std.lv=</span>T)</span></code></pre></div>
+<p>Get a summary using summary() function, add standardized=T to request standardized parameter estimates</p>
+<div class="sourceCode" id="cb396"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb396-1"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb396-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fixedFacTwoFacRun, <span class="at">standardized=</span>T)</span></code></pre></div>
+<pre><code>## lavaan 0.6-12 ended normally after 16 iterations
 ## 
 ##   Estimator                                         ML
 ##   Optimization method                           NLMINB
 ##   Number of model parameters                        13
 ## 
-##   Number of observations                           200
+##   Number of observations                          1000
 ## 
 ## Model Test User Model:
 ##                                                       
-##   Test statistic                               113.638
+##   Test statistic                                 2.957
 ##   Degrees of freedom                                 8
-##   P-value (Chi-square)                           0.000
-## 
-## Model Test Baseline Model:
-## 
-##   Test statistic                              1168.055
-##   Degrees of freedom                                15
-##   P-value                                        0.000
-## 
-## User Model versus Baseline Model:
-## 
-##   Comparative Fit Index (CFI)                    0.908
-##   Tucker-Lewis Index (TLI)                       0.828
-## 
-## Loglikelihood and Information Criteria:
-## 
-##   Loglikelihood user model (H0)              -1413.224
-##   Loglikelihood unrestricted model (H1)      -1356.405
-##                                                       
-##   Akaike (AIC)                                2852.449
-##   Bayesian (BIC)                              2895.327
-##   Sample-size adjusted Bayesian (BIC)         2854.141
-## 
-## Root Mean Square Error of Approximation:
-## 
-##   RMSEA                                          0.257
-##   90 Percent confidence interval - lower         0.216
-##   90 Percent confidence interval - upper         0.300
-##   P-value RMSEA &lt;= 0.05                          0.000
-## 
-## Standardized Root Mean Square Residual:
-## 
-##   SRMR                                           0.070
+##   P-value (Chi-square)                           0.937
 ## 
 ## Parameter Estimates:
 ## 
@@ -862,62 +864,73 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Latent Variables:
 ##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
 ##   posAffect =~                                                          
-##     glad              1.000                               1.115    0.943
-##     happy             1.095    0.048   22.882    0.000    1.221    0.919
-##     cheerful          0.763    0.046   16.739    0.000    0.851    0.812
+##     glad              0.694    0.030   22.878    0.000    0.694    0.706
+##     happy             0.740    0.030   24.806    0.000    0.740    0.758
+##     cheerful          0.772    0.030   25.798    0.000    0.772    0.785
 ##   satisfaction =~                                                       
-##     satisfied         1.000                               1.152    0.902
-##     content           1.110    0.054   20.462    0.000    1.278    0.936
-##     comfortable       0.715    0.057   12.548    0.000    0.823    0.719
+##     satisfied         0.773    0.030   25.373    0.000    0.773    0.767
+##     content           0.826    0.033   25.207    0.000    0.826    0.762
+##     comfortable       0.709    0.029   24.584    0.000    0.709    0.746
 ## 
 ## Covariances:
 ##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
 ##   posAffect ~~                                                          
-##     satisfaction      1.104    0.131    8.425    0.000    0.859    0.859
+##     satisfaction      0.488    0.032   15.097    0.000    0.488    0.488
 ## 
 ## Variances:
 ##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .glad              0.154    0.031    4.966    0.000    0.154    0.110
-##    .happy             0.274    0.043    6.398    0.000    0.274    0.155
-##    .cheerful          0.374    0.042    8.851    0.000    0.374    0.341
-##    .satisfied         0.302    0.047    6.492    0.000    0.302    0.186
-##    .content           0.230    0.048    4.742    0.000    0.230    0.123
-##    .comfortable       0.632    0.068    9.253    0.000    0.632    0.482
-##     posAffect         1.244    0.142    8.790    0.000    1.000    1.000
-##     satisfaction      1.326    0.164    8.093    0.000    1.000    1.000</code></pre>
-</div>
-<div id="part-iv-interpret-the-chisquare-statistic-and-fit-indices" class="section level3 hasAnchor" number="13.2.4">
-<h3><span class="header-section-number">13.2.4</span> PART IV: Interpret the chisquare statistic and fit indices<a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#part-iv-interpret-the-chisquare-statistic-and-fit-indices" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb520"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb520-1"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb520-1" aria-hidden="true" tabindex="-1"></a>Model Test User Model<span class="sc">:</span></span>
-<span id="cb520-2"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb520-2" aria-hidden="true" tabindex="-1"></a>                                                      </span>
-<span id="cb520-3"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb520-3" aria-hidden="true" tabindex="-1"></a>  Test statistic                               <span class="fl">113.638</span></span>
-<span id="cb520-4"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb520-4" aria-hidden="true" tabindex="-1"></a>  Degrees of freedom                                 <span class="dv">8</span></span>
-<span id="cb520-5"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb520-5" aria-hidden="true" tabindex="-1"></a>  P<span class="sc">-</span><span class="fu">value</span> (Chi<span class="sc">-</span>square)                           <span class="fl">0.000</span></span></code></pre></div>
+##    .glad              0.484    0.029   16.647    0.000    0.484    0.501
+##    .happy             0.405    0.028   14.389    0.000    0.405    0.425
+##    .cheerful          0.371    0.029   13.004    0.000    0.371    0.384
+##    .satisfied         0.419    0.029   14.326    0.000    0.419    0.412
+##    .content           0.491    0.034   14.542    0.000    0.491    0.419
+##    .comfortable       0.400    0.026   15.315    0.000    0.400    0.443
+##     posAffect         1.000                               1.000    1.000
+##     satisfaction      1.000                               1.000    1.000</code></pre>
+<div class="sourceCode" id="cb398"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb398-1"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb398-1" aria-hidden="true" tabindex="-1"></a> df <span class="ot">=</span> <span class="dv">8</span>  <span class="co"># same!</span></span>
+<span id="cb398-2"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb398-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb398-3"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb398-3" aria-hidden="true" tabindex="-1"></a>Latent Variables<span class="sc">:</span></span>
+<span id="cb398-4"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb398-4" aria-hidden="true" tabindex="-1"></a>                   Estimate  Std.Err  z<span class="sc">-</span>value  <span class="fu">P</span>(<span class="sc">&gt;</span><span class="er">|</span>z<span class="sc">|</span>)   Std.lv  Std.all</span>
+<span id="cb398-5"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb398-5" aria-hidden="true" tabindex="-1"></a>  posAffect <span class="ot">=</span><span class="er">~</span>                                                          </span>
+<span id="cb398-6"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb398-6" aria-hidden="true" tabindex="-1"></a>    glad              <span class="fl">0.694</span>    <span class="fl">0.030</span>   <span class="fl">22.878</span>    <span class="fl">0.000</span>    <span class="fl">0.694</span>    <span class="fl">0.706</span></span>
+<span id="cb398-7"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb398-7" aria-hidden="true" tabindex="-1"></a>    happy             <span class="fl">0.740</span>    <span class="fl">0.030</span>   <span class="fl">24.806</span>    <span class="fl">0.000</span>    <span class="fl">0.740</span>    <span class="fl">0.758</span></span>
+<span id="cb398-8"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb398-8" aria-hidden="true" tabindex="-1"></a>    cheerful          <span class="fl">0.772</span>    <span class="fl">0.030</span>   <span class="fl">25.798</span>    <span class="fl">0.000</span>    <span class="fl">0.772</span>    <span class="fl">0.785</span></span>
+<span id="cb398-9"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb398-9" aria-hidden="true" tabindex="-1"></a>  satisfaction <span class="ot">=</span><span class="er">~</span>                                                       </span>
+<span id="cb398-10"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb398-10" aria-hidden="true" tabindex="-1"></a>    satisfied         <span class="fl">0.773</span>    <span class="fl">0.030</span>   <span class="fl">25.373</span>    <span class="fl">0.000</span>    <span class="fl">0.773</span>    <span class="fl">0.767</span></span>
+<span id="cb398-11"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb398-11" aria-hidden="true" tabindex="-1"></a>    content           <span class="fl">0.826</span>    <span class="fl">0.033</span>   <span class="fl">25.207</span>    <span class="fl">0.000</span>    <span class="fl">0.826</span>    <span class="fl">0.762</span></span>
+<span id="cb398-12"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb398-12" aria-hidden="true" tabindex="-1"></a>    comfortable       <span class="fl">0.709</span>    <span class="fl">0.029</span>   <span class="fl">24.584</span>    <span class="fl">0.000</span>    <span class="fl">0.709</span>    <span class="fl">0.746</span></span></code></pre></div>
 <ul>
-<li>113.638 is much larger than df=8 and the p-value is 0.000&lt;0.05,</li>
-<li>This chisquare is too large and the model is a poor fit.</li>
-</ul>
-<div class="sourceCode" id="cb521"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb521-1"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb521-1" aria-hidden="true" tabindex="-1"></a>Root Mean Square Error of Approximation<span class="sc">:</span></span>
-<span id="cb521-2"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb521-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb521-3"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb521-3" aria-hidden="true" tabindex="-1"></a>  RMSEA                                          <span class="fl">0.257</span></span>
-<span id="cb521-4"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb521-4" aria-hidden="true" tabindex="-1"></a>  <span class="dv">90</span> Percent confidence interval <span class="sc">-</span> lower         <span class="fl">0.216</span></span>
-<span id="cb521-5"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb521-5" aria-hidden="true" tabindex="-1"></a>  <span class="dv">90</span> Percent confidence interval <span class="sc">-</span> upper         <span class="fl">0.300</span></span>
-<span id="cb521-6"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb521-6" aria-hidden="true" tabindex="-1"></a>  P<span class="sc">-</span>value RMSEA <span class="sc">&lt;=</span> <span class="fl">0.05</span>                          <span class="fl">0.000</span></span>
-<span id="cb521-7"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb521-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb521-8"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb521-8" aria-hidden="true" tabindex="-1"></a>Standardized Root Mean Square Residual<span class="sc">:</span></span>
-<span id="cb521-9"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb521-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb521-10"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb521-10" aria-hidden="true" tabindex="-1"></a>  SRMR                                           <span class="fl">0.070</span></span>
-<span id="cb521-11"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb521-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb521-12"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb521-12" aria-hidden="true" tabindex="-1"></a>User Model versus Baseline Model<span class="sc">:</span></span>
-<span id="cb521-13"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb521-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb521-14"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb521-14" aria-hidden="true" tabindex="-1"></a>  Comparative Fit <span class="fu">Index</span> (CFI)                    <span class="fl">0.908</span></span>
-<span id="cb521-15"><a href="week11_1-lavaan-lab-10-model-fit-part-ii-fit-indices.html#cb521-15" aria-hidden="true" tabindex="-1"></a>  Tucker<span class="sc">-</span>Lewis <span class="fu">Index</span> (TLI)                       <span class="fl">0.828</span></span></code></pre></div>
+<li>1-SD change in the factor (posAffect) causes:
 <ul>
-<li>RMSEA = 0.257 &gt;&gt; 0.1. The lower bound of the confidence interval is also larger than 0.1. This indicates a poor fit.</li>
-<li>P-value RMSEA &lt;= 0.05: sig - close fit null hypothesis rejected.</li>
-<li>SRMR = 0.07 &lt; 0.08, meaning that the average standardized residual between S and Sigma is no larger than 0.08, but SRMR is known to be lenient (i.e., low SRMR =/= good models, but high SRMR = bad models).</li>
-<li>90.8% improvement over the null model … marginal fit</li>
+<li>0.694-unit change in glad (on its raw scale)</li>
+<li>0.740-unit change in happy (on its raw scale)</li>
+<li>0.772-unit change in cheerful (on its raw scale)</li>
+</ul></li>
+<li>1-SD change in the factor (satisfaction) causes:
+<ul>
+<li>0.773-unit change in satisfied (on its raw scale)</li>
+<li>0.826-unit change in content (on its raw scale)</li>
+<li>0.709-unit change in comfortable (on its raw scale)</li>
+</ul></li>
 </ul>
+<div class="sourceCode" id="cb399"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb399-1"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb399-1" aria-hidden="true" tabindex="-1"></a> Covariances<span class="sc">:</span></span>
+<span id="cb399-2"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb399-2" aria-hidden="true" tabindex="-1"></a>                    Estimate  Std.Err  z<span class="sc">-</span>value  <span class="fu">P</span>(<span class="sc">&gt;</span><span class="er">|</span>z<span class="sc">|</span>)   Std.lv  Std.all</span>
+<span id="cb399-3"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb399-3" aria-hidden="true" tabindex="-1"></a>   posAffect <span class="sc">~</span><span class="er">~</span>                                                          </span>
+<span id="cb399-4"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb399-4" aria-hidden="true" tabindex="-1"></a>     satisfaction      <span class="fl">0.262</span>    <span class="fl">0.025</span>   <span class="fl">10.284</span>    <span class="fl">0.000</span>    <span class="fl">0.488</span>    <span class="fl">0.488</span></span>
+<span id="cb399-5"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb399-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb399-6"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb399-6" aria-hidden="true" tabindex="-1"></a>Variances<span class="sc">:</span></span>
+<span id="cb399-7"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb399-7" aria-hidden="true" tabindex="-1"></a>                    Estimate  Std.Err  z<span class="sc">-</span>value  <span class="fu">P</span>(<span class="sc">&gt;</span><span class="er">|</span>z<span class="sc">|</span>)   Std.lv  Std.all</span>
+<span id="cb399-8"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb399-8" aria-hidden="true" tabindex="-1"></a>    .glad              <span class="fl">0.484</span>    <span class="fl">0.029</span>   <span class="fl">16.647</span>    <span class="fl">0.000</span>    <span class="fl">0.484</span>    <span class="fl">0.501</span></span>
+<span id="cb399-9"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb399-9" aria-hidden="true" tabindex="-1"></a>    .happy             <span class="fl">0.405</span>    <span class="fl">0.028</span>   <span class="fl">14.389</span>    <span class="fl">0.000</span>    <span class="fl">0.405</span>    <span class="fl">0.425</span></span>
+<span id="cb399-10"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb399-10" aria-hidden="true" tabindex="-1"></a>    .cheerful          <span class="fl">0.371</span>    <span class="fl">0.029</span>   <span class="fl">13.004</span>    <span class="fl">0.000</span>    <span class="fl">0.371</span>    <span class="fl">0.384</span></span>
+<span id="cb399-11"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb399-11" aria-hidden="true" tabindex="-1"></a>    .satisfied         <span class="fl">0.419</span>    <span class="fl">0.029</span>   <span class="fl">14.326</span>    <span class="fl">0.000</span>    <span class="fl">0.419</span>    <span class="fl">0.412</span></span>
+<span id="cb399-12"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb399-12" aria-hidden="true" tabindex="-1"></a>    .content           <span class="fl">0.491</span>    <span class="fl">0.034</span>   <span class="fl">14.542</span>    <span class="fl">0.000</span>    <span class="fl">0.491</span>    <span class="fl">0.419</span></span>
+<span id="cb399-13"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb399-13" aria-hidden="true" tabindex="-1"></a>    .comfortable       <span class="fl">0.400</span>    <span class="fl">0.026</span>   <span class="fl">15.315</span>    <span class="fl">0.000</span>    <span class="fl">0.400</span>    <span class="fl">0.443</span></span></code></pre></div>
+<p>remain unchanged.</p>
+<p>Followed by two factor variances.</p>
+<div class="sourceCode" id="cb400"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb400-1"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb400-1" aria-hidden="true" tabindex="-1"></a>                    Estimate  Std.Err  z<span class="sc">-</span>value  <span class="fu">P</span>(<span class="sc">&gt;</span><span class="er">|</span>z<span class="sc">|</span>)   Std.lv  Std.all</span>
+<span id="cb400-2"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb400-2" aria-hidden="true" tabindex="-1"></a>    posAffect         <span class="fl">1.000</span>                               <span class="fl">1.000</span>    <span class="fl">1.000</span></span>
+<span id="cb400-3"><a href="week9_1-lavaan-lab-6-two-factor-cfa-model.html#cb400-3" aria-hidden="true" tabindex="-1"></a>    satisfaction      <span class="fl">1.000</span>                               <span class="fl">1.000</span>    <span class="fl">1.000</span></span></code></pre></div>
 
 </div>
 </div>
@@ -927,8 +940,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="week10_2-lavaan-lab-9-model-fit-part-i-test-statistics.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="week8_2-lavaan-lab-7-two-factor-sr-model.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

@@ -1,4 +1,4 @@
-# Week5_2: Lavaan Lab 3 Moderation and Conditional Effects
+# Week6_1: Lavaan Lab 3 Moderation and Conditional Effects
 
 In this lab, we will learn how to: 
 
@@ -47,6 +47,7 @@ Multiple ways to accomplish this:
 cov(cbtData[,-c(1,2,5,7)])
 cov(cbtData[,c(3,4,6)])
 cov(cbtData[,c("CBTDummy", "NeedCog", "Depression")])
+cor(cbtData[,c("CBTDummy", "NeedCog", "Depression")])
 ```
 
 let's round this to two decimals
