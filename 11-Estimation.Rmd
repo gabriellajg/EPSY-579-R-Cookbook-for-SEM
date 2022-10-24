@@ -169,6 +169,16 @@ coefTable = cbind(coefTable,
 coefTable
 ```
 
+### Compare the standard errors:
+
+```{r}
+seTable = parameterEstimates(two_fac_fit_ml)[,1:3]
+seTable = cbind(seTable, 
+                  ML = parameterEstimates(two_fac_fit_ml)$se, 
+                  ULS = parameterEstimates(two_fac_fit_uls)$se, 
+                  WLS = parameterEstimates(two_fac_fit_wls)$se)
+seTable
+```
 
 
 <!------------------------------>
@@ -177,15 +187,16 @@ coefTable
 
 Going back to the 1-factor toy example...
 
-Suppose we have a new covariance matrix now: 
+Suppose we have a new covariance matrix now and a super large sample size (n = 200000000): 
 
 ```{r}
+n = 200000000
 S_3fac_new = matrix(c(5, 1, 3.5, 1, 3, 2, 3.5, 2, 6), 3, 3, 
                     dimnames = list(c('Y1', 'Y2', 'Y3'), c('Y1', 'Y2', 'Y3')))
 S_3fac_new
 ```
 
-The one-factor syntax is still:
+The one-factor syntax is the same:
 
 ```{r}
 one_fac_syntax <- "
@@ -202,10 +213,9 @@ one_fac_fit_new <- lavaan::sem(one_fac_syntax,
                     estimator = "ML", 
                     fixed.x = FALSE)
 ```
-
 + lavaan WARNING: some estimated ov variances are negative
 + negative residual variances
-+ ULS doesn't help either
++ changing the estimation from ML to ULS doesn't help
 
 ```{r}
 summary(one_fac_fit_new, standardized = T)
@@ -232,3 +242,10 @@ one_fac_fit_new2 <- lavaan::sem(one_fac_syntax_const,
                        fixed.x = FALSE)
 summary(one_fac_fit_new2, standardized = T)
 ```
+
+```{r}
+fitted(one_fac_fit_new)$cov # perfect
+fitted(one_fac_fit_new2)$cov # compromised, at the cost of model fit 
+S_3fac_new
+```
+

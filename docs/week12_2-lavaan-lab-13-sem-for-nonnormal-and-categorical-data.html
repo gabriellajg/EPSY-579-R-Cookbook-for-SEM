@@ -312,6 +312,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="11.4.1" data-path="week8_2-lavaan-lab-8-estimation-methods.html"><a href="week8_2-lavaan-lab-8-estimation-methods.html#ml-estimation"><i class="fa fa-check"></i><b>11.4.1</b> ML Estimation</a></li>
 <li class="chapter" data-level="11.4.2" data-path="week8_2-lavaan-lab-8-estimation-methods.html"><a href="week8_2-lavaan-lab-8-estimation-methods.html#wls-estimation"><i class="fa fa-check"></i><b>11.4.2</b> WLS Estimation</a></li>
 <li class="chapter" data-level="11.4.3" data-path="week8_2-lavaan-lab-8-estimation-methods.html"><a href="week8_2-lavaan-lab-8-estimation-methods.html#compare-the-parameter-estimates"><i class="fa fa-check"></i><b>11.4.3</b> Compare the parameter estimates</a></li>
+<li class="chapter" data-level="11.4.4" data-path="week8_2-lavaan-lab-8-estimation-methods.html"><a href="week8_2-lavaan-lab-8-estimation-methods.html#compare-the-standard-errors"><i class="fa fa-check"></i><b>11.4.4</b> Compare the standard errors:</a></li>
 </ul></li>
 <li class="chapter" data-level="11.5" data-path="week8_2-lavaan-lab-8-estimation-methods.html"><a href="week8_2-lavaan-lab-8-estimation-methods.html#part-v-improper-solutions"><i class="fa fa-check"></i><b>11.5</b> PART V: Improper Solutions</a></li>
 </ul></li>
@@ -506,44 +507,60 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data" class="section level1 hasAnchor" number="16">
 <h1><span class="header-section-number">Chapter 16</span> Week12_2: Lavaan Lab 13 SEM for Nonnormal and Categorical Data<a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Load up the lavaan library:</p>
-<div class="sourceCode" id="cb590"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb590-1"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb590-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span></code></pre></div>
+<div class="sourceCode" id="cb603"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb603-1"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb603-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span></code></pre></div>
 <!------------------------------>
 <div id="part-i-nonnormality-diagnosis" class="section level2 hasAnchor" number="16.1">
 <h2><span class="header-section-number">16.1</span> PART I: Nonnormality Diagnosis<a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#part-i-nonnormality-diagnosis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!------------------------------>
 <p>Let’s first load the simulated non-normal data and look at the normality/nonnormality of the items:</p>
-<div class="sourceCode" id="cb591"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb591-1"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb591-1" aria-hidden="true" tabindex="-1"></a>nnorm_dat <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;nonnormal.csv&quot;</span>, <span class="at">header =</span> T)</span>
-<span id="cb591-2"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb591-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(nnorm_dat)</span></code></pre></div>
-<pre><code>##       odd1       odd2        odd3       odd4       odd5      odd6       odd7       odd8
-## 1 1.455398  1.1968135 -0.52181159 -1.9651704 -4.2353119 1.0959168  1.1434283 -0.4393833
-## 2 6.517492  2.7962582  0.56780460  4.6117031  5.0850284 1.4194502  1.3925536  5.2085814
-## 3 2.047266 -2.1148975 -1.35879880  0.6664211  3.1903653 2.0040147  0.5134188  0.2114613
-## 4 8.251226  4.9818940 10.29910350  7.5773213  0.2595174 1.8953510 -2.5800594 -2.0036514
-## 5 3.553213  4.7921231  2.44286008  1.4219472  0.5007659 1.2665319  0.4181851  1.1586593
-## 6 2.728876 -0.3436493  0.07283766 -1.8742132 -3.0228869 0.5607386 -0.7374122 -0.3249854</code></pre>
-<div class="sourceCode" id="cb593"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb593-1"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb593-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>)) <span class="co">#opens graph window with 2 rows 2 columns</span></span>
-<span id="cb593-2"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb593-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(nnorm_dat<span class="sc">$</span>odd5)</span>
-<span id="cb593-3"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb593-3" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(nnorm_dat<span class="sc">$</span>odd6)</span>
-<span id="cb593-4"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb593-4" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(nnorm_dat<span class="sc">$</span>odd7)</span>
-<span id="cb593-5"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb593-5" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(nnorm_dat<span class="sc">$</span>odd8)</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-341-1.png" width="672" /></p>
+<div class="sourceCode" id="cb604"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb604-1"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb604-1" aria-hidden="true" tabindex="-1"></a>nnorm_dat <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;nonnormal.csv&quot;</span>, <span class="at">header =</span> T)</span>
+<span id="cb604-2"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb604-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(nnorm_dat)</span></code></pre></div>
+<pre><code>##       odd1       odd2        odd3       odd4       odd5      odd6
+## 1 1.455398  1.1968135 -0.52181159 -1.9651704 -4.2353119 1.0959168
+## 2 6.517492  2.7962582  0.56780460  4.6117031  5.0850284 1.4194502
+## 3 2.047266 -2.1148975 -1.35879880  0.6664211  3.1903653 2.0040147
+## 4 8.251226  4.9818940 10.29910350  7.5773213  0.2595174 1.8953510
+## 5 3.553213  4.7921231  2.44286008  1.4219472  0.5007659 1.2665319
+## 6 2.728876 -0.3436493  0.07283766 -1.8742132 -3.0228869 0.5607386
+##         odd7       odd8
+## 1  1.1434283 -0.4393833
+## 2  1.3925536  5.2085814
+## 3  0.5134188  0.2114613
+## 4 -2.5800594 -2.0036514
+## 5  0.4181851  1.1586593
+## 6 -0.7374122 -0.3249854</code></pre>
+<div class="sourceCode" id="cb606"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb606-1"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb606-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>)) <span class="co">#opens graph window with 2 rows 2 columns</span></span>
+<span id="cb606-2"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb606-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(nnorm_dat<span class="sc">$</span>odd5)</span>
+<span id="cb606-3"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb606-3" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(nnorm_dat<span class="sc">$</span>odd6)</span>
+<span id="cb606-4"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb606-4" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(nnorm_dat<span class="sc">$</span>odd7)</span>
+<span id="cb606-5"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb606-5" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(nnorm_dat<span class="sc">$</span>odd8)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-346-1.png" width="672" /></p>
 <p>Use describe() function from the psych package to get univariate descriptives:</p>
-<div class="sourceCode" id="cb594"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb594-1"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb594-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages(&quot;psych&quot;)</span></span>
-<span id="cb594-2"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb594-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(psych)</span>
-<span id="cb594-3"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb594-3" aria-hidden="true" tabindex="-1"></a><span class="fu">describe</span>(nnorm_dat)</span></code></pre></div>
-<pre><code>##      vars    n mean   sd median trimmed  mad    min   max range  skew kurtosis   se
-## odd1    1 1000 1.23 2.19   1.18    1.17 1.49  -9.50 18.41 27.91  0.87     7.77 0.07
-## odd2    2 1000 0.91 2.18   0.87    0.89 1.65 -12.49 17.81 30.30  0.45     7.07 0.07
-## odd3    3 1000 1.05 2.21   1.02    1.03 1.41 -18.10 22.44 40.55  0.58    18.62 0.07
-## odd4    4 1000 0.65 2.19   0.55    0.62 1.64 -18.04 12.43 30.47 -0.39     8.35 0.07
-## odd5    5 1000 0.46 2.24   0.56    0.53 1.66 -16.83  7.79 24.62 -0.99     6.17 0.07
-## odd6    6 1000 0.54 2.32   0.63    0.62 1.59 -24.87 12.98 37.84 -2.37    24.73 0.07
-## odd7    7 1000 0.26 1.91   0.23    0.28 1.32 -12.30 16.58 28.87  0.07    12.23 0.06
-## odd8    8 1000 0.28 1.89   0.24    0.28 1.33  -8.26 12.64 20.90  0.39     6.23 0.06</code></pre>
+<div class="sourceCode" id="cb607"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb607-1"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb607-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages(&quot;psych&quot;)</span></span>
+<span id="cb607-2"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb607-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(psych)</span>
+<span id="cb607-3"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb607-3" aria-hidden="true" tabindex="-1"></a><span class="fu">describe</span>(nnorm_dat)</span></code></pre></div>
+<pre><code>##      vars    n mean   sd median trimmed  mad    min   max range  skew
+## odd1    1 1000 1.23 2.19   1.18    1.17 1.49  -9.50 18.41 27.91  0.87
+## odd2    2 1000 0.91 2.18   0.87    0.89 1.65 -12.49 17.81 30.30  0.45
+## odd3    3 1000 1.05 2.21   1.02    1.03 1.41 -18.10 22.44 40.55  0.58
+## odd4    4 1000 0.65 2.19   0.55    0.62 1.64 -18.04 12.43 30.47 -0.39
+## odd5    5 1000 0.46 2.24   0.56    0.53 1.66 -16.83  7.79 24.62 -0.99
+## odd6    6 1000 0.54 2.32   0.63    0.62 1.59 -24.87 12.98 37.84 -2.37
+## odd7    7 1000 0.26 1.91   0.23    0.28 1.32 -12.30 16.58 28.87  0.07
+## odd8    8 1000 0.28 1.89   0.24    0.28 1.33  -8.26 12.64 20.90  0.39
+##      kurtosis   se
+## odd1     7.77 0.07
+## odd2     7.07 0.07
+## odd3    18.62 0.07
+## odd4     8.35 0.07
+## odd5     6.17 0.07
+## odd6    24.73 0.07
+## odd7    12.23 0.06
+## odd8     6.23 0.06</code></pre>
 <p>Use mardia() from the psych package to test multivariate normality:</p>
-<div class="sourceCode" id="cb596"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb596-1"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb596-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>)) <span class="co">#opens graph window</span></span>
-<span id="cb596-2"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb596-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mardia</span>(nnorm_dat)</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-343-1.png" width="672" /></p>
+<div class="sourceCode" id="cb609"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb609-1"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb609-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>)) <span class="co">#opens graph window</span></span>
+<span id="cb609-2"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb609-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mardia</span>(nnorm_dat)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-348-1.png" width="672" /></p>
 <pre><code>## Call: mardia(x = nnorm_dat)
 ## 
 ## Mardia tests of multivariate skew and kurtosis
@@ -559,16 +576,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">16.2</span> PART II: Robust corrections<a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#part-ii-robust-corrections" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!------------------------------>
 <p>Write out syntax for a one-factor CFA model:</p>
-<div class="sourceCode" id="cb598"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb598-1"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb598-1" aria-hidden="true" tabindex="-1"></a>cfaSyn <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
-<span id="cb598-2"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb598-2" aria-hidden="true" tabindex="-1"></a><span class="st">    odd =~ odd1 + odd2 + odd3 + odd4 + odd5 + odd6 + odd7 + odd8</span></span>
-<span id="cb598-3"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb598-3" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb611"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb611-1"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb611-1" aria-hidden="true" tabindex="-1"></a>cfaSyn <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
+<span id="cb611-2"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb611-2" aria-hidden="true" tabindex="-1"></a><span class="st">    odd =~ odd1 + odd2 + odd3 + odd4 + odd5 + odd6 + odd7 + odd8</span></span>
+<span id="cb611-3"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb611-3" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
 <p>Fit the one-factor model:</p>
-<div class="sourceCode" id="cb599"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb599-1"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb599-1" aria-hidden="true" tabindex="-1"></a>mlrFit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(cfaSyn, </span>
-<span id="cb599-2"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb599-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">data =</span> nnorm_dat, </span>
-<span id="cb599-3"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb599-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">fixed.x =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb599-4"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb599-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">estimator =</span> <span class="st">&quot;mlr&quot;</span>)</span>
-<span id="cb599-5"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb599-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb599-6"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb599-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mlrFit, <span class="at">fit.measure =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb612"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb612-1"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb612-1" aria-hidden="true" tabindex="-1"></a>mlrFit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(cfaSyn, </span>
+<span id="cb612-2"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb612-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">data =</span> nnorm_dat, </span>
+<span id="cb612-3"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb612-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">fixed.x =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb612-4"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb612-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">estimator =</span> <span class="st">&quot;mlr&quot;</span>)</span>
+<span id="cb612-5"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb612-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb612-6"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb612-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mlrFit, <span class="at">fit.measure =</span> T)</span></code></pre></div>
 <pre><code>## lavaan 0.6-12 ended normally after 34 iterations
 ## 
 ##   Estimator                                         ML
@@ -663,8 +680,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">16.3</span> PART III: Categorical Data Analysis in Lavaan<a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#part-iii-categorical-data-analysis-in-lavaan" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!------------------------------>
 <p>Let’s load the simulated data in which ODD items are ordinal:</p>
-<div class="sourceCode" id="cb601"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb601-1"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb601-1" aria-hidden="true" tabindex="-1"></a>odd <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;oddData.csv&quot;</span>, <span class="at">header =</span> T)</span>
-<span id="cb601-2"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb601-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(odd)</span></code></pre></div>
+<div class="sourceCode" id="cb614"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb614-1"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb614-1" aria-hidden="true" tabindex="-1"></a>odd <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;oddData.csv&quot;</span>, <span class="at">header =</span> T)</span>
+<span id="cb614-2"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb614-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(odd)</span></code></pre></div>
 <pre><code>##   id odd1 odd2 odd3 odd4 odd5 odd6 odd7 odd8
 ## 1  4    1    1    1    1    1    0    0    0
 ## 2  7    2    0    1    0    0    0    1    0
@@ -673,22 +690,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 5 37    1    1    1    0    0    0    0    0
 ## 6 39    1    1    1    0    0    1    1    0</code></pre>
 <p>Write out syntax for a one-factor CFA model:</p>
-<div class="sourceCode" id="cb603"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb603-1"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb603-1" aria-hidden="true" tabindex="-1"></a>oddOneFac <span class="ot">=</span> <span class="st">&#39;</span></span>
-<span id="cb603-2"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb603-2" aria-hidden="true" tabindex="-1"></a><span class="st">    #Specify Overall Odd Factor</span></span>
-<span id="cb603-3"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb603-3" aria-hidden="true" tabindex="-1"></a><span class="st">    odd  =~ odd1 + odd2 + odd3 + odd4 + odd5 + odd6 + odd7 + odd8</span></span>
-<span id="cb603-4"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb603-4" aria-hidden="true" tabindex="-1"></a><span class="st">    &#39;</span></span></code></pre></div>
+<div class="sourceCode" id="cb616"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb616-1"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb616-1" aria-hidden="true" tabindex="-1"></a>oddOneFac <span class="ot">=</span> <span class="st">&#39;</span></span>
+<span id="cb616-2"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb616-2" aria-hidden="true" tabindex="-1"></a><span class="st">    #Specify Overall Odd Factor</span></span>
+<span id="cb616-3"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb616-3" aria-hidden="true" tabindex="-1"></a><span class="st">    odd  =~ odd1 + odd2 + odd3 + odd4 + odd5 + odd6 + odd7 + odd8</span></span>
+<span id="cb616-4"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb616-4" aria-hidden="true" tabindex="-1"></a><span class="st">    &#39;</span></span></code></pre></div>
 <ul>
 <li>Fit the one-factor model:</li>
 <li>label ordinal variables using ordered argument:</li>
 <li>ordered = c( #NAMES OF ORDINAL INDICATORS#)</li>
 </ul>
-<div class="sourceCode" id="cb604"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb604-1"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb604-1" aria-hidden="true" tabindex="-1"></a>oneFacFit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(oddOneFac, </span>
-<span id="cb604-2"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb604-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> odd,</span>
-<span id="cb604-3"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb604-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">ordered=</span><span class="fu">c</span>(<span class="st">&#39;odd1&#39;</span>,<span class="st">&#39;odd2&#39;</span>,<span class="st">&#39;odd3&#39;</span>,<span class="st">&#39;odd4&#39;</span>,<span class="st">&#39;odd5&#39;</span>,<span class="st">&#39;odd6&#39;</span>,<span class="st">&#39;odd7&#39;</span>,<span class="st">&#39;odd8&#39;</span>), </span>
-<span id="cb604-4"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb604-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">fixed.x =</span> <span class="cn">FALSE</span>) </span>
-<span id="cb604-5"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb604-5" aria-hidden="true" tabindex="-1"></a><span class="co">#declare these as ordered variable</span></span>
-<span id="cb604-6"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb604-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb604-7"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb604-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(oneFacFit, <span class="at">fit.measures =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb617"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb617-1"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb617-1" aria-hidden="true" tabindex="-1"></a>oneFacFit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(oddOneFac, </span>
+<span id="cb617-2"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb617-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> odd,</span>
+<span id="cb617-3"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb617-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">ordered=</span><span class="fu">c</span>(<span class="st">&#39;odd1&#39;</span>,<span class="st">&#39;odd2&#39;</span>,<span class="st">&#39;odd3&#39;</span>,<span class="st">&#39;odd4&#39;</span>,<span class="st">&#39;odd5&#39;</span>,<span class="st">&#39;odd6&#39;</span>,<span class="st">&#39;odd7&#39;</span>,<span class="st">&#39;odd8&#39;</span>), </span>
+<span id="cb617-4"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb617-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">fixed.x =</span> <span class="cn">FALSE</span>) </span>
+<span id="cb617-5"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb617-5" aria-hidden="true" tabindex="-1"></a><span class="co">#declare these as ordered variable</span></span>
+<span id="cb617-6"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb617-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb617-7"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb617-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(oneFacFit, <span class="at">fit.measures =</span> T)</span></code></pre></div>
 <pre><code>## lavaan 0.6-12 ended normally after 16 iterations
 ## 
 ##   Estimator                                       DWLS
@@ -815,15 +832,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li>Unfortunately you cannot use missing = ‘fiml’ for categorical data:</li>
 </ul>
-<div class="sourceCode" id="cb606"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb606-1"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb606-1" aria-hidden="true" tabindex="-1"></a>FitMessy <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(oddOneFac, </span>
-<span id="cb606-2"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb606-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">data =</span> odd,</span>
-<span id="cb606-3"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb606-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">ordered=</span><span class="fu">c</span>(<span class="st">&#39;odd1&#39;</span>,<span class="st">&#39;odd2&#39;</span>,<span class="st">&#39;odd3&#39;</span>,<span class="st">&#39;odd4&#39;</span>,<span class="st">&#39;odd5&#39;</span>,<span class="st">&#39;odd6&#39;</span>,<span class="st">&#39;odd7&#39;</span>,<span class="st">&#39;odd8&#39;</span>), </span>
-<span id="cb606-4"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb606-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">fixed.x =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb606-5"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb606-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">estimator =</span> <span class="st">&quot;DWLS&quot;</span>,</span>
-<span id="cb606-6"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb606-6" aria-hidden="true" tabindex="-1"></a>                <span class="co">#missing = &#39;fiml&#39;</span></span>
-<span id="cb606-7"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb606-7" aria-hidden="true" tabindex="-1"></a>                ) </span>
-<span id="cb606-8"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb606-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb606-9"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb606-9" aria-hidden="true" tabindex="-1"></a>FitMessy</span></code></pre></div>
+<div class="sourceCode" id="cb619"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb619-1"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb619-1" aria-hidden="true" tabindex="-1"></a>FitMessy <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(oddOneFac, </span>
+<span id="cb619-2"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb619-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">data =</span> odd,</span>
+<span id="cb619-3"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb619-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">ordered=</span><span class="fu">c</span>(<span class="st">&#39;odd1&#39;</span>,<span class="st">&#39;odd2&#39;</span>,<span class="st">&#39;odd3&#39;</span>,<span class="st">&#39;odd4&#39;</span>,<span class="st">&#39;odd5&#39;</span>,<span class="st">&#39;odd6&#39;</span>,<span class="st">&#39;odd7&#39;</span>,<span class="st">&#39;odd8&#39;</span>), </span>
+<span id="cb619-4"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb619-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">fixed.x =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb619-5"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb619-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">estimator =</span> <span class="st">&quot;DWLS&quot;</span>,</span>
+<span id="cb619-6"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb619-6" aria-hidden="true" tabindex="-1"></a>                <span class="co">#missing = &#39;fiml&#39;</span></span>
+<span id="cb619-7"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb619-7" aria-hidden="true" tabindex="-1"></a>                ) </span>
+<span id="cb619-8"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb619-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb619-9"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb619-9" aria-hidden="true" tabindex="-1"></a>FitMessy</span></code></pre></div>
 <pre><code>## lavaan 0.6-12 ended normally after 16 iterations
 ## 
 ##   Estimator                                       DWLS
@@ -837,18 +854,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##   Test statistic                                44.892
 ##   Degrees of freedom                                20
 ##   P-value (Chi-square)                           0.001</code></pre>
-<div class="sourceCode" id="cb608"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb608-1"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb608-1" aria-hidden="true" tabindex="-1"></a><span class="co">#summary(FitMessy, fit.measures = T)</span></span></code></pre></div>
+<div class="sourceCode" id="cb621"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb621-1"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb621-1" aria-hidden="true" tabindex="-1"></a><span class="co">#summary(FitMessy, fit.measures = T)</span></span></code></pre></div>
 <ul>
 <li>But you cannot use missing = ‘fiml’ together with MLR for nonnormal data:</li>
 </ul>
-<div class="sourceCode" id="cb609"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb609-1"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb609-1" aria-hidden="true" tabindex="-1"></a>FitMessy <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(oddOneFac, </span>
-<span id="cb609-2"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb609-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">data =</span> nnorm_dat,</span>
-<span id="cb609-3"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb609-3" aria-hidden="true" tabindex="-1"></a>                <span class="co">#ordered=c(&#39;odd1&#39;,&#39;odd2&#39;,&#39;odd3&#39;,&#39;odd4&#39;,&#39;odd5&#39;,&#39;odd6&#39;,&#39;odd7&#39;,&#39;odd8&#39;), </span></span>
-<span id="cb609-4"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb609-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">fixed.x =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb609-5"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb609-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">estimator =</span> <span class="st">&quot;mlr&quot;</span>,</span>
-<span id="cb609-6"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb609-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">missing =</span> <span class="st">&#39;fiml&#39;</span>) </span>
-<span id="cb609-7"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb609-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb609-8"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb609-8" aria-hidden="true" tabindex="-1"></a>FitMessy</span></code></pre></div>
+<div class="sourceCode" id="cb622"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb622-1"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb622-1" aria-hidden="true" tabindex="-1"></a>FitMessy <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(oddOneFac, </span>
+<span id="cb622-2"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb622-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">data =</span> nnorm_dat,</span>
+<span id="cb622-3"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb622-3" aria-hidden="true" tabindex="-1"></a>                <span class="co">#ordered=c(&#39;odd1&#39;,&#39;odd2&#39;,&#39;odd3&#39;,&#39;odd4&#39;,&#39;odd5&#39;,&#39;odd6&#39;,&#39;odd7&#39;,&#39;odd8&#39;), </span></span>
+<span id="cb622-4"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb622-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">fixed.x =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb622-5"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb622-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">estimator =</span> <span class="st">&quot;mlr&quot;</span>,</span>
+<span id="cb622-6"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb622-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">missing =</span> <span class="st">&#39;fiml&#39;</span>) </span>
+<span id="cb622-7"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb622-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb622-8"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb622-8" aria-hidden="true" tabindex="-1"></a>FitMessy</span></code></pre></div>
 <pre><code>## lavaan 0.6-12 ended normally after 34 iterations
 ## 
 ##   Estimator                                         ML
@@ -865,7 +882,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##   P-value (Chi-square)                           0.000       0.000
 ##   Scaling correction factor                                  3.417
 ##     Yuan-Bentler correction (Mplus variant)</code></pre>
-<div class="sourceCode" id="cb611"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb611-1"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb611-1" aria-hidden="true" tabindex="-1"></a><span class="co">#summary(FitMessy, fit.measures = T)</span></span></code></pre></div>
+<div class="sourceCode" id="cb624"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb624-1"><a href="week12_2-lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb624-1" aria-hidden="true" tabindex="-1"></a><span class="co">#summary(FitMessy, fit.measures = T)</span></span></code></pre></div>
 
 </div>
 </div>

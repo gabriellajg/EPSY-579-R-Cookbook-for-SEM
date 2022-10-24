@@ -128,6 +128,7 @@ part-iv-ml-vs-uls-vs-wls
 ml-estimation
 wls-estimation
 compare-the-parameter-estimates
+compare-the-standard-errors
 part-v-improper-solutions
 week10_2-lavaan-lab-9-model-fit-part-i-test-statistics
 part-i-robust-ml-on-the-positive-affect-example

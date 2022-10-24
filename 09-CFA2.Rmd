@@ -45,6 +45,10 @@ Get a summary using summary() function, add standardized=T to request standardiz
 summary(fixedIndTwoFacRun, standardized=T)
 ```
 
+```{r}
+summary(fixedIndTwoFacRun, standardized = T)
+```
+
 Here is the fun part. Plot the fitted model using semPaths() function from the semPlot package: 
 
 ```{r}
@@ -160,6 +164,15 @@ fitted(fixedIndTwoFacRun)
 Sigma <- fitted(fixedIndTwoFacRun)$cov
 ```
 
+fixed variance: 
+
+```{r}
+fixedVarTwoFacRun = lavaan::sem(model = fixedIndTwoFacSyntax, data = cfaData, fixed.x=FALSE, std.lv = TRUE)
+Sigma2 <- fitted(fixedVarTwoFacRun)$cov
+Sigma2 # same as Sigma!
+```
+
+
 How close is Sigma to S? 
 
 + Rearrange the rows and columns of Sigma (important!) and take the difference between Sigma and S
@@ -168,7 +181,7 @@ How close is Sigma to S?
 (S = cov(cfaData[,-1]))
 
 diff = Sigma[colnames(S), colnames(S)] - S
-round(diff, 3)
+round(diff, 4)
 
 print(paste0("The difference between S and Sigma ranged between ", round(min(diff),4), " and ", round(max(diff),4), "."))
 ```
@@ -214,6 +227,7 @@ Use the three matrices above to calculate the model-implied covariance matrix an
 
 ```{r}
 SIGMA <- Lambda%*%Psi%*%t(Lambda)+Theta
+SIGMA
 ```
 
 A shortcut function to obtain the SIGMA matrix is to use fitted() function, as shown above...

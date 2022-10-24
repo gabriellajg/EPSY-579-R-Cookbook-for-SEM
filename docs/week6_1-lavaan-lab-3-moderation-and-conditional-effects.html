@@ -312,6 +312,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="11.4.1" data-path="week8_2-lavaan-lab-8-estimation-methods.html"><a href="week8_2-lavaan-lab-8-estimation-methods.html#ml-estimation"><i class="fa fa-check"></i><b>11.4.1</b> ML Estimation</a></li>
 <li class="chapter" data-level="11.4.2" data-path="week8_2-lavaan-lab-8-estimation-methods.html"><a href="week8_2-lavaan-lab-8-estimation-methods.html#wls-estimation"><i class="fa fa-check"></i><b>11.4.2</b> WLS Estimation</a></li>
 <li class="chapter" data-level="11.4.3" data-path="week8_2-lavaan-lab-8-estimation-methods.html"><a href="week8_2-lavaan-lab-8-estimation-methods.html#compare-the-parameter-estimates"><i class="fa fa-check"></i><b>11.4.3</b> Compare the parameter estimates</a></li>
+<li class="chapter" data-level="11.4.4" data-path="week8_2-lavaan-lab-8-estimation-methods.html"><a href="week8_2-lavaan-lab-8-estimation-methods.html#compare-the-standard-errors"><i class="fa fa-check"></i><b>11.4.4</b> Compare the standard errors:</a></li>
 </ul></li>
 <li class="chapter" data-level="11.5" data-path="week8_2-lavaan-lab-8-estimation-methods.html"><a href="week8_2-lavaan-lab-8-estimation-methods.html#part-v-improper-solutions"><i class="fa fa-check"></i><b>11.5</b> PART V: Improper Solutions</a></li>
 </ul></li>
@@ -519,13 +520,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb146-1" aria-hidden="true" tabindex="-1"></a>cbtData <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">&quot;dataInClass.csv&quot;</span>, <span class="at">header =</span> T)</span></code></pre></div>
 <p>Let’s examine this dataset:</p>
 <div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb147-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(cbtData)</span></code></pre></div>
-<pre><code>##   ID              CBT CBTDummy NeedCog NegThoughts Depression NeedCogCont
-## 1  1    CBT Treatment        1       0  -4.1453029  -5.802172   0.0182802
-## 2  2 Information Only        0       1   2.1775218   5.496665   1.4238703
-## 3  3    CBT Treatment        1       0  -1.5551349  -1.950566  -1.0151726
-## 4  4 Information Only        0       0   0.1679286   2.655801  -0.8547152
-## 5  5 Information Only        0       1   2.5103192   6.855488   0.6759705
-## 6  6    CBT Treatment        1       0  -3.1626670  -2.968198  -0.9123426</code></pre>
+<pre><code>##   ID              CBT CBTDummy NeedCog NegThoughts
+## 1  1    CBT Treatment        1       0  -4.1453029
+## 2  2 Information Only        0       1   2.1775218
+## 3  3    CBT Treatment        1       0  -1.5551349
+## 4  4 Information Only        0       0   0.1679286
+## 5  5 Information Only        0       1   2.5103192
+## 6  6    CBT Treatment        1       0  -3.1626670
+##   Depression NeedCogCont
+## 1  -5.802172   0.0182802
+## 2   5.496665   1.4238703
+## 3  -1.950566  -1.0151726
+## 4   2.655801  -0.8547152
+## 5   6.855488   0.6759705
+## 6  -2.968198  -0.9123426</code></pre>
 <div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb149-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(cbtData)</span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    1000 obs. of  7 variables:
 ##  $ ID         : int  1 2 3 4 5 6 7 8 9 10 ...
@@ -536,8 +544,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  $ Depression : num  -5.8 5.5 -1.95 2.66 6.86 ...
 ##  $ NeedCogCont: num  0.0183 1.4239 -1.0152 -0.8547 0.676 ...</code></pre>
 <div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb151-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colSums</span>(<span class="fu">is.na</span>(cbtData))</span></code></pre></div>
-<pre><code>##          ID         CBT    CBTDummy     NeedCog NegThoughts  Depression NeedCogCont 
-##           0           0           0           0           0           0           0</code></pre>
+<pre><code>##          ID         CBT    CBTDummy     NeedCog 
+##           0           0           0           0 
+## NegThoughts  Depression NeedCogCont 
+##           0           0           0</code></pre>
 <p>Notice that the first two columns are not model variables</p>
 <ul>
 <li>col 1 is a case ID variable.</li>
@@ -609,7 +619,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## NeedCog            5.5586     0.2356  23.590   &lt;2e-16 ***
 ## CBTDummy:NeedCog  -8.0093     0.3384 -23.666   &lt;2e-16 ***
 ## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## Signif. codes:  
+## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## Residual standard error: 2.47 on 996 degrees of freedom
 ## Multiple R-squared:  0.8095, Adjusted R-squared:  0.809 
@@ -635,13 +646,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>cbtData$fourth &lt;- cbtData$CBTDummy * cbtData$NeedCog</p>
 <p>Let’s look at cbtData again:</p>
 <div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb171-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(cbtData)</span></code></pre></div>
-<pre><code>##   ID              CBT CBTDummy NeedCog NegThoughts Depression NeedCogCont CBTxNeedCog
-## 1  1    CBT Treatment        1       0  -4.1453029  -5.802172   0.0182802           0
-## 2  2 Information Only        0       1   2.1775218   5.496665   1.4238703           0
-## 3  3    CBT Treatment        1       0  -1.5551349  -1.950566  -1.0151726           0
-## 4  4 Information Only        0       0   0.1679286   2.655801  -0.8547152           0
-## 5  5 Information Only        0       1   2.5103192   6.855488   0.6759705           0
-## 6  6    CBT Treatment        1       0  -3.1626670  -2.968198  -0.9123426           0</code></pre>
+<pre><code>##   ID              CBT CBTDummy NeedCog NegThoughts
+## 1  1    CBT Treatment        1       0  -4.1453029
+## 2  2 Information Only        0       1   2.1775218
+## 3  3    CBT Treatment        1       0  -1.5551349
+## 4  4 Information Only        0       0   0.1679286
+## 5  5 Information Only        0       1   2.5103192
+## 6  6    CBT Treatment        1       0  -3.1626670
+##   Depression NeedCogCont CBTxNeedCog
+## 1  -5.802172   0.0182802           0
+## 2   5.496665   1.4238703           0
+## 3  -1.950566  -1.0151726           0
+## 4   2.655801  -0.8547152           0
+## 5   6.855488   0.6759705           0
+## 6  -2.968198  -0.9123426           0</code></pre>
 <p>Now you have a new variable called CBTxNeedCog at the end.</p>
 </div>
 <div id="follow-the-equation-of-y-depression" class="section level3 hasAnchor" number="5.3.2">
@@ -663,7 +681,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb175-3"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb175-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">fixed.x =</span><span class="cn">FALSE</span>, </span>
 <span id="cb175-4"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb175-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">meanstructure =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb176-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(inter_fit1)</span></code></pre></div>
-<pre><code>## lavaan 0.6-12 ended normally after 41 iterations
+<pre><code>## lavaan 0.6-12 ended normally after 33 iterations
 ## 
 ##   Estimator                                         ML
 ##   Optimization method                           NLMINB
@@ -692,7 +710,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Covariances:
 ##                    Estimate  Std.Err  z-value  P(&gt;|z|)
 ##   CBTDummy ~~                                         
-##     NeedCog          -0.008    0.007   -1.163    0.245
+##     NeedCog          -0.009    0.007   -1.163    0.245
 ##     CBTxNeedCog       0.073    0.006   12.083    0.000
 ##   NeedCog ~~                                          
 ##     CBTxNeedCog       0.101    0.006   16.630    0.000
@@ -727,7 +745,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## NeedCog            5.5586     0.2356  23.590   &lt;2e-16 ***
 ## CBTDummy:NeedCog  -8.0093     0.3384 -23.666   &lt;2e-16 ***
 ## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## Signif. codes:  
+## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## Residual standard error: 2.47 on 996 degrees of freedom
 ## Multiple R-squared:  0.8095, Adjusted R-squared:  0.809 
@@ -774,13 +793,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb187-1" aria-hidden="true" tabindex="-1"></a>cbtData<span class="sc">$</span>CBTxNeedCogCont <span class="ot">&lt;-</span> cbtData<span class="sc">$</span>CBTDummy <span class="sc">*</span> cbtData<span class="sc">$</span>NeedCogCont</span></code></pre></div>
 <p>Let’s look at cbtData again:</p>
 <div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb188-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(cbtData)</span></code></pre></div>
-<pre><code>##   ID              CBT CBTDummy NeedCog NegThoughts Depression NeedCogCont CBTxNeedCog CBTxNeedCogCont
-## 1  1    CBT Treatment        1       0  -4.1453029  -5.802172   0.0182802           0       0.0182802
-## 2  2 Information Only        0       1   2.1775218   5.496665   1.4238703           0       0.0000000
-## 3  3    CBT Treatment        1       0  -1.5551349  -1.950566  -1.0151726           0      -1.0151726
-## 4  4 Information Only        0       0   0.1679286   2.655801  -0.8547152           0       0.0000000
-## 5  5 Information Only        0       1   2.5103192   6.855488   0.6759705           0       0.0000000
-## 6  6    CBT Treatment        1       0  -3.1626670  -2.968198  -0.9123426           0      -0.9123426</code></pre>
+<pre><code>##   ID              CBT CBTDummy NeedCog NegThoughts
+## 1  1    CBT Treatment        1       0  -4.1453029
+## 2  2 Information Only        0       1   2.1775218
+## 3  3    CBT Treatment        1       0  -1.5551349
+## 4  4 Information Only        0       0   0.1679286
+## 5  5 Information Only        0       1   2.5103192
+## 6  6    CBT Treatment        1       0  -3.1626670
+##   Depression NeedCogCont CBTxNeedCog CBTxNeedCogCont
+## 1  -5.802172   0.0182802           0       0.0182802
+## 2   5.496665   1.4238703           0       0.0000000
+## 3  -1.950566  -1.0151726           0      -1.0151726
+## 4   2.655801  -0.8547152           0       0.0000000
+## 5   6.855488   0.6759705           0       0.0000000
+## 6  -2.968198  -0.9123426           0      -0.9123426</code></pre>
 <p>Time to write some lavaan model syntax (with labels):</p>
 <div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb190-1" aria-hidden="true" tabindex="-1"></a>interactionSyntax2 <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
 <span id="cb190-2"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb190-2" aria-hidden="true" tabindex="-1"></a><span class="st">    #Regression</span></span>
@@ -792,7 +818,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb191-3"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb191-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">fixed.x =</span><span class="cn">FALSE</span>, </span>
 <span id="cb191-4"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb191-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">meanstructure =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb192-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(inter_fit2)</span></code></pre></div>
-<pre><code>## lavaan 0.6-12 ended normally after 35 iterations
+<pre><code>## lavaan 0.6-12 ended normally after 32 iterations
 ## 
 ##   Estimator                                         ML
 ##   Optimization method                           NLMINB
@@ -869,7 +895,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb203-4"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb203-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">meanstructure =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb203-5"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb203-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb203-6"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb203-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(inter_fit3)</span></code></pre></div>
-<pre><code>## lavaan 0.6-12 ended normally after 35 iterations
+<pre><code>## lavaan 0.6-12 ended normally after 32 iterations
 ## 
 ##   Estimator                                         ML
 ##   Optimization method                           NLMINB
@@ -943,13 +969,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## -5.7282 -1.1381  0.0649  1.2229  4.4762 
 ## 
 ## Coefficients:
-##                      Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)           2.93065    0.07981   36.72   &lt;2e-16 ***
-## CBTDummy             -9.24546    0.11284  -81.93   &lt;2e-16 ***
-## NeedCogCont           3.30525    0.07873   41.98   &lt;2e-16 ***
-## CBTDummy:NeedCogCont -4.96674    0.11325  -43.85   &lt;2e-16 ***
+##                      Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept)           2.93065    0.07981   36.72   &lt;2e-16
+## CBTDummy             -9.24546    0.11284  -81.93   &lt;2e-16
+## NeedCogCont           3.30525    0.07873   41.98   &lt;2e-16
+## CBTDummy:NeedCogCont -4.96674    0.11325  -43.85   &lt;2e-16
+##                         
+## (Intercept)          ***
+## CBTDummy             ***
+## NeedCogCont          ***
+## CBTDummy:NeedCogCont ***
 ## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## Signif. codes:  
+## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## Residual standard error: 1.783 on 996 degrees of freedom
 ## Multiple R-squared:  0.9008, Adjusted R-squared:  0.9005 
@@ -967,9 +999,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb208-1"><a href="week6_1-lavaan-lab-3-moderation-and-conditional-effects.html#cb208-1" aria-hidden="true" tabindex="-1"></a>interactions<span class="sc">::</span><span class="fu">johnson_neyman</span>(interactionModel2, <span class="at">pred =</span> <span class="st">&quot;CBTDummy&quot;</span>, <span class="at">modx =</span> <span class="st">&quot;NeedCogCont&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.05</span>)</span></code></pre></div>
 <pre><code>## JOHNSON-NEYMAN INTERVAL 
 ## 
-## When NeedCogCont is OUTSIDE the interval [-1.96, -1.77], the slope of CBTDummy is p &lt; .05.
+## When NeedCogCont is OUTSIDE the interval [-1.96,
+## -1.77], the slope of CBTDummy is p &lt; .05.
 ## 
-## Note: The range of observed values of NeedCogCont is [-2.83, 3.31]</code></pre>
+## Note: The range of observed values of NeedCogCont is
+## [-2.83, 3.31]</code></pre>
 <p><img src="bookdownproj_files/figure-html/unnamed-chunk-126-1.png" width="672" /></p>
 <!------------------------------>
 </div>

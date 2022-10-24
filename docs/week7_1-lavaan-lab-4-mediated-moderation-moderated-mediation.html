@@ -312,6 +312,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="11.4.1" data-path="week8_2-lavaan-lab-8-estimation-methods.html"><a href="week8_2-lavaan-lab-8-estimation-methods.html#ml-estimation"><i class="fa fa-check"></i><b>11.4.1</b> ML Estimation</a></li>
 <li class="chapter" data-level="11.4.2" data-path="week8_2-lavaan-lab-8-estimation-methods.html"><a href="week8_2-lavaan-lab-8-estimation-methods.html#wls-estimation"><i class="fa fa-check"></i><b>11.4.2</b> WLS Estimation</a></li>
 <li class="chapter" data-level="11.4.3" data-path="week8_2-lavaan-lab-8-estimation-methods.html"><a href="week8_2-lavaan-lab-8-estimation-methods.html#compare-the-parameter-estimates"><i class="fa fa-check"></i><b>11.4.3</b> Compare the parameter estimates</a></li>
+<li class="chapter" data-level="11.4.4" data-path="week8_2-lavaan-lab-8-estimation-methods.html"><a href="week8_2-lavaan-lab-8-estimation-methods.html#compare-the-standard-errors"><i class="fa fa-check"></i><b>11.4.4</b> Compare the standard errors:</a></li>
 </ul></li>
 <li class="chapter" data-level="11.5" data-path="week8_2-lavaan-lab-8-estimation-methods.html"><a href="week8_2-lavaan-lab-8-estimation-methods.html#part-v-improper-solutions"><i class="fa fa-check"></i><b>11.5</b> PART V: Improper Solutions</a></li>
 </ul></li>
@@ -525,11 +526,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>This time we work with the continuous version of the moderator: NeedCogCont.</p>
 <p>Let’s examine their means and standard deviations:</p>
 <div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb218-1" aria-hidden="true" tabindex="-1"></a><span class="fu">apply</span>(cbtData[,<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)], <span class="dv">2</span>, mean)</span></code></pre></div>
-<pre><code>##     CBTDummy      NeedCog  NegThoughts   Depression  NeedCogCont 
-##  0.500000000  0.309000000 -1.944249996 -1.589356290  0.005925852</code></pre>
+<pre><code>##     CBTDummy      NeedCog  NegThoughts   Depression 
+##  0.500000000  0.309000000 -1.944249996 -1.589356290 
+##  NeedCogCont 
+##  0.005925852</code></pre>
 <div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb220-1" aria-hidden="true" tabindex="-1"></a><span class="fu">apply</span>(cbtData[,<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)], <span class="dv">2</span>, sd)</span></code></pre></div>
-<pre><code>##    CBTDummy     NeedCog NegThoughts  Depression NeedCogCont 
-##   0.5002502   0.4623124   3.1877174   5.6506763   0.9974319</code></pre>
+<pre><code>##    CBTDummy     NeedCog NegThoughts  Depression 
+##   0.5002502   0.4623124   3.1877174   5.6506763 
+## NeedCogCont 
+##   0.9974319</code></pre>
 <p>Why dropping the first two variables?</p>
 <ul>
 <li>The first two variables ID and CBT are not numerical and have no means.</li>
@@ -545,13 +550,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb222-1" aria-hidden="true" tabindex="-1"></a>cbtData<span class="sc">$</span>CBTxNeedCogCont <span class="ot">&lt;-</span> cbtData<span class="sc">$</span>CBTDummy <span class="sc">*</span> cbtData<span class="sc">$</span>NeedCogCont</span></code></pre></div>
 <p>Let’s look at cbtData again:</p>
 <div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb223-1"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb223-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(cbtData)</span></code></pre></div>
-<pre><code>##   ID              CBT CBTDummy NeedCog NegThoughts Depression NeedCogCont CBTxNeedCogCont
-## 1  1    CBT Treatment        1       0  -4.1453029  -5.802172   0.0182802       0.0182802
-## 2  2 Information Only        0       1   2.1775218   5.496665   1.4238703       0.0000000
-## 3  3    CBT Treatment        1       0  -1.5551349  -1.950566  -1.0151726      -1.0151726
-## 4  4 Information Only        0       0   0.1679286   2.655801  -0.8547152       0.0000000
-## 5  5 Information Only        0       1   2.5103192   6.855488   0.6759705       0.0000000
-## 6  6    CBT Treatment        1       0  -3.1626670  -2.968198  -0.9123426      -0.9123426</code></pre>
+<pre><code>##   ID              CBT CBTDummy NeedCog NegThoughts
+## 1  1    CBT Treatment        1       0  -4.1453029
+## 2  2 Information Only        0       1   2.1775218
+## 3  3    CBT Treatment        1       0  -1.5551349
+## 4  4 Information Only        0       0   0.1679286
+## 5  5 Information Only        0       1   2.5103192
+## 6  6    CBT Treatment        1       0  -3.1626670
+##   Depression NeedCogCont CBTxNeedCogCont
+## 1  -5.802172   0.0182802       0.0182802
+## 2   5.496665   1.4238703       0.0000000
+## 3  -1.950566  -1.0151726      -1.0151726
+## 4   2.655801  -0.8547152       0.0000000
+## 5   6.855488   0.6759705       0.0000000
+## 6  -2.968198  -0.9123426      -0.9123426</code></pre>
 </div>
 <div id="step-3-write-the-syntax-and-fit-the-model" class="section level3 hasAnchor" number="6.1.3">
 <h3><span class="header-section-number">6.1.3</span> Step 3: Write the syntax and Fit the model<a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#step-3-write-the-syntax-and-fit-the-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -576,7 +588,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb227-3"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb227-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">fixed.x =</span> <span class="cn">FALSE</span>,</span>
 <span id="cb227-4"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb227-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">meanstructure =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb227-5"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb227-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ex1fit, <span class="at">ci =</span> T)</span></code></pre></div>
-<pre><code>## lavaan 0.6-12 ended normally after 40 iterations
+<pre><code>## lavaan 0.6-12 ended normally after 38 iterations
 ## 
 ##   Estimator                                         ML
 ##   Optimization method                           NLMINB
@@ -596,45 +608,76 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##   Information saturated (h1) model          Structured
 ## 
 ## Regressions:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|) ci.lower ci.upper
-##   NegThoughts ~                                                         
-##     CBTxNCC (a_m1)   -3.071    0.064  -48.104    0.000   -3.196   -2.945
-##     NdCgCnt (a_m2)    2.000    0.044   45.075    0.000    1.913    2.087
-##     CBTDmmy (a_m3)   -5.060    0.064  -79.562    0.000   -5.185   -4.936
-##   Depression ~                                                          
-##     CBTDmmy   (b1)   -1.240    0.137   -9.055    0.000   -1.509   -0.972
-##     NdCgCnt   (b2)    0.141    0.061    2.292    0.022    0.020    0.261
-##     CBTxNCC   (b3)   -0.109    0.092   -1.180    0.238   -0.290    0.072
-##     NgThght   (bM)    1.582    0.025   62.899    0.000    1.533    1.631
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##   NegThoughts ~                                       
+##     CBTxNCC (a_m1)   -3.071    0.064  -48.104    0.000
+##     NdCgCnt (a_m2)    2.000    0.044   45.075    0.000
+##     CBTDmmy (a_m3)   -5.060    0.064  -79.562    0.000
+##   Depression ~                                        
+##     CBTDmmy   (b1)   -1.240    0.137   -9.055    0.000
+##     NdCgCnt   (b2)    0.141    0.061    2.292    0.022
+##     CBTxNCC   (b3)   -0.109    0.092   -1.180    0.238
+##     NgThght   (bM)    1.582    0.025   62.899    0.000
+##  ci.lower ci.upper
+##                   
+##    -3.196   -2.945
+##     1.913    2.087
+##    -5.185   -4.936
+##                   
+##    -1.509   -0.972
+##     0.020    0.261
+##    -0.290    0.072
+##     1.533    1.631
 ## 
 ## Covariances:
-##                      Estimate  Std.Err  z-value  P(&gt;|z|) ci.lower ci.upper
-##   CBTxNeedCogCont ~~                                                      
-##     NeedCogCont         0.480    0.027   18.055    0.000    0.428    0.532
-##     CBTDummy           -0.008    0.011   -0.764    0.445   -0.030    0.013
-##   NeedCogCont ~~                                                          
-##     CBTDummy           -0.020    0.016   -1.249    0.212   -0.051    0.011
+##                      Estimate  Std.Err  z-value  P(&gt;|z|)
+##   CBTxNeedCogCont ~~                                    
+##     NeedCogCont         0.480    0.027   18.055    0.000
+##     CBTDummy           -0.008    0.011   -0.764    0.445
+##   NeedCogCont ~~                                        
+##     CBTDummy           -0.020    0.016   -1.249    0.212
+##  ci.lower ci.upper
+##                   
+##     0.428    0.532
+##    -0.030    0.013
+##                   
+##    -0.051    0.011
 ## 
 ## Intercepts:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|) ci.lower ci.upper
-##    .NegThoughts       0.523    0.045   11.618    0.000    0.434    0.611
-##    .Depression        2.104    0.038   55.199    0.000    2.029    2.179
-##     CBTxNeedCogCnt   -0.017    0.022   -0.764    0.445   -0.060    0.026
-##     NeedCogCont       0.006    0.032    0.188    0.851   -0.056    0.068
-##     CBTDummy          0.500    0.016   31.623    0.000    0.469    0.531
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##    .NegThoughts       0.523    0.045   11.618    0.000
+##    .Depression        2.104    0.038   55.199    0.000
+##     CBTxNeedCogCnt   -0.017    0.022   -0.764    0.445
+##     NeedCogCont       0.006    0.032    0.188    0.851
+##     CBTDummy          0.500    0.016   31.623    0.000
+##  ci.lower ci.upper
+##     0.434    0.611
+##     2.029    2.179
+##    -0.060    0.026
+##    -0.056    0.068
+##     0.469    0.531
 ## 
 ## Variances:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|) ci.lower ci.upper
-##    .NegThoughts       1.010    0.045   22.361    0.000    0.921    1.098
-##    .Depression        0.639    0.029   22.361    0.000    0.583    0.695
-##     CBTxNeedCogCnt    0.480    0.021   22.361    0.000    0.438    0.522
-##     NeedCogCont       0.994    0.044   22.361    0.000    0.907    1.081
-##     CBTDummy          0.250    0.011   22.361    0.000    0.228    0.272
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##    .NegThoughts       1.010    0.045   22.361    0.000
+##    .Depression        0.639    0.029   22.361    0.000
+##     CBTxNeedCogCnt    0.480    0.021   22.361    0.000
+##     NeedCogCont       0.994    0.044   22.361    0.000
+##     CBTDummy          0.250    0.011   22.361    0.000
+##  ci.lower ci.upper
+##     0.921    1.098
+##     0.583    0.695
+##     0.438    0.522
+##     0.907    1.081
+##     0.228    0.272
 ## 
 ## Defined Parameters:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|) ci.lower ci.upper
-##     MedMod_ab        -4.858    0.127  -38.211    0.000   -5.107   -4.609
-##     TotalMod         -4.967    0.113  -43.943    0.000   -5.188   -4.745</code></pre>
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##     MedMod_ab        -4.858    0.127  -38.211    0.000
+##     TotalMod         -4.967    0.113  -43.943    0.000
+##  ci.lower ci.upper
+##    -5.107   -4.609
+##    -5.188   -4.745</code></pre>
 <p>Are we done?</p>
 </div>
 <div id="step-4-bootstrap-version" class="section level3 hasAnchor" number="6.1.4">
@@ -658,30 +701,77 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb230-2"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb230-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">level =</span> <span class="fl">0.95</span>, </span>
 <span id="cb230-3"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb230-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">boot.ci.type=</span><span class="st">&quot;bca.simple&quot;</span>,</span>
 <span id="cb230-4"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb230-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">standardized =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<pre><code>## Warning in norm.inter(t, adj.alpha): extreme order statistics used as endpoints</code></pre>
-<pre><code>##                lhs op             rhs     label    est    se       z pvalue ci.lower ci.upper std.lv std.all std.nox
-## 1      NegThoughts  ~ CBTxNeedCogCont      a_m1 -3.071 0.067 -45.675  0.000   -3.195   -2.922 -3.071  -0.668  -0.964
-## 2      NegThoughts  ~     NeedCogCont      a_m2  2.000 0.048  42.047  0.000    1.902    2.093  2.000   0.626   0.628
-## 3      NegThoughts  ~        CBTDummy      a_m3 -5.060 0.064 -78.764  0.000   -5.183   -4.930 -5.060  -0.794  -1.588
-## 4       Depression  ~        CBTDummy        b1 -1.240 0.133  -9.337  0.000   -1.493   -0.979 -1.240  -0.110  -0.220
-## 5       Depression  ~     NeedCogCont        b2  0.141 0.059   2.379  0.017    0.020    0.256  0.141   0.025   0.025
-## 6       Depression  ~ CBTxNeedCogCont        b3 -0.109 0.088  -1.232  0.218   -0.270    0.071 -0.109  -0.013  -0.019
-## 7       Depression  ~     NegThoughts        bM  1.582 0.024  65.833  0.000    1.539    1.632  1.582   0.892   0.892
-## 8      NegThoughts ~~     NegThoughts            1.010 0.042  23.885  0.000    0.937    1.109  1.010   0.099   0.099
-## 9       Depression ~~      Depression            0.639 0.030  21.077  0.000    0.585    0.708  0.639   0.020   0.020
-## 10 CBTxNeedCogCont ~~ CBTxNeedCogCont            0.480 0.034  14.292  0.000    0.411    0.545  0.480   1.000   0.480
-## 11 CBTxNeedCogCont ~~     NeedCogCont            0.480 0.034  14.314  0.000    0.412    0.545  0.480   0.695   0.480
-## 12 CBTxNeedCogCont ~~        CBTDummy           -0.008 0.011  -0.781  0.435   -0.030    0.013 -0.008  -0.024  -0.008
-## 13     NeedCogCont ~~     NeedCogCont            0.994 0.044  22.749  0.000    0.909    1.078  0.994   1.000   0.994
-## 14     NeedCogCont ~~        CBTDummy           -0.020 0.016  -1.258  0.208   -0.051    0.013 -0.020  -0.040  -0.020
-## 15        CBTDummy ~~        CBTDummy            0.250 0.000 619.384  0.000    0.250    0.250  0.250   1.000   0.250
-## 16     NegThoughts ~1                            0.523 0.046  11.401  0.000    0.436    0.616  0.523   0.164   0.164
-## 17      Depression ~1                            2.104 0.038  54.754  0.000    2.029    2.177  2.104   0.373   0.373
-## 18 CBTxNeedCogCont ~1                           -0.017 0.021  -0.781  0.435   -0.059    0.026 -0.017  -0.024  -0.017
-## 19     NeedCogCont ~1                            0.006 0.031   0.190  0.849   -0.062    0.063  0.006   0.006   0.006
-## 20        CBTDummy ~1                            0.500 0.016  30.669  0.000    0.466    0.528  0.500   1.000   0.500
-## 21       MedMod_ab :=         a_m1*bM MedMod_ab -4.858 0.125 -38.863  0.000   -5.089   -4.602 -4.858  -0.596  -0.860
-## 22        TotalMod :=    MedMod_ab+b3  TotalMod -4.967 0.118 -42.112  0.000   -5.195   -4.720 -4.967  -0.609  -0.879</code></pre>
+<pre><code>## Warning in norm.inter(t, adj.alpha): extreme order
+## statistics used as endpoints</code></pre>
+<pre><code>##                lhs op             rhs     label    est
+## 1      NegThoughts  ~ CBTxNeedCogCont      a_m1 -3.071
+## 2      NegThoughts  ~     NeedCogCont      a_m2  2.000
+## 3      NegThoughts  ~        CBTDummy      a_m3 -5.060
+## 4       Depression  ~        CBTDummy        b1 -1.240
+## 5       Depression  ~     NeedCogCont        b2  0.141
+## 6       Depression  ~ CBTxNeedCogCont        b3 -0.109
+## 7       Depression  ~     NegThoughts        bM  1.582
+## 8      NegThoughts ~~     NegThoughts            1.010
+## 9       Depression ~~      Depression            0.639
+## 10 CBTxNeedCogCont ~~ CBTxNeedCogCont            0.480
+## 11 CBTxNeedCogCont ~~     NeedCogCont            0.480
+## 12 CBTxNeedCogCont ~~        CBTDummy           -0.008
+## 13     NeedCogCont ~~     NeedCogCont            0.994
+## 14     NeedCogCont ~~        CBTDummy           -0.020
+## 15        CBTDummy ~~        CBTDummy            0.250
+## 16     NegThoughts ~1                            0.523
+## 17      Depression ~1                            2.104
+## 18 CBTxNeedCogCont ~1                           -0.017
+## 19     NeedCogCont ~1                            0.006
+## 20        CBTDummy ~1                            0.500
+## 21       MedMod_ab :=         a_m1*bM MedMod_ab -4.858
+## 22        TotalMod :=    MedMod_ab+b3  TotalMod -4.967
+##       se       z pvalue ci.lower ci.upper std.lv std.all
+## 1  0.067 -45.675  0.000   -3.195   -2.922 -3.071  -0.668
+## 2  0.048  42.047  0.000    1.902    2.093  2.000   0.626
+## 3  0.064 -78.764  0.000   -5.183   -4.930 -5.060  -0.794
+## 4  0.133  -9.337  0.000   -1.493   -0.979 -1.240  -0.110
+## 5  0.059   2.379  0.017    0.020    0.256  0.141   0.025
+## 6  0.088  -1.232  0.218   -0.270    0.071 -0.109  -0.013
+## 7  0.024  65.833  0.000    1.539    1.632  1.582   0.892
+## 8  0.042  23.885  0.000    0.937    1.109  1.010   0.099
+## 9  0.030  21.077  0.000    0.585    0.708  0.639   0.020
+## 10 0.034  14.292  0.000    0.411    0.545  0.480   1.000
+## 11 0.034  14.314  0.000    0.412    0.545  0.480   0.695
+## 12 0.011  -0.781  0.435   -0.030    0.013 -0.008  -0.024
+## 13 0.044  22.749  0.000    0.909    1.078  0.994   1.000
+## 14 0.016  -1.258  0.208   -0.051    0.013 -0.020  -0.040
+## 15 0.000 619.383  0.000    0.250    0.250  0.250   1.000
+## 16 0.046  11.401  0.000    0.436    0.616  0.523   0.164
+## 17 0.038  54.754  0.000    2.029    2.177  2.104   0.373
+## 18 0.021  -0.781  0.435   -0.059    0.026 -0.017  -0.024
+## 19 0.031   0.190  0.849   -0.062    0.063  0.006   0.006
+## 20 0.016  30.669  0.000    0.466    0.528  0.500   1.000
+## 21 0.125 -38.863  0.000   -5.089   -4.602 -4.858  -0.596
+## 22 0.118 -42.112  0.000   -5.195   -4.720 -4.967  -0.609
+##    std.nox
+## 1   -0.964
+## 2    0.628
+## 3   -1.588
+## 4   -0.220
+## 5    0.025
+## 6   -0.019
+## 7    0.892
+## 8    0.099
+## 9    0.020
+## 10   0.480
+## 11   0.480
+## 12  -0.008
+## 13   0.994
+## 14  -0.020
+## 15   0.250
+## 16   0.164
+## 17   0.373
+## 18  -0.017
+## 19   0.006
+## 20   0.500
+## 21  -0.860
+## 22  -0.879</code></pre>
 <p>Warning message:</p>
 <p>In norm.inter(t, adj.alpha) : extreme order statistics used as endpoints</p>
 <p><a href="https://rcompanion.org/handbook/E_04.html" class="uri">https://rcompanion.org/handbook/E_04.html</a></p>
@@ -742,44 +832,89 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb240-6"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb240-6" aria-hidden="true" tabindex="-1"></a><span class="st">  #Index of Moderated Mediation</span></span>
 <span id="cb240-7"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb240-7" aria-hidden="true" tabindex="-1"></a><span class="st">  IndexOfModMed := a3*b</span></span>
 <span id="cb240-8"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb240-8" aria-hidden="true" tabindex="-1"></a><span class="st">    &quot;</span>  </span></code></pre></div>
+<div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb241-1" aria-hidden="true" tabindex="-1"></a>ex2ModMediationBasic <span class="ot">&lt;-</span> <span class="st">&quot; </span></span>
+<span id="cb241-2"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb241-2" aria-hidden="true" tabindex="-1"></a><span class="st">  NegThoughts ~ a1*CBTDummy + a2*NeedCogCont + a3*CBTxNeedCogCont </span></span>
+<span id="cb241-3"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb241-3" aria-hidden="true" tabindex="-1"></a><span class="st">    Depression ~ b*NegThoughts + cprime*CBTDummy</span></span>
+<span id="cb241-4"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb241-4" aria-hidden="true" tabindex="-1"></a><span class="st">    &quot;</span>  <span class="co"># NegThoughts ~ CBTDummy:NeedCogCont</span></span></code></pre></div>
 </div>
 <div id="step-3-bootstrap-version" class="section level3 hasAnchor" number="6.2.3">
 <h3><span class="header-section-number">6.2.3</span> Step 3: Bootstrap Version<a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#step-3-bootstrap-version" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Since this model involves tests of indirect effects</p>
 <p>let’s jump to the bootstrap test:</p>
-<div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb241-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2022</span>)</span>
-<span id="cb241-2"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb241-2" aria-hidden="true" tabindex="-1"></a>ex2Boot <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> ex2ModMediation, </span>
-<span id="cb241-3"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb241-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> cbtData, </span>
-<span id="cb241-4"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb241-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">fixed.x =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb241-5"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb241-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">meanstructure =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb241-6"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb241-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">se =</span> <span class="st">&quot;bootstrap&quot;</span>, </span>
-<span id="cb241-7"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb241-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">bootstrap =</span> <span class="dv">1000</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb242-1"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb242-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2022</span>)</span>
+<span id="cb242-2"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb242-2" aria-hidden="true" tabindex="-1"></a>ex2Boot <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> ex2ModMediation, </span>
+<span id="cb242-3"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb242-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> cbtData, </span>
+<span id="cb242-4"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb242-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">fixed.x =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb242-5"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb242-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">meanstructure =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb242-6"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb242-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">se =</span> <span class="st">&quot;bootstrap&quot;</span>, </span>
+<span id="cb242-7"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb242-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">bootstrap =</span> <span class="dv">1000</span>) </span></code></pre></div>
 <p>You can further request a BC (bias-corrected) by adding an argument boot.ci.type = “bca.simple” to parameterEstimates():</p>
-<div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb242-1"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb242-1" aria-hidden="true" tabindex="-1"></a><span class="fu">parameterEstimates</span>(ex2Boot, </span>
-<span id="cb242-2"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb242-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">level =</span> <span class="fl">0.95</span>, </span>
-<span id="cb242-3"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb242-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">boot.ci.type=</span><span class="st">&quot;bca.simple&quot;</span>,</span>
-<span id="cb242-4"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb242-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">standardized =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<pre><code>## Warning in norm.inter(t, adj.alpha): extreme order statistics used as endpoints</code></pre>
-<pre><code>##                lhs op             rhs         label    est    se       z pvalue ci.lower ci.upper std.lv std.all std.nox
-## 1      NegThoughts  ~        CBTDummy            a1 -5.060 0.064 -78.764  0.000   -5.183   -4.930 -5.060  -0.794  -1.588
-## 2      NegThoughts  ~     NeedCogCont            a2  2.000 0.048  42.047  0.000    1.902    2.093  2.000   0.626   0.628
-## 3      NegThoughts  ~ CBTxNeedCogCont            a3 -3.071 0.067 -45.675  0.000   -3.195   -2.922 -3.071  -0.668  -0.964
-## 4       Depression  ~     NegThoughts             b  1.617 0.013 124.544  0.000    1.592    1.642  1.617   0.912   0.912
-## 5       Depression  ~        CBTDummy        cprime -1.066 0.084 -12.758  0.000   -1.216   -0.899 -1.066  -0.094  -0.189
-## 6      NegThoughts ~~     NegThoughts                1.010 0.042  23.885  0.000    0.937    1.109  1.010   0.099   0.099
-## 7       Depression ~~      Depression                0.645 0.031  21.047  0.000    0.592    0.714  0.645   0.020   0.020
-## 8         CBTDummy ~~        CBTDummy                0.250 0.000 619.383  0.000    0.250    0.250  0.250   1.000   0.250
-## 9         CBTDummy ~~     NeedCogCont               -0.020 0.016  -1.258  0.208   -0.051    0.013 -0.020  -0.040  -0.020
-## 10        CBTDummy ~~ CBTxNeedCogCont               -0.008 0.011  -0.781  0.435   -0.030    0.013 -0.008  -0.024  -0.008
-## 11     NeedCogCont ~~     NeedCogCont                0.994 0.044  22.749  0.000    0.909    1.078  0.994   1.000   0.994
-## 12     NeedCogCont ~~ CBTxNeedCogCont                0.480 0.034  14.314  0.000    0.412    0.545  0.480   0.695   0.480
-## 13 CBTxNeedCogCont ~~ CBTxNeedCogCont                0.480 0.034  14.292  0.000    0.411    0.545  0.480   1.000   0.480
-## 14     NegThoughts ~1                                0.523 0.046  11.401  0.000    0.436    0.616  0.523   0.164   0.164
-## 15      Depression ~1                                2.089 0.037  56.930  0.000    2.021    2.160  2.089   0.370   0.370
-## 16        CBTDummy ~1                                0.500 0.016  30.669  0.000    0.467    0.529  0.500   1.000   0.500
-## 17     NeedCogCont ~1                                0.006 0.031   0.190  0.849   -0.062    0.063  0.006   0.006   0.006
-## 18 CBTxNeedCogCont ~1                               -0.017 0.021  -0.781  0.435   -0.059    0.026 -0.017  -0.024  -0.017
-## 19   IndexOfModMed :=            a3*b IndexOfModMed -4.967 0.114 -43.431  0.000   -5.180   -4.727 -4.967  -0.609  -0.879</code></pre>
+<div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb243-1"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb243-1" aria-hidden="true" tabindex="-1"></a><span class="fu">parameterEstimates</span>(ex2Boot, </span>
+<span id="cb243-2"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb243-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">level =</span> <span class="fl">0.95</span>, </span>
+<span id="cb243-3"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb243-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">boot.ci.type=</span><span class="st">&quot;bca.simple&quot;</span>,</span>
+<span id="cb243-4"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb243-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">standardized =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>## Warning in norm.inter(t, adj.alpha): extreme order
+## statistics used as endpoints</code></pre>
+<pre><code>##                lhs op             rhs         label    est
+## 1      NegThoughts  ~        CBTDummy            a1 -5.060
+## 2      NegThoughts  ~     NeedCogCont            a2  2.000
+## 3      NegThoughts  ~ CBTxNeedCogCont            a3 -3.071
+## 4       Depression  ~     NegThoughts             b  1.617
+## 5       Depression  ~        CBTDummy        cprime -1.066
+## 6      NegThoughts ~~     NegThoughts                1.010
+## 7       Depression ~~      Depression                0.645
+## 8         CBTDummy ~~        CBTDummy                0.250
+## 9         CBTDummy ~~     NeedCogCont               -0.020
+## 10        CBTDummy ~~ CBTxNeedCogCont               -0.008
+## 11     NeedCogCont ~~     NeedCogCont                0.994
+## 12     NeedCogCont ~~ CBTxNeedCogCont                0.480
+## 13 CBTxNeedCogCont ~~ CBTxNeedCogCont                0.480
+## 14     NegThoughts ~1                                0.523
+## 15      Depression ~1                                2.089
+## 16        CBTDummy ~1                                0.500
+## 17     NeedCogCont ~1                                0.006
+## 18 CBTxNeedCogCont ~1                               -0.017
+## 19   IndexOfModMed :=            a3*b IndexOfModMed -4.967
+##       se       z pvalue ci.lower ci.upper std.lv std.all
+## 1  0.064 -78.764  0.000   -5.183   -4.930 -5.060  -0.794
+## 2  0.048  42.047  0.000    1.902    2.093  2.000   0.626
+## 3  0.067 -45.675  0.000   -3.195   -2.922 -3.071  -0.668
+## 4  0.013 124.544  0.000    1.592    1.642  1.617   0.912
+## 5  0.084 -12.758  0.000   -1.216   -0.899 -1.066  -0.094
+## 6  0.042  23.885  0.000    0.937    1.109  1.010   0.099
+## 7  0.031  21.047  0.000    0.592    0.714  0.645   0.020
+## 8  0.000 619.383  0.000    0.250    0.250  0.250   1.000
+## 9  0.016  -1.258  0.208   -0.051    0.013 -0.020  -0.040
+## 10 0.011  -0.781  0.435   -0.030    0.013 -0.008  -0.024
+## 11 0.044  22.749  0.000    0.909    1.078  0.994   1.000
+## 12 0.034  14.314  0.000    0.412    0.545  0.480   0.695
+## 13 0.034  14.292  0.000    0.411    0.545  0.480   1.000
+## 14 0.046  11.401  0.000    0.436    0.616  0.523   0.164
+## 15 0.037  56.930  0.000    2.021    2.160  2.089   0.370
+## 16 0.016  30.669  0.000    0.468    0.531  0.500   1.000
+## 17 0.031   0.190  0.849   -0.062    0.063  0.006   0.006
+## 18 0.021  -0.781  0.435   -0.059    0.026 -0.017  -0.024
+## 19 0.114 -43.431  0.000   -5.180   -4.727 -4.967  -0.609
+##    std.nox
+## 1   -1.588
+## 2    0.628
+## 3   -0.964
+## 4    0.912
+## 5   -0.189
+## 6    0.099
+## 7    0.020
+## 8    0.250
+## 9   -0.020
+## 10  -0.008
+## 11   0.994
+## 12   0.480
+## 13   0.480
+## 14   0.164
+## 15   0.370
+## 16   0.500
+## 17   0.006
+## 18  -0.017
+## 19  -0.879</code></pre>
 <p>Defined Parameters:</p>
 <pre><code>               Estimate  Std.Err  ci.lower  ci.upper   std.all
 
@@ -796,85 +931,138 @@ IndexOfModMed    -4.967    0.114    -5.180    -4.727    -0.609</code></pre>
 <h3><span class="header-section-number">6.2.4</span> Step 4: Simple Slopes<a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#step-4-simple-slopes" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>As a follow-up analysis to a significant moderation effect, we conduct simple slope anlaysis:</p>
 <p>Let’s use pick-a-point (Rogosa, 1980) and plot the indirect effects at designated levels of NeedCogCont:</p>
-<div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb246-1"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb246-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(cbtData<span class="sc">$</span>NeedCogCont) <span class="co">#0</span></span></code></pre></div>
+<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb247-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(cbtData<span class="sc">$</span>NeedCogCont) <span class="co">#0</span></span></code></pre></div>
 <pre><code>## [1] 0.005925852</code></pre>
-<div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb248-1"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb248-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(cbtData<span class="sc">$</span>NeedCogCont) <span class="co"># 1</span></span></code></pre></div>
+<div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb249-1"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb249-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(cbtData<span class="sc">$</span>NeedCogCont) <span class="co"># 1</span></span></code></pre></div>
 <pre><code>## [1] 0.9974319</code></pre>
 <p>Three representative levels:</p>
-<div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb250-1"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb250-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(cbtData<span class="sc">$</span>NeedCogCont) <span class="sc">-</span> <span class="fu">sd</span>(cbtData<span class="sc">$</span>NeedCogCont) <span class="co"># -1</span></span></code></pre></div>
+<div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb251-1"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb251-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(cbtData<span class="sc">$</span>NeedCogCont) <span class="sc">-</span> <span class="fu">sd</span>(cbtData<span class="sc">$</span>NeedCogCont) <span class="co"># -1</span></span></code></pre></div>
 <pre><code>## [1] -0.991506</code></pre>
-<div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb252-1"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb252-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(cbtData<span class="sc">$</span>NeedCogCont)  <span class="co">#0</span></span></code></pre></div>
+<div class="sourceCode" id="cb253"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb253-1"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb253-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(cbtData<span class="sc">$</span>NeedCogCont)  <span class="co">#0</span></span></code></pre></div>
 <pre><code>## [1] 0.005925852</code></pre>
-<div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb254-1"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb254-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(cbtData<span class="sc">$</span>NeedCogCont) <span class="sc">+</span> <span class="fu">sd</span>(cbtData<span class="sc">$</span>NeedCogCont) <span class="co"># 1</span></span></code></pre></div>
+<div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb255-1"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb255-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(cbtData<span class="sc">$</span>NeedCogCont) <span class="sc">+</span> <span class="fu">sd</span>(cbtData<span class="sc">$</span>NeedCogCont) <span class="co"># 1</span></span></code></pre></div>
 <pre><code>## [1] 1.003358</code></pre>
 <p>let’s define the Conditional Indirect Effects in the syntax:</p>
-<div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb256-1"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb256-1" aria-hidden="true" tabindex="-1"></a>ex3ModMediation <span class="ot">&lt;-</span> <span class="st">&quot; </span></span>
-<span id="cb256-2"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb256-2" aria-hidden="true" tabindex="-1"></a><span class="st">    #Regressions</span></span>
-<span id="cb256-3"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb256-3" aria-hidden="true" tabindex="-1"></a><span class="st">  NegThoughts ~ a1*CBTDummy + a2*NeedCogCont + a3*CBTxNeedCogCont </span></span>
-<span id="cb256-4"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb256-4" aria-hidden="true" tabindex="-1"></a><span class="st">    Depression ~ b*NegThoughts + cprime*CBTDummy</span></span>
-<span id="cb256-5"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb256-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb256-6"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb256-6" aria-hidden="true" tabindex="-1"></a><span class="st">  #Index of Moderated Mediation</span></span>
-<span id="cb256-7"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb256-7" aria-hidden="true" tabindex="-1"></a><span class="st">  IndexOfModMed := a3*b</span></span>
-<span id="cb256-8"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb256-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb256-9"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb256-9" aria-hidden="true" tabindex="-1"></a><span class="st">  #Simple Slopes</span></span>
-<span id="cb256-10"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb256-10" aria-hidden="true" tabindex="-1"></a><span class="st">    aSSLow := a1+a3*(-1)    </span></span>
-<span id="cb256-11"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb256-11" aria-hidden="true" tabindex="-1"></a><span class="st">    aSSMean := a1+a3*0      </span></span>
-<span id="cb256-12"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb256-12" aria-hidden="true" tabindex="-1"></a><span class="st">    aSSHigh := a1+a3*1      </span></span>
-<span id="cb256-13"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb256-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb256-14"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb256-14" aria-hidden="true" tabindex="-1"></a><span class="st">    #Conditional Indirect Effects</span></span>
-<span id="cb256-15"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb256-15" aria-hidden="true" tabindex="-1"></a><span class="st">    abLow := aSSLow*b</span></span>
-<span id="cb256-16"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb256-16" aria-hidden="true" tabindex="-1"></a><span class="st">    abMean := aSSMean*b</span></span>
-<span id="cb256-17"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb256-17" aria-hidden="true" tabindex="-1"></a><span class="st">    abHigh := aSSHigh*b</span></span>
-<span id="cb256-18"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb256-18" aria-hidden="true" tabindex="-1"></a><span class="st">    &quot;</span>  </span></code></pre></div>
-<div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb257-1"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb257-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2022</span>)</span>
-<span id="cb257-2"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb257-2" aria-hidden="true" tabindex="-1"></a>ex3Boot <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> ex3ModMediation, </span>
-<span id="cb257-3"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb257-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> cbtData, </span>
-<span id="cb257-4"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb257-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">se =</span> <span class="st">&quot;bootstrap&quot;</span>, </span>
-<span id="cb257-5"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb257-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">bootstrap =</span> <span class="dv">1000</span>, </span>
-<span id="cb257-6"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb257-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">fixed.x=</span><span class="cn">FALSE</span>,</span>
-<span id="cb257-7"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb257-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">meanstructure =</span> <span class="cn">TRUE</span>) </span></code></pre></div>
-<div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb258-1"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb258-1" aria-hidden="true" tabindex="-1"></a><span class="fu">parameterEstimates</span>(ex3Boot, </span>
-<span id="cb258-2"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb258-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">level =</span> <span class="fl">0.95</span>, </span>
-<span id="cb258-3"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb258-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">boot.ci.type=</span><span class="st">&quot;bca.simple&quot;</span>,</span>
-<span id="cb258-4"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb258-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">standardized =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<pre><code>## Warning in norm.inter(t, adj.alpha): extreme order statistics used as endpoints</code></pre>
-<pre><code>##                lhs op             rhs         label     est    se       z pvalue ci.lower ci.upper  std.lv std.all std.nox
-## 1      NegThoughts  ~        CBTDummy            a1  -5.060 0.064 -78.764  0.000   -5.183   -4.930  -5.060  -0.794  -1.588
-## 2      NegThoughts  ~     NeedCogCont            a2   2.000 0.048  42.047  0.000    1.902    2.093   2.000   0.626   0.628
-## 3      NegThoughts  ~ CBTxNeedCogCont            a3  -3.071 0.067 -45.675  0.000   -3.195   -2.922  -3.071  -0.668  -0.964
-## 4       Depression  ~     NegThoughts             b   1.617 0.013 124.544  0.000    1.592    1.642   1.617   0.912   0.912
-## 5       Depression  ~        CBTDummy        cprime  -1.066 0.084 -12.758  0.000   -1.216   -0.899  -1.066  -0.094  -0.189
-## 6      NegThoughts ~~     NegThoughts                 1.010 0.042  23.885  0.000    0.937    1.109   1.010   0.099   0.099
-## 7       Depression ~~      Depression                 0.645 0.031  21.047  0.000    0.592    0.714   0.645   0.020   0.020
-## 8         CBTDummy ~~        CBTDummy                 0.250 0.000 619.383  0.000    0.250    0.250   0.250   1.000   0.250
-## 9         CBTDummy ~~     NeedCogCont                -0.020 0.016  -1.258  0.208   -0.051    0.013  -0.020  -0.040  -0.020
-## 10        CBTDummy ~~ CBTxNeedCogCont                -0.008 0.011  -0.781  0.435   -0.030    0.013  -0.008  -0.024  -0.008
-## 11     NeedCogCont ~~     NeedCogCont                 0.994 0.044  22.749  0.000    0.909    1.078   0.994   1.000   0.994
-## 12     NeedCogCont ~~ CBTxNeedCogCont                 0.480 0.034  14.314  0.000    0.412    0.545   0.480   0.695   0.480
-## 13 CBTxNeedCogCont ~~ CBTxNeedCogCont                 0.480 0.034  14.292  0.000    0.411    0.545   0.480   1.000   0.480
-## 14     NegThoughts ~1                                 0.523 0.046  11.401  0.000    0.436    0.616   0.523   0.164   0.164
-## 15      Depression ~1                                 2.089 0.037  56.930  0.000    2.021    2.160   2.089   0.370   0.370
-## 16        CBTDummy ~1                                 0.500 0.016  30.669  0.000    0.467    0.529   0.500   1.000   0.500
-## 17     NeedCogCont ~1                                 0.006 0.031   0.190  0.849   -0.062    0.063   0.006   0.006   0.006
-## 18 CBTxNeedCogCont ~1                                -0.017 0.021  -0.781  0.435   -0.059    0.026  -0.017  -0.024  -0.017
-## 19   IndexOfModMed :=            a3*b IndexOfModMed  -4.967 0.114 -43.431  0.000   -5.180   -4.727  -4.967  -0.609  -0.879
-## 20          aSSLow :=      a1+a3*(-1)        aSSLow  -1.990 0.092 -21.679  0.000   -2.176   -1.813  -1.990  -0.126  -0.624
-## 21         aSSMean :=         a1+a3*0       aSSMean  -5.060 0.064 -78.724  0.000   -5.183   -4.930  -5.060  -0.794  -1.588
-## 22         aSSHigh :=         a1+a3*1       aSSHigh  -8.131 0.094 -86.243  0.000   -8.313   -7.942  -8.131  -1.462  -2.552
-## 23           abLow :=        aSSLow*b         abLow  -3.218 0.151 -21.338  0.000   -3.532   -2.941  -3.218  -0.115  -0.570
-## 24          abMean :=       aSSMean*b        abMean  -8.185 0.121 -67.625  0.000   -8.433   -7.944  -8.185  -0.725  -1.449
-## 25          abHigh :=       aSSHigh*b        abHigh -13.152 0.181 -72.721  0.000  -13.513  -12.779 -13.152  -1.334  -2.329</code></pre>
-<div class="sourceCode" id="cb261"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb261-1"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb261-1" aria-hidden="true" tabindex="-1"></a>Defined Parameters<span class="sc">:</span> </span>
-<span id="cb261-2"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb261-2" aria-hidden="true" tabindex="-1"></a>                   Estimate  Std.Err  z<span class="sc">-</span>value  <span class="fu">P</span>(<span class="sc">&gt;</span><span class="er">|</span>z<span class="sc">|</span>)    ci.lower  ci.upper    std.all</span>
-<span id="cb261-3"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb261-3" aria-hidden="true" tabindex="-1"></a>    IndexOfModMed    <span class="sc">-</span><span class="fl">4.967</span>    <span class="fl">0.114</span>  <span class="sc">-</span><span class="fl">43.431</span>    <span class="fl">0.000</span>      <span class="sc">-</span><span class="fl">5.180</span>    <span class="sc">-</span><span class="fl">4.727</span>     <span class="sc">-</span><span class="fl">0.609</span>      </span>
-<span id="cb261-4"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb261-4" aria-hidden="true" tabindex="-1"></a>    aSSLow           <span class="sc">-</span><span class="fl">1.990</span>    <span class="fl">0.092</span>  <span class="sc">-</span><span class="fl">21.679</span>    <span class="fl">0.000</span>      <span class="sc">-</span><span class="fl">2.176</span>    <span class="sc">-</span><span class="fl">1.813</span>     <span class="sc">-</span><span class="fl">0.126</span>  </span>
-<span id="cb261-5"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb261-5" aria-hidden="true" tabindex="-1"></a>    aSSMean          <span class="sc">-</span><span class="fl">5.060</span>    <span class="fl">0.064</span>  <span class="sc">-</span><span class="fl">78.724</span>    <span class="fl">0.000</span>      <span class="sc">-</span><span class="fl">5.183</span>    <span class="sc">-</span><span class="fl">4.930</span>     <span class="sc">-</span><span class="fl">0.794</span>                                 </span>
-<span id="cb261-6"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb261-6" aria-hidden="true" tabindex="-1"></a>    aSSHigh          <span class="sc">-</span><span class="fl">8.131</span>    <span class="fl">0.094</span>  <span class="sc">-</span><span class="fl">86.243</span>    <span class="fl">0.000</span>      <span class="sc">-</span><span class="fl">8.313</span>    <span class="sc">-</span><span class="fl">7.942</span>     <span class="sc">-</span><span class="fl">1.462</span>  </span>
-<span id="cb261-7"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb261-7" aria-hidden="true" tabindex="-1"></a>    abLow            <span class="sc">-</span><span class="fl">3.218</span>    <span class="fl">0.151</span>  <span class="sc">-</span><span class="fl">21.338</span>    <span class="fl">0.000</span>      <span class="sc">-</span><span class="fl">3.532</span>    <span class="sc">-</span><span class="fl">2.941</span>     <span class="sc">-</span><span class="fl">0.115</span>  </span>
-<span id="cb261-8"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb261-8" aria-hidden="true" tabindex="-1"></a>    abMean           <span class="sc">-</span><span class="fl">8.185</span>    <span class="fl">0.121</span>  <span class="sc">-</span><span class="fl">67.625</span>    <span class="fl">0.000</span>      <span class="sc">-</span><span class="fl">8.433</span>    <span class="sc">-</span><span class="fl">7.944</span>     <span class="sc">-</span><span class="fl">0.725</span>  </span>
-<span id="cb261-9"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb261-9" aria-hidden="true" tabindex="-1"></a>    abHigh          <span class="sc">-</span><span class="fl">13.152</span>    <span class="fl">0.181</span>  <span class="sc">-</span><span class="fl">72.721</span>    <span class="fl">0.000</span>     <span class="sc">-</span><span class="fl">13.513</span>   <span class="sc">-</span><span class="fl">12.779</span>     <span class="sc">-</span><span class="fl">1.334</span>  </span>
-<span id="cb261-10"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb261-10" aria-hidden="true" tabindex="-1"></a>    b                 <span class="fl">1.617</span>    <span class="fl">0.013</span>  <span class="fl">124.544</span>    <span class="fl">0.000</span>       <span class="fl">1.592</span>     <span class="fl">1.642</span>      <span class="fl">0.912</span>  </span>
-<span id="cb261-11"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb261-11" aria-hidden="true" tabindex="-1"></a>    cprime           <span class="sc">-</span><span class="fl">1.066</span>    <span class="fl">0.084</span>  <span class="sc">-</span><span class="fl">12.758</span>    <span class="fl">0.000</span>      <span class="sc">-</span><span class="fl">1.216</span>    <span class="sc">-</span><span class="fl">0.899</span>     <span class="sc">-</span><span class="fl">0.094</span>  </span></code></pre></div>
+<div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb257-1"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb257-1" aria-hidden="true" tabindex="-1"></a>ex3ModMediation <span class="ot">&lt;-</span> <span class="st">&quot; </span></span>
+<span id="cb257-2"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb257-2" aria-hidden="true" tabindex="-1"></a><span class="st">    #Regressions</span></span>
+<span id="cb257-3"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb257-3" aria-hidden="true" tabindex="-1"></a><span class="st">  NegThoughts ~ a1*CBTDummy + a2*NeedCogCont + a3*CBTxNeedCogCont </span></span>
+<span id="cb257-4"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb257-4" aria-hidden="true" tabindex="-1"></a><span class="st">    Depression ~ b*NegThoughts + cprime*CBTDummy</span></span>
+<span id="cb257-5"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb257-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb257-6"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb257-6" aria-hidden="true" tabindex="-1"></a><span class="st">  #Index of Moderated Mediation</span></span>
+<span id="cb257-7"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb257-7" aria-hidden="true" tabindex="-1"></a><span class="st">  IndexOfModMed := a3*b</span></span>
+<span id="cb257-8"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb257-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb257-9"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb257-9" aria-hidden="true" tabindex="-1"></a><span class="st">  #Simple Slopes</span></span>
+<span id="cb257-10"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb257-10" aria-hidden="true" tabindex="-1"></a><span class="st">    aSSLow := a1+a3*(-1)    </span></span>
+<span id="cb257-11"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb257-11" aria-hidden="true" tabindex="-1"></a><span class="st">    aSSMean := a1+a3*0      </span></span>
+<span id="cb257-12"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb257-12" aria-hidden="true" tabindex="-1"></a><span class="st">    aSSHigh := a1+a3*1      </span></span>
+<span id="cb257-13"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb257-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb257-14"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb257-14" aria-hidden="true" tabindex="-1"></a><span class="st">    #Conditional Indirect Effects</span></span>
+<span id="cb257-15"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb257-15" aria-hidden="true" tabindex="-1"></a><span class="st">    abLow := aSSLow*b</span></span>
+<span id="cb257-16"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb257-16" aria-hidden="true" tabindex="-1"></a><span class="st">    abMean := aSSMean*b</span></span>
+<span id="cb257-17"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb257-17" aria-hidden="true" tabindex="-1"></a><span class="st">    abHigh := aSSHigh*b</span></span>
+<span id="cb257-18"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb257-18" aria-hidden="true" tabindex="-1"></a><span class="st">    &quot;</span>  </span></code></pre></div>
+<div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb258-1"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb258-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2022</span>)</span>
+<span id="cb258-2"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb258-2" aria-hidden="true" tabindex="-1"></a>ex3Boot <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> ex3ModMediation, </span>
+<span id="cb258-3"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb258-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> cbtData, </span>
+<span id="cb258-4"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb258-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">se =</span> <span class="st">&quot;bootstrap&quot;</span>, </span>
+<span id="cb258-5"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb258-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">bootstrap =</span> <span class="dv">1000</span>, </span>
+<span id="cb258-6"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb258-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">fixed.x=</span><span class="cn">FALSE</span>,</span>
+<span id="cb258-7"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb258-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">meanstructure =</span> <span class="cn">TRUE</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb259"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb259-1"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb259-1" aria-hidden="true" tabindex="-1"></a><span class="fu">parameterEstimates</span>(ex3Boot, </span>
+<span id="cb259-2"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb259-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">level =</span> <span class="fl">0.95</span>, </span>
+<span id="cb259-3"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb259-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">boot.ci.type=</span><span class="st">&quot;bca.simple&quot;</span>,</span>
+<span id="cb259-4"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb259-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">standardized =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>## Warning in norm.inter(t, adj.alpha): extreme order
+## statistics used as endpoints</code></pre>
+<pre><code>##                lhs op             rhs         label
+## 1      NegThoughts  ~        CBTDummy            a1
+## 2      NegThoughts  ~     NeedCogCont            a2
+## 3      NegThoughts  ~ CBTxNeedCogCont            a3
+## 4       Depression  ~     NegThoughts             b
+## 5       Depression  ~        CBTDummy        cprime
+## 6      NegThoughts ~~     NegThoughts              
+## 7       Depression ~~      Depression              
+## 8         CBTDummy ~~        CBTDummy              
+## 9         CBTDummy ~~     NeedCogCont              
+## 10        CBTDummy ~~ CBTxNeedCogCont              
+## 11     NeedCogCont ~~     NeedCogCont              
+## 12     NeedCogCont ~~ CBTxNeedCogCont              
+## 13 CBTxNeedCogCont ~~ CBTxNeedCogCont              
+## 14     NegThoughts ~1                              
+## 15      Depression ~1                              
+## 16        CBTDummy ~1                              
+## 17     NeedCogCont ~1                              
+## 18 CBTxNeedCogCont ~1                              
+## 19   IndexOfModMed :=            a3*b IndexOfModMed
+## 20          aSSLow :=      a1+a3*(-1)        aSSLow
+## 21         aSSMean :=         a1+a3*0       aSSMean
+## 22         aSSHigh :=         a1+a3*1       aSSHigh
+## 23           abLow :=        aSSLow*b         abLow
+## 24          abMean :=       aSSMean*b        abMean
+## 25          abHigh :=       aSSHigh*b        abHigh
+##        est    se       z pvalue ci.lower ci.upper  std.lv
+## 1   -5.060 0.064 -78.764  0.000   -5.183   -4.930  -5.060
+## 2    2.000 0.048  42.047  0.000    1.902    2.093   2.000
+## 3   -3.071 0.067 -45.675  0.000   -3.195   -2.922  -3.071
+## 4    1.617 0.013 124.544  0.000    1.592    1.642   1.617
+## 5   -1.066 0.084 -12.758  0.000   -1.216   -0.899  -1.066
+## 6    1.010 0.042  23.885  0.000    0.937    1.109   1.010
+## 7    0.645 0.031  21.047  0.000    0.592    0.714   0.645
+## 8    0.250 0.000 619.383  0.000    0.250    0.250   0.250
+## 9   -0.020 0.016  -1.258  0.208   -0.051    0.013  -0.020
+## 10  -0.008 0.011  -0.781  0.435   -0.030    0.013  -0.008
+## 11   0.994 0.044  22.749  0.000    0.909    1.078   0.994
+## 12   0.480 0.034  14.314  0.000    0.412    0.545   0.480
+## 13   0.480 0.034  14.292  0.000    0.411    0.545   0.480
+## 14   0.523 0.046  11.401  0.000    0.436    0.616   0.523
+## 15   2.089 0.037  56.930  0.000    2.021    2.160   2.089
+## 16   0.500 0.016  30.669  0.000    0.468    0.531   0.500
+## 17   0.006 0.031   0.190  0.849   -0.062    0.063   0.006
+## 18  -0.017 0.021  -0.781  0.435   -0.059    0.026  -0.017
+## 19  -4.967 0.114 -43.431  0.000   -5.180   -4.727  -4.967
+## 20  -1.990 0.092 -21.679  0.000   -2.176   -1.813  -1.990
+## 21  -5.060 0.064 -78.724  0.000   -5.183   -4.930  -5.060
+## 22  -8.131 0.094 -86.243  0.000   -8.313   -7.942  -8.131
+## 23  -3.218 0.151 -21.338  0.000   -3.532   -2.941  -3.218
+## 24  -8.185 0.121 -67.625  0.000   -8.433   -7.944  -8.185
+## 25 -13.152 0.181 -72.721  0.000  -13.513  -12.779 -13.152
+##    std.all std.nox
+## 1   -0.794  -1.588
+## 2    0.626   0.628
+## 3   -0.668  -0.964
+## 4    0.912   0.912
+## 5   -0.094  -0.189
+## 6    0.099   0.099
+## 7    0.020   0.020
+## 8    1.000   0.250
+## 9   -0.040  -0.020
+## 10  -0.024  -0.008
+## 11   1.000   0.994
+## 12   0.695   0.480
+## 13   1.000   0.480
+## 14   0.164   0.164
+## 15   0.370   0.370
+## 16   1.000   0.500
+## 17   0.006   0.006
+## 18  -0.024  -0.017
+## 19  -0.609  -0.879
+## 20  -0.126  -0.624
+## 21  -0.794  -1.588
+## 22  -1.462  -2.552
+## 23  -0.115  -0.570
+## 24  -0.725  -1.449
+## 25  -1.334  -2.329</code></pre>
+<div class="sourceCode" id="cb262"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb262-1"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb262-1" aria-hidden="true" tabindex="-1"></a>Defined Parameters<span class="sc">:</span> </span>
+<span id="cb262-2"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb262-2" aria-hidden="true" tabindex="-1"></a>                   Estimate  Std.Err  z<span class="sc">-</span>value  <span class="fu">P</span>(<span class="sc">&gt;</span><span class="er">|</span>z<span class="sc">|</span>)    ci.lower  ci.upper    std.all</span>
+<span id="cb262-3"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb262-3" aria-hidden="true" tabindex="-1"></a>    IndexOfModMed    <span class="sc">-</span><span class="fl">4.967</span>    <span class="fl">0.114</span>  <span class="sc">-</span><span class="fl">43.431</span>    <span class="fl">0.000</span>      <span class="sc">-</span><span class="fl">5.180</span>    <span class="sc">-</span><span class="fl">4.727</span>     <span class="sc">-</span><span class="fl">0.609</span>      </span>
+<span id="cb262-4"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb262-4" aria-hidden="true" tabindex="-1"></a>    aSSLow           <span class="sc">-</span><span class="fl">1.990</span>    <span class="fl">0.092</span>  <span class="sc">-</span><span class="fl">21.679</span>    <span class="fl">0.000</span>      <span class="sc">-</span><span class="fl">2.176</span>    <span class="sc">-</span><span class="fl">1.813</span>     <span class="sc">-</span><span class="fl">0.126</span>  </span>
+<span id="cb262-5"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb262-5" aria-hidden="true" tabindex="-1"></a>    aSSMean          <span class="sc">-</span><span class="fl">5.060</span>    <span class="fl">0.064</span>  <span class="sc">-</span><span class="fl">78.724</span>    <span class="fl">0.000</span>      <span class="sc">-</span><span class="fl">5.183</span>    <span class="sc">-</span><span class="fl">4.930</span>     <span class="sc">-</span><span class="fl">0.794</span>                          </span>
+<span id="cb262-6"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb262-6" aria-hidden="true" tabindex="-1"></a>    aSSHigh          <span class="sc">-</span><span class="fl">8.131</span>    <span class="fl">0.094</span>  <span class="sc">-</span><span class="fl">86.243</span>    <span class="fl">0.000</span>      <span class="sc">-</span><span class="fl">8.313</span>    <span class="sc">-</span><span class="fl">7.942</span>     <span class="sc">-</span><span class="fl">1.462</span>  </span>
+<span id="cb262-7"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb262-7" aria-hidden="true" tabindex="-1"></a>    abLow            <span class="sc">-</span><span class="fl">3.218</span>    <span class="fl">0.151</span>  <span class="sc">-</span><span class="fl">21.338</span>    <span class="fl">0.000</span>      <span class="sc">-</span><span class="fl">3.532</span>    <span class="sc">-</span><span class="fl">2.941</span>     <span class="sc">-</span><span class="fl">0.115</span>  </span>
+<span id="cb262-8"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb262-8" aria-hidden="true" tabindex="-1"></a>    abMean           <span class="sc">-</span><span class="fl">8.185</span>    <span class="fl">0.121</span>  <span class="sc">-</span><span class="fl">67.625</span>    <span class="fl">0.000</span>      <span class="sc">-</span><span class="fl">8.433</span>    <span class="sc">-</span><span class="fl">7.944</span>     <span class="sc">-</span><span class="fl">0.725</span>  </span>
+<span id="cb262-9"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb262-9" aria-hidden="true" tabindex="-1"></a>    abHigh          <span class="sc">-</span><span class="fl">13.152</span>    <span class="fl">0.181</span>  <span class="sc">-</span><span class="fl">72.721</span>    <span class="fl">0.000</span>     <span class="sc">-</span><span class="fl">13.513</span>   <span class="sc">-</span><span class="fl">12.779</span>     <span class="sc">-</span><span class="fl">1.334</span>  </span>
+<span id="cb262-10"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb262-10" aria-hidden="true" tabindex="-1"></a>    b                 <span class="fl">1.617</span>    <span class="fl">0.013</span>  <span class="fl">124.544</span>    <span class="fl">0.000</span>       <span class="fl">1.592</span>     <span class="fl">1.642</span>      <span class="fl">0.912</span>  </span>
+<span id="cb262-11"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb262-11" aria-hidden="true" tabindex="-1"></a>    cprime           <span class="sc">-</span><span class="fl">1.066</span>    <span class="fl">0.084</span>  <span class="sc">-</span><span class="fl">12.758</span>    <span class="fl">0.000</span>      <span class="sc">-</span><span class="fl">1.216</span>    <span class="sc">-</span><span class="fl">0.899</span>     <span class="sc">-</span><span class="fl">0.094</span>  </span></code></pre></div>
 <ul>
 <li><p>What does a1 tell you?</p></li>
 <li><p>What does a2 tell you?</p></li>
@@ -898,93 +1086,132 @@ IndexOfModMed    -4.967    0.114    -5.180    -4.727    -0.609</code></pre>
 <!------------------------------>
 <p>Although johnson_neyman() does not work on lavaan fitted object (yet), one can use a try-and-error approach to figure out the region of significance:</p>
 <p>First, obtain the minimum and maximum of the moderator NeedCogCont:</p>
-<div class="sourceCode" id="cb262"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb262-1"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb262-1" aria-hidden="true" tabindex="-1"></a><span class="fu">min</span>(cbtData<span class="sc">$</span>NeedCogCont)   <span class="co"># -2.83</span></span></code></pre></div>
+<div class="sourceCode" id="cb263"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb263-1"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb263-1" aria-hidden="true" tabindex="-1"></a><span class="fu">min</span>(cbtData<span class="sc">$</span>NeedCogCont)   <span class="co"># -2.83</span></span></code></pre></div>
 <pre><code>## [1] -2.829197</code></pre>
-<div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb264-1"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb264-1" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(cbtData<span class="sc">$</span>NeedCogCont)   <span class="co">#  3.31</span></span></code></pre></div>
+<div class="sourceCode" id="cb265"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb265-1"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb265-1" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(cbtData<span class="sc">$</span>NeedCogCont)   <span class="co">#  3.31</span></span></code></pre></div>
 <pre><code>## [1] 3.310095</code></pre>
-<div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb266-1"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb266-1" aria-hidden="true" tabindex="-1"></a>ex4_JN <span class="ot">&lt;-</span> <span class="st">&quot; </span></span>
-<span id="cb266-2"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb266-2" aria-hidden="true" tabindex="-1"></a><span class="st">    #Regressions</span></span>
-<span id="cb266-3"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb266-3" aria-hidden="true" tabindex="-1"></a><span class="st">  NegThoughts ~ a1*CBTDummy + a2*NeedCogCont + a3*CBTxNeedCogCont </span></span>
-<span id="cb266-4"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb266-4" aria-hidden="true" tabindex="-1"></a><span class="st">    Depression ~ b*NegThoughts + cprime*CBTDummy</span></span>
-<span id="cb266-5"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb266-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb266-6"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb266-6" aria-hidden="true" tabindex="-1"></a><span class="st">  #Index of Moderated Mediation</span></span>
-<span id="cb266-7"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb266-7" aria-hidden="true" tabindex="-1"></a><span class="st">  IndexOfModMed := a3*b</span></span>
-<span id="cb266-8"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb266-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb266-9"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb266-9" aria-hidden="true" tabindex="-1"></a><span class="st">  #Simple Slopes</span></span>
-<span id="cb266-10"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb266-10" aria-hidden="true" tabindex="-1"></a><span class="st">    aSSMin := a1+a3*(-2.83) </span></span>
-<span id="cb266-11"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb266-11" aria-hidden="true" tabindex="-1"></a><span class="st">    aSSMin1 := a1+a3*(-1.75)    </span></span>
-<span id="cb266-12"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb266-12" aria-hidden="true" tabindex="-1"></a><span class="st">    aSSMin2 := a1+a3*(-1.74)    </span></span>
-<span id="cb266-13"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb266-13" aria-hidden="true" tabindex="-1"></a><span class="st">    aSSMin3 := a1+a3*(-1.58)    </span></span>
-<span id="cb266-14"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb266-14" aria-hidden="true" tabindex="-1"></a><span class="st">    aSSMin4 := a1+a3*(-1.57)    </span></span>
-<span id="cb266-15"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb266-15" aria-hidden="true" tabindex="-1"></a><span class="st">    aSSLow := a1+a3*(-1)    </span></span>
-<span id="cb266-16"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb266-16" aria-hidden="true" tabindex="-1"></a><span class="st">    aSSMean := a1+a3*0      </span></span>
-<span id="cb266-17"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb266-17" aria-hidden="true" tabindex="-1"></a><span class="st">    aSSHigh := a1+a3*1      </span></span>
-<span id="cb266-18"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb266-18" aria-hidden="true" tabindex="-1"></a><span class="st">    aSSMax := a1+a3*(3.31)  </span></span>
-<span id="cb266-19"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb266-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb266-20"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb266-20" aria-hidden="true" tabindex="-1"></a><span class="st">    #Conditional Indirect Effects</span></span>
-<span id="cb266-21"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb266-21" aria-hidden="true" tabindex="-1"></a><span class="st">    abMin := (a1+a3*(-2.83))*b</span></span>
-<span id="cb266-22"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb266-22" aria-hidden="true" tabindex="-1"></a><span class="st">    abMin1 := (a1+a3*(-1.75))*b    # cutoff1</span></span>
-<span id="cb266-23"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb266-23" aria-hidden="true" tabindex="-1"></a><span class="st">    abMin2 := (a1+a3*(-1.74))*b</span></span>
-<span id="cb266-24"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb266-24" aria-hidden="true" tabindex="-1"></a><span class="st">    abMin3 := (a1+a3*(-1.58))*b</span></span>
-<span id="cb266-25"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb266-25" aria-hidden="true" tabindex="-1"></a><span class="st">    abMin4 := (a1+a3*(-1.57))*b    # cutoff2</span></span>
-<span id="cb266-26"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb266-26" aria-hidden="true" tabindex="-1"></a><span class="st">    abLow := aSSLow*b</span></span>
-<span id="cb266-27"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb266-27" aria-hidden="true" tabindex="-1"></a><span class="st">    abMean := aSSMean*b</span></span>
-<span id="cb266-28"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb266-28" aria-hidden="true" tabindex="-1"></a><span class="st">    abHigh := aSSHigh*b</span></span>
-<span id="cb266-29"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb266-29" aria-hidden="true" tabindex="-1"></a><span class="st">    abMax := (a1+a3*(3.31))*b</span></span>
-<span id="cb266-30"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb266-30" aria-hidden="true" tabindex="-1"></a><span class="st">    &quot;</span>  </span></code></pre></div>
-<div class="sourceCode" id="cb267"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb267-1"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb267-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2022</span>)</span>
-<span id="cb267-2"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb267-2" aria-hidden="true" tabindex="-1"></a>ex4Boot <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> ex4_JN, </span>
-<span id="cb267-3"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb267-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> cbtData, </span>
-<span id="cb267-4"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb267-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">se =</span> <span class="st">&quot;bootstrap&quot;</span>, </span>
-<span id="cb267-5"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb267-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">bootstrap =</span> <span class="dv">1000</span>, </span>
-<span id="cb267-6"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb267-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">fixed.x=</span><span class="cn">FALSE</span>,</span>
-<span id="cb267-7"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb267-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">meanstructure =</span> <span class="cn">TRUE</span>) </span></code></pre></div>
-<div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb268-1" aria-hidden="true" tabindex="-1"></a><span class="fu">parameterEstimates</span>(ex4Boot, </span>
-<span id="cb268-2"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb268-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">level =</span> <span class="fl">0.95</span>, </span>
-<span id="cb268-3"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb268-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">boot.ci.type=</span><span class="st">&quot;bca.simple&quot;</span>)</span></code></pre></div>
-<pre><code>## Warning in norm.inter(t, adj.alpha): extreme order statistics used as endpoints</code></pre>
-<pre><code>##                lhs op               rhs         label     est    se       z pvalue ci.lower ci.upper
-## 1      NegThoughts  ~          CBTDummy            a1  -5.060 0.064 -78.764  0.000   -5.183   -4.930
-## 2      NegThoughts  ~       NeedCogCont            a2   2.000 0.048  42.047  0.000    1.902    2.093
-## 3      NegThoughts  ~   CBTxNeedCogCont            a3  -3.071 0.067 -45.675  0.000   -3.195   -2.922
-## 4       Depression  ~       NegThoughts             b   1.617 0.013 124.544  0.000    1.592    1.642
-## 5       Depression  ~          CBTDummy        cprime  -1.066 0.084 -12.758  0.000   -1.216   -0.899
-## 6      NegThoughts ~~       NegThoughts                 1.010 0.042  23.885  0.000    0.937    1.109
-## 7       Depression ~~        Depression                 0.645 0.031  21.047  0.000    0.592    0.714
-## 8         CBTDummy ~~          CBTDummy                 0.250 0.000 619.383  0.000    0.250    0.250
-## 9         CBTDummy ~~       NeedCogCont                -0.020 0.016  -1.258  0.208   -0.051    0.013
-## 10        CBTDummy ~~   CBTxNeedCogCont                -0.008 0.011  -0.781  0.435   -0.030    0.013
-## 11     NeedCogCont ~~       NeedCogCont                 0.994 0.044  22.749  0.000    0.909    1.078
-## 12     NeedCogCont ~~   CBTxNeedCogCont                 0.480 0.034  14.314  0.000    0.412    0.545
-## 13 CBTxNeedCogCont ~~   CBTxNeedCogCont                 0.480 0.034  14.292  0.000    0.411    0.545
-## 14     NegThoughts ~1                                   0.523 0.046  11.401  0.000    0.436    0.616
-## 15      Depression ~1                                   2.089 0.037  56.930  0.000    2.021    2.160
-## 16        CBTDummy ~1                                   0.500 0.016  30.669  0.000    0.467    0.529
-## 17     NeedCogCont ~1                                   0.006 0.031   0.190  0.849   -0.062    0.063
-## 18 CBTxNeedCogCont ~1                                  -0.017 0.021  -0.781  0.435   -0.059    0.026
-## 19   IndexOfModMed :=              a3*b IndexOfModMed  -4.967 0.114 -43.431  0.000   -5.180   -4.727
-## 20          aSSMin :=     a1+a3*(-2.83)        aSSMin   3.630 0.199  18.215  0.000    3.204    4.011
-## 21         aSSMin1 :=     a1+a3*(-1.75)       aSSMin1   0.313 0.133   2.363  0.018    0.029    0.562
-## 22         aSSMin2 :=     a1+a3*(-1.74)       aSSMin2   0.283 0.132   2.141  0.032    0.000    0.530
-## 23         aSSMin3 :=     a1+a3*(-1.58)       aSSMin3  -0.209 0.123  -1.701  0.089   -0.471    0.018
-## 24         aSSMin4 :=     a1+a3*(-1.57)       aSSMin4  -0.239 0.122  -1.960  0.050   -0.500   -0.013
-## 25          aSSLow :=        a1+a3*(-1)        aSSLow  -1.990 0.092 -21.679  0.000   -2.176   -1.813
-## 26         aSSMean :=           a1+a3*0       aSSMean  -5.060 0.064 -78.724  0.000   -5.183   -4.930
-## 27         aSSHigh :=           a1+a3*1       aSSHigh  -8.131 0.094 -86.243  0.000   -8.313   -7.942
-## 28          aSSMax :=      a1+a3*(3.31)        aSSMax -15.224 0.233 -65.232  0.000  -15.658  -14.751
-## 29           abMin := (a1+a3*(-2.83))*b         abMin   5.871 0.324  18.092  0.000    5.185    6.487
-## 30          abMin1 := (a1+a3*(-1.75))*b        abMin1   0.507 0.214   2.363  0.018    0.047    0.904
-## 31          abMin2 := (a1+a3*(-1.74))*b        abMin2   0.457 0.213   2.141  0.032   -0.001    0.853
-## 32          abMin3 := (a1+a3*(-1.58))*b        abMin3  -0.338 0.199  -1.700  0.089   -0.759    0.030
-## 33          abMin4 := (a1+a3*(-1.57))*b        abMin4  -0.387 0.198  -1.959  0.050   -0.807   -0.020
-## 34           abLow :=          aSSLow*b         abLow  -3.218 0.151 -21.338  0.000   -3.532   -2.941
-## 35          abMean :=         aSSMean*b        abMean  -8.185 0.121 -67.625  0.000   -8.433   -7.944
-## 36          abHigh :=         aSSHigh*b        abHigh -13.152 0.181 -72.721  0.000  -13.513  -12.779
-## 37           abMax :=  (a1+a3*(3.31))*b         abMax -24.624 0.418 -58.964  0.000  -25.391  -23.738</code></pre>
+<div class="sourceCode" id="cb267"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb267-1"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb267-1" aria-hidden="true" tabindex="-1"></a>ex4_JN <span class="ot">&lt;-</span> <span class="st">&quot; </span></span>
+<span id="cb267-2"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb267-2" aria-hidden="true" tabindex="-1"></a><span class="st">    #Regressions</span></span>
+<span id="cb267-3"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb267-3" aria-hidden="true" tabindex="-1"></a><span class="st">  NegThoughts ~ a1*CBTDummy + a2*NeedCogCont + a3*CBTxNeedCogCont </span></span>
+<span id="cb267-4"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb267-4" aria-hidden="true" tabindex="-1"></a><span class="st">    Depression ~ b*NegThoughts + cprime*CBTDummy</span></span>
+<span id="cb267-5"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb267-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb267-6"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb267-6" aria-hidden="true" tabindex="-1"></a><span class="st">  #Index of Moderated Mediation</span></span>
+<span id="cb267-7"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb267-7" aria-hidden="true" tabindex="-1"></a><span class="st">  IndexOfModMed := a3*b</span></span>
+<span id="cb267-8"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb267-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb267-9"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb267-9" aria-hidden="true" tabindex="-1"></a><span class="st">  #Simple Slopes</span></span>
+<span id="cb267-10"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb267-10" aria-hidden="true" tabindex="-1"></a><span class="st">    aSSMin := a1+a3*(-2.83) </span></span>
+<span id="cb267-11"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb267-11" aria-hidden="true" tabindex="-1"></a><span class="st">    aSSMin1 := a1+a3*(-1.75)    </span></span>
+<span id="cb267-12"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb267-12" aria-hidden="true" tabindex="-1"></a><span class="st">    aSSMin2 := a1+a3*(-1.74)    </span></span>
+<span id="cb267-13"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb267-13" aria-hidden="true" tabindex="-1"></a><span class="st">    aSSMin3 := a1+a3*(-1.58)    </span></span>
+<span id="cb267-14"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb267-14" aria-hidden="true" tabindex="-1"></a><span class="st">    aSSMin4 := a1+a3*(-1.57)    </span></span>
+<span id="cb267-15"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb267-15" aria-hidden="true" tabindex="-1"></a><span class="st">    aSSLow := a1+a3*(-1)    </span></span>
+<span id="cb267-16"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb267-16" aria-hidden="true" tabindex="-1"></a><span class="st">    aSSMean := a1+a3*0      </span></span>
+<span id="cb267-17"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb267-17" aria-hidden="true" tabindex="-1"></a><span class="st">    aSSHigh := a1+a3*1      </span></span>
+<span id="cb267-18"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb267-18" aria-hidden="true" tabindex="-1"></a><span class="st">    aSSMax := a1+a3*(3.31)  </span></span>
+<span id="cb267-19"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb267-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb267-20"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb267-20" aria-hidden="true" tabindex="-1"></a><span class="st">    #Conditional Indirect Effects</span></span>
+<span id="cb267-21"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb267-21" aria-hidden="true" tabindex="-1"></a><span class="st">    abMin := (a1+a3*(-2.83))*b</span></span>
+<span id="cb267-22"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb267-22" aria-hidden="true" tabindex="-1"></a><span class="st">    abMin1 := (a1+a3*(-1.75))*b    # cutoff1</span></span>
+<span id="cb267-23"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb267-23" aria-hidden="true" tabindex="-1"></a><span class="st">    abMin2 := (a1+a3*(-1.74))*b</span></span>
+<span id="cb267-24"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb267-24" aria-hidden="true" tabindex="-1"></a><span class="st">    abMin3 := (a1+a3*(-1.58))*b</span></span>
+<span id="cb267-25"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb267-25" aria-hidden="true" tabindex="-1"></a><span class="st">    abMin4 := (a1+a3*(-1.57))*b    # cutoff2</span></span>
+<span id="cb267-26"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb267-26" aria-hidden="true" tabindex="-1"></a><span class="st">    abLow := aSSLow*b</span></span>
+<span id="cb267-27"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb267-27" aria-hidden="true" tabindex="-1"></a><span class="st">    abMean := aSSMean*b</span></span>
+<span id="cb267-28"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb267-28" aria-hidden="true" tabindex="-1"></a><span class="st">    abHigh := aSSHigh*b</span></span>
+<span id="cb267-29"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb267-29" aria-hidden="true" tabindex="-1"></a><span class="st">    abMax := (a1+a3*(3.31))*b</span></span>
+<span id="cb267-30"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb267-30" aria-hidden="true" tabindex="-1"></a><span class="st">    &quot;</span>  </span></code></pre></div>
+<div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb268-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2022</span>)</span>
+<span id="cb268-2"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb268-2" aria-hidden="true" tabindex="-1"></a>ex4Boot <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> ex4_JN, </span>
+<span id="cb268-3"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb268-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> cbtData, </span>
+<span id="cb268-4"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb268-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">se =</span> <span class="st">&quot;bootstrap&quot;</span>, </span>
+<span id="cb268-5"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb268-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">bootstrap =</span> <span class="dv">1000</span>, </span>
+<span id="cb268-6"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb268-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">fixed.x=</span><span class="cn">FALSE</span>,</span>
+<span id="cb268-7"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb268-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">meanstructure =</span> <span class="cn">TRUE</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb269"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb269-1"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb269-1" aria-hidden="true" tabindex="-1"></a><span class="fu">parameterEstimates</span>(ex4Boot, </span>
+<span id="cb269-2"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb269-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">level =</span> <span class="fl">0.95</span>, </span>
+<span id="cb269-3"><a href="week7_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#cb269-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">boot.ci.type=</span><span class="st">&quot;bca.simple&quot;</span>)</span></code></pre></div>
+<pre><code>## Warning in norm.inter(t, adj.alpha): extreme order
+## statistics used as endpoints</code></pre>
+<pre><code>##                lhs op               rhs         label
+## 1      NegThoughts  ~          CBTDummy            a1
+## 2      NegThoughts  ~       NeedCogCont            a2
+## 3      NegThoughts  ~   CBTxNeedCogCont            a3
+## 4       Depression  ~       NegThoughts             b
+## 5       Depression  ~          CBTDummy        cprime
+## 6      NegThoughts ~~       NegThoughts              
+## 7       Depression ~~        Depression              
+## 8         CBTDummy ~~          CBTDummy              
+## 9         CBTDummy ~~       NeedCogCont              
+## 10        CBTDummy ~~   CBTxNeedCogCont              
+## 11     NeedCogCont ~~       NeedCogCont              
+## 12     NeedCogCont ~~   CBTxNeedCogCont              
+## 13 CBTxNeedCogCont ~~   CBTxNeedCogCont              
+## 14     NegThoughts ~1                                
+## 15      Depression ~1                                
+## 16        CBTDummy ~1                                
+## 17     NeedCogCont ~1                                
+## 18 CBTxNeedCogCont ~1                                
+## 19   IndexOfModMed :=              a3*b IndexOfModMed
+## 20          aSSMin :=     a1+a3*(-2.83)        aSSMin
+## 21         aSSMin1 :=     a1+a3*(-1.75)       aSSMin1
+## 22         aSSMin2 :=     a1+a3*(-1.74)       aSSMin2
+## 23         aSSMin3 :=     a1+a3*(-1.58)       aSSMin3
+## 24         aSSMin4 :=     a1+a3*(-1.57)       aSSMin4
+## 25          aSSLow :=        a1+a3*(-1)        aSSLow
+## 26         aSSMean :=           a1+a3*0       aSSMean
+## 27         aSSHigh :=           a1+a3*1       aSSHigh
+## 28          aSSMax :=      a1+a3*(3.31)        aSSMax
+## 29           abMin := (a1+a3*(-2.83))*b         abMin
+## 30          abMin1 := (a1+a3*(-1.75))*b        abMin1
+## 31          abMin2 := (a1+a3*(-1.74))*b        abMin2
+## 32          abMin3 := (a1+a3*(-1.58))*b        abMin3
+## 33          abMin4 := (a1+a3*(-1.57))*b        abMin4
+## 34           abLow :=          aSSLow*b         abLow
+## 35          abMean :=         aSSMean*b        abMean
+## 36          abHigh :=         aSSHigh*b        abHigh
+## 37           abMax :=  (a1+a3*(3.31))*b         abMax
+##        est    se       z pvalue ci.lower ci.upper
+## 1   -5.060 0.064 -78.764  0.000   -5.183   -4.930
+## 2    2.000 0.048  42.047  0.000    1.902    2.093
+## 3   -3.071 0.067 -45.675  0.000   -3.195   -2.922
+## 4    1.617 0.013 124.544  0.000    1.592    1.642
+## 5   -1.066 0.084 -12.758  0.000   -1.216   -0.899
+## 6    1.010 0.042  23.885  0.000    0.937    1.109
+## 7    0.645 0.031  21.047  0.000    0.592    0.714
+## 8    0.250 0.000 619.383  0.000    0.250    0.250
+## 9   -0.020 0.016  -1.258  0.208   -0.051    0.013
+## 10  -0.008 0.011  -0.781  0.435   -0.030    0.013
+## 11   0.994 0.044  22.749  0.000    0.909    1.078
+## 12   0.480 0.034  14.314  0.000    0.412    0.545
+## 13   0.480 0.034  14.292  0.000    0.411    0.545
+## 14   0.523 0.046  11.401  0.000    0.436    0.616
+## 15   2.089 0.037  56.930  0.000    2.021    2.160
+## 16   0.500 0.016  30.669  0.000    0.468    0.531
+## 17   0.006 0.031   0.190  0.849   -0.062    0.063
+## 18  -0.017 0.021  -0.781  0.435   -0.059    0.026
+## 19  -4.967 0.114 -43.431  0.000   -5.180   -4.727
+## 20   3.630 0.199  18.215  0.000    3.204    4.011
+## 21   0.313 0.133   2.363  0.018    0.029    0.562
+## 22   0.283 0.132   2.141  0.032    0.000    0.530
+## 23  -0.209 0.123  -1.701  0.089   -0.471    0.018
+## 24  -0.239 0.122  -1.960  0.050   -0.500   -0.013
+## 25  -1.990 0.092 -21.679  0.000   -2.176   -1.813
+## 26  -5.060 0.064 -78.724  0.000   -5.183   -4.930
+## 27  -8.131 0.094 -86.243  0.000   -8.313   -7.942
+## 28 -15.224 0.233 -65.232  0.000  -15.658  -14.751
+## 29   5.871 0.324  18.092  0.000    5.185    6.487
+## 30   0.507 0.214   2.363  0.018    0.047    0.904
+## 31   0.457 0.213   2.141  0.032   -0.001    0.853
+## 32  -0.338 0.199  -1.700  0.089   -0.759    0.030
+## 33  -0.387 0.198  -1.959  0.050   -0.807   -0.020
+## 34  -3.218 0.151 -21.338  0.000   -3.532   -2.941
+## 35  -8.185 0.121 -67.625  0.000   -8.433   -7.944
+## 36 -13.152 0.181 -72.721  0.000  -13.513  -12.779
+## 37 -24.624 0.418 -58.964  0.000  -25.391  -23.738</code></pre>
 <p>So our regions of significance are:</p>
 <ul>
 <li><span class="math inline">\([-2.83, -1.75]\)</span>: In which the ab are positive and significant. Participants with this level of NeegCog experienced elevated levels of depression due to CBT because CBT induces more negative thoughts among them.</li>
-<li><span class="math inline">\([-1.75, -1.57]\)</span>: In which the ab are NOT significant.</li>
+<li><span class="math inline">\((-1.75, -1.57)\)</span>: In which the ab are NOT significant.</li>
 <li><span class="math inline">\([-1.57, 3.31]\)</span>: In which the ab are negative and significant. Participants with this level of NeegCog experienced reduced levels of depression due to CBT because CBT reduced negative thoughts for them.</li>
 </ul>
 

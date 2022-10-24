@@ -312,6 +312,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="11.4.1" data-path="week8_2-lavaan-lab-8-estimation-methods.html"><a href="week8_2-lavaan-lab-8-estimation-methods.html#ml-estimation"><i class="fa fa-check"></i><b>11.4.1</b> ML Estimation</a></li>
 <li class="chapter" data-level="11.4.2" data-path="week8_2-lavaan-lab-8-estimation-methods.html"><a href="week8_2-lavaan-lab-8-estimation-methods.html#wls-estimation"><i class="fa fa-check"></i><b>11.4.2</b> WLS Estimation</a></li>
 <li class="chapter" data-level="11.4.3" data-path="week8_2-lavaan-lab-8-estimation-methods.html"><a href="week8_2-lavaan-lab-8-estimation-methods.html#compare-the-parameter-estimates"><i class="fa fa-check"></i><b>11.4.3</b> Compare the parameter estimates</a></li>
+<li class="chapter" data-level="11.4.4" data-path="week8_2-lavaan-lab-8-estimation-methods.html"><a href="week8_2-lavaan-lab-8-estimation-methods.html#compare-the-standard-errors"><i class="fa fa-check"></i><b>11.4.4</b> Compare the standard errors:</a></li>
 </ul></li>
 <li class="chapter" data-level="11.5" data-path="week8_2-lavaan-lab-8-estimation-methods.html"><a href="week8_2-lavaan-lab-8-estimation-methods.html#part-v-improper-solutions"><i class="fa fa-check"></i><b>11.5</b> PART V: Improper Solutions</a></li>
 </ul></li>
@@ -507,44 +508,51 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">Chapter 17</span> Week13_1: Lavaan Lab 14 Measurement Invariance<a href="week13_1-lavaan-lab-14-measurement-invariance.html#week13_1-lavaan-lab-14-measurement-invariance" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>For this lab, we will run the MG-CFA analyses in class using simulated data based on Todd Little’s positive affect example.</p>
 <p>Load up the lavaan library:</p>
-<div class="sourceCode" id="cb612"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb612-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb612-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span></code></pre></div>
+<div class="sourceCode" id="cb625"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb625-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb625-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span></code></pre></div>
 <p>and the dataset:</p>
-<div class="sourceCode" id="cb613"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb613-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb613-1" aria-hidden="true" tabindex="-1"></a>affectData <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;cfaInclassData.csv&quot;</span>, <span class="at">header =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb626"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb626-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb626-1" aria-hidden="true" tabindex="-1"></a>affectData <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;cfaInclassData.csv&quot;</span>, <span class="at">header =</span> T)</span></code></pre></div>
 <p>For demonstration purposes, let’s first simulate a grouping variable called school:</p>
-<div class="sourceCode" id="cb614"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb614-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb614-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">555</span>)</span>
-<span id="cb614-2"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb614-2" aria-hidden="true" tabindex="-1"></a>affectData<span class="sc">$</span>school <span class="ot">=</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&#39;public&#39;</span>, <span class="st">&#39;private&#39;</span>), <span class="fu">nrow</span>(affectData), <span class="at">replace =</span> T)</span>
-<span id="cb614-3"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb614-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(affectData<span class="sc">$</span>school)</span></code></pre></div>
+<div class="sourceCode" id="cb627"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb627-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb627-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">555</span>)</span>
+<span id="cb627-2"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb627-2" aria-hidden="true" tabindex="-1"></a>affectData<span class="sc">$</span>school <span class="ot">=</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&#39;public&#39;</span>, <span class="st">&#39;private&#39;</span>), <span class="fu">nrow</span>(affectData), <span class="at">replace =</span> T)</span>
+<span id="cb627-3"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb627-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(affectData<span class="sc">$</span>school)</span></code></pre></div>
 <pre><code>## 
 ## private  public 
 ##     513     487</code></pre>
-<div class="sourceCode" id="cb616"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb616-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb616-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(affectData)</span></code></pre></div>
-<pre><code>##   ID        glad   cheerful      happy  satisfied    content comfortable  school
-## 1  1  0.13521092  0.5413297 -0.1041445 -0.5777446  0.8645383  0.02935020 private
-## 2  2 -0.29116043  0.2434081  0.6671535  2.0763730 -0.7382832  1.05439183  public
-## 3  3  0.71975913  0.2218277  0.4722337  2.1685984 -0.2727574  0.09053090 private
-## 4  4  0.44432030  0.9295414  0.8574083 -1.0575363 -1.3841364 -0.07940091 private
-## 5  5  2.84476524  3.1710123  3.5145040  1.5725274  2.3406754  1.59866763  public
-## 6  6 -0.03317526 -0.8434011 -0.1485924 -0.5469343 -1.5750953 -0.69629828  public</code></pre>
+<div class="sourceCode" id="cb629"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb629-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb629-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(affectData)</span></code></pre></div>
+<pre><code>##   ID        glad   cheerful      happy  satisfied    content
+## 1  1  0.13521092  0.5413297 -0.1041445 -0.5777446  0.8645383
+## 2  2 -0.29116043  0.2434081  0.6671535  2.0763730 -0.7382832
+## 3  3  0.71975913  0.2218277  0.4722337  2.1685984 -0.2727574
+## 4  4  0.44432030  0.9295414  0.8574083 -1.0575363 -1.3841364
+## 5  5  2.84476524  3.1710123  3.5145040  1.5725274  2.3406754
+## 6  6 -0.03317526 -0.8434011 -0.1485924 -0.5469343 -1.5750953
+##   comfortable  school
+## 1  0.02935020 private
+## 2  1.05439183  public
+## 3  0.09053090 private
+## 4 -0.07940091 private
+## 5  1.59866763  public
+## 6 -0.69629828  public</code></pre>
 <p>The goal of testing measurement invariance (MI) is to make sure that the scale that measures positive affect and satisfaction functions in the same way between public and private schools.</p>
 <!------------------------------>
 <div id="part-i-multi-group-analyses-done-incorrectly" class="section level2 hasAnchor" number="17.1">
 <h2><span class="header-section-number">17.1</span> PART I: Multi-Group Analyses, Done Incorrectly<a href="week13_1-lavaan-lab-14-measurement-invariance.html#part-i-multi-group-analyses-done-incorrectly" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!------------------------------>
 <p>Syntax for an SR model (it doesn’t matter whether the model is for CFA or SR, the test of MI only applies to the CFA part):</p>
-<div class="sourceCode" id="cb618"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb618-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb618-1" aria-hidden="true" tabindex="-1"></a>srSyntax <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
-<span id="cb618-2"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb618-2" aria-hidden="true" tabindex="-1"></a><span class="st">    posAffect =~ glad + happy + cheerful </span></span>
-<span id="cb618-3"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb618-3" aria-hidden="true" tabindex="-1"></a><span class="st">    satisfaction =~ satisfied + content + comfortable </span></span>
-<span id="cb618-4"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb618-4" aria-hidden="true" tabindex="-1"></a><span class="st">    </span></span>
-<span id="cb618-5"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb618-5" aria-hidden="true" tabindex="-1"></a><span class="st">    # Structural Regression: beta</span></span>
-<span id="cb618-6"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb618-6" aria-hidden="true" tabindex="-1"></a><span class="st">    satisfaction ~ posAffect</span></span>
-<span id="cb618-7"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb618-7" aria-hidden="true" tabindex="-1"></a><span class="st">    &quot;</span></span></code></pre></div>
-<div class="sourceCode" id="cb619"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb619-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb619-1" aria-hidden="true" tabindex="-1"></a>MGsrRunWRONG <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(srSyntax, </span>
-<span id="cb619-2"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb619-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> affectData, </span>
-<span id="cb619-3"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb619-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">fixed.x=</span><span class="cn">FALSE</span>,</span>
-<span id="cb619-4"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb619-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">group =</span> <span class="st">&quot;school&quot;</span>, <span class="co"># group indicator</span></span>
-<span id="cb619-5"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb619-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">estimator =</span> <span class="st">&quot;MLR&quot;</span>) <span class="co"># use MLR as a go-to estimation method</span></span>
-<span id="cb619-6"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb619-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb619-7"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb619-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(MGsrRunWRONG, <span class="at">standardized =</span> T, <span class="at">fit.measures =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb631"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb631-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb631-1" aria-hidden="true" tabindex="-1"></a>srSyntax <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
+<span id="cb631-2"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb631-2" aria-hidden="true" tabindex="-1"></a><span class="st">    posAffect =~ glad + happy + cheerful </span></span>
+<span id="cb631-3"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb631-3" aria-hidden="true" tabindex="-1"></a><span class="st">    satisfaction =~ satisfied + content + comfortable </span></span>
+<span id="cb631-4"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb631-4" aria-hidden="true" tabindex="-1"></a><span class="st">    </span></span>
+<span id="cb631-5"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb631-5" aria-hidden="true" tabindex="-1"></a><span class="st">    # Structural Regression: beta</span></span>
+<span id="cb631-6"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb631-6" aria-hidden="true" tabindex="-1"></a><span class="st">    satisfaction ~ posAffect</span></span>
+<span id="cb631-7"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb631-7" aria-hidden="true" tabindex="-1"></a><span class="st">    &quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb632"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb632-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb632-1" aria-hidden="true" tabindex="-1"></a>MGsrRunWRONG <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(srSyntax, </span>
+<span id="cb632-2"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb632-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> affectData, </span>
+<span id="cb632-3"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb632-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">fixed.x=</span><span class="cn">FALSE</span>,</span>
+<span id="cb632-4"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb632-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">group =</span> <span class="st">&quot;school&quot;</span>, <span class="co"># group indicator</span></span>
+<span id="cb632-5"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb632-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">estimator =</span> <span class="st">&quot;MLR&quot;</span>) <span class="co"># use MLR as a go-to estimation method</span></span>
+<span id="cb632-6"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb632-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb632-7"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb632-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(MGsrRunWRONG, <span class="at">standardized =</span> T, <span class="at">fit.measures =</span> T)</span></code></pre></div>
 <pre><code>## lavaan 0.6-12 ended normally after 31 iterations
 ## 
 ##   Estimator                                         ML
@@ -619,92 +627,152 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Group 1 [private]:
 ## 
 ## Latent Variables:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   posAffect =~                                                          
-##     glad              1.000                               0.740    0.754
-##     happy             0.975    0.065   14.962    0.000    0.722    0.743
-##     cheerful          1.103    0.068   16.264    0.000    0.816    0.807
-##   satisfaction =~                                                       
-##     satisfied         1.000                               0.792    0.779
-##     content           1.065    0.071   14.999    0.000    0.843    0.761
-##     comfortable       0.874    0.059   14.910    0.000    0.692    0.741
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   posAffect =~                                                 
+##     glad              1.000                               0.740
+##     happy             0.975    0.065   14.962    0.000    0.722
+##     cheerful          1.103    0.068   16.264    0.000    0.816
+##   satisfaction =~                                              
+##     satisfied         1.000                               0.792
+##     content           1.065    0.071   14.999    0.000    0.843
+##     comfortable       0.874    0.059   14.910    0.000    0.692
+##   Std.all
+##          
+##     0.754
+##     0.743
+##     0.807
+##          
+##     0.779
+##     0.761
+##     0.741
 ## 
 ## Regressions:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   satisfaction ~                                                        
-##     posAffect         0.520    0.065    8.033    0.000    0.486    0.486
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   satisfaction ~                                               
+##     posAffect         0.520    0.065    8.033    0.000    0.486
+##   Std.all
+##          
+##     0.486
 ## 
 ## Intercepts:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .glad              0.023    0.043    0.530    0.596    0.023    0.023
-##    .happy             0.012    0.043    0.270    0.787    0.012    0.012
-##    .cheerful          0.027    0.045    0.594    0.553    0.027    0.026
-##    .satisfied        -0.102    0.045   -2.269    0.023   -0.102   -0.100
-##    .content          -0.086    0.049   -1.754    0.079   -0.086   -0.077
-##    .comfortable      -0.061    0.041   -1.481    0.138   -0.061   -0.065
-##     posAffect         0.000                               0.000    0.000
-##    .satisfaction      0.000                               0.000    0.000
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .glad              0.023    0.043    0.530    0.596    0.023
+##    .happy             0.012    0.043    0.270    0.787    0.012
+##    .cheerful          0.027    0.045    0.594    0.553    0.027
+##    .satisfied        -0.102    0.045   -2.269    0.023   -0.102
+##    .content          -0.086    0.049   -1.754    0.079   -0.086
+##    .comfortable      -0.061    0.041   -1.481    0.138   -0.061
+##     posAffect         0.000                               0.000
+##    .satisfaction      0.000                               0.000
+##   Std.all
+##     0.023
+##     0.012
+##     0.026
+##    -0.100
+##    -0.077
+##    -0.065
+##     0.000
+##     0.000
 ## 
 ## Variances:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .glad              0.417    0.037   11.257    0.000    0.417    0.432
-##    .happy             0.422    0.038   11.130    0.000    0.422    0.448
-##    .cheerful          0.357    0.037    9.643    0.000    0.357    0.349
-##    .satisfied         0.406    0.039   10.484    0.000    0.406    0.393
-##    .content           0.519    0.047   11.070    0.000    0.519    0.422
-##    .comfortable       0.393    0.036   10.765    0.000    0.393    0.451
-##     posAffect         0.548    0.059    9.213    0.000    1.000    1.000
-##    .satisfaction      0.478    0.057    8.380    0.000    0.763    0.763
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .glad              0.417    0.037   11.257    0.000    0.417
+##    .happy             0.422    0.038   11.130    0.000    0.422
+##    .cheerful          0.357    0.037    9.643    0.000    0.357
+##    .satisfied         0.406    0.039   10.484    0.000    0.406
+##    .content           0.519    0.047   11.070    0.000    0.519
+##    .comfortable       0.393    0.036   10.765    0.000    0.393
+##     posAffect         0.548    0.059    9.213    0.000    1.000
+##    .satisfaction      0.478    0.057    8.380    0.000    0.763
+##   Std.all
+##     0.432
+##     0.448
+##     0.349
+##     0.393
+##     0.422
+##     0.451
+##     1.000
+##     0.763
 ## 
 ## 
 ## Group 2 [public]:
 ## 
 ## Latent Variables:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   posAffect =~                                                          
-##     glad              1.000                               0.643    0.655
-##     happy             1.182    0.091   13.041    0.000    0.761    0.775
-##     cheerful          1.130    0.091   12.455    0.000    0.727    0.764
-##   satisfaction =~                                                       
-##     satisfied         1.000                               0.749    0.753
-##     content           1.072    0.072   14.806    0.000    0.803    0.763
-##     comfortable       0.972    0.065   14.904    0.000    0.729    0.753
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   posAffect =~                                                 
+##     glad              1.000                               0.643
+##     happy             1.182    0.091   13.041    0.000    0.761
+##     cheerful          1.130    0.091   12.455    0.000    0.727
+##   satisfaction =~                                              
+##     satisfied         1.000                               0.749
+##     content           1.072    0.072   14.806    0.000    0.803
+##     comfortable       0.972    0.065   14.904    0.000    0.729
+##   Std.all
+##          
+##     0.655
+##     0.775
+##     0.764
+##          
+##     0.753
+##     0.763
+##     0.753
 ## 
 ## Regressions:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   satisfaction ~                                                        
-##     posAffect         0.568    0.074    7.725    0.000    0.488    0.488
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   satisfaction ~                                               
+##     posAffect         0.568    0.074    7.725    0.000    0.488
+##   Std.all
+##          
+##     0.488
 ## 
 ## Intercepts:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .glad             -0.022    0.045   -0.492    0.623   -0.022   -0.022
-##    .happy             0.005    0.044    0.114    0.910    0.005    0.005
-##    .cheerful         -0.030    0.043   -0.697    0.486   -0.030   -0.032
-##    .satisfied         0.018    0.045    0.399    0.690    0.018    0.018
-##    .content           0.012    0.048    0.251    0.802    0.012    0.011
-##    .comfortable      -0.026    0.044   -0.597    0.551   -0.026   -0.027
-##     posAffect         0.000                               0.000    0.000
-##    .satisfaction      0.000                               0.000    0.000
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .glad             -0.022    0.045   -0.492    0.623   -0.022
+##    .happy             0.005    0.044    0.114    0.910    0.005
+##    .cheerful         -0.030    0.043   -0.697    0.486   -0.030
+##    .satisfied         0.018    0.045    0.399    0.690    0.018
+##    .content           0.012    0.048    0.251    0.802    0.012
+##    .comfortable      -0.026    0.044   -0.597    0.551   -0.026
+##     posAffect         0.000                               0.000
+##    .satisfaction      0.000                               0.000
+##   Std.all
+##    -0.022
+##     0.005
+##    -0.032
+##     0.018
+##     0.011
+##    -0.027
+##     0.000
+##     0.000
 ## 
 ## Variances:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .glad              0.552    0.043   12.930    0.000    0.552    0.571
-##    .happy             0.385    0.043    8.958    0.000    0.385    0.400
-##    .cheerful          0.377    0.041    9.304    0.000    0.377    0.416
-##    .satisfied         0.429    0.042   10.338    0.000    0.429    0.433
-##    .content           0.462    0.048    9.576    0.000    0.462    0.417
-##    .comfortable       0.405    0.040   10.259    0.000    0.405    0.433
-##     posAffect         0.414    0.058    7.152    0.000    1.000    1.000
-##    .satisfaction      0.428    0.053    8.110    0.000    0.762    0.762</code></pre>
-<div class="sourceCode" id="cb621"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb621-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb621-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(semPlot)</span>
-<span id="cb621-2"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb621-2" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(MGsrRunWRONG, <span class="at">what=</span><span class="st">&#39;est&#39;</span>, </span>
-<span id="cb621-3"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb621-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">nCharNodes =</span> <span class="dv">0</span>,</span>
-<span id="cb621-4"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb621-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">nCharEdges =</span> <span class="dv">0</span>, <span class="co"># don&#39;t limit variable name lengths</span></span>
-<span id="cb621-5"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb621-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">edge.label.cex=</span><span class="fl">0.6</span>, </span>
-<span id="cb621-6"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb621-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">curvePivot =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb621-7"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb621-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">curve =</span> <span class="fl">1.5</span>, <span class="co"># pull covariances&#39; curves out a little</span></span>
-<span id="cb621-8"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb621-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">fade=</span><span class="cn">FALSE</span>)</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-356-1.png" width="672" /><img src="bookdownproj_files/figure-html/unnamed-chunk-356-2.png" width="672" /></p>
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .glad              0.552    0.043   12.930    0.000    0.552
+##    .happy             0.385    0.043    8.958    0.000    0.385
+##    .cheerful          0.377    0.041    9.304    0.000    0.377
+##    .satisfied         0.429    0.042   10.338    0.000    0.429
+##    .content           0.462    0.048    9.576    0.000    0.462
+##    .comfortable       0.405    0.040   10.259    0.000    0.405
+##     posAffect         0.414    0.058    7.152    0.000    1.000
+##    .satisfaction      0.428    0.053    8.110    0.000    0.762
+##   Std.all
+##     0.571
+##     0.400
+##     0.416
+##     0.433
+##     0.417
+##     0.433
+##     1.000
+##     0.762</code></pre>
+<div class="sourceCode" id="cb634"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb634-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb634-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(semPlot)</span>
+<span id="cb634-2"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb634-2" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(MGsrRunWRONG, <span class="at">what=</span><span class="st">&#39;est&#39;</span>, </span>
+<span id="cb634-3"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb634-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">nCharNodes =</span> <span class="dv">0</span>,</span>
+<span id="cb634-4"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb634-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">nCharEdges =</span> <span class="dv">0</span>, <span class="co"># don&#39;t limit variable name lengths</span></span>
+<span id="cb634-5"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb634-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">edge.label.cex=</span><span class="fl">0.6</span>, </span>
+<span id="cb634-6"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb634-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">curvePivot =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb634-7"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb634-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">curve =</span> <span class="fl">1.5</span>, <span class="co"># pull covariances&#39; curves out a little</span></span>
+<span id="cb634-8"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb634-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">fade=</span><span class="cn">FALSE</span>)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-361-1.png" width="672" /><img src="bookdownproj_files/figure-html/unnamed-chunk-361-2.png" width="672" /></p>
 <!------------------------------>
 </div>
 <div id="part-ii-testing-measurement-invariance" class="section level2 hasAnchor" number="17.2">
@@ -713,12 +781,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="step-1-configural-invariance" class="section level3 hasAnchor" number="17.2.1">
 <h3><span class="header-section-number">17.2.1</span> step 1: Configural invariance<a href="week13_1-lavaan-lab-14-measurement-invariance.html#step-1-configural-invariance" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>If you simply use the MGsrRunWRONG synatx above, you are just testing configural invariance:</p>
-<div class="sourceCode" id="cb622"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb622-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb622-1" aria-hidden="true" tabindex="-1"></a>configuralFit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(srSyntax, </span>
-<span id="cb622-2"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb622-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> affectData, </span>
-<span id="cb622-3"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb622-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">fixed.x=</span><span class="cn">FALSE</span>,</span>
-<span id="cb622-4"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb622-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">group =</span> <span class="st">&quot;school&quot;</span>, <span class="co"># group indicator</span></span>
-<span id="cb622-5"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb622-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">estimator =</span> <span class="st">&quot;MLR&quot;</span>) <span class="co"># use MLR as a go-to estimation method</span></span>
-<span id="cb622-6"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb622-6" aria-hidden="true" tabindex="-1"></a><span class="co">#summary(configuralFit, standardized = T, fit.measures = T)</span></span></code></pre></div>
+<div class="sourceCode" id="cb635"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb635-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb635-1" aria-hidden="true" tabindex="-1"></a>configuralFit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(srSyntax, </span>
+<span id="cb635-2"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb635-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> affectData, </span>
+<span id="cb635-3"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb635-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">fixed.x=</span><span class="cn">FALSE</span>,</span>
+<span id="cb635-4"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb635-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">group =</span> <span class="st">&quot;school&quot;</span>, <span class="co"># group indicator</span></span>
+<span id="cb635-5"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb635-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">estimator =</span> <span class="st">&quot;MLR&quot;</span>) <span class="co"># use MLR as a go-to estimation method</span></span>
+<span id="cb635-6"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb635-6" aria-hidden="true" tabindex="-1"></a><span class="co">#summary(configuralFit, standardized = T, fit.measures = T)</span></span></code></pre></div>
 <ul>
 <li>Configural invariance was established due to satisfying model fit;</li>
 </ul>
@@ -726,17 +794,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="step-2-metric-weak-invariance" class="section level3 hasAnchor" number="17.2.2">
 <h3><span class="header-section-number">17.2.2</span> step 2: Metric (weak) invariance<a href="week13_1-lavaan-lab-14-measurement-invariance.html#step-2-metric-weak-invariance" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>To test metric invariance, you could manually constraint all factor loadings to be the same using tricks like “posAffect =~ c(lam1, lam1)*glad” but there is a shortcut using “group.equal” argument:</p>
-<div class="sourceCode" id="cb623"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb623-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb623-1" aria-hidden="true" tabindex="-1"></a>metricFit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(srSyntax, </span>
-<span id="cb623-2"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb623-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> affectData, </span>
-<span id="cb623-3"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb623-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">fixed.x=</span><span class="cn">FALSE</span>,</span>
-<span id="cb623-4"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb623-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>,</span>
-<span id="cb623-5"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb623-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">group =</span> <span class="st">&quot;school&quot;</span>, </span>
-<span id="cb623-6"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb623-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">group.equal =</span> <span class="fu">c</span>(<span class="st">&quot;loadings&quot;</span>)) </span></code></pre></div>
+<div class="sourceCode" id="cb636"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb636-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb636-1" aria-hidden="true" tabindex="-1"></a>metricFit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(srSyntax, </span>
+<span id="cb636-2"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb636-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> affectData, </span>
+<span id="cb636-3"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb636-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">fixed.x=</span><span class="cn">FALSE</span>,</span>
+<span id="cb636-4"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb636-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>,</span>
+<span id="cb636-5"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb636-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">group =</span> <span class="st">&quot;school&quot;</span>, </span>
+<span id="cb636-6"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb636-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">group.equal =</span> <span class="fu">c</span>(<span class="st">&quot;loadings&quot;</span>)) </span></code></pre></div>
 <ul>
 <li>so that all factor loadings are fixed to be the same across groups</li>
 <li>More group equality constraints can be added, like “intercepts”, “means”, “residuals”, “residual.covariances”, “lv.variances”, “lv.covariances”, “regressions”</li>
 </ul>
-<div class="sourceCode" id="cb624"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb624-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb624-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(metricFit, <span class="at">standardized =</span> T, <span class="at">fit.measures =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb637"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb637-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb637-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(metricFit, <span class="at">standardized =</span> T, <span class="at">fit.measures =</span> T)</span></code></pre></div>
 <pre><code>## lavaan 0.6-12 ended normally after 25 iterations
 ## 
 ##   Estimator                                         ML
@@ -812,89 +880,149 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Group 1 [private]:
 ## 
 ## Latent Variables:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   posAffect =~                                                          
-##     glad              1.000                               0.718    0.740
-##     happy   (.p2.)    1.057    0.054   19.585    0.000    0.759    0.767
-##     cheerfl (.p3.)    1.113    0.055   20.393    0.000    0.799    0.796
-##   satisfaction =~                                                       
-##     satisfd           1.000                               0.778    0.770
-##     content (.p5.)    1.069    0.051   21.078    0.000    0.832    0.754
-##     cmfrtbl (.p6.)    0.919    0.044   21.033    0.000    0.715    0.757
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   posAffect =~                                                 
+##     glad              1.000                               0.718
+##     happy   (.p2.)    1.057    0.054   19.585    0.000    0.759
+##     cheerfl (.p3.)    1.113    0.055   20.393    0.000    0.799
+##   satisfaction =~                                              
+##     satisfd           1.000                               0.778
+##     content (.p5.)    1.069    0.051   21.078    0.000    0.832
+##     cmfrtbl (.p6.)    0.919    0.044   21.033    0.000    0.715
+##   Std.all
+##          
+##     0.740
+##     0.767
+##     0.796
+##          
+##     0.770
+##     0.754
+##     0.757
 ## 
 ## Regressions:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   satisfaction ~                                                        
-##     posAffect         0.529    0.063    8.333    0.000    0.488    0.488
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   satisfaction ~                                               
+##     posAffect         0.529    0.063    8.333    0.000    0.488
+##   Std.all
+##          
+##     0.488
 ## 
 ## Intercepts:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .glad              0.023    0.043    0.530    0.596    0.023    0.024
-##    .happy             0.012    0.043    0.270    0.787    0.012    0.012
-##    .cheerful          0.027    0.045    0.594    0.553    0.027    0.026
-##    .satisfied        -0.102    0.045   -2.269    0.023   -0.102   -0.101
-##    .content          -0.086    0.049   -1.754    0.079   -0.086   -0.078
-##    .comfortable      -0.061    0.041   -1.481    0.138   -0.061   -0.065
-##     posAffect         0.000                               0.000    0.000
-##    .satisfaction      0.000                               0.000    0.000
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .glad              0.023    0.043    0.530    0.596    0.023
+##    .happy             0.012    0.043    0.270    0.787    0.012
+##    .cheerful          0.027    0.045    0.594    0.553    0.027
+##    .satisfied        -0.102    0.045   -2.269    0.023   -0.102
+##    .content          -0.086    0.049   -1.754    0.079   -0.086
+##    .comfortable      -0.061    0.041   -1.481    0.138   -0.061
+##     posAffect         0.000                               0.000
+##    .satisfaction      0.000                               0.000
+##   Std.all
+##     0.024
+##     0.012
+##     0.026
+##    -0.101
+##    -0.078
+##    -0.065
+##     0.000
+##     0.000
 ## 
 ## Variances:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .glad              0.427    0.036   11.943    0.000    0.427    0.453
-##    .happy             0.403    0.037   10.793    0.000    0.403    0.411
-##    .cheerful          0.370    0.035   10.705    0.000    0.370    0.367
-##    .satisfied         0.415    0.036   11.539    0.000    0.415    0.407
-##    .content           0.525    0.044   11.903    0.000    0.525    0.431
-##    .comfortable       0.381    0.035   10.927    0.000    0.381    0.427
-##     posAffect         0.516    0.053    9.799    0.000    1.000    1.000
-##    .satisfaction      0.461    0.051    9.082    0.000    0.762    0.762
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .glad              0.427    0.036   11.943    0.000    0.427
+##    .happy             0.403    0.037   10.793    0.000    0.403
+##    .cheerful          0.370    0.035   10.705    0.000    0.370
+##    .satisfied         0.415    0.036   11.539    0.000    0.415
+##    .content           0.525    0.044   11.903    0.000    0.525
+##    .comfortable       0.381    0.035   10.927    0.000    0.381
+##     posAffect         0.516    0.053    9.799    0.000    1.000
+##    .satisfaction      0.461    0.051    9.082    0.000    0.762
+##   Std.all
+##     0.453
+##     0.411
+##     0.367
+##     0.407
+##     0.431
+##     0.427
+##     1.000
+##     0.762
 ## 
 ## 
 ## Group 2 [public]:
 ## 
 ## Latent Variables:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   posAffect =~                                                          
-##     glad              1.000                               0.673    0.675
-##     happy   (.p2.)    1.057    0.054   19.585    0.000    0.711    0.740
-##     cheerfl (.p3.)    1.113    0.055   20.393    0.000    0.748    0.780
-##   satisfaction =~                                                       
-##     satisfd           1.000                               0.763    0.761
-##     content (.p5.)    1.069    0.051   21.078    0.000    0.816    0.771
-##     cmfrtbl (.p6.)    0.919    0.044   21.033    0.000    0.701    0.734
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   posAffect =~                                                 
+##     glad              1.000                               0.673
+##     happy   (.p2.)    1.057    0.054   19.585    0.000    0.711
+##     cheerfl (.p3.)    1.113    0.055   20.393    0.000    0.748
+##   satisfaction =~                                              
+##     satisfd           1.000                               0.763
+##     content (.p5.)    1.069    0.051   21.078    0.000    0.816
+##     cmfrtbl (.p6.)    0.919    0.044   21.033    0.000    0.701
+##   Std.all
+##          
+##     0.675
+##     0.740
+##     0.780
+##          
+##     0.761
+##     0.771
+##     0.734
 ## 
 ## Regressions:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   satisfaction ~                                                        
-##     posAffect         0.557    0.067    8.342    0.000    0.492    0.492
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   satisfaction ~                                               
+##     posAffect         0.557    0.067    8.342    0.000    0.492
+##   Std.all
+##          
+##     0.492
 ## 
 ## Intercepts:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .glad             -0.022    0.045   -0.492    0.623   -0.022   -0.022
-##    .happy             0.005    0.044    0.114    0.910    0.005    0.005
-##    .cheerful         -0.030    0.043   -0.697    0.486   -0.030   -0.031
-##    .satisfied         0.018    0.045    0.399    0.690    0.018    0.018
-##    .content           0.012    0.048    0.251    0.802    0.012    0.011
-##    .comfortable      -0.026    0.044   -0.597    0.551   -0.026   -0.027
-##     posAffect         0.000                               0.000    0.000
-##    .satisfaction      0.000                               0.000    0.000
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .glad             -0.022    0.045   -0.492    0.623   -0.022
+##    .happy             0.005    0.044    0.114    0.910    0.005
+##    .cheerful         -0.030    0.043   -0.697    0.486   -0.030
+##    .satisfied         0.018    0.045    0.399    0.690    0.018
+##    .content           0.012    0.048    0.251    0.802    0.012
+##    .comfortable      -0.026    0.044   -0.597    0.551   -0.026
+##     posAffect         0.000                               0.000
+##    .satisfaction      0.000                               0.000
+##   Std.all
+##    -0.022
+##     0.005
+##    -0.031
+##     0.018
+##     0.011
+##    -0.027
+##     0.000
+##     0.000
 ## 
 ## Variances:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .glad              0.541    0.042   12.899    0.000    0.541    0.545
-##    .happy             0.418    0.040   10.351    0.000    0.418    0.452
-##    .cheerful          0.360    0.038    9.399    0.000    0.360    0.392
-##    .satisfied         0.423    0.040   10.551    0.000    0.423    0.421
-##    .content           0.454    0.045   10.053    0.000    0.454    0.406
-##    .comfortable       0.420    0.038   11.052    0.000    0.420    0.461
-##     posAffect         0.453    0.049    9.180    0.000    1.000    1.000
-##    .satisfaction      0.441    0.048    9.107    0.000    0.758    0.758</code></pre>
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .glad              0.541    0.042   12.899    0.000    0.541
+##    .happy             0.418    0.040   10.351    0.000    0.418
+##    .cheerful          0.360    0.038    9.399    0.000    0.360
+##    .satisfied         0.423    0.040   10.551    0.000    0.423
+##    .content           0.454    0.045   10.053    0.000    0.454
+##    .comfortable       0.420    0.038   11.052    0.000    0.420
+##     posAffect         0.453    0.049    9.180    0.000    1.000
+##    .satisfaction      0.441    0.048    9.107    0.000    0.758
+##   Std.all
+##     0.545
+##     0.452
+##     0.392
+##     0.421
+##     0.406
+##     0.461
+##     1.000
+##     0.758</code></pre>
 <ul>
 <li>Again, metric invariance was established due to satisfying model fit;</li>
 <li>To test whether the equal factor loading assumption caused damage to model fit, we compare metricFit to configuralFit:</li>
 </ul>
 <p>Model comparison:</p>
-<div class="sourceCode" id="cb626"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb626-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb626-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(configuralFit, metricFit)</span></code></pre></div>
+<div class="sourceCode" id="cb639"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb639-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb639-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(configuralFit, metricFit)</span></code></pre></div>
 <pre><code>## Scaled Chi-Squared Difference Test (method = &quot;satorra.bentler.2001&quot;)
 ## 
 ## lavaan NOTE:
@@ -913,13 +1041,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="step-3-scalar-strong-invariance" class="section level3 hasAnchor" number="17.2.3">
 <h3><span class="header-section-number">17.2.3</span> step 3: Scalar (strong) Invariance<a href="week13_1-lavaan-lab-14-measurement-invariance.html#step-3-scalar-strong-invariance" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>In this step, both factor loadings and measurement intercepts (of course, including factor structure) are constrained to be equal between the groups:</p>
-<div class="sourceCode" id="cb628"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb628-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb628-1" aria-hidden="true" tabindex="-1"></a>scalarFit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(srSyntax, </span>
-<span id="cb628-2"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb628-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> affectData, </span>
-<span id="cb628-3"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb628-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">fixed.x=</span><span class="cn">FALSE</span>,</span>
-<span id="cb628-4"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb628-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>,</span>
-<span id="cb628-5"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb628-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">group =</span> <span class="st">&quot;school&quot;</span>, </span>
-<span id="cb628-6"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb628-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">group.equal =</span> <span class="fu">c</span>(<span class="st">&quot;loadings&quot;</span>, <span class="st">&quot;intercepts&quot;</span>)) </span>
-<span id="cb628-7"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb628-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(scalarFit, <span class="at">standardized =</span> T, <span class="at">fit.measures =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb641"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb641-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb641-1" aria-hidden="true" tabindex="-1"></a>scalarFit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(srSyntax, </span>
+<span id="cb641-2"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb641-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> affectData, </span>
+<span id="cb641-3"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb641-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">fixed.x=</span><span class="cn">FALSE</span>,</span>
+<span id="cb641-4"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb641-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>,</span>
+<span id="cb641-5"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb641-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">group =</span> <span class="st">&quot;school&quot;</span>, </span>
+<span id="cb641-6"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb641-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">group.equal =</span> <span class="fu">c</span>(<span class="st">&quot;loadings&quot;</span>, <span class="st">&quot;intercepts&quot;</span>)) </span>
+<span id="cb641-7"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb641-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(scalarFit, <span class="at">standardized =</span> T, <span class="at">fit.measures =</span> T)</span></code></pre></div>
 <pre><code>## lavaan 0.6-12 ended normally after 32 iterations
 ## 
 ##   Estimator                                         ML
@@ -995,85 +1123,145 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Group 1 [private]:
 ## 
 ## Latent Variables:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   posAffect =~                                                          
-##     glad              1.000                               0.718    0.740
-##     happy   (.p2.)    1.056    0.054   19.522    0.000    0.759    0.767
-##     cheerfl (.p3.)    1.113    0.055   20.413    0.000    0.800    0.796
-##   satisfaction =~                                                       
-##     satisfd           1.000                               0.780    0.771
-##     content (.p5.)    1.068    0.051   21.059    0.000    0.832    0.754
-##     cmfrtbl (.p6.)    0.915    0.043   21.140    0.000    0.713    0.755
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   posAffect =~                                                 
+##     glad              1.000                               0.718
+##     happy   (.p2.)    1.056    0.054   19.522    0.000    0.759
+##     cheerfl (.p3.)    1.113    0.055   20.413    0.000    0.800
+##   satisfaction =~                                              
+##     satisfd           1.000                               0.780
+##     content (.p5.)    1.068    0.051   21.059    0.000    0.832
+##     cmfrtbl (.p6.)    0.915    0.043   21.140    0.000    0.713
+##   Std.all
+##          
+##     0.740
+##     0.767
+##     0.796
+##          
+##     0.771
+##     0.754
+##     0.755
 ## 
 ## Regressions:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   satisfaction ~                                                        
-##     posAffect         0.530    0.063    8.350    0.000    0.488    0.488
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   satisfaction ~                                               
+##     posAffect         0.530    0.063    8.350    0.000    0.488
+##   Std.all
+##          
+##     0.488
 ## 
 ## Intercepts:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .glad    (.16.)    0.019    0.040    0.462    0.644    0.019    0.019
-##    .happy   (.17.)    0.026    0.040    0.644    0.519    0.026    0.026
-##    .cheerfl (.18.)    0.018    0.042    0.415    0.678    0.018    0.017
-##    .satisfd (.19.)   -0.085    0.042   -2.031    0.042   -0.085   -0.084
-##    .content (.20.)   -0.082    0.045   -1.820    0.069   -0.082   -0.075
-##    .cmfrtbl (.21.)   -0.081    0.038   -2.108    0.035   -0.081   -0.086
-##     psAffct           0.000                               0.000    0.000
-##    .stsfctn           0.000                               0.000    0.000
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .glad    (.16.)    0.019    0.040    0.462    0.644    0.019
+##    .happy   (.17.)    0.026    0.040    0.644    0.519    0.026
+##    .cheerfl (.18.)    0.018    0.042    0.415    0.678    0.018
+##    .satisfd (.19.)   -0.085    0.042   -2.031    0.042   -0.085
+##    .content (.20.)   -0.082    0.045   -1.820    0.069   -0.082
+##    .cmfrtbl (.21.)   -0.081    0.038   -2.108    0.035   -0.081
+##     psAffct           0.000                               0.000
+##    .stsfctn           0.000                               0.000
+##   Std.all
+##     0.019
+##     0.026
+##     0.017
+##    -0.084
+##    -0.075
+##    -0.086
+##     0.000
+##     0.000
 ## 
 ## Variances:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .glad              0.427    0.036   11.937    0.000    0.427    0.453
-##    .happy             0.403    0.037   10.809    0.000    0.403    0.412
-##    .cheerful          0.370    0.035   10.680    0.000    0.370    0.367
-##    .satisfied         0.414    0.036   11.505    0.000    0.414    0.405
-##    .content           0.525    0.044   11.872    0.000    0.525    0.431
-##    .comfortable       0.383    0.035   11.042    0.000    0.383    0.430
-##     posAffect         0.516    0.053    9.801    0.000    1.000    1.000
-##    .satisfaction      0.463    0.051    9.090    0.000    0.762    0.762
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .glad              0.427    0.036   11.937    0.000    0.427
+##    .happy             0.403    0.037   10.809    0.000    0.403
+##    .cheerful          0.370    0.035   10.680    0.000    0.370
+##    .satisfied         0.414    0.036   11.505    0.000    0.414
+##    .content           0.525    0.044   11.872    0.000    0.525
+##    .comfortable       0.383    0.035   11.042    0.000    0.383
+##     posAffect         0.516    0.053    9.801    0.000    1.000
+##    .satisfaction      0.463    0.051    9.090    0.000    0.762
+##   Std.all
+##     0.453
+##     0.412
+##     0.367
+##     0.405
+##     0.431
+##     0.430
+##     1.000
+##     0.762
 ## 
 ## 
 ## Group 2 [public]:
 ## 
 ## Latent Variables:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   posAffect =~                                                          
-##     glad              1.000                               0.673    0.675
-##     happy   (.p2.)    1.056    0.054   19.522    0.000    0.710    0.739
-##     cheerfl (.p3.)    1.113    0.055   20.413    0.000    0.749    0.780
-##   satisfaction =~                                                       
-##     satisfd           1.000                               0.764    0.762
-##     content (.p5.)    1.068    0.051   21.059    0.000    0.816    0.771
-##     cmfrtbl (.p6.)    0.915    0.043   21.140    0.000    0.699    0.732
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   posAffect =~                                                 
+##     glad              1.000                               0.673
+##     happy   (.p2.)    1.056    0.054   19.522    0.000    0.710
+##     cheerfl (.p3.)    1.113    0.055   20.413    0.000    0.749
+##   satisfaction =~                                              
+##     satisfd           1.000                               0.764
+##     content (.p5.)    1.068    0.051   21.059    0.000    0.816
+##     cmfrtbl (.p6.)    0.915    0.043   21.140    0.000    0.699
+##   Std.all
+##          
+##     0.675
+##     0.739
+##     0.780
+##          
+##     0.762
+##     0.771
+##     0.732
 ## 
 ## Regressions:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   satisfaction ~                                                        
-##     posAffect         0.558    0.067    8.350    0.000    0.492    0.492
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   satisfaction ~                                               
+##     posAffect         0.558    0.067    8.350    0.000    0.492
+##   Std.all
+##          
+##     0.492
 ## 
 ## Intercepts:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .glad    (.16.)    0.019    0.040    0.462    0.644    0.019    0.019
-##    .happy   (.17.)    0.026    0.040    0.644    0.519    0.026    0.027
-##    .cheerfl (.18.)    0.018    0.042    0.415    0.678    0.018    0.018
-##    .satisfd (.19.)   -0.085    0.042   -2.031    0.042   -0.085   -0.085
-##    .content (.20.)   -0.082    0.045   -1.820    0.069   -0.082   -0.078
-##    .cmfrtbl (.21.)   -0.081    0.038   -2.108    0.035   -0.081   -0.085
-##     psAffct          -0.035    0.049   -0.697    0.486   -0.051   -0.051
-##    .stsfctn           0.104    0.051    2.053    0.040    0.137    0.137
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .glad    (.16.)    0.019    0.040    0.462    0.644    0.019
+##    .happy   (.17.)    0.026    0.040    0.644    0.519    0.026
+##    .cheerfl (.18.)    0.018    0.042    0.415    0.678    0.018
+##    .satisfd (.19.)   -0.085    0.042   -2.031    0.042   -0.085
+##    .content (.20.)   -0.082    0.045   -1.820    0.069   -0.082
+##    .cmfrtbl (.21.)   -0.081    0.038   -2.108    0.035   -0.081
+##     psAffct          -0.035    0.049   -0.697    0.486   -0.051
+##    .stsfctn           0.104    0.051    2.053    0.040    0.137
+##   Std.all
+##     0.019
+##     0.027
+##     0.018
+##    -0.085
+##    -0.078
+##    -0.085
+##    -0.051
+##     0.137
 ## 
 ## Variances:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .glad              0.541    0.042   12.891    0.000    0.541    0.545
-##    .happy             0.419    0.041   10.332    0.000    0.419    0.453
-##    .cheerful          0.360    0.038    9.378    0.000    0.360    0.391
-##    .satisfied         0.422    0.040   10.516    0.000    0.422    0.420
-##    .content           0.454    0.045   10.032    0.000    0.454    0.405
-##    .comfortable       0.422    0.038   11.095    0.000    0.422    0.463
-##     posAffect         0.453    0.049    9.174    0.000    1.000    1.000
-##    .satisfaction      0.443    0.049    9.101    0.000    0.758    0.758</code></pre>
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .glad              0.541    0.042   12.891    0.000    0.541
+##    .happy             0.419    0.041   10.332    0.000    0.419
+##    .cheerful          0.360    0.038    9.378    0.000    0.360
+##    .satisfied         0.422    0.040   10.516    0.000    0.422
+##    .content           0.454    0.045   10.032    0.000    0.454
+##    .comfortable       0.422    0.038   11.095    0.000    0.422
+##     posAffect         0.453    0.049    9.174    0.000    1.000
+##    .satisfaction      0.443    0.049    9.101    0.000    0.758
+##   Std.all
+##     0.545
+##     0.453
+##     0.391
+##     0.420
+##     0.405
+##     0.463
+##     1.000
+##     0.758</code></pre>
 <p>Model comparison:</p>
-<div class="sourceCode" id="cb630"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb630-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb630-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(metricFit, scalarFit)</span></code></pre></div>
+<div class="sourceCode" id="cb643"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb643-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb643-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(metricFit, scalarFit)</span></code></pre></div>
 <pre><code>## Scaled Chi-Squared Difference Test (method = &quot;satorra.bentler.2001&quot;)
 ## 
 ## lavaan NOTE:
@@ -1091,13 +1279,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="step-4-optional-residual-variance-strict-invariance" class="section level3 hasAnchor" number="17.2.4">
 <h3><span class="header-section-number">17.2.4</span> step 4: (Optional) Residual variance (strict) invariance<a href="week13_1-lavaan-lab-14-measurement-invariance.html#step-4-optional-residual-variance-strict-invariance" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb632"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb632-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb632-1" aria-hidden="true" tabindex="-1"></a>resVarFit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(srSyntax, </span>
-<span id="cb632-2"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb632-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> affectData, </span>
-<span id="cb632-3"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb632-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">fixed.x=</span><span class="cn">FALSE</span>,</span>
-<span id="cb632-4"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb632-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>,</span>
-<span id="cb632-5"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb632-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">group =</span> <span class="st">&quot;school&quot;</span>, </span>
-<span id="cb632-6"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb632-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">group.equal =</span> <span class="fu">c</span>(<span class="st">&quot;loadings&quot;</span>, <span class="st">&quot;intercepts&quot;</span>, <span class="st">&quot;residuals&quot;</span>)) </span>
-<span id="cb632-7"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb632-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(resVarFit, <span class="at">standardized =</span> T, <span class="at">fit.measures =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb645"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb645-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb645-1" aria-hidden="true" tabindex="-1"></a>resVarFit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(srSyntax, </span>
+<span id="cb645-2"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb645-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> affectData, </span>
+<span id="cb645-3"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb645-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">fixed.x=</span><span class="cn">FALSE</span>,</span>
+<span id="cb645-4"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb645-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>,</span>
+<span id="cb645-5"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb645-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">group =</span> <span class="st">&quot;school&quot;</span>, </span>
+<span id="cb645-6"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb645-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">group.equal =</span> <span class="fu">c</span>(<span class="st">&quot;loadings&quot;</span>, <span class="st">&quot;intercepts&quot;</span>, <span class="st">&quot;residuals&quot;</span>)) </span>
+<span id="cb645-7"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb645-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(resVarFit, <span class="at">standardized =</span> T, <span class="at">fit.measures =</span> T)</span></code></pre></div>
 <pre><code>## lavaan 0.6-12 ended normally after 32 iterations
 ## 
 ##   Estimator                                         ML
@@ -1173,85 +1361,145 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Group 1 [private]:
 ## 
 ## Latent Variables:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   posAffect =~                                                          
-##     glad              1.000                               0.713    0.716
-##     happy   (.p2.)    1.063    0.054   19.648    0.000    0.758    0.765
-##     cheerfl (.p3.)    1.114    0.055   20.246    0.000    0.794    0.794
-##   satisfaction =~                                                       
-##     satisfd           1.000                               0.781    0.770
-##     content (.p5.)    1.068    0.051   21.048    0.000    0.833    0.766
-##     cmfrtbl (.p6.)    0.915    0.043   21.139    0.000    0.714    0.748
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   posAffect =~                                                 
+##     glad              1.000                               0.713
+##     happy   (.p2.)    1.063    0.054   19.648    0.000    0.758
+##     cheerfl (.p3.)    1.114    0.055   20.246    0.000    0.794
+##   satisfaction =~                                              
+##     satisfd           1.000                               0.781
+##     content (.p5.)    1.068    0.051   21.048    0.000    0.833
+##     cmfrtbl (.p6.)    0.915    0.043   21.139    0.000    0.714
+##   Std.all
+##          
+##     0.716
+##     0.765
+##     0.794
+##          
+##     0.770
+##     0.766
+##     0.748
 ## 
 ## Regressions:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   satisfaction ~                                                        
-##     posAffect         0.537    0.064    8.445    0.000    0.491    0.491
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   satisfaction ~                                               
+##     posAffect         0.537    0.064    8.445    0.000    0.491
+##   Std.all
+##          
+##     0.491
 ## 
 ## Intercepts:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .glad    (.16.)    0.018    0.040    0.443    0.658    0.018    0.018
-##    .happy   (.17.)    0.026    0.040    0.650    0.516    0.026    0.026
-##    .cheerfl (.18.)    0.018    0.042    0.415    0.678    0.018    0.018
-##    .satisfd (.19.)   -0.085    0.042   -2.026    0.043   -0.085   -0.084
-##    .content (.20.)   -0.083    0.045   -1.825    0.068   -0.083   -0.076
-##    .cmfrtbl (.21.)   -0.082    0.038   -2.136    0.033   -0.082   -0.086
-##     psAffct           0.000                               0.000    0.000
-##    .stsfctn           0.000                               0.000    0.000
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .glad    (.16.)    0.018    0.040    0.443    0.658    0.018
+##    .happy   (.17.)    0.026    0.040    0.650    0.516    0.026
+##    .cheerfl (.18.)    0.018    0.042    0.415    0.678    0.018
+##    .satisfd (.19.)   -0.085    0.042   -2.026    0.043   -0.085
+##    .content (.20.)   -0.083    0.045   -1.825    0.068   -0.083
+##    .cmfrtbl (.21.)   -0.082    0.038   -2.136    0.033   -0.082
+##     psAffct           0.000                               0.000
+##    .stsfctn           0.000                               0.000
+##   Std.all
+##     0.018
+##     0.026
+##     0.018
+##    -0.084
+##    -0.076
+##    -0.086
+##     0.000
+##     0.000
 ## 
 ## Variances:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .glad    (.p8.)    0.483    0.028   17.136    0.000    0.483    0.487
-##    .happy   (.p9.)    0.408    0.029   14.229    0.000    0.408    0.415
-##    .cheerfl (.10.)    0.369    0.028   13.197    0.000    0.369    0.369
-##    .satisfd (.11.)    0.417    0.028   14.667    0.000    0.417    0.406
-##    .content (.12.)    0.490    0.034   14.545    0.000    0.490    0.414
-##    .cmfrtbl (.13.)    0.402    0.027   15.048    0.000    0.402    0.441
-##     psAffct           0.509    0.051    9.913    0.000    1.000    1.000
-##    .stsfctn           0.463    0.050    9.171    0.000    0.759    0.759
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .glad    (.p8.)    0.483    0.028   17.136    0.000    0.483
+##    .happy   (.p9.)    0.408    0.029   14.229    0.000    0.408
+##    .cheerfl (.10.)    0.369    0.028   13.197    0.000    0.369
+##    .satisfd (.11.)    0.417    0.028   14.667    0.000    0.417
+##    .content (.12.)    0.490    0.034   14.545    0.000    0.490
+##    .cmfrtbl (.13.)    0.402    0.027   15.048    0.000    0.402
+##     psAffct           0.509    0.051    9.913    0.000    1.000
+##    .stsfctn           0.463    0.050    9.171    0.000    0.759
+##   Std.all
+##     0.487
+##     0.415
+##     0.369
+##     0.406
+##     0.414
+##     0.441
+##     1.000
+##     0.759
 ## 
 ## 
 ## Group 2 [public]:
 ## 
 ## Latent Variables:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   posAffect =~                                                          
-##     glad              1.000                               0.673    0.696
-##     happy   (.p2.)    1.063    0.054   19.648    0.000    0.716    0.746
-##     cheerfl (.p3.)    1.114    0.055   20.246    0.000    0.750    0.777
-##   satisfaction =~                                                       
-##     satisfd           1.000                               0.764    0.764
-##     content (.p5.)    1.068    0.051   21.048    0.000    0.816    0.759
-##     cmfrtbl (.p6.)    0.915    0.043   21.139    0.000    0.699    0.741
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   posAffect =~                                                 
+##     glad              1.000                               0.673
+##     happy   (.p2.)    1.063    0.054   19.648    0.000    0.716
+##     cheerfl (.p3.)    1.114    0.055   20.246    0.000    0.750
+##   satisfaction =~                                              
+##     satisfd           1.000                               0.764
+##     content (.p5.)    1.068    0.051   21.048    0.000    0.816
+##     cmfrtbl (.p6.)    0.915    0.043   21.139    0.000    0.699
+##   Std.all
+##          
+##     0.696
+##     0.746
+##     0.777
+##          
+##     0.764
+##     0.759
+##     0.741
 ## 
 ## Regressions:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   satisfaction ~                                                        
-##     posAffect         0.556    0.067    8.327    0.000    0.490    0.490
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   satisfaction ~                                               
+##     posAffect         0.556    0.067    8.327    0.000    0.490
+##   Std.all
+##          
+##     0.490
 ## 
 ## Intercepts:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .glad    (.16.)    0.018    0.040    0.443    0.658    0.018    0.018
-##    .happy   (.17.)    0.026    0.040    0.650    0.516    0.026    0.027
-##    .cheerfl (.18.)    0.018    0.042    0.415    0.678    0.018    0.018
-##    .satisfd (.19.)   -0.085    0.042   -2.026    0.043   -0.085   -0.085
-##    .content (.20.)   -0.083    0.045   -1.825    0.068   -0.083   -0.077
-##    .cmfrtbl (.21.)   -0.082    0.038   -2.136    0.033   -0.082   -0.087
-##     psAffct          -0.034    0.049   -0.693    0.488   -0.051   -0.051
-##    .stsfctn           0.104    0.051    2.049    0.040    0.136    0.136
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .glad    (.16.)    0.018    0.040    0.443    0.658    0.018
+##    .happy   (.17.)    0.026    0.040    0.650    0.516    0.026
+##    .cheerfl (.18.)    0.018    0.042    0.415    0.678    0.018
+##    .satisfd (.19.)   -0.085    0.042   -2.026    0.043   -0.085
+##    .content (.20.)   -0.083    0.045   -1.825    0.068   -0.083
+##    .cmfrtbl (.21.)   -0.082    0.038   -2.136    0.033   -0.082
+##     psAffct          -0.034    0.049   -0.693    0.488   -0.051
+##    .stsfctn           0.104    0.051    2.049    0.040    0.136
+##   Std.all
+##     0.018
+##     0.027
+##     0.018
+##    -0.085
+##    -0.077
+##    -0.087
+##    -0.051
+##     0.136
 ## 
 ## Variances:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .glad    (.p8.)    0.483    0.028   17.136    0.000    0.483    0.516
-##    .happy   (.p9.)    0.408    0.029   14.229    0.000    0.408    0.443
-##    .cheerfl (.10.)    0.369    0.028   13.197    0.000    0.369    0.396
-##    .satisfd (.11.)    0.417    0.028   14.667    0.000    0.417    0.417
-##    .content (.12.)    0.490    0.034   14.545    0.000    0.490    0.424
-##    .cmfrtbl (.13.)    0.402    0.027   15.048    0.000    0.402    0.451
-##     psAffct           0.454    0.050    9.153    0.000    1.000    1.000
-##    .stsfctn           0.444    0.049    9.141    0.000    0.760    0.760</code></pre>
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .glad    (.p8.)    0.483    0.028   17.136    0.000    0.483
+##    .happy   (.p9.)    0.408    0.029   14.229    0.000    0.408
+##    .cheerfl (.10.)    0.369    0.028   13.197    0.000    0.369
+##    .satisfd (.11.)    0.417    0.028   14.667    0.000    0.417
+##    .content (.12.)    0.490    0.034   14.545    0.000    0.490
+##    .cmfrtbl (.13.)    0.402    0.027   15.048    0.000    0.402
+##     psAffct           0.454    0.050    9.153    0.000    1.000
+##    .stsfctn           0.444    0.049    9.141    0.000    0.760
+##   Std.all
+##     0.516
+##     0.443
+##     0.396
+##     0.417
+##     0.424
+##     0.451
+##     1.000
+##     0.760</code></pre>
 <p>Model comparison:</p>
-<div class="sourceCode" id="cb634"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb634-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb634-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(resVarFit, scalarFit)</span></code></pre></div>
+<div class="sourceCode" id="cb647"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb647-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb647-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(resVarFit, scalarFit)</span></code></pre></div>
 <pre><code>## Scaled Chi-Squared Difference Test (method = &quot;satorra.bentler.2001&quot;)
 ## 
 ## lavaan NOTE:
@@ -1275,14 +1523,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="measurementinvariance" class="section level3 hasAnchor" number="17.3.1">
 <h3><span class="header-section-number">17.3.1</span> measurementInvariance()<a href="week13_1-lavaan-lab-14-measurement-invariance.html#measurementinvariance" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>There is a shortcut function in package ‘semTools’ that performsinvariance testing in one place, but unfornately it will soon retire…</p>
-<div class="sourceCode" id="cb636"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb636-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb636-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(semTools)</span>
-<span id="cb636-2"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb636-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb636-3"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb636-3" aria-hidden="true" tabindex="-1"></a><span class="fu">measurementInvariance</span>(<span class="at">model =</span> srSyntax, </span>
-<span id="cb636-4"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb636-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">data =</span> affectData, </span>
-<span id="cb636-5"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb636-5" aria-hidden="true" tabindex="-1"></a>                      <span class="at">fixed.x=</span><span class="cn">FALSE</span>,</span>
-<span id="cb636-6"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb636-6" aria-hidden="true" tabindex="-1"></a>                      <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>, </span>
-<span id="cb636-7"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb636-7" aria-hidden="true" tabindex="-1"></a>                      <span class="at">group =</span> <span class="st">&quot;school&quot;</span>)</span></code></pre></div>
-<pre><code>## Warning: The measurementInvariance function is deprecated, and it will cease to be included in future versions of semTools. See help(&#39;semTools-deprecated) for details.</code></pre>
+<div class="sourceCode" id="cb649"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb649-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb649-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(semTools)</span>
+<span id="cb649-2"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb649-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb649-3"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb649-3" aria-hidden="true" tabindex="-1"></a><span class="fu">measurementInvariance</span>(<span class="at">model =</span> srSyntax, </span>
+<span id="cb649-4"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb649-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">data =</span> affectData, </span>
+<span id="cb649-5"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb649-5" aria-hidden="true" tabindex="-1"></a>                      <span class="at">fixed.x=</span><span class="cn">FALSE</span>,</span>
+<span id="cb649-6"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb649-6" aria-hidden="true" tabindex="-1"></a>                      <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>, </span>
+<span id="cb649-7"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb649-7" aria-hidden="true" tabindex="-1"></a>                      <span class="at">group =</span> <span class="st">&quot;school&quot;</span>)</span></code></pre></div>
+<pre><code>## Warning: The measurementInvariance function is deprecated, and
+## it will cease to be included in future versions of semTools. See
+## help(&#39;semTools-deprecated) for details.</code></pre>
 <pre><code>## 
 ## Measurement invariance models:
 ## 
@@ -1307,41 +1557,46 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 
 ## Fit measures:
 ## 
-##                cfi.scaled rmsea.scaled cfi.scaled.delta rmsea.scaled.delta
-## fit.configural          1            0               NA                 NA
-## fit.loadings            1            0                0                  0
-## fit.intercepts          1            0                0                  0
-## fit.means               1            0                0                  0</code></pre>
+##                cfi.scaled rmsea.scaled cfi.scaled.delta
+## fit.configural          1            0               NA
+## fit.loadings            1            0                0
+## fit.intercepts          1            0                0
+## fit.means               1            0                0
+##                rmsea.scaled.delta
+## fit.configural                 NA
+## fit.loadings                    0
+## fit.intercepts                  0
+## fit.means                       0</code></pre>
 </div>
 <div id="measeq.syntax" class="section level3 hasAnchor" number="17.3.2">
 <h3><span class="header-section-number">17.3.2</span> measEq.syntax()<a href="week13_1-lavaan-lab-14-measurement-invariance.html#measeq.syntax" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>To use measEq.syntax() from semTools, we need to use a model syntax for CFA model instead of SR model:</p>
-<div class="sourceCode" id="cb639"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb639-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb639-1" aria-hidden="true" tabindex="-1"></a>cfaSyntax <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
-<span id="cb639-2"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb639-2" aria-hidden="true" tabindex="-1"></a><span class="st">    posAffect =~ glad + happy + cheerful </span></span>
-<span id="cb639-3"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb639-3" aria-hidden="true" tabindex="-1"></a><span class="st">    satisfaction =~ satisfied + content + comfortable </span></span>
-<span id="cb639-4"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb639-4" aria-hidden="true" tabindex="-1"></a><span class="st">    &quot;</span></span></code></pre></div>
-<div class="sourceCode" id="cb640"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb640-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb640-1" aria-hidden="true" tabindex="-1"></a>test.seq <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">weak =</span> <span class="fu">c</span>(<span class="st">&quot;loadings&quot;</span>),</span>
-<span id="cb640-2"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb640-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">strong =</span> <span class="fu">c</span>(<span class="st">&quot;intercepts&quot;</span>),</span>
-<span id="cb640-3"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb640-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">strict =</span> <span class="fu">c</span>(<span class="st">&quot;residuals&quot;</span>))</span>
-<span id="cb640-4"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb640-4" aria-hidden="true" tabindex="-1"></a>meq.list <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
-<span id="cb640-5"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb640-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">0</span><span class="sc">:</span><span class="fu">length</span>(test.seq)) {</span>
-<span id="cb640-6"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb640-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (i <span class="sc">==</span> 0L) {</span>
-<span id="cb640-7"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb640-7" aria-hidden="true" tabindex="-1"></a>    meq.label <span class="ot">&lt;-</span> <span class="st">&quot;configural&quot;</span></span>
-<span id="cb640-8"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb640-8" aria-hidden="true" tabindex="-1"></a>    group.equal <span class="ot">&lt;-</span> <span class="st">&quot;&quot;</span></span>
-<span id="cb640-9"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb640-9" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
-<span id="cb640-10"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb640-10" aria-hidden="true" tabindex="-1"></a>    meq.label <span class="ot">&lt;-</span> <span class="fu">names</span>(test.seq)[i]</span>
-<span id="cb640-11"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb640-11" aria-hidden="true" tabindex="-1"></a>    group.equal <span class="ot">&lt;-</span> <span class="fu">unlist</span>(test.seq[<span class="dv">1</span><span class="sc">:</span>i])</span>
-<span id="cb640-12"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb640-12" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb640-13"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb640-13" aria-hidden="true" tabindex="-1"></a>  meq.list[[meq.label]] <span class="ot">&lt;-</span> <span class="fu">measEq.syntax</span>(<span class="at">configural.model =</span> cfaSyntax,</span>
-<span id="cb640-14"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb640-14" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">data =</span> affectData,</span>
-<span id="cb640-15"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb640-15" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">fixed.x =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb640-16"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb640-16" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>, </span>
-<span id="cb640-17"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb640-17" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">group =</span> <span class="st">&quot;school&quot;</span>,</span>
-<span id="cb640-18"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb640-18" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">group.equal =</span> group.equal,</span>
-<span id="cb640-19"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb640-19" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">return.fit =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb640-20"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb640-20" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<div class="sourceCode" id="cb641"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb641-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb641-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">=</span> <span class="fu">compareFit</span>(meq.list)</span>
-<span id="cb641-2"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb641-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">compareFit</span>(meq.list))</span></code></pre></div>
+<div class="sourceCode" id="cb652"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb652-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb652-1" aria-hidden="true" tabindex="-1"></a>cfaSyntax <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
+<span id="cb652-2"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb652-2" aria-hidden="true" tabindex="-1"></a><span class="st">    posAffect =~ glad + happy + cheerful </span></span>
+<span id="cb652-3"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb652-3" aria-hidden="true" tabindex="-1"></a><span class="st">    satisfaction =~ satisfied + content + comfortable </span></span>
+<span id="cb652-4"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb652-4" aria-hidden="true" tabindex="-1"></a><span class="st">    &quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb653"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb653-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb653-1" aria-hidden="true" tabindex="-1"></a>test.seq <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">weak =</span> <span class="fu">c</span>(<span class="st">&quot;loadings&quot;</span>),</span>
+<span id="cb653-2"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb653-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">strong =</span> <span class="fu">c</span>(<span class="st">&quot;intercepts&quot;</span>),</span>
+<span id="cb653-3"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb653-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">strict =</span> <span class="fu">c</span>(<span class="st">&quot;residuals&quot;</span>))</span>
+<span id="cb653-4"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb653-4" aria-hidden="true" tabindex="-1"></a>meq.list <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb653-5"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb653-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">0</span><span class="sc">:</span><span class="fu">length</span>(test.seq)) {</span>
+<span id="cb653-6"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb653-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (i <span class="sc">==</span> 0L) {</span>
+<span id="cb653-7"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb653-7" aria-hidden="true" tabindex="-1"></a>    meq.label <span class="ot">&lt;-</span> <span class="st">&quot;configural&quot;</span></span>
+<span id="cb653-8"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb653-8" aria-hidden="true" tabindex="-1"></a>    group.equal <span class="ot">&lt;-</span> <span class="st">&quot;&quot;</span></span>
+<span id="cb653-9"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb653-9" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb653-10"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb653-10" aria-hidden="true" tabindex="-1"></a>    meq.label <span class="ot">&lt;-</span> <span class="fu">names</span>(test.seq)[i]</span>
+<span id="cb653-11"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb653-11" aria-hidden="true" tabindex="-1"></a>    group.equal <span class="ot">&lt;-</span> <span class="fu">unlist</span>(test.seq[<span class="dv">1</span><span class="sc">:</span>i])</span>
+<span id="cb653-12"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb653-12" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb653-13"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb653-13" aria-hidden="true" tabindex="-1"></a>  meq.list[[meq.label]] <span class="ot">&lt;-</span> <span class="fu">measEq.syntax</span>(<span class="at">configural.model =</span> cfaSyntax,</span>
+<span id="cb653-14"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb653-14" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">data =</span> affectData,</span>
+<span id="cb653-15"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb653-15" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">fixed.x =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb653-16"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb653-16" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>, </span>
+<span id="cb653-17"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb653-17" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">group =</span> <span class="st">&quot;school&quot;</span>,</span>
+<span id="cb653-18"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb653-18" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">group.equal =</span> group.equal,</span>
+<span id="cb653-19"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb653-19" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">return.fit =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb653-20"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb653-20" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb654"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb654-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb654-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">=</span> <span class="fu">compareFit</span>(meq.list)</span>
+<span id="cb654-2"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb654-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">compareFit</span>(meq.list))</span></code></pre></div>
 <pre><code>## ################### Nested Model Comparison #########################
 ## Scaled Chi-Squared Difference Test (method = &quot;satorra.bentler.2001&quot;)
 ## 
@@ -1350,24 +1605,38 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##     robust test that should be reported per model. A robust difference
 ##     test is a function of two standard (not robust) statistics.
 ##  
-##                     Df   AIC   BIC  Chisq Chisq diff Df diff Pr(&gt;Chisq)
-## meq.list.configural 16 15022 15208 11.920                              
-## meq.list.weak       20 15020 15187 17.640     6.1624       4     0.1873
-## meq.list.strong     24 15014 15162 20.364     2.7216       4     0.6054
-## meq.list.strict     30 15009 15127 26.885     6.6022       6     0.3592
+##                     Df   AIC   BIC  Chisq Chisq diff Df diff
+## meq.list.configural 16 15022 15208 11.920                   
+## meq.list.weak       20 15020 15187 17.640     6.1624       4
+## meq.list.strong     24 15014 15162 20.364     2.7216       4
+## meq.list.strict     30 15009 15127 26.885     6.6022       6
+##                     Pr(&gt;Chisq)
+## meq.list.configural           
+## meq.list.weak           0.1873
+## meq.list.strong         0.6054
+## meq.list.strict         0.3592
 ## 
 ## ####################### Model Fit Indices ###########################
-##                     chisq.scaled df.scaled pvalue.scaled rmsea.robust cfi.robust tli.robust  srmr        aic        bic
-## meq.list.configural      11.709†        16          .764        .000†     1.000†     1.004† .013† 15022.004  15208.498 
-## meq.list.weak            17.639         20          .611        .000†     1.000†     1.002  .019  15019.724  15186.588 
-## meq.list.strong          20.360         24          .676        .000†     1.000†     1.002  .020  15014.448  15161.681 
-## meq.list.strict          26.947         30          .626        .000†     1.000†     1.002  .023  15008.968† 15126.754†
+##                     chisq.scaled df.scaled pvalue.scaled rmsea.robust
+## meq.list.configural      11.709†        16          .764        .000†
+## meq.list.weak            17.639         20          .611        .000†
+## meq.list.strong          20.360         24          .676        .000†
+## meq.list.strict          26.947         30          .626        .000†
+##                     cfi.robust tli.robust  srmr        aic        bic
+## meq.list.configural     1.000†     1.004† .013† 15022.004  15208.498 
+## meq.list.weak           1.000†     1.002  .019  15019.724  15186.588 
+## meq.list.strong         1.000†     1.002  .020  15014.448  15161.681 
+## meq.list.strict         1.000†     1.002  .023  15008.968† 15126.754†
 ## 
 ## ################## Differences in Fit Indices #######################
-##                                     df.scaled rmsea.robust cfi.robust tli.robust  srmr    aic     bic
-## meq.list.weak - meq.list.configural         4            0          0     -0.002 0.006 -2.280 -21.911
-## meq.list.strong - meq.list.weak             4            0          0      0.001 0.001 -5.276 -24.907
-## meq.list.strict - meq.list.strong           6            0          0     -0.001 0.003 -5.480 -34.926</code></pre>
+##                                     df.scaled rmsea.robust cfi.robust
+## meq.list.weak - meq.list.configural         4            0          0
+## meq.list.strong - meq.list.weak             4            0          0
+## meq.list.strict - meq.list.strong           6            0          0
+##                                     tli.robust  srmr    aic     bic
+## meq.list.weak - meq.list.configural     -0.002 0.006 -2.280 -21.911
+## meq.list.strong - meq.list.weak          0.001 0.001 -5.276 -24.907
+## meq.list.strict - meq.list.strong       -0.001 0.003 -5.480 -34.926</code></pre>
 <!------------------------------>
 </div>
 </div>
@@ -1380,15 +1649,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <div id="statistical-test-of-equal-factor-means" class="section level3 hasAnchor" number="17.4.1">
 <h3><span class="header-section-number">17.4.1</span> Statistical Test of Equal Factor Means:<a href="week13_1-lavaan-lab-14-measurement-invariance.html#statistical-test-of-equal-factor-means" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb643"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb643-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb643-1" aria-hidden="true" tabindex="-1"></a>equalMeanfit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(cfaSyntax, </span>
-<span id="cb643-2"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb643-2" aria-hidden="true" tabindex="-1"></a>                    affectData, </span>
-<span id="cb643-3"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb643-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">fixed.x =</span> <span class="cn">FALSE</span>, </span>
-<span id="cb643-4"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb643-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>, </span>
-<span id="cb643-5"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb643-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">group =</span> <span class="st">&quot;school&quot;</span>, </span>
-<span id="cb643-6"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb643-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">group.equal =</span> <span class="fu">c</span>(<span class="st">&quot;loadings&quot;</span>, <span class="st">&quot;intercepts&quot;</span>, <span class="st">&quot;residuals&quot;</span>, </span>
-<span id="cb643-7"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb643-7" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">&quot;means&quot;</span>))</span>
-<span id="cb643-8"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb643-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb643-9"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb643-9" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(equalMeanfit, <span class="at">standardized =</span> T, <span class="at">fit.measures =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb656"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb656-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb656-1" aria-hidden="true" tabindex="-1"></a>equalMeanfit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(cfaSyntax, </span>
+<span id="cb656-2"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb656-2" aria-hidden="true" tabindex="-1"></a>                    affectData, </span>
+<span id="cb656-3"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb656-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">fixed.x =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb656-4"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb656-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>, </span>
+<span id="cb656-5"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb656-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">group =</span> <span class="st">&quot;school&quot;</span>, </span>
+<span id="cb656-6"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb656-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">group.equal =</span> <span class="fu">c</span>(<span class="st">&quot;loadings&quot;</span>, <span class="st">&quot;intercepts&quot;</span>, <span class="st">&quot;residuals&quot;</span>, </span>
+<span id="cb656-7"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb656-7" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">&quot;means&quot;</span>))</span>
+<span id="cb656-8"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb656-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb656-9"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb656-9" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(equalMeanfit, <span class="at">standardized =</span> T, <span class="at">fit.measures =</span> T)</span></code></pre></div>
 <pre><code>## lavaan 0.6-12 ended normally after 28 iterations
 ## 
 ##   Estimator                                         ML
@@ -1464,84 +1733,144 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Group 1 [private]:
 ## 
 ## Latent Variables:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   posAffect =~                                                          
-##     glad              1.000                               0.713    0.716
-##     happy   (.p2.)    1.064    0.054   19.659    0.000    0.759    0.766
-##     cheerfl (.p3.)    1.113    0.055   20.234    0.000    0.794    0.794
-##   satisfaction =~                                                       
-##     satisfd           1.000                               0.781    0.770
-##     content (.p5.)    1.069    0.051   21.128    0.000    0.834    0.766
-##     cmfrtbl (.p6.)    0.917    0.043   21.128    0.000    0.716    0.749
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   posAffect =~                                                 
+##     glad              1.000                               0.713
+##     happy   (.p2.)    1.064    0.054   19.659    0.000    0.759
+##     cheerfl (.p3.)    1.113    0.055   20.234    0.000    0.794
+##   satisfaction =~                                              
+##     satisfd           1.000                               0.781
+##     content (.p5.)    1.069    0.051   21.128    0.000    0.834
+##     cmfrtbl (.p6.)    0.917    0.043   21.128    0.000    0.716
+##   Std.all
+##          
+##     0.716
+##     0.766
+##     0.794
+##          
+##     0.770
+##     0.766
+##     0.749
 ## 
 ## Covariances:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   posAffect ~~                                                          
-##     satisfaction      0.272    0.038    7.166    0.000    0.489    0.489
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   posAffect ~~                                                 
+##     satisfaction      0.272    0.038    7.166    0.000    0.489
+##   Std.all
+##          
+##     0.489
 ## 
 ## Intercepts:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .glad    (.16.)    0.000    0.031    0.007    0.994    0.000    0.000
-##    .happy   (.17.)    0.007    0.031    0.241    0.810    0.007    0.008
-##    .cheerfl (.18.)   -0.002    0.031   -0.065    0.948   -0.002   -0.002
-##    .satisfd (.19.)   -0.043    0.032   -1.360    0.174   -0.043   -0.043
-##    .content (.20.)   -0.038    0.034   -1.111    0.267   -0.038   -0.035
-##    .cmfrtbl (.21.)   -0.044    0.030   -1.459    0.144   -0.044   -0.046
-##     psAffct           0.000                               0.000    0.000
-##     stsfctn           0.000                               0.000    0.000
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .glad    (.16.)    0.000    0.031    0.007    0.994    0.000
+##    .happy   (.17.)    0.007    0.031    0.241    0.810    0.007
+##    .cheerfl (.18.)   -0.002    0.031   -0.065    0.948   -0.002
+##    .satisfd (.19.)   -0.043    0.032   -1.360    0.174   -0.043
+##    .content (.20.)   -0.038    0.034   -1.111    0.267   -0.038
+##    .cmfrtbl (.21.)   -0.044    0.030   -1.459    0.144   -0.044
+##     psAffct           0.000                               0.000
+##     stsfctn           0.000                               0.000
+##   Std.all
+##     0.000
+##     0.008
+##    -0.002
+##    -0.043
+##    -0.035
+##    -0.046
+##     0.000
+##     0.000
 ## 
 ## Variances:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .glad    (.p7.)    0.484    0.028   17.125    0.000    0.484    0.487
-##    .happy   (.p8.)    0.407    0.029   14.219    0.000    0.407    0.414
-##    .cheerfl (.p9.)    0.369    0.028   13.207    0.000    0.369    0.369
-##    .satisfd (.10.)    0.419    0.028   14.741    0.000    0.419    0.407
-##    .content (.11.)    0.491    0.034   14.588    0.000    0.491    0.413
-##    .cmfrtbl (.12.)    0.401    0.027   14.918    0.000    0.401    0.439
-##     psAffct           0.509    0.051    9.894    0.000    1.000    1.000
-##     stsfctn           0.609    0.064    9.549    0.000    1.000    1.000
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .glad    (.p7.)    0.484    0.028   17.125    0.000    0.484
+##    .happy   (.p8.)    0.407    0.029   14.219    0.000    0.407
+##    .cheerfl (.p9.)    0.369    0.028   13.207    0.000    0.369
+##    .satisfd (.10.)    0.419    0.028   14.741    0.000    0.419
+##    .content (.11.)    0.491    0.034   14.588    0.000    0.491
+##    .cmfrtbl (.12.)    0.401    0.027   14.918    0.000    0.401
+##     psAffct           0.509    0.051    9.894    0.000    1.000
+##     stsfctn           0.609    0.064    9.549    0.000    1.000
+##   Std.all
+##     0.487
+##     0.414
+##     0.369
+##     0.407
+##     0.413
+##     0.439
+##     1.000
+##     1.000
 ## 
 ## 
 ## Group 2 [public]:
 ## 
 ## Latent Variables:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   posAffect =~                                                          
-##     glad              1.000                               0.674    0.696
-##     happy   (.p2.)    1.064    0.054   19.659    0.000    0.717    0.747
-##     cheerfl (.p3.)    1.113    0.055   20.234    0.000    0.750    0.777
-##   satisfaction =~                                                       
-##     satisfd           1.000                               0.765    0.763
-##     content (.p5.)    1.069    0.051   21.128    0.000    0.817    0.759
-##     cmfrtbl (.p6.)    0.917    0.043   21.128    0.000    0.701    0.742
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   posAffect =~                                                 
+##     glad              1.000                               0.674
+##     happy   (.p2.)    1.064    0.054   19.659    0.000    0.717
+##     cheerfl (.p3.)    1.113    0.055   20.234    0.000    0.750
+##   satisfaction =~                                              
+##     satisfd           1.000                               0.765
+##     content (.p5.)    1.069    0.051   21.128    0.000    0.817
+##     cmfrtbl (.p6.)    0.917    0.043   21.128    0.000    0.701
+##   Std.all
+##          
+##     0.696
+##     0.747
+##     0.777
+##          
+##     0.763
+##     0.759
+##     0.742
 ## 
 ## Covariances:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   posAffect ~~                                                          
-##     satisfaction      0.251    0.035    7.161    0.000    0.488    0.488
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   posAffect ~~                                                 
+##     satisfaction      0.251    0.035    7.161    0.000    0.488
+##   Std.all
+##          
+##     0.488
 ## 
 ## Intercepts:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .glad    (.16.)    0.000    0.031    0.007    0.994    0.000    0.000
-##    .happy   (.17.)    0.007    0.031    0.241    0.810    0.007    0.008
-##    .cheerfl (.18.)   -0.002    0.031   -0.065    0.948   -0.002   -0.002
-##    .satisfd (.19.)   -0.043    0.032   -1.360    0.174   -0.043   -0.043
-##    .content (.20.)   -0.038    0.034   -1.111    0.267   -0.038   -0.035
-##    .cmfrtbl (.21.)   -0.044    0.030   -1.459    0.144   -0.044   -0.046
-##     psAffct           0.000                               0.000    0.000
-##     stsfctn           0.000                               0.000    0.000
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .glad    (.16.)    0.000    0.031    0.007    0.994    0.000
+##    .happy   (.17.)    0.007    0.031    0.241    0.810    0.007
+##    .cheerfl (.18.)   -0.002    0.031   -0.065    0.948   -0.002
+##    .satisfd (.19.)   -0.043    0.032   -1.360    0.174   -0.043
+##    .content (.20.)   -0.038    0.034   -1.111    0.267   -0.038
+##    .cmfrtbl (.21.)   -0.044    0.030   -1.459    0.144   -0.044
+##     psAffct           0.000                               0.000
+##     stsfctn           0.000                               0.000
+##   Std.all
+##     0.000
+##     0.008
+##    -0.002
+##    -0.043
+##    -0.035
+##    -0.046
+##     0.000
+##     0.000
 ## 
 ## Variances:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .glad    (.p7.)    0.484    0.028   17.125    0.000    0.484    0.516
-##    .happy   (.p8.)    0.407    0.029   14.219    0.000    0.407    0.442
-##    .cheerfl (.p9.)    0.369    0.028   13.207    0.000    0.369    0.396
-##    .satisfd (.10.)    0.419    0.028   14.741    0.000    0.419    0.417
-##    .content (.11.)    0.491    0.034   14.588    0.000    0.491    0.424
-##    .cmfrtbl (.12.)    0.401    0.027   14.918    0.000    0.401    0.449
-##     psAffct           0.454    0.050    9.164    0.000    1.000    1.000
-##     stsfctn           0.585    0.057   10.290    0.000    1.000    1.000</code></pre>
-<div class="sourceCode" id="cb645"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb645-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb645-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(resVarFit, equalMeanfit)</span></code></pre></div>
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .glad    (.p7.)    0.484    0.028   17.125    0.000    0.484
+##    .happy   (.p8.)    0.407    0.029   14.219    0.000    0.407
+##    .cheerfl (.p9.)    0.369    0.028   13.207    0.000    0.369
+##    .satisfd (.10.)    0.419    0.028   14.741    0.000    0.419
+##    .content (.11.)    0.491    0.034   14.588    0.000    0.491
+##    .cmfrtbl (.12.)    0.401    0.027   14.918    0.000    0.401
+##     psAffct           0.454    0.050    9.164    0.000    1.000
+##     stsfctn           0.585    0.057   10.290    0.000    1.000
+##   Std.all
+##     0.516
+##     0.442
+##     0.396
+##     0.417
+##     0.424
+##     0.449
+##     1.000
+##     1.000</code></pre>
+<div class="sourceCode" id="cb658"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb658-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb658-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(resVarFit, equalMeanfit)</span></code></pre></div>
 <pre><code>## Scaled Chi-Squared Difference Test (method = &quot;satorra.bentler.2001&quot;)
 ## 
 ## lavaan NOTE:
@@ -1562,15 +1891,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li>Note that we used srSyntax here because we need to define the regression coefficient between PA and satisfaction:</li>
 </ul>
-<div class="sourceCode" id="cb647"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb647-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb647-1" aria-hidden="true" tabindex="-1"></a>equalBetafit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(srSyntax, </span>
-<span id="cb647-2"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb647-2" aria-hidden="true" tabindex="-1"></a>                    affectData, </span>
-<span id="cb647-3"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb647-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">fixed.x =</span> <span class="cn">FALSE</span>, </span>
-<span id="cb647-4"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb647-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>, </span>
-<span id="cb647-5"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb647-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">group =</span> <span class="st">&quot;school&quot;</span>, </span>
-<span id="cb647-6"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb647-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">group.equal =</span> <span class="fu">c</span>(<span class="st">&quot;loadings&quot;</span>, <span class="st">&quot;intercepts&quot;</span>, <span class="st">&quot;residuals&quot;</span>,</span>
-<span id="cb647-7"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb647-7" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">&quot;regressions&quot;</span>))</span>
-<span id="cb647-8"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb647-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb647-9"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb647-9" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(equalBetafit, <span class="at">standardized =</span> T, <span class="at">fit.measures =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb660"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb660-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb660-1" aria-hidden="true" tabindex="-1"></a>equalBetafit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(srSyntax, </span>
+<span id="cb660-2"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb660-2" aria-hidden="true" tabindex="-1"></a>                    affectData, </span>
+<span id="cb660-3"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb660-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">fixed.x =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb660-4"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb660-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>, </span>
+<span id="cb660-5"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb660-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">group =</span> <span class="st">&quot;school&quot;</span>, </span>
+<span id="cb660-6"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb660-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">group.equal =</span> <span class="fu">c</span>(<span class="st">&quot;loadings&quot;</span>, <span class="st">&quot;intercepts&quot;</span>, <span class="st">&quot;residuals&quot;</span>,</span>
+<span id="cb660-7"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb660-7" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">&quot;regressions&quot;</span>))</span>
+<span id="cb660-8"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb660-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb660-9"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb660-9" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(equalBetafit, <span class="at">standardized =</span> T, <span class="at">fit.measures =</span> T)</span></code></pre></div>
 <pre><code>## lavaan 0.6-12 ended normally after 30 iterations
 ## 
 ##   Estimator                                         ML
@@ -1646,84 +1975,144 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Group 1 [private]:
 ## 
 ## Latent Variables:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   posAffect =~                                                          
-##     glad              1.000                               0.712    0.716
-##     happy   (.p2.)    1.064    0.054   19.668    0.000    0.758    0.765
-##     cheerfl (.p3.)    1.114    0.055   20.253    0.000    0.794    0.794
-##   satisfaction =~                                                       
-##     satisfd           1.000                               0.783    0.771
-##     content (.p5.)    1.067    0.051   21.045    0.000    0.836    0.767
-##     cmfrtbl (.p6.)    0.915    0.043   21.157    0.000    0.716    0.749
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   posAffect =~                                                 
+##     glad              1.000                               0.712
+##     happy   (.p2.)    1.064    0.054   19.668    0.000    0.758
+##     cheerfl (.p3.)    1.114    0.055   20.253    0.000    0.794
+##   satisfaction =~                                              
+##     satisfd           1.000                               0.783
+##     content (.p5.)    1.067    0.051   21.045    0.000    0.836
+##     cmfrtbl (.p6.)    0.915    0.043   21.157    0.000    0.716
+##   Std.all
+##          
+##     0.716
+##     0.765
+##     0.794
+##          
+##     0.771
+##     0.767
+##     0.749
 ## 
 ## Regressions:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   satisfaction ~                                                        
-##     psAffct (.p7.)    0.546    0.048   11.266    0.000    0.497    0.497
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   satisfaction ~                                               
+##     psAffct (.p7.)    0.546    0.048   11.266    0.000    0.497
+##   Std.all
+##          
+##     0.497
 ## 
 ## Intercepts:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .glad    (.16.)    0.018    0.040    0.443    0.658    0.018    0.018
-##    .happy   (.17.)    0.026    0.040    0.650    0.516    0.026    0.026
-##    .cheerfl (.18.)    0.018    0.042    0.415    0.678    0.018    0.018
-##    .satisfd (.19.)   -0.085    0.042   -2.026    0.043   -0.085   -0.084
-##    .content (.20.)   -0.083    0.045   -1.825    0.068   -0.083   -0.076
-##    .cmfrtbl (.21.)   -0.082    0.038   -2.137    0.033   -0.082   -0.086
-##     psAffct           0.000                               0.000    0.000
-##    .stsfctn           0.000                               0.000    0.000
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .glad    (.16.)    0.018    0.040    0.443    0.658    0.018
+##    .happy   (.17.)    0.026    0.040    0.650    0.516    0.026
+##    .cheerfl (.18.)    0.018    0.042    0.415    0.678    0.018
+##    .satisfd (.19.)   -0.085    0.042   -2.026    0.043   -0.085
+##    .content (.20.)   -0.083    0.045   -1.825    0.068   -0.083
+##    .cmfrtbl (.21.)   -0.082    0.038   -2.137    0.033   -0.082
+##     psAffct           0.000                               0.000
+##    .stsfctn           0.000                               0.000
+##   Std.all
+##     0.018
+##     0.026
+##     0.018
+##    -0.084
+##    -0.076
+##    -0.086
+##     0.000
+##     0.000
 ## 
 ## Variances:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .glad    (.p8.)    0.483    0.028   17.135    0.000    0.483    0.488
-##    .happy   (.p9.)    0.407    0.029   14.260    0.000    0.407    0.415
-##    .cheerfl (.10.)    0.369    0.028   13.259    0.000    0.369    0.370
-##    .satisfd (.11.)    0.417    0.028   14.675    0.000    0.417    0.405
-##    .content (.12.)    0.490    0.034   14.542    0.000    0.490    0.412
-##    .cmfrtbl (.13.)    0.402    0.027   15.067    0.000    0.402    0.439
-##     psAffct           0.508    0.051    9.911    0.000    1.000    1.000
-##    .stsfctn           0.462    0.050    9.171    0.000    0.753    0.753
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .glad    (.p8.)    0.483    0.028   17.135    0.000    0.483
+##    .happy   (.p9.)    0.407    0.029   14.260    0.000    0.407
+##    .cheerfl (.10.)    0.369    0.028   13.259    0.000    0.369
+##    .satisfd (.11.)    0.417    0.028   14.675    0.000    0.417
+##    .content (.12.)    0.490    0.034   14.542    0.000    0.490
+##    .cmfrtbl (.13.)    0.402    0.027   15.067    0.000    0.402
+##     psAffct           0.508    0.051    9.911    0.000    1.000
+##    .stsfctn           0.462    0.050    9.171    0.000    0.753
+##   Std.all
+##     0.488
+##     0.415
+##     0.370
+##     0.405
+##     0.412
+##     0.439
+##     1.000
+##     0.753
 ## 
 ## 
 ## Group 2 [public]:
 ## 
 ## Latent Variables:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   posAffect =~                                                          
-##     glad              1.000                               0.674    0.696
-##     happy   (.p2.)    1.064    0.054   19.668    0.000    0.717    0.747
-##     cheerfl (.p3.)    1.114    0.055   20.253    0.000    0.751    0.777
-##   satisfaction =~                                                       
-##     satisfd           1.000                               0.762    0.763
-##     content (.p5.)    1.067    0.051   21.045    0.000    0.813    0.758
-##     cmfrtbl (.p6.)    0.915    0.043   21.157    0.000    0.697    0.740
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   posAffect =~                                                 
+##     glad              1.000                               0.674
+##     happy   (.p2.)    1.064    0.054   19.668    0.000    0.717
+##     cheerfl (.p3.)    1.114    0.055   20.253    0.000    0.751
+##   satisfaction =~                                              
+##     satisfd           1.000                               0.762
+##     content (.p5.)    1.067    0.051   21.045    0.000    0.813
+##     cmfrtbl (.p6.)    0.915    0.043   21.157    0.000    0.697
+##   Std.all
+##          
+##     0.696
+##     0.747
+##     0.777
+##          
+##     0.763
+##     0.758
+##     0.740
 ## 
 ## Regressions:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   satisfaction ~                                                        
-##     psAffct (.p7.)    0.546    0.048   11.266    0.000    0.483    0.483
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   satisfaction ~                                               
+##     psAffct (.p7.)    0.546    0.048   11.266    0.000    0.483
+##   Std.all
+##          
+##     0.483
 ## 
 ## Intercepts:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .glad    (.16.)    0.018    0.040    0.443    0.658    0.018    0.018
-##    .happy   (.17.)    0.026    0.040    0.650    0.516    0.026    0.027
-##    .cheerfl (.18.)    0.018    0.042    0.415    0.678    0.018    0.018
-##    .satisfd (.19.)   -0.085    0.042   -2.026    0.043   -0.085   -0.085
-##    .content (.20.)   -0.083    0.045   -1.825    0.068   -0.083   -0.077
-##    .cmfrtbl (.21.)   -0.082    0.038   -2.137    0.033   -0.082   -0.087
-##     psAffct          -0.034    0.049   -0.693    0.488   -0.051   -0.051
-##    .stsfctn           0.104    0.051    2.046    0.041    0.136    0.136
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .glad    (.16.)    0.018    0.040    0.443    0.658    0.018
+##    .happy   (.17.)    0.026    0.040    0.650    0.516    0.026
+##    .cheerfl (.18.)    0.018    0.042    0.415    0.678    0.018
+##    .satisfd (.19.)   -0.085    0.042   -2.026    0.043   -0.085
+##    .content (.20.)   -0.083    0.045   -1.825    0.068   -0.083
+##    .cmfrtbl (.21.)   -0.082    0.038   -2.137    0.033   -0.082
+##     psAffct          -0.034    0.049   -0.693    0.488   -0.051
+##    .stsfctn           0.104    0.051    2.046    0.041    0.136
+##   Std.all
+##     0.018
+##     0.027
+##     0.018
+##    -0.085
+##    -0.077
+##    -0.087
+##    -0.051
+##     0.136
 ## 
 ## Variances:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .glad    (.p8.)    0.483    0.028   17.135    0.000    0.483    0.515
-##    .happy   (.p9.)    0.407    0.029   14.260    0.000    0.407    0.442
-##    .cheerfl (.10.)    0.369    0.028   13.259    0.000    0.369    0.396
-##    .satisfd (.11.)    0.417    0.028   14.675    0.000    0.417    0.418
-##    .content (.12.)    0.490    0.034   14.542    0.000    0.490    0.426
-##    .cmfrtbl (.13.)    0.402    0.027   15.067    0.000    0.402    0.453
-##     psAffct           0.454    0.049    9.228    0.000    1.000    1.000
-##    .stsfctn           0.445    0.048    9.293    0.000    0.767    0.767</code></pre>
-<div class="sourceCode" id="cb649"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb649-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb649-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(resVarFit, equalBetafit)</span></code></pre></div>
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .glad    (.p8.)    0.483    0.028   17.135    0.000    0.483
+##    .happy   (.p9.)    0.407    0.029   14.260    0.000    0.407
+##    .cheerfl (.10.)    0.369    0.028   13.259    0.000    0.369
+##    .satisfd (.11.)    0.417    0.028   14.675    0.000    0.417
+##    .content (.12.)    0.490    0.034   14.542    0.000    0.490
+##    .cmfrtbl (.13.)    0.402    0.027   15.067    0.000    0.402
+##     psAffct           0.454    0.049    9.228    0.000    1.000
+##    .stsfctn           0.445    0.048    9.293    0.000    0.767
+##   Std.all
+##     0.515
+##     0.442
+##     0.396
+##     0.418
+##     0.426
+##     0.453
+##     1.000
+##     0.767</code></pre>
+<div class="sourceCode" id="cb662"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb662-1"><a href="week13_1-lavaan-lab-14-measurement-invariance.html#cb662-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(resVarFit, equalBetafit)</span></code></pre></div>
 <pre><code>## Scaled Chi-Squared Difference Test (method = &quot;satorra.bentler.2001&quot;)
 ## 
 ## lavaan NOTE:

@@ -312,6 +312,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="11.4.1" data-path="week8_2-lavaan-lab-8-estimation-methods.html"><a href="week8_2-lavaan-lab-8-estimation-methods.html#ml-estimation"><i class="fa fa-check"></i><b>11.4.1</b> ML Estimation</a></li>
 <li class="chapter" data-level="11.4.2" data-path="week8_2-lavaan-lab-8-estimation-methods.html"><a href="week8_2-lavaan-lab-8-estimation-methods.html#wls-estimation"><i class="fa fa-check"></i><b>11.4.2</b> WLS Estimation</a></li>
 <li class="chapter" data-level="11.4.3" data-path="week8_2-lavaan-lab-8-estimation-methods.html"><a href="week8_2-lavaan-lab-8-estimation-methods.html#compare-the-parameter-estimates"><i class="fa fa-check"></i><b>11.4.3</b> Compare the parameter estimates</a></li>
+<li class="chapter" data-level="11.4.4" data-path="week8_2-lavaan-lab-8-estimation-methods.html"><a href="week8_2-lavaan-lab-8-estimation-methods.html#compare-the-standard-errors"><i class="fa fa-check"></i><b>11.4.4</b> Compare the standard errors:</a></li>
 </ul></li>
 <li class="chapter" data-level="11.5" data-path="week8_2-lavaan-lab-8-estimation-methods.html"><a href="week8_2-lavaan-lab-8-estimation-methods.html#part-v-improper-solutions"><i class="fa fa-check"></i><b>11.5</b> PART V: Improper Solutions</a></li>
 </ul></li>
@@ -518,17 +519,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>This is a simulated dataset based on Todd Little’s positive affect example.</p>
 <p>The hypothesis is that a latent variable ‘positive affect’ is measured by three indicators (glad, cheerful, and happy).</p>
 <p>Let’s read this dataset in:</p>
-<div class="sourceCode" id="cb329"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb329-1"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb329-1" aria-hidden="true" tabindex="-1"></a>cfaData<span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;cfaInclassData.csv&quot;</span>, <span class="at">header =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb330-1"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb330-1" aria-hidden="true" tabindex="-1"></a>cfaData<span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;cfaInclassData.csv&quot;</span>, <span class="at">header =</span> T)</span></code></pre></div>
 <p>and examine the dataset:</p>
-<div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb330-1"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb330-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(cfaData)</span></code></pre></div>
-<pre><code>##   ID        glad   cheerful      happy  satisfied    content comfortable
-## 1  1  0.13521092  0.5413297 -0.1041445 -0.5777446  0.8645383  0.02935020
-## 2  2 -0.29116043  0.2434081  0.6671535  2.0763730 -0.7382832  1.05439183
-## 3  3  0.71975913  0.2218277  0.4722337  2.1685984 -0.2727574  0.09053090
-## 4  4  0.44432030  0.9295414  0.8574083 -1.0575363 -1.3841364 -0.07940091
-## 5  5  2.84476524  3.1710123  3.5145040  1.5725274  2.3406754  1.59866763
-## 6  6 -0.03317526 -0.8434011 -0.1485924 -0.5469343 -1.5750953 -0.69629828</code></pre>
-<div class="sourceCode" id="cb332"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb332-1"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb332-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(cfaData)</span></code></pre></div>
+<div class="sourceCode" id="cb331"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb331-1"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb331-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(cfaData)</span></code></pre></div>
+<pre><code>##   ID        glad   cheerful      happy  satisfied
+## 1  1  0.13521092  0.5413297 -0.1041445 -0.5777446
+## 2  2 -0.29116043  0.2434081  0.6671535  2.0763730
+## 3  3  0.71975913  0.2218277  0.4722337  2.1685984
+## 4  4  0.44432030  0.9295414  0.8574083 -1.0575363
+## 5  5  2.84476524  3.1710123  3.5145040  1.5725274
+## 6  6 -0.03317526 -0.8434011 -0.1485924 -0.5469343
+##      content comfortable
+## 1  0.8645383  0.02935020
+## 2 -0.7382832  1.05439183
+## 3 -0.2727574  0.09053090
+## 4 -1.3841364 -0.07940091
+## 5  2.3406754  1.59866763
+## 6 -1.5750953 -0.69629828</code></pre>
+<div class="sourceCode" id="cb333"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb333-1"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb333-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(cfaData)</span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    1000 obs. of  7 variables:
 ##  $ ID         : int  1 2 3 4 5 6 7 8 9 10 ...
 ##  $ glad       : num  0.135 -0.291 0.72 0.444 2.845 ...
@@ -537,17 +545,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  $ satisfied  : num  -0.578 2.076 2.169 -1.058 1.573 ...
 ##  $ content    : num  0.865 -0.738 -0.273 -1.384 2.341 ...
 ##  $ comfortable: num  0.0294 1.0544 0.0905 -0.0794 1.5987 ...</code></pre>
-<div class="sourceCode" id="cb334"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb334-1"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb334-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(cfaData) <span class="co">#n = 1000, 7 variables</span></span></code></pre></div>
+<div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb335-1"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb335-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(cfaData) <span class="co">#n = 1000, 7 variables</span></span></code></pre></div>
 <pre><code>## [1] 1000    7</code></pre>
 <p>Let’s examine their means and standard deviations:</p>
-<div class="sourceCode" id="cb336"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb336-1"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb336-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">apply</span>(cfaData[,<span class="sc">-</span><span class="dv">1</span>], <span class="dv">2</span>, mean), <span class="dv">2</span>) <span class="co"># mean-centered</span></span></code></pre></div>
-<pre><code>##        glad    cheerful       happy   satisfied     content comfortable 
-##        0.00        0.00        0.01       -0.04       -0.04       -0.04</code></pre>
-<div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb338-1"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb338-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">apply</span>(cfaData[,<span class="sc">-</span><span class="dv">1</span>], <span class="dv">2</span>, sd), <span class="dv">2</span>) </span></code></pre></div>
-<pre><code>##        glad    cheerful       happy   satisfied     content comfortable 
-##        0.98        0.98        0.98        1.01        1.08        0.95</code></pre>
+<div class="sourceCode" id="cb337"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb337-1"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb337-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">apply</span>(cfaData[,<span class="sc">-</span><span class="dv">1</span>], <span class="dv">2</span>, mean), <span class="dv">2</span>) <span class="co"># mean-centered</span></span></code></pre></div>
+<pre><code>##        glad    cheerful       happy   satisfied 
+##        0.00        0.00        0.01       -0.04 
+##     content comfortable 
+##       -0.04       -0.04</code></pre>
+<div class="sourceCode" id="cb339"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb339-1"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb339-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">apply</span>(cfaData[,<span class="sc">-</span><span class="dv">1</span>], <span class="dv">2</span>, sd), <span class="dv">2</span>) </span></code></pre></div>
+<pre><code>##        glad    cheerful       happy   satisfied 
+##        0.98        0.98        0.98        1.01 
+##     content comfortable 
+##        1.08        0.95</code></pre>
 <p>Let’s call up the lavaan library and run some CFA’s!</p>
-<div class="sourceCode" id="cb340"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb340-1"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb340-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span></code></pre></div>
+<div class="sourceCode" id="cb341"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb341-1"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb341-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span></code></pre></div>
 <!------------------------------>
 </div>
 <div id="part-i-one-factor-cfa-fixed-loading" class="section level2 hasAnchor" number="8.2">
@@ -562,28 +574,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Happy = lambda3*posAffect(eta) + u3</li>
 </ul>
 <p>Let’s first follow the equations above and write the syntax (disturbances are automatically included):</p>
-<div class="sourceCode" id="cb341"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb341-1"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb341-1" aria-hidden="true" tabindex="-1"></a>mod1.wrong<span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
-<span id="cb341-2"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb341-2" aria-hidden="true" tabindex="-1"></a><span class="st">  glad ~ posAffect</span></span>
-<span id="cb341-3"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb341-3" aria-hidden="true" tabindex="-1"></a><span class="st">  cheerful ~ posAffect</span></span>
-<span id="cb341-4"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb341-4" aria-hidden="true" tabindex="-1"></a><span class="st">  happy ~ posAffect</span></span>
-<span id="cb341-5"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb341-5" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span>
-<span id="cb341-6"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb341-6" aria-hidden="true" tabindex="-1"></a>fit1.wrong <span class="ot">=</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> mod1.wrong, <span class="at">data =</span> cfaData, <span class="at">fixed.x=</span><span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb342"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb342-1"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb342-1" aria-hidden="true" tabindex="-1"></a>mod1.wrong<span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
+<span id="cb342-2"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb342-2" aria-hidden="true" tabindex="-1"></a><span class="st">  glad ~ posAffect</span></span>
+<span id="cb342-3"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb342-3" aria-hidden="true" tabindex="-1"></a><span class="st">  cheerful ~ posAffect</span></span>
+<span id="cb342-4"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb342-4" aria-hidden="true" tabindex="-1"></a><span class="st">  happy ~ posAffect</span></span>
+<span id="cb342-5"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb342-5" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span>
+<span id="cb342-6"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb342-6" aria-hidden="true" tabindex="-1"></a>fit1.wrong <span class="ot">=</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> mod1.wrong, <span class="at">data =</span> cfaData, <span class="at">fixed.x=</span><span class="cn">FALSE</span>)</span></code></pre></div>
 <p>Oops - an error message!</p>
-<div class="sourceCode" id="cb342"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb342-1"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb342-1" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> <span class="fu">lav_data_full</span>(<span class="at">data =</span> data, <span class="at">group =</span> group, <span class="at">cluster =</span> cluster,  <span class="sc">:</span> </span>
-<span id="cb342-2"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb342-2" aria-hidden="true" tabindex="-1"></a>  lavaan ERROR<span class="sc">:</span> missing observed variables <span class="cf">in</span> dataset<span class="sc">:</span> posAffect</span></code></pre></div>
+<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb343-1"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb343-1" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> <span class="fu">lav_data_full</span>(<span class="at">data =</span> data, <span class="at">group =</span> group, <span class="at">cluster =</span> cluster,  <span class="sc">:</span> </span>
+<span id="cb343-2"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb343-2" aria-hidden="true" tabindex="-1"></a>  lavaan ERROR<span class="sc">:</span> missing observed variables <span class="cf">in</span> dataset<span class="sc">:</span> posAffect</span></code></pre></div>
 <p>This is because posAffect is a latent variable and we have to use =~ to define a latent variable:</p>
-<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb343-1"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb343-1" aria-hidden="true" tabindex="-1"></a>mod1.wrong<span class="ot">&lt;-</span><span class="st">&#39;</span></span>
-<span id="cb343-2"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb343-2" aria-hidden="true" tabindex="-1"></a><span class="st">posAffect =~ Glad + Cheerful + Happy</span></span>
-<span id="cb343-3"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb343-3" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span>
-<span id="cb343-4"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb343-4" aria-hidden="true" tabindex="-1"></a>fit1.wrong <span class="ot">=</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> mod1.wrong, <span class="at">data =</span> cfaData, <span class="at">fixed.x=</span><span class="cn">FALSE</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb344"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb344-1"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb344-1" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> lavaan<span class="sc">::</span><span class="fu">lavaan</span>(<span class="at">model =</span> mod1.wrong, <span class="at">data =</span> cfaData, <span class="at">fixed.x =</span> <span class="cn">FALSE</span>,  <span class="sc">:</span> </span>
-<span id="cb344-2"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb344-2" aria-hidden="true" tabindex="-1"></a>  lavaan ERROR<span class="sc">:</span> missing observed variables <span class="cf">in</span> dataset<span class="sc">:</span> Glad Cheerful Happy</span></code></pre></div>
+<div class="sourceCode" id="cb344"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb344-1"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb344-1" aria-hidden="true" tabindex="-1"></a>mod1.wrong<span class="ot">&lt;-</span><span class="st">&#39;</span></span>
+<span id="cb344-2"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb344-2" aria-hidden="true" tabindex="-1"></a><span class="st">posAffect =~ Glad + Cheerful + Happy</span></span>
+<span id="cb344-3"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb344-3" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span>
+<span id="cb344-4"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb344-4" aria-hidden="true" tabindex="-1"></a>fit1.wrong <span class="ot">=</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> mod1.wrong, <span class="at">data =</span> cfaData, <span class="at">fixed.x=</span><span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb345"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb345-1"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb345-1" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> lavaan<span class="sc">::</span><span class="fu">lavaan</span>(<span class="at">model =</span> mod1.wrong, <span class="at">data =</span> cfaData, <span class="at">fixed.x =</span> <span class="cn">FALSE</span>,  <span class="sc">:</span> </span>
+<span id="cb345-2"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb345-2" aria-hidden="true" tabindex="-1"></a>  lavaan ERROR<span class="sc">:</span> missing observed variables <span class="cf">in</span> dataset<span class="sc">:</span> Glad Cheerful Happy</span></code></pre></div>
 <p>Error, why?</p>
 <p>The variable names in the model syntax have to match the column names EXACTLY, even the letter cases.</p>
 <p>Let’s try again:</p>
-<div class="sourceCode" id="cb345"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb345-1"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb345-1" aria-hidden="true" tabindex="-1"></a>mod1<span class="ot">&lt;-</span><span class="st">&#39;</span></span>
-<span id="cb345-2"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb345-2" aria-hidden="true" tabindex="-1"></a><span class="st">posAffect =~ glad + cheerful + happy</span></span>
-<span id="cb345-3"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb345-3" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span></code></pre></div>
+<div class="sourceCode" id="cb346"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb346-1"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb346-1" aria-hidden="true" tabindex="-1"></a>mod1<span class="ot">&lt;-</span><span class="st">&#39;</span></span>
+<span id="cb346-2"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb346-2" aria-hidden="true" tabindex="-1"></a><span class="st">posAffect =~ glad + cheerful + happy</span></span>
+<span id="cb346-3"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb346-3" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span></code></pre></div>
 <p>Let’s explain the lavaan model syntax!</p>
 <ul>
 <li>mod1 is used to name our model.</li>
@@ -594,9 +606,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>By default, the loading of glad is fixed at 1 (Fixed Loading Method)</li>
 </ul>
 <p>Next we name the fitted object ‘fit1’ to see our output.</p>
-<div class="sourceCode" id="cb346"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb346-1"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb346-1" aria-hidden="true" tabindex="-1"></a>fit1 <span class="ot">=</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(mod1, <span class="at">data =</span> cfaData, <span class="at">fixed.x=</span><span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb347"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb347-1"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb347-1" aria-hidden="true" tabindex="-1"></a>fit1 <span class="ot">=</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(mod1, <span class="at">data =</span> cfaData, <span class="at">fixed.x=</span><span class="cn">FALSE</span>)</span></code></pre></div>
 <p>This summary will show us the loadings (I also requested standardized results):</p>
-<div class="sourceCode" id="cb347"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb347-1"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb347-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit1, <span class="at">standardized =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb348"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb348-1"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb348-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit1, <span class="at">standardized =</span> T)</span></code></pre></div>
 <pre><code>## lavaan 0.6-12 ended normally after 20 iterations
 ## 
 ##   Estimator                                         ML
@@ -617,26 +629,36 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##   Information saturated (h1) model          Structured
 ## 
 ## Latent Variables:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   posAffect =~                                                          
-##     glad              1.000                               0.693    0.705
-##     cheerful          1.117    0.059   18.782    0.000    0.774    0.787
-##     happy             1.066    0.057   18.786    0.000    0.739    0.757
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##   posAffect =~                                        
+##     glad              1.000                           
+##     cheerful          1.117    0.059   18.782    0.000
+##     happy             1.066    0.057   18.786    0.000
+##    Std.lv  Std.all
+##                   
+##     0.693    0.705
+##     0.774    0.787
+##     0.739    0.757
 ## 
 ## Variances:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .glad              0.485    0.030   16.238    0.000    0.485    0.503
-##    .cheerful          0.367    0.030   12.062    0.000    0.367    0.380
-##    .happy             0.407    0.030   13.751    0.000    0.407    0.427
-##     posAffect         0.480    0.043   11.270    0.000    1.000    1.000</code></pre>
-<div class="sourceCode" id="cb349"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb349-1"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb349-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">=</span> <span class="dv">0</span> (why?)</span>
-<span id="cb349-2"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb349-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb349-3"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb349-3" aria-hidden="true" tabindex="-1"></a>Latent Variables<span class="sc">:</span></span>
-<span id="cb349-4"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb349-4" aria-hidden="true" tabindex="-1"></a>                   Estimate  Std.Err  z<span class="sc">-</span>value  <span class="fu">P</span>(<span class="sc">&gt;</span><span class="er">|</span>z<span class="sc">|</span>)   Std.lv  Std.all</span>
-<span id="cb349-5"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb349-5" aria-hidden="true" tabindex="-1"></a>  posAffect <span class="ot">=</span><span class="er">~</span>                                                          </span>
-<span id="cb349-6"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb349-6" aria-hidden="true" tabindex="-1"></a>    glad              <span class="fl">1.000</span>                               <span class="fl">0.693</span>    <span class="fl">0.705</span></span>
-<span id="cb349-7"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb349-7" aria-hidden="true" tabindex="-1"></a>    cheerful          <span class="fl">1.117</span>    <span class="fl">0.059</span>   <span class="fl">18.782</span>    <span class="fl">0.000</span>    <span class="fl">0.774</span>    <span class="fl">0.787</span></span>
-<span id="cb349-8"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb349-8" aria-hidden="true" tabindex="-1"></a>    happy             <span class="fl">1.066</span>    <span class="fl">0.057</span>   <span class="fl">18.786</span>    <span class="fl">0.000</span>    <span class="fl">0.739</span>    <span class="fl">0.757</span></span></code></pre></div>
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##    .glad              0.485    0.030   16.238    0.000
+##    .cheerful          0.367    0.030   12.062    0.000
+##    .happy             0.407    0.030   13.751    0.000
+##     posAffect         0.480    0.043   11.270    0.000
+##    Std.lv  Std.all
+##     0.485    0.503
+##     0.367    0.380
+##     0.407    0.427
+##     1.000    1.000</code></pre>
+<div class="sourceCode" id="cb350"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb350-1"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb350-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">=</span> <span class="dv">0</span> (why?)</span>
+<span id="cb350-2"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb350-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb350-3"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb350-3" aria-hidden="true" tabindex="-1"></a>Latent Variables<span class="sc">:</span></span>
+<span id="cb350-4"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb350-4" aria-hidden="true" tabindex="-1"></a>                   Estimate  Std.Err  z<span class="sc">-</span>value  <span class="fu">P</span>(<span class="sc">&gt;</span><span class="er">|</span>z<span class="sc">|</span>)   Std.lv  Std.all</span>
+<span id="cb350-5"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb350-5" aria-hidden="true" tabindex="-1"></a>  posAffect <span class="ot">=</span><span class="er">~</span>                                                          </span>
+<span id="cb350-6"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb350-6" aria-hidden="true" tabindex="-1"></a>    glad              <span class="fl">1.000</span>                               <span class="fl">0.693</span>    <span class="fl">0.705</span></span>
+<span id="cb350-7"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb350-7" aria-hidden="true" tabindex="-1"></a>    cheerful          <span class="fl">1.117</span>    <span class="fl">0.059</span>   <span class="fl">18.782</span>    <span class="fl">0.000</span>    <span class="fl">0.774</span>    <span class="fl">0.787</span></span>
+<span id="cb350-8"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb350-8" aria-hidden="true" tabindex="-1"></a>    happy             <span class="fl">1.066</span>    <span class="fl">0.057</span>   <span class="fl">18.786</span>    <span class="fl">0.000</span>    <span class="fl">0.739</span>    <span class="fl">0.757</span></span></code></pre></div>
 <p>What does this mean?</p>
 <ul>
 <li>1 unit change in posAffect produces:
@@ -646,46 +668,46 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>1.066-unit change in “happy” (1.066 times greater than the effect on “glad”)</li>
 </ul></li>
 </ul>
-<div class="sourceCode" id="cb350"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb350-1"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb350-1" aria-hidden="true" tabindex="-1"></a>Variances<span class="sc">:</span></span>
-<span id="cb350-2"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb350-2" aria-hidden="true" tabindex="-1"></a>Unique factor variances<span class="sc">:</span></span>
-<span id="cb350-3"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb350-3" aria-hidden="true" tabindex="-1"></a>                   Estimate  Std.Err  z<span class="sc">-</span>value  <span class="fu">P</span>(<span class="sc">&gt;</span><span class="er">|</span>z<span class="sc">|</span>)   Std.lv  Std.all</span>
-<span id="cb350-4"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb350-4" aria-hidden="true" tabindex="-1"></a>   .glad              <span class="fl">0.485</span>    <span class="fl">0.030</span>   <span class="fl">16.238</span>    <span class="fl">0.000</span>    <span class="fl">0.485</span>    <span class="fl">0.503</span></span>
-<span id="cb350-5"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb350-5" aria-hidden="true" tabindex="-1"></a>   .cheerful          <span class="fl">0.367</span>    <span class="fl">0.030</span>   <span class="fl">12.062</span>    <span class="fl">0.000</span>    <span class="fl">0.367</span>    <span class="fl">0.380</span></span>
-<span id="cb350-6"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb350-6" aria-hidden="true" tabindex="-1"></a>   .happy             <span class="fl">0.407</span>    <span class="fl">0.030</span>   <span class="fl">13.751</span>    <span class="fl">0.000</span>    <span class="fl">0.407</span>    <span class="fl">0.427</span></span></code></pre></div>
+<div class="sourceCode" id="cb351"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb351-1"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb351-1" aria-hidden="true" tabindex="-1"></a>Variances<span class="sc">:</span></span>
+<span id="cb351-2"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb351-2" aria-hidden="true" tabindex="-1"></a>Unique factor variances<span class="sc">:</span></span>
+<span id="cb351-3"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb351-3" aria-hidden="true" tabindex="-1"></a>                   Estimate  Std.Err  z<span class="sc">-</span>value  <span class="fu">P</span>(<span class="sc">&gt;</span><span class="er">|</span>z<span class="sc">|</span>)   Std.lv  Std.all</span>
+<span id="cb351-4"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb351-4" aria-hidden="true" tabindex="-1"></a>   .glad              <span class="fl">0.485</span>    <span class="fl">0.030</span>   <span class="fl">16.238</span>    <span class="fl">0.000</span>    <span class="fl">0.485</span>    <span class="fl">0.503</span></span>
+<span id="cb351-5"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb351-5" aria-hidden="true" tabindex="-1"></a>   .cheerful          <span class="fl">0.367</span>    <span class="fl">0.030</span>   <span class="fl">12.062</span>    <span class="fl">0.000</span>    <span class="fl">0.367</span>    <span class="fl">0.380</span></span>
+<span id="cb351-6"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb351-6" aria-hidden="true" tabindex="-1"></a>   .happy             <span class="fl">0.407</span>    <span class="fl">0.030</span>   <span class="fl">13.751</span>    <span class="fl">0.000</span>    <span class="fl">0.407</span>    <span class="fl">0.427</span></span></code></pre></div>
 <ul>
 <li>The leftover unique factor variances remain substantial</li>
 <li>Meaning that none of the indicators is a perfect measure of posAffect</li>
 <li>but they all contribute significantly to the measurement of posAffect (the standardized loadings above larger than 0.6)</li>
 </ul>
 <p>Followed by the latent factor variance.</p>
-<div class="sourceCode" id="cb351"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb351-1"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb351-1" aria-hidden="true" tabindex="-1"></a>                   Estimate  Std.Err  z<span class="sc">-</span>value  <span class="fu">P</span>(<span class="sc">&gt;</span><span class="er">|</span>z<span class="sc">|</span>)   Std.lv  Std.all</span>
-<span id="cb351-2"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb351-2" aria-hidden="true" tabindex="-1"></a>    posAffect         <span class="fl">0.480</span>    <span class="fl">0.043</span>   <span class="fl">11.270</span>    <span class="fl">0.000</span>    <span class="fl">1.000</span>    <span class="fl">1.000</span></span></code></pre></div>
+<div class="sourceCode" id="cb352"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb352-1"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb352-1" aria-hidden="true" tabindex="-1"></a>                   Estimate  Std.Err  z<span class="sc">-</span>value  <span class="fu">P</span>(<span class="sc">&gt;</span><span class="er">|</span>z<span class="sc">|</span>)   Std.lv  Std.all</span>
+<span id="cb352-2"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb352-2" aria-hidden="true" tabindex="-1"></a>    posAffect         <span class="fl">0.480</span>    <span class="fl">0.043</span>   <span class="fl">11.270</span>    <span class="fl">0.000</span>    <span class="fl">1.000</span>    <span class="fl">1.000</span></span></code></pre></div>
 </div>
 <div id="change-marker-indicator" class="section level3 hasAnchor" number="8.2.2">
 <h3><span class="header-section-number">8.2.2</span> Change marker indicator<a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#change-marker-indicator" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>If you’d like to fix the 2nd loading to 1:</p>
-<div class="sourceCode" id="cb352"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb352-1"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb352-1" aria-hidden="true" tabindex="-1"></a>mod1b_wrong<span class="ot">&lt;-</span><span class="st">&#39;</span></span>
-<span id="cb352-2"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb352-2" aria-hidden="true" tabindex="-1"></a><span class="st">posAffect =~ glad + 1*cheerful + happy</span></span>
-<span id="cb352-3"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb352-3" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span></code></pre></div>
+<div class="sourceCode" id="cb353"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb353-1"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb353-1" aria-hidden="true" tabindex="-1"></a>mod1b_wrong<span class="ot">&lt;-</span><span class="st">&#39;</span></span>
+<span id="cb353-2"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb353-2" aria-hidden="true" tabindex="-1"></a><span class="st">posAffect =~ glad + 1*cheerful + happy</span></span>
+<span id="cb353-3"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb353-3" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span></code></pre></div>
 <p>won’t work.</p>
 <p>You will get something like this:</p>
-<div class="sourceCode" id="cb353"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb353-1"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb353-1" aria-hidden="true" tabindex="-1"></a>Latent Variables<span class="sc">:</span></span>
-<span id="cb353-2"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb353-2" aria-hidden="true" tabindex="-1"></a>                   Estimate  Std.Err  z<span class="sc">-</span>value  <span class="fu">P</span>(<span class="sc">&gt;</span><span class="er">|</span>z<span class="sc">|</span>)   Std.lv  Std.all</span>
-<span id="cb353-3"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb353-3" aria-hidden="true" tabindex="-1"></a>  posAffect <span class="ot">=</span><span class="er">~</span>                                                          </span>
-<span id="cb353-4"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb353-4" aria-hidden="true" tabindex="-1"></a>    glad              <span class="fl">1.000</span>                               <span class="fl">0.734</span>    <span class="fl">0.733</span></span>
-<span id="cb353-5"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb353-5" aria-hidden="true" tabindex="-1"></a>    cheerful          <span class="fl">1.000</span>                               <span class="fl">0.734</span>    <span class="fl">0.759</span></span>
-<span id="cb353-6"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb353-6" aria-hidden="true" tabindex="-1"></a>    happy             <span class="fl">1.009</span>    <span class="fl">0.046</span>   <span class="fl">22.052</span>    <span class="fl">0.000</span>    <span class="fl">0.741</span>    <span class="fl">0.759</span></span></code></pre></div>
+<div class="sourceCode" id="cb354"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb354-1"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb354-1" aria-hidden="true" tabindex="-1"></a>Latent Variables<span class="sc">:</span></span>
+<span id="cb354-2"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb354-2" aria-hidden="true" tabindex="-1"></a>                   Estimate  Std.Err  z<span class="sc">-</span>value  <span class="fu">P</span>(<span class="sc">&gt;</span><span class="er">|</span>z<span class="sc">|</span>)   Std.lv  Std.all</span>
+<span id="cb354-3"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb354-3" aria-hidden="true" tabindex="-1"></a>  posAffect <span class="ot">=</span><span class="er">~</span>                                                          </span>
+<span id="cb354-4"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb354-4" aria-hidden="true" tabindex="-1"></a>    glad              <span class="fl">1.000</span>                               <span class="fl">0.734</span>    <span class="fl">0.733</span></span>
+<span id="cb354-5"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb354-5" aria-hidden="true" tabindex="-1"></a>    cheerful          <span class="fl">1.000</span>                               <span class="fl">0.734</span>    <span class="fl">0.759</span></span>
+<span id="cb354-6"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb354-6" aria-hidden="true" tabindex="-1"></a>    happy             <span class="fl">1.009</span>    <span class="fl">0.046</span>   <span class="fl">22.052</span>    <span class="fl">0.000</span>    <span class="fl">0.741</span>    <span class="fl">0.759</span></span></code></pre></div>
 <p>You’ll have to change the order of the indicators to move cheerful to the front of the variable list:</p>
-<div class="sourceCode" id="cb354"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb354-1"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb354-1" aria-hidden="true" tabindex="-1"></a>mod1b<span class="ot">&lt;-</span><span class="st">&#39;</span></span>
-<span id="cb354-2"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb354-2" aria-hidden="true" tabindex="-1"></a><span class="st">posAffect =~ cheerful + glad + happy</span></span>
-<span id="cb354-3"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb354-3" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span></code></pre></div>
-<p>Or use *NA to specify which loading to keep free and use *1 to specify the marker variable whose loading to be fixed at 1</p>
 <div class="sourceCode" id="cb355"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb355-1"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb355-1" aria-hidden="true" tabindex="-1"></a>mod1b<span class="ot">&lt;-</span><span class="st">&#39;</span></span>
-<span id="cb355-2"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb355-2" aria-hidden="true" tabindex="-1"></a><span class="st">posAffect =~ NA*glad + 1*cheerful + NA*happy</span></span>
+<span id="cb355-2"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb355-2" aria-hidden="true" tabindex="-1"></a><span class="st">posAffect =~ cheerful + glad + happy</span></span>
 <span id="cb355-3"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb355-3" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span></code></pre></div>
+<p>Or use *NA to specify which loading to keep free and use *1 to specify the marker variable whose loading to be fixed at 1</p>
+<div class="sourceCode" id="cb356"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb356-1"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb356-1" aria-hidden="true" tabindex="-1"></a>mod1b<span class="ot">&lt;-</span><span class="st">&#39;</span></span>
+<span id="cb356-2"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb356-2" aria-hidden="true" tabindex="-1"></a><span class="st">posAffect =~ NA*glad + 1*cheerful + NA*happy</span></span>
+<span id="cb356-3"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb356-3" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span></code></pre></div>
 <p>Here we named the fitted object ‘fit1b’ to see our output.</p>
-<div class="sourceCode" id="cb356"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb356-1"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb356-1" aria-hidden="true" tabindex="-1"></a>fit1b <span class="ot">=</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(mod1b, <span class="at">data =</span> cfaData, <span class="at">fixed.x=</span><span class="cn">FALSE</span>)</span>
-<span id="cb356-2"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb356-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit1b, <span class="at">standardized =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb357"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb357-1"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb357-1" aria-hidden="true" tabindex="-1"></a>fit1b <span class="ot">=</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(mod1b, <span class="at">data =</span> cfaData, <span class="at">fixed.x=</span><span class="cn">FALSE</span>)</span>
+<span id="cb357-2"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb357-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit1b, <span class="at">standardized =</span> T)</span></code></pre></div>
 <pre><code>## lavaan 0.6-12 ended normally after 19 iterations
 ## 
 ##   Estimator                                         ML
@@ -706,18 +728,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##   Information saturated (h1) model          Structured
 ## 
 ## Latent Variables:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   posAffect =~                                                          
-##     glad              0.895    0.048   18.782    0.000    0.693    0.705
-##     cheerful          1.000                               0.774    0.787
-##     happy             0.954    0.050   19.130    0.000    0.739    0.757
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##   posAffect =~                                        
+##     glad              0.895    0.048   18.782    0.000
+##     cheerful          1.000                           
+##     happy             0.954    0.050   19.130    0.000
+##    Std.lv  Std.all
+##                   
+##     0.693    0.705
+##     0.774    0.787
+##     0.739    0.757
 ## 
 ## Variances:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .glad              0.485    0.030   16.238    0.000    0.485    0.503
-##    .cheerful          0.367    0.030   12.062    0.000    0.367    0.380
-##    .happy             0.407    0.030   13.751    0.000    0.407    0.427
-##     posAffect         0.599    0.048   12.616    0.000    1.000    1.000</code></pre>
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##    .glad              0.485    0.030   16.238    0.000
+##    .cheerful          0.367    0.030   12.062    0.000
+##    .happy             0.407    0.030   13.751    0.000
+##     posAffect         0.599    0.048   12.616    0.000
+##    Std.lv  Std.all
+##     0.485    0.503
+##     0.367    0.380
+##     0.407    0.427
+##     1.000    1.000</code></pre>
 <ul>
 <li>The loadings can be obtained by dividing those in fit1 by 1.117 (i.e., they change proportionally).</li>
 <li>The variances of unique factors and latent factor remain unchanged.</li>
@@ -731,12 +763,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="fixed-factor-method" class="section level3 hasAnchor" number="8.3.1">
 <h3><span class="header-section-number">8.3.1</span> Fixed Factor Method<a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#fixed-factor-method" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Keep using the same syntax but assign a new name mod2:</p>
-<div class="sourceCode" id="cb358"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb358-1"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb358-1" aria-hidden="true" tabindex="-1"></a>mod2<span class="ot">&lt;-</span><span class="st">&#39;</span></span>
-<span id="cb358-2"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb358-2" aria-hidden="true" tabindex="-1"></a><span class="st">posAffect =~ glad + cheerful + happy</span></span>
-<span id="cb358-3"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb358-3" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span></code></pre></div>
+<div class="sourceCode" id="cb359"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb359-1"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb359-1" aria-hidden="true" tabindex="-1"></a>mod2<span class="ot">&lt;-</span><span class="st">&#39;</span></span>
+<span id="cb359-2"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb359-2" aria-hidden="true" tabindex="-1"></a><span class="st">posAffect =~ glad + cheerful + happy</span></span>
+<span id="cb359-3"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb359-3" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span></code></pre></div>
 <p>To fix the variance of the latent variable to 1, add std.lv=T to sem() function:</p>
-<div class="sourceCode" id="cb359"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb359-1"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb359-1" aria-hidden="true" tabindex="-1"></a>fit2<span class="ot">&lt;-</span>lavaan<span class="sc">::</span><span class="fu">sem</span>(mod2, <span class="at">data =</span> cfaData, <span class="at">fixed.x=</span><span class="cn">FALSE</span>, <span class="at">std.lv=</span>T)</span>
-<span id="cb359-2"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb359-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit2, <span class="at">standardized =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb360"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb360-1"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb360-1" aria-hidden="true" tabindex="-1"></a>fit2<span class="ot">&lt;-</span>lavaan<span class="sc">::</span><span class="fu">sem</span>(mod2, <span class="at">data =</span> cfaData, <span class="at">fixed.x=</span><span class="cn">FALSE</span>, <span class="at">std.lv=</span>T)</span>
+<span id="cb360-2"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb360-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit2, <span class="at">standardized =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>## lavaan 0.6-12 ended normally after 11 iterations
 ## 
 ##   Estimator                                         ML
@@ -757,24 +789,34 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##   Information saturated (h1) model          Structured
 ## 
 ## Latent Variables:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   posAffect =~                                                          
-##     glad              0.693    0.031   22.540    0.000    0.693    0.705
-##     cheerful          0.774    0.031   25.233    0.000    0.774    0.787
-##     happy             0.739    0.030   24.226    0.000    0.739    0.757
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##   posAffect =~                                        
+##     glad              0.693    0.031   22.540    0.000
+##     cheerful          0.774    0.031   25.233    0.000
+##     happy             0.739    0.030   24.226    0.000
+##    Std.lv  Std.all
+##                   
+##     0.693    0.705
+##     0.774    0.787
+##     0.739    0.757
 ## 
 ## Variances:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .glad              0.485    0.030   16.238    0.000    0.485    0.503
-##    .cheerful          0.367    0.030   12.062    0.000    0.367    0.380
-##    .happy             0.407    0.030   13.751    0.000    0.407    0.427
-##     posAffect         1.000                               1.000    1.000</code></pre>
-<div class="sourceCode" id="cb361"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb361-1"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb361-1" aria-hidden="true" tabindex="-1"></a>Latent Variables<span class="sc">:</span></span>
-<span id="cb361-2"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb361-2" aria-hidden="true" tabindex="-1"></a>                   Estimate  Std.Err  z<span class="sc">-</span>value  <span class="fu">P</span>(<span class="sc">&gt;</span><span class="er">|</span>z<span class="sc">|</span>)   Std.lv  Std.all</span>
-<span id="cb361-3"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb361-3" aria-hidden="true" tabindex="-1"></a>  posAffect <span class="ot">=</span><span class="er">~</span>                                                          </span>
-<span id="cb361-4"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb361-4" aria-hidden="true" tabindex="-1"></a>    glad              <span class="fl">0.693</span>    <span class="fl">0.031</span>   <span class="fl">22.540</span>    <span class="fl">0.000</span>    <span class="fl">0.693</span>    <span class="fl">0.705</span></span>
-<span id="cb361-5"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb361-5" aria-hidden="true" tabindex="-1"></a>    cheerful          <span class="fl">0.774</span>    <span class="fl">0.031</span>   <span class="fl">25.233</span>    <span class="fl">0.000</span>    <span class="fl">0.774</span>    <span class="fl">0.787</span></span>
-<span id="cb361-6"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb361-6" aria-hidden="true" tabindex="-1"></a>    happy             <span class="fl">0.739</span>    <span class="fl">0.030</span>   <span class="fl">24.226</span>    <span class="fl">0.000</span>    <span class="fl">0.739</span>    <span class="fl">0.757</span></span></code></pre></div>
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##    .glad              0.485    0.030   16.238    0.000
+##    .cheerful          0.367    0.030   12.062    0.000
+##    .happy             0.407    0.030   13.751    0.000
+##     posAffect         1.000                           
+##    Std.lv  Std.all
+##     0.485    0.503
+##     0.367    0.380
+##     0.407    0.427
+##     1.000    1.000</code></pre>
+<div class="sourceCode" id="cb362"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb362-1"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb362-1" aria-hidden="true" tabindex="-1"></a>Latent Variables<span class="sc">:</span></span>
+<span id="cb362-2"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb362-2" aria-hidden="true" tabindex="-1"></a>                   Estimate  Std.Err  z<span class="sc">-</span>value  <span class="fu">P</span>(<span class="sc">&gt;</span><span class="er">|</span>z<span class="sc">|</span>)   Std.lv  Std.all</span>
+<span id="cb362-3"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb362-3" aria-hidden="true" tabindex="-1"></a>  posAffect <span class="ot">=</span><span class="er">~</span>                                                          </span>
+<span id="cb362-4"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb362-4" aria-hidden="true" tabindex="-1"></a>    glad              <span class="fl">0.693</span>    <span class="fl">0.031</span>   <span class="fl">22.540</span>    <span class="fl">0.000</span>    <span class="fl">0.693</span>    <span class="fl">0.705</span></span>
+<span id="cb362-5"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb362-5" aria-hidden="true" tabindex="-1"></a>    cheerful          <span class="fl">0.774</span>    <span class="fl">0.031</span>   <span class="fl">25.233</span>    <span class="fl">0.000</span>    <span class="fl">0.774</span>    <span class="fl">0.787</span></span>
+<span id="cb362-6"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb362-6" aria-hidden="true" tabindex="-1"></a>    happy             <span class="fl">0.739</span>    <span class="fl">0.030</span>   <span class="fl">24.226</span>    <span class="fl">0.000</span>    <span class="fl">0.739</span>    <span class="fl">0.757</span></span></code></pre></div>
 <ul>
 <li>1-SD change in the factor (posAffect) causes:
 <ul>
@@ -783,12 +825,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>0.739-unit change in happy (on its raw scale)</li>
 </ul></li>
 </ul>
-<div class="sourceCode" id="cb362"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb362-1"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb362-1" aria-hidden="true" tabindex="-1"></a>Variances<span class="sc">:</span></span>
-<span id="cb362-2"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb362-2" aria-hidden="true" tabindex="-1"></a>                   Estimate  Std.Err  z<span class="sc">-</span>value  <span class="fu">P</span>(<span class="sc">&gt;</span><span class="er">|</span>z<span class="sc">|</span>)   Std.lv  Std.all</span>
-<span id="cb362-3"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb362-3" aria-hidden="true" tabindex="-1"></a>   .glad              <span class="fl">0.485</span>    <span class="fl">0.030</span>   <span class="fl">16.238</span>    <span class="fl">0.000</span>    <span class="fl">0.485</span>    <span class="fl">0.503</span></span>
-<span id="cb362-4"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb362-4" aria-hidden="true" tabindex="-1"></a>   .cheerful          <span class="fl">0.367</span>    <span class="fl">0.030</span>   <span class="fl">12.062</span>    <span class="fl">0.000</span>    <span class="fl">0.367</span>    <span class="fl">0.380</span></span>
-<span id="cb362-5"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb362-5" aria-hidden="true" tabindex="-1"></a>   .happy             <span class="fl">0.407</span>    <span class="fl">0.030</span>   <span class="fl">13.751</span>    <span class="fl">0.000</span>    <span class="fl">0.407</span>    <span class="fl">0.427</span></span>
-<span id="cb362-6"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb362-6" aria-hidden="true" tabindex="-1"></a>    posAffect         <span class="fl">1.000</span>                               <span class="fl">1.000</span>    <span class="fl">1.000</span></span></code></pre></div>
+<div class="sourceCode" id="cb363"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb363-1"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb363-1" aria-hidden="true" tabindex="-1"></a>Variances<span class="sc">:</span></span>
+<span id="cb363-2"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb363-2" aria-hidden="true" tabindex="-1"></a>                   Estimate  Std.Err  z<span class="sc">-</span>value  <span class="fu">P</span>(<span class="sc">&gt;</span><span class="er">|</span>z<span class="sc">|</span>)   Std.lv  Std.all</span>
+<span id="cb363-3"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb363-3" aria-hidden="true" tabindex="-1"></a>   .glad              <span class="fl">0.485</span>    <span class="fl">0.030</span>   <span class="fl">16.238</span>    <span class="fl">0.000</span>    <span class="fl">0.485</span>    <span class="fl">0.503</span></span>
+<span id="cb363-4"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb363-4" aria-hidden="true" tabindex="-1"></a>   .cheerful          <span class="fl">0.367</span>    <span class="fl">0.030</span>   <span class="fl">12.062</span>    <span class="fl">0.000</span>    <span class="fl">0.367</span>    <span class="fl">0.380</span></span>
+<span id="cb363-5"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb363-5" aria-hidden="true" tabindex="-1"></a>   .happy             <span class="fl">0.407</span>    <span class="fl">0.030</span>   <span class="fl">13.751</span>    <span class="fl">0.000</span>    <span class="fl">0.407</span>    <span class="fl">0.427</span></span>
+<span id="cb363-6"><a href="week8_1-lavaan-lab-5-one-factor-cfa-model.html#cb363-6" aria-hidden="true" tabindex="-1"></a>    posAffect         <span class="fl">1.000</span>                               <span class="fl">1.000</span>    <span class="fl">1.000</span></span></code></pre></div>
 <ul>
 <li>We see that posAffect now has variance (=sd) of 1</li>
 <li>All loadings were freely estimated, no loading is 1.</li>

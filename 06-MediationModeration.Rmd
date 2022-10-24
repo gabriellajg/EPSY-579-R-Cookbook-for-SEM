@@ -199,6 +199,14 @@ ex2ModMediation <- "
 	"  
 ```
 
+```{r}
+ex2ModMediationBasic <- " 
+  NegThoughts ~ a1*CBTDummy + a2*NeedCogCont + a3*CBTxNeedCogCont 
+	Depression ~ b*NegThoughts + cprime*CBTDummy
+	"  # NegThoughts ~ CBTDummy:NeedCogCont
+
+```
+
 ### Step 3: Bootstrap Version
 
 Since this model involves tests of indirect effects
@@ -302,7 +310,7 @@ Defined Parameters:
                    Estimate  Std.Err  z-value  P(>|z|)    ci.lower  ci.upper    std.all
     IndexOfModMed    -4.967    0.114  -43.431    0.000      -5.180    -4.727     -0.609      
     aSSLow           -1.990    0.092  -21.679    0.000      -2.176    -1.813     -0.126  
-    aSSMean          -5.060    0.064  -78.724    0.000      -5.183    -4.930     -0.794                                 
+    aSSMean          -5.060    0.064  -78.724    0.000      -5.183    -4.930     -0.794                          
     aSSHigh          -8.131    0.094  -86.243    0.000      -8.313    -7.942     -1.462  
     abLow            -3.218    0.151  -21.338    0.000      -3.532    -2.941     -0.115  
     abMean           -8.185    0.121  -67.625    0.000      -8.433    -7.944     -0.725  
@@ -396,6 +404,6 @@ parameterEstimates(ex4Boot,
 So our regions of significance are: 
 
 + $[-2.83, -1.75]$: In which the ab are positive and significant. Participants with this level of NeegCog experienced elevated levels of depression due to CBT because CBT induces more negative thoughts among them. 
-+ $[-1.75, -1.57]$: In which the ab are NOT significant. 
++ $(-1.75, -1.57)$: In which the ab are NOT significant. 
 + $[-1.57, 3.31]$: In which the ab are negative and significant. Participants with this level of NeegCog experienced reduced levels of depression due to CBT because CBT reduced negative thoughts for them. 
  

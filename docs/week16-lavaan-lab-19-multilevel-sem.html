@@ -312,6 +312,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="11.4.1" data-path="week8_2-lavaan-lab-8-estimation-methods.html"><a href="week8_2-lavaan-lab-8-estimation-methods.html#ml-estimation"><i class="fa fa-check"></i><b>11.4.1</b> ML Estimation</a></li>
 <li class="chapter" data-level="11.4.2" data-path="week8_2-lavaan-lab-8-estimation-methods.html"><a href="week8_2-lavaan-lab-8-estimation-methods.html#wls-estimation"><i class="fa fa-check"></i><b>11.4.2</b> WLS Estimation</a></li>
 <li class="chapter" data-level="11.4.3" data-path="week8_2-lavaan-lab-8-estimation-methods.html"><a href="week8_2-lavaan-lab-8-estimation-methods.html#compare-the-parameter-estimates"><i class="fa fa-check"></i><b>11.4.3</b> Compare the parameter estimates</a></li>
+<li class="chapter" data-level="11.4.4" data-path="week8_2-lavaan-lab-8-estimation-methods.html"><a href="week8_2-lavaan-lab-8-estimation-methods.html#compare-the-standard-errors"><i class="fa fa-check"></i><b>11.4.4</b> Compare the standard errors:</a></li>
 </ul></li>
 <li class="chapter" data-level="11.5" data-path="week8_2-lavaan-lab-8-estimation-methods.html"><a href="week8_2-lavaan-lab-8-estimation-methods.html#part-v-improper-solutions"><i class="fa fa-check"></i><b>11.5</b> PART V: Improper Solutions</a></li>
 </ul></li>
@@ -511,22 +512,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>add covariates at both the between and the within level</li>
 </ul>
 <p>Load up the lavaan library:</p>
-<div class="sourceCode" id="cb837"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb837-1"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb837-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span></code></pre></div>
+<div class="sourceCode" id="cb850"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb850-1"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb850-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span></code></pre></div>
 <p>Let’s read in a Mplus example dataset from an online location</p>
-<div class="sourceCode" id="cb838"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb838-1"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb838-1" aria-hidden="true" tabindex="-1"></a>Data <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;http://statmodel.com/usersguide/chap9/ex9.6.dat&quot;</span>)</span>
-<span id="cb838-2"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb838-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(Data) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;y1&quot;</span>, <span class="st">&quot;y2&quot;</span>, <span class="st">&quot;y3&quot;</span>, <span class="st">&quot;y4&quot;</span>, <span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>, <span class="st">&quot;w&quot;</span>, <span class="st">&quot;clus&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb851"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb851-1"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb851-1" aria-hidden="true" tabindex="-1"></a>Data <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;http://statmodel.com/usersguide/chap9/ex9.6.dat&quot;</span>)</span>
+<span id="cb851-2"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb851-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(Data) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;y1&quot;</span>, <span class="st">&quot;y2&quot;</span>, <span class="st">&quot;y3&quot;</span>, <span class="st">&quot;y4&quot;</span>, <span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>, <span class="st">&quot;w&quot;</span>, <span class="st">&quot;clus&quot;</span>)</span></code></pre></div>
 <p>Take a look at the matrix:</p>
-<div class="sourceCode" id="cb839"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb839-1"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb839-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Data)</span></code></pre></div>
-<pre><code>##          y1        y2        y3        y4        x1        x2         w clus
-## 1  2.203250  1.858861  1.738477  2.244863  1.142800 -0.796987 -0.149501    1
-## 2  1.934917  2.127876  0.083120  2.509436  1.949033 -0.122764 -0.149501    1
-## 3  0.321955  0.977231 -0.835405  0.558367 -0.716481 -0.767064 -0.149501    1
-## 4  0.073154 -1.743092 -2.310271 -1.514332 -2.649131  0.637570 -0.149501    1
-## 5 -1.214906  0.452618  0.372610 -1.790372 -0.262916  0.302564 -0.149501    1
-## 6  0.298330 -1.820272  0.561335 -2.090582 -0.944963  1.363045  0.319335    2</code></pre>
-<div class="sourceCode" id="cb841"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb841-1"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb841-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(Data)</span></code></pre></div>
+<div class="sourceCode" id="cb852"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb852-1"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb852-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Data)</span></code></pre></div>
+<pre><code>##          y1        y2        y3        y4        x1        x2
+## 1  2.203250  1.858861  1.738477  2.244863  1.142800 -0.796987
+## 2  1.934917  2.127876  0.083120  2.509436  1.949033 -0.122764
+## 3  0.321955  0.977231 -0.835405  0.558367 -0.716481 -0.767064
+## 4  0.073154 -1.743092 -2.310271 -1.514332 -2.649131  0.637570
+## 5 -1.214906  0.452618  0.372610 -1.790372 -0.262916  0.302564
+## 6  0.298330 -1.820272  0.561335 -2.090582 -0.944963  1.363045
+##           w clus
+## 1 -0.149501    1
+## 2 -0.149501    1
+## 3 -0.149501    1
+## 4 -0.149501    1
+## 5 -0.149501    1
+## 6  0.319335    2</code></pre>
+<div class="sourceCode" id="cb854"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb854-1"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb854-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(Data)</span></code></pre></div>
 <pre><code>## [1] 1000    8</code></pre>
-<div class="sourceCode" id="cb843"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb843-1"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb843-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">unique</span>(Data<span class="sc">$</span>clus))</span></code></pre></div>
+<div class="sourceCode" id="cb856"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb856-1"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb856-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">unique</span>(Data<span class="sc">$</span>clus))</span></code></pre></div>
 <pre><code>## [1] 110</code></pre>
 <ul>
 <li>there are 1000 individual observations in 110 clusters</li>
@@ -540,25 +548,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">22.1</span> PART I: Multilevel CFA 1: within-only construct<a href="week16-lavaan-lab-19-multilevel-sem.html#part-i-multilevel-cfa-1-within-only-construct" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!------------------------------>
 <p>This model specifies the latent variable only at the within level:</p>
-<div class="sourceCode" id="cb845"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb845-1"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb845-1" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
-<span id="cb845-2"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb845-2" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 1</span></span>
-<span id="cb845-3"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb845-3" aria-hidden="true" tabindex="-1"></a><span class="st">    fw =~ y1 + y2 + y3 + y4</span></span>
-<span id="cb845-4"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb845-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb845-5"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb845-5" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 2</span></span>
-<span id="cb845-6"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb845-6" aria-hidden="true" tabindex="-1"></a><span class="st">    y1 ~~ y1 + y2 + y3 + y4</span></span>
-<span id="cb845-7"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb845-7" aria-hidden="true" tabindex="-1"></a><span class="st">    y2 ~~ y2 + y2 + y3</span></span>
-<span id="cb845-8"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb845-8" aria-hidden="true" tabindex="-1"></a><span class="st">    y3 ~~ y3 + y4</span></span>
-<span id="cb845-9"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb845-9" aria-hidden="true" tabindex="-1"></a><span class="st">    y4 ~~ y4</span></span>
-<span id="cb845-10"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb845-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb845-11"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb845-11" aria-hidden="true" tabindex="-1"></a><span class="st">    # all variances and covariances are freely estimated</span></span>
-<span id="cb845-12"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb845-12" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span></code></pre></div>
+<div class="sourceCode" id="cb858"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb858-1"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb858-1" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
+<span id="cb858-2"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb858-2" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 1</span></span>
+<span id="cb858-3"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb858-3" aria-hidden="true" tabindex="-1"></a><span class="st">    fw =~ y1 + y2 + y3 + y4</span></span>
+<span id="cb858-4"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb858-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb858-5"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb858-5" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 2</span></span>
+<span id="cb858-6"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb858-6" aria-hidden="true" tabindex="-1"></a><span class="st">    y1 ~~ y1 + y2 + y3 + y4</span></span>
+<span id="cb858-7"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb858-7" aria-hidden="true" tabindex="-1"></a><span class="st">    y2 ~~ y2 + y2 + y3</span></span>
+<span id="cb858-8"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb858-8" aria-hidden="true" tabindex="-1"></a><span class="st">    y3 ~~ y3 + y4</span></span>
+<span id="cb858-9"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb858-9" aria-hidden="true" tabindex="-1"></a><span class="st">    y4 ~~ y4</span></span>
+<span id="cb858-10"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb858-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb858-11"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb858-11" aria-hidden="true" tabindex="-1"></a><span class="st">    # all variances and covariances are freely estimated</span></span>
+<span id="cb858-12"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb858-12" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span></code></pre></div>
 <p>Fit the model:</p>
-<div class="sourceCode" id="cb846"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb846-1"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb846-1" aria-hidden="true" tabindex="-1"></a>model1fit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(model1, <span class="at">data =</span> Data, </span>
-<span id="cb846-2"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb846-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">cluster =</span> <span class="st">&quot;clus&quot;</span>,</span>
-<span id="cb846-3"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb846-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>,</span>
-<span id="cb846-4"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb846-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb846-5"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb846-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb846-6"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb846-6" aria-hidden="true" tabindex="-1"></a>lavaan<span class="sc">::</span><span class="fu">summary</span>(model1fit, <span class="at">fit.measures =</span> T, <span class="at">standardized =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb859"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb859-1"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb859-1" aria-hidden="true" tabindex="-1"></a>model1fit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(model1, <span class="at">data =</span> Data, </span>
+<span id="cb859-2"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb859-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">cluster =</span> <span class="st">&quot;clus&quot;</span>,</span>
+<span id="cb859-3"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb859-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>,</span>
+<span id="cb859-4"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb859-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb859-5"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb859-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb859-6"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb859-6" aria-hidden="true" tabindex="-1"></a>lavaan<span class="sc">::</span><span class="fu">summary</span>(model1fit, <span class="at">fit.measures =</span> T, <span class="at">standardized =</span> T)</span></code></pre></div>
 <pre><code>## lavaan 0.6-12 ended normally after 57 iterations
 ## 
 ##   Estimator                                         ML
@@ -630,56 +638,93 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Level 1 [within]:
 ## 
 ## Latent Variables:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   fw =~                                                                 
-##     y1                1.000                               1.568    0.843
-##     y2                1.019    0.035   28.881    0.000    1.598    0.857
-##     y3                0.995    0.041   24.267    0.000    1.560    0.832
-##     y4                1.034    0.035   29.613    0.000    1.622    0.851
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   fw =~                                                        
+##     y1                1.000                               1.568
+##     y2                1.019    0.035   28.881    0.000    1.598
+##     y3                0.995    0.041   24.267    0.000    1.560
+##     y4                1.034    0.035   29.613    0.000    1.622
+##   Std.all
+##          
+##     0.843
+##     0.857
+##     0.832
+##     0.851
 ## 
 ## Intercepts:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .y1                0.000                               0.000    0.000
-##    .y2                0.000                               0.000    0.000
-##    .y3                0.000                               0.000    0.000
-##    .y4                0.000                               0.000    0.000
-##     fw                0.000                               0.000    0.000
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .y1                0.000                               0.000
+##    .y2                0.000                               0.000
+##    .y3                0.000                               0.000
+##    .y4                0.000                               0.000
+##     fw                0.000                               0.000
+##   Std.all
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
 ## 
 ## Variances:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .y1                0.997    0.070   14.220    0.000    0.997    0.289
-##    .y2                0.919    0.061   14.990    0.000    0.919    0.265
-##    .y3                1.082    0.057   18.977    0.000    1.082    0.308
-##    .y4                0.997    0.069   14.422    0.000    0.997    0.275
-##     fw                2.458    0.186   13.209    0.000    1.000    1.000
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .y1                0.997    0.070   14.220    0.000    0.997
+##    .y2                0.919    0.061   14.990    0.000    0.919
+##    .y3                1.082    0.057   18.977    0.000    1.082
+##    .y4                0.997    0.069   14.422    0.000    0.997
+##     fw                2.458    0.186   13.209    0.000    1.000
+##   Std.all
+##     0.289
+##     0.265
+##     0.308
+##     0.275
+##     1.000
 ## 
 ## 
 ## Level 2 [clus]:
 ## 
 ## Covariances:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##  .y1 ~~                                                                 
-##    .y2                0.069    0.027    2.558    0.011    0.069    0.935
-##    .y3                0.080    0.027    2.916    0.004    0.080    1.141
-##    .y4                0.052    0.024    2.157    0.031    0.052    0.764
-##  .y2 ~~                                                                 
-##    .y3                0.055    0.023    2.399    0.016    0.055    0.935
-##  .y3 ~~                                                                 
-##    .y4                0.040    0.026    1.537    0.124    0.040    0.727
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##  .y1 ~~                                                        
+##    .y2                0.069    0.027    2.558    0.011    0.069
+##    .y3                0.080    0.027    2.916    0.004    0.080
+##    .y4                0.052    0.024    2.157    0.031    0.052
+##  .y2 ~~                                                        
+##    .y3                0.055    0.023    2.399    0.016    0.055
+##  .y3 ~~                                                        
+##    .y4                0.040    0.026    1.537    0.124    0.040
+##   Std.all
+##          
+##     0.935
+##     1.141
+##     0.764
+##          
+##     0.935
+##          
+##     0.727
 ## 
 ## Intercepts:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .y1               -0.063    0.089   -0.716    0.474   -0.063   -0.215
-##    .y2               -0.060    0.088   -0.674    0.500   -0.060   -0.239
-##    .y3               -0.026    0.086   -0.301    0.763   -0.026   -0.109
-##    .y4               -0.005    0.089   -0.053    0.958   -0.005   -0.020
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .y1               -0.063    0.089   -0.716    0.474   -0.063
+##    .y2               -0.060    0.088   -0.674    0.500   -0.060
+##    .y3               -0.026    0.086   -0.301    0.763   -0.026
+##    .y4               -0.005    0.089   -0.053    0.958   -0.005
+##   Std.all
+##    -0.215
+##    -0.239
+##    -0.109
+##    -0.020
 ## 
 ## Variances:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .y1                0.088    0.033    2.679    0.007    0.088    1.000
-##    .y2                0.062    0.037    1.687    0.092    0.062    1.000
-##    .y3                0.056    0.035    1.608    0.108    0.056    1.000
-##    .y4                0.054    0.038    1.423    0.155    0.054    1.000</code></pre>
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .y1                0.088    0.033    2.679    0.007    0.088
+##    .y2                0.062    0.037    1.687    0.092    0.062
+##    .y3                0.056    0.035    1.608    0.108    0.056
+##    .y4                0.054    0.038    1.423    0.155    0.054
+##   Std.all
+##     1.000
+##     1.000
+##     1.000
+##     1.000</code></pre>
 <!------------------------------>
 </div>
 <div id="part-ii-multilevel-cfa-2-between-only-construct" class="section level2 hasAnchor" number="22.2">
@@ -691,30 +736,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>We may collect other variables from students/teachers in the schools though</li>
 </ul>
 <p>Note that the following model syntax:</p>
-<div class="sourceCode" id="cb848"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb848-1"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb848-1" aria-hidden="true" tabindex="-1"></a>model2.wrong <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
-<span id="cb848-2"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb848-2" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 1</span></span>
-<span id="cb848-3"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb848-3" aria-hidden="true" tabindex="-1"></a><span class="st">  # perhaps other level-1 variables</span></span>
-<span id="cb848-4"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb848-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb848-5"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb848-5" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 2</span></span>
-<span id="cb848-6"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb848-6" aria-hidden="true" tabindex="-1"></a><span class="st">    fb =~ y1 + y2 + y3 + y4</span></span>
-<span id="cb848-7"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb848-7" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span>
-<span id="cb848-8"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb848-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb848-9"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb848-9" aria-hidden="true" tabindex="-1"></a>model2fit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(model2.wrong, <span class="at">data =</span> Data, </span>
-<span id="cb848-10"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb848-10" aria-hidden="true" tabindex="-1"></a>                         <span class="at">cluster =</span> <span class="st">&quot;clus&quot;</span>,</span>
-<span id="cb848-11"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb848-11" aria-hidden="true" tabindex="-1"></a>                         <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>,</span>
-<span id="cb848-12"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb848-12" aria-hidden="true" tabindex="-1"></a>                         <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb849"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb849-1"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb849-1" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> <span class="fu">lav_partable_vnames</span>(tmp.lav, <span class="at">type =</span> <span class="st">&quot;ov&quot;</span>, <span class="at">level =</span> tmp.level.values[l]) <span class="sc">:</span> lavaan ERROR<span class="sc">:</span> level column does not contain value <span class="st">`</span><span class="at">1&#39;</span></span></code></pre></div>
+<div class="sourceCode" id="cb861"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb861-1"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb861-1" aria-hidden="true" tabindex="-1"></a>model2.wrong <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
+<span id="cb861-2"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb861-2" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 1</span></span>
+<span id="cb861-3"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb861-3" aria-hidden="true" tabindex="-1"></a><span class="st">  # perhaps other level-1 variables</span></span>
+<span id="cb861-4"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb861-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb861-5"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb861-5" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 2</span></span>
+<span id="cb861-6"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb861-6" aria-hidden="true" tabindex="-1"></a><span class="st">    fb =~ y1 + y2 + y3 + y4</span></span>
+<span id="cb861-7"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb861-7" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span>
+<span id="cb861-8"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb861-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb861-9"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb861-9" aria-hidden="true" tabindex="-1"></a>model2fit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(model2.wrong, <span class="at">data =</span> Data, </span>
+<span id="cb861-10"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb861-10" aria-hidden="true" tabindex="-1"></a>                         <span class="at">cluster =</span> <span class="st">&quot;clus&quot;</span>,</span>
+<span id="cb861-11"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb861-11" aria-hidden="true" tabindex="-1"></a>                         <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>,</span>
+<span id="cb861-12"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb861-12" aria-hidden="true" tabindex="-1"></a>                         <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb862"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb862-1"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb862-1" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> <span class="fu">lav_partable_vnames</span>(tmp.lav, <span class="at">type =</span> <span class="st">&quot;ov&quot;</span>, <span class="at">level =</span> tmp.level.values[l]) <span class="sc">:</span> lavaan ERROR<span class="sc">:</span> level column does not contain value <span class="st">`</span><span class="at">1&#39;</span></span></code></pre></div>
 <p>won’t work because there is nothing at level 1. Instead, specify this model just like a regular CFA model:</p>
-<div class="sourceCode" id="cb850"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb850-1"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb850-1" aria-hidden="true" tabindex="-1"></a>model2 <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
-<span id="cb850-2"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb850-2" aria-hidden="true" tabindex="-1"></a><span class="st">    fb =~ y1 + y2 + y3 + y4</span></span>
-<span id="cb850-3"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb850-3" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span></code></pre></div>
+<div class="sourceCode" id="cb863"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb863-1"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb863-1" aria-hidden="true" tabindex="-1"></a>model2 <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
+<span id="cb863-2"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb863-2" aria-hidden="true" tabindex="-1"></a><span class="st">    fb =~ y1 + y2 + y3 + y4</span></span>
+<span id="cb863-3"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb863-3" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span></code></pre></div>
 <p>Fit the model:</p>
-<div class="sourceCode" id="cb851"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb851-1"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb851-1" aria-hidden="true" tabindex="-1"></a>model2fit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(model2, <span class="at">data =</span> Data, </span>
-<span id="cb851-2"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb851-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">cluster =</span> <span class="st">&quot;clus&quot;</span>,</span>
-<span id="cb851-3"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb851-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>,</span>
-<span id="cb851-4"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb851-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb851-5"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb851-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb851-6"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb851-6" aria-hidden="true" tabindex="-1"></a>lavaan<span class="sc">::</span><span class="fu">summary</span>(model2fit, <span class="at">fit.measures =</span> T, <span class="at">standardized =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb864"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb864-1"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb864-1" aria-hidden="true" tabindex="-1"></a>model2fit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(model2, <span class="at">data =</span> Data, </span>
+<span id="cb864-2"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb864-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">cluster =</span> <span class="st">&quot;clus&quot;</span>,</span>
+<span id="cb864-3"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb864-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>,</span>
+<span id="cb864-4"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb864-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb864-5"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb864-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb864-6"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb864-6" aria-hidden="true" tabindex="-1"></a>lavaan<span class="sc">::</span><span class="fu">summary</span>(model2fit, <span class="at">fit.measures =</span> T, <span class="at">standardized =</span> T)</span></code></pre></div>
 <pre><code>## lavaan 0.6-12 ended normally after 20 iterations
 ## 
 ##   Estimator                                         ML
@@ -782,28 +827,46 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##   Observed information based on                 Hessian
 ## 
 ## Latent Variables:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   fb =~                                                                 
-##     y1                1.000                               1.638    0.856
-##     y2                0.995    0.031   31.694    0.000    1.629    0.860
-##     y3                0.984    0.037   26.944    0.000    1.612    0.842
-##     y4                1.003    0.029   34.582    0.000    1.643    0.851
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   fb =~                                                        
+##     y1                1.000                               1.638
+##     y2                0.995    0.031   31.694    0.000    1.629
+##     y3                0.984    0.037   26.944    0.000    1.612
+##     y4                1.003    0.029   34.582    0.000    1.643
+##   Std.all
+##          
+##     0.856
+##     0.860
+##     0.842
+##     0.851
 ## 
 ## Intercepts:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .y1               -0.064    0.090   -0.707    0.479   -0.064   -0.033
-##    .y2               -0.058    0.089   -0.652    0.515   -0.058   -0.031
-##    .y3               -0.026    0.087   -0.303    0.762   -0.026   -0.014
-##    .y4               -0.011    0.091   -0.119    0.905   -0.011   -0.006
-##     fb                0.000                               0.000    0.000
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .y1               -0.064    0.090   -0.707    0.479   -0.064
+##    .y2               -0.058    0.089   -0.652    0.515   -0.058
+##    .y3               -0.026    0.087   -0.303    0.762   -0.026
+##    .y4               -0.011    0.091   -0.119    0.905   -0.011
+##     fb                0.000                               0.000
+##   Std.all
+##    -0.033
+##    -0.031
+##    -0.014
+##    -0.006
+##     0.000
 ## 
 ## Variances:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .y1                0.983    0.065   15.151    0.000    0.983    0.268
-##    .y2                0.937    0.060   15.657    0.000    0.937    0.261
-##    .y3                1.065    0.058   18.477    0.000    1.065    0.291
-##    .y4                1.030    0.064   16.008    0.000    1.030    0.276
-##     fb                2.684    0.178   15.101    0.000    1.000    1.000</code></pre>
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .y1                0.983    0.065   15.151    0.000    0.983
+##    .y2                0.937    0.060   15.657    0.000    0.937
+##    .y3                1.065    0.058   18.477    0.000    1.065
+##    .y4                1.030    0.064   16.008    0.000    1.030
+##     fb                2.684    0.178   15.101    0.000    1.000
+##   Std.all
+##     0.268
+##     0.261
+##     0.291
+##     0.276
+##     1.000</code></pre>
 <!------------------------------>
 </div>
 <div id="part-iii-multilevel-cfa-3-shared-cross-level-construct" class="section level2 hasAnchor" number="22.3">
@@ -814,29 +877,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>However, the latent variable only makes sense at the between level so SEM model is only built at the between level;</li>
 <li>The indicators are correlated at the within level;</li>
 </ul>
-<div class="sourceCode" id="cb853"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb853-1"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb853-1" aria-hidden="true" tabindex="-1"></a>model3 <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
-<span id="cb853-2"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb853-2" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 1</span></span>
-<span id="cb853-3"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb853-3" aria-hidden="true" tabindex="-1"></a><span class="st">    y1 ~~ y1 + y2 + y3 + y4</span></span>
-<span id="cb853-4"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb853-4" aria-hidden="true" tabindex="-1"></a><span class="st">    y2 ~~ y2 + y3 + y4</span></span>
-<span id="cb853-5"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb853-5" aria-hidden="true" tabindex="-1"></a><span class="st">    y3 ~~ y3 + y4</span></span>
-<span id="cb853-6"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb853-6" aria-hidden="true" tabindex="-1"></a><span class="st">    y4 ~~ y4</span></span>
-<span id="cb853-7"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb853-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb853-8"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb853-8" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 2</span></span>
-<span id="cb853-9"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb853-9" aria-hidden="true" tabindex="-1"></a><span class="st">    fs =~ y1 + y2 + y3 + y4</span></span>
-<span id="cb853-10"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb853-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb853-11"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb853-11" aria-hidden="true" tabindex="-1"></a><span class="st"> # Fix Significant Heywood Cases</span></span>
-<span id="cb853-12"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb853-12" aria-hidden="true" tabindex="-1"></a><span class="st">  y2 ~~ v2*y2</span></span>
-<span id="cb853-13"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb853-13" aria-hidden="true" tabindex="-1"></a><span class="st">  y4 ~~ v4*y4</span></span>
-<span id="cb853-14"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb853-14" aria-hidden="true" tabindex="-1"></a><span class="st">  v2 &gt; 0</span></span>
-<span id="cb853-15"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb853-15" aria-hidden="true" tabindex="-1"></a><span class="st">  v4 &gt; 0 </span></span>
-<span id="cb853-16"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb853-16" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span></code></pre></div>
+<div class="sourceCode" id="cb866"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb866-1"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb866-1" aria-hidden="true" tabindex="-1"></a>model3 <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
+<span id="cb866-2"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb866-2" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 1</span></span>
+<span id="cb866-3"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb866-3" aria-hidden="true" tabindex="-1"></a><span class="st">    y1 ~~ y1 + y2 + y3 + y4</span></span>
+<span id="cb866-4"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb866-4" aria-hidden="true" tabindex="-1"></a><span class="st">    y2 ~~ y2 + y3 + y4</span></span>
+<span id="cb866-5"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb866-5" aria-hidden="true" tabindex="-1"></a><span class="st">    y3 ~~ y3 + y4</span></span>
+<span id="cb866-6"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb866-6" aria-hidden="true" tabindex="-1"></a><span class="st">    y4 ~~ y4</span></span>
+<span id="cb866-7"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb866-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb866-8"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb866-8" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 2</span></span>
+<span id="cb866-9"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb866-9" aria-hidden="true" tabindex="-1"></a><span class="st">    fs =~ y1 + y2 + y3 + y4</span></span>
+<span id="cb866-10"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb866-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb866-11"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb866-11" aria-hidden="true" tabindex="-1"></a><span class="st"> # Fix Significant Heywood Cases</span></span>
+<span id="cb866-12"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb866-12" aria-hidden="true" tabindex="-1"></a><span class="st">  y2 ~~ v2*y2</span></span>
+<span id="cb866-13"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb866-13" aria-hidden="true" tabindex="-1"></a><span class="st">  y4 ~~ v4*y4</span></span>
+<span id="cb866-14"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb866-14" aria-hidden="true" tabindex="-1"></a><span class="st">  v2 &gt; 0</span></span>
+<span id="cb866-15"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb866-15" aria-hidden="true" tabindex="-1"></a><span class="st">  v4 &gt; 0 </span></span>
+<span id="cb866-16"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb866-16" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span></code></pre></div>
 <p>Fit the model:</p>
-<div class="sourceCode" id="cb854"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb854-1"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb854-1" aria-hidden="true" tabindex="-1"></a>model3fit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(model3, <span class="at">data =</span> Data, </span>
-<span id="cb854-2"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb854-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">cluster =</span> <span class="st">&quot;clus&quot;</span>,</span>
-<span id="cb854-3"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb854-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>,</span>
-<span id="cb854-4"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb854-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb867"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb867-1"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb867-1" aria-hidden="true" tabindex="-1"></a>model3fit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(model3, <span class="at">data =</span> Data, </span>
+<span id="cb867-2"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb867-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">cluster =</span> <span class="st">&quot;clus&quot;</span>,</span>
+<span id="cb867-3"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb867-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>,</span>
+<span id="cb867-4"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb867-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <pre><code>## Warning in lav_object_post_check(object): lavaan WARNING: some estimated ov variances are negative</code></pre>
-<div class="sourceCode" id="cb856"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb856-1"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb856-1" aria-hidden="true" tabindex="-1"></a>lavaan<span class="sc">::</span><span class="fu">summary</span>(model3fit, <span class="at">standardized =</span> T, <span class="at">fit.measures =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb869"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb869-1"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb869-1" aria-hidden="true" tabindex="-1"></a>lavaan<span class="sc">::</span><span class="fu">summary</span>(model3fit, <span class="at">standardized =</span> T, <span class="at">fit.measures =</span> T)</span></code></pre></div>
 <pre><code>## lavaan 0.6-11 ended normally after 94 iterations
 ## 
 ##   Estimator                                         ML
@@ -973,20 +1036,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Model 4a specifies the latent variable both at the within and the between level;</li>
 <li>The CFA at each level should have the same factor structure, but not necessarily the same parameter estimates;</li>
 </ul>
-<div class="sourceCode" id="cb858"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb858-1"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb858-1" aria-hidden="true" tabindex="-1"></a>model4a <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
-<span id="cb858-2"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb858-2" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 1</span></span>
-<span id="cb858-3"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb858-3" aria-hidden="true" tabindex="-1"></a><span class="st">    fw =~ y1 + y2 + y3 + y4</span></span>
-<span id="cb858-4"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb858-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb858-5"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb858-5" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 2</span></span>
-<span id="cb858-6"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb858-6" aria-hidden="true" tabindex="-1"></a><span class="st">    fb =~ y1 + y2 + y3 + y4</span></span>
-<span id="cb858-7"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb858-7" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span>
-<span id="cb858-8"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb858-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb858-9"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb858-9" aria-hidden="true" tabindex="-1"></a>model4afit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(model4a, <span class="at">data =</span> Data, </span>
-<span id="cb858-10"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb858-10" aria-hidden="true" tabindex="-1"></a>                         <span class="at">cluster =</span> <span class="st">&quot;clus&quot;</span>,</span>
-<span id="cb858-11"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb858-11" aria-hidden="true" tabindex="-1"></a>                         <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>,</span>
-<span id="cb858-12"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb858-12" aria-hidden="true" tabindex="-1"></a>                         <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
-<pre><code>## Warning in lav_object_post_check(object): lavaan WARNING: some estimated ov variances are negative</code></pre>
-<div class="sourceCode" id="cb860"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb860-1"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb860-1" aria-hidden="true" tabindex="-1"></a>lavaan<span class="sc">::</span><span class="fu">summary</span>(model4afit, <span class="at">fit.measures =</span> T, <span class="at">standardized =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb871"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb871-1"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb871-1" aria-hidden="true" tabindex="-1"></a>model4a <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
+<span id="cb871-2"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb871-2" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 1</span></span>
+<span id="cb871-3"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb871-3" aria-hidden="true" tabindex="-1"></a><span class="st">    fw =~ y1 + y2 + y3 + y4</span></span>
+<span id="cb871-4"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb871-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb871-5"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb871-5" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 2</span></span>
+<span id="cb871-6"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb871-6" aria-hidden="true" tabindex="-1"></a><span class="st">    fb =~ y1 + y2 + y3 + y4</span></span>
+<span id="cb871-7"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb871-7" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span>
+<span id="cb871-8"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb871-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb871-9"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb871-9" aria-hidden="true" tabindex="-1"></a>model4afit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(model4a, <span class="at">data =</span> Data, </span>
+<span id="cb871-10"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb871-10" aria-hidden="true" tabindex="-1"></a>                         <span class="at">cluster =</span> <span class="st">&quot;clus&quot;</span>,</span>
+<span id="cb871-11"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb871-11" aria-hidden="true" tabindex="-1"></a>                         <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>,</span>
+<span id="cb871-12"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb871-12" aria-hidden="true" tabindex="-1"></a>                         <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## Warning in lav_object_post_check(object): lavaan WARNING: some
+## estimated ov variances are negative</code></pre>
+<div class="sourceCode" id="cb873"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb873-1"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb873-1" aria-hidden="true" tabindex="-1"></a>lavaan<span class="sc">::</span><span class="fu">summary</span>(model4afit, <span class="at">fit.measures =</span> T, <span class="at">standardized =</span> T)</span></code></pre></div>
 <pre><code>## lavaan 0.6-12 ended normally after 50 iterations
 ## 
 ##   Estimator                                         ML
@@ -1058,72 +1122,109 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Level 1 [within]:
 ## 
 ## Latent Variables:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   fw =~                                                                 
-##     y1                1.000                               1.486    0.831
-##     y2                0.992    0.035   28.208    0.000    1.474    0.836
-##     y3                0.992    0.041   24.110    0.000    1.474    0.818
-##     y4                1.007    0.035   28.619    0.000    1.496    0.830
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   fw =~                                                        
+##     y1                1.000                               1.486
+##     y2                0.992    0.035   28.208    0.000    1.474
+##     y3                0.992    0.041   24.110    0.000    1.474
+##     y4                1.007    0.035   28.619    0.000    1.496
+##   Std.all
+##          
+##     0.831
+##     0.836
+##     0.818
+##     0.830
 ## 
 ## Intercepts:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .y1                0.000                               0.000    0.000
-##    .y2                0.000                               0.000    0.000
-##    .y3                0.000                               0.000    0.000
-##    .y4                0.000                               0.000    0.000
-##     fw                0.000                               0.000    0.000
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .y1                0.000                               0.000
+##    .y2                0.000                               0.000
+##    .y3                0.000                               0.000
+##    .y4                0.000                               0.000
+##     fw                0.000                               0.000
+##   Std.all
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
 ## 
 ## Variances:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .y1                0.989    0.071   13.980    0.000    0.989    0.309
-##    .y2                0.934    0.062   15.187    0.000    0.934    0.301
-##    .y3                1.076    0.057   18.812    0.000    1.076    0.331
-##    .y4                1.014    0.070   14.478    0.000    1.014    0.312
-##     fw                2.207    0.165   13.371    0.000    1.000    1.000
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .y1                0.989    0.071   13.980    0.000    0.989
+##    .y2                0.934    0.062   15.187    0.000    0.934
+##    .y3                1.076    0.057   18.812    0.000    1.076
+##    .y4                1.014    0.070   14.478    0.000    1.014
+##     fw                2.207    0.165   13.371    0.000    1.000
+##   Std.all
+##     0.309
+##     0.301
+##     0.331
+##     0.312
+##     1.000
 ## 
 ## 
 ## Level 2 [clus]:
 ## 
 ## Latent Variables:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   fb =~                                                                 
-##     y1                1.000                               0.700    1.006
-##     y2                1.005    0.086   11.732    0.000    0.704    0.998
-##     y3                0.947    0.094   10.117    0.000    0.663    1.013
-##     y4                0.984    0.080   12.240    0.000    0.689    0.983
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   fb =~                                                        
+##     y1                1.000                               0.700
+##     y2                1.005    0.086   11.732    0.000    0.704
+##     y3                0.947    0.094   10.117    0.000    0.663
+##     y4                0.984    0.080   12.240    0.000    0.689
+##   Std.all
+##          
+##     1.006
+##     0.998
+##     1.013
+##     0.983
 ## 
 ## Intercepts:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .y1               -0.072    0.089   -0.815    0.415   -0.072   -0.104
-##    .y2               -0.067    0.088   -0.755    0.450   -0.067   -0.095
-##    .y3               -0.035    0.086   -0.404    0.687   -0.035   -0.053
-##    .y4               -0.018    0.089   -0.205    0.838   -0.018   -0.026
-##     fb                0.000                               0.000    0.000
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .y1               -0.072    0.089   -0.815    0.415   -0.072
+##    .y2               -0.067    0.088   -0.755    0.450   -0.067
+##    .y3               -0.035    0.086   -0.404    0.687   -0.035
+##    .y4               -0.018    0.089   -0.205    0.838   -0.018
+##     fb                0.000                               0.000
+##   Std.all
+##    -0.104
+##    -0.095
+##    -0.053
+##    -0.026
+##     0.000
 ## 
 ## Variances:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .y1               -0.006    0.018   -0.339    0.734   -0.006   -0.012
-##    .y2                0.002    0.020    0.091    0.928    0.002    0.004
-##    .y3               -0.011    0.020   -0.541    0.589   -0.011   -0.025
-##    .y4                0.016    0.021    0.786    0.432    0.016    0.033
-##     fb                0.490    0.120    4.099    0.000    1.000    1.000</code></pre>
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .y1               -0.006    0.018   -0.339    0.734   -0.006
+##    .y2                0.002    0.020    0.091    0.928    0.002
+##    .y3               -0.011    0.020   -0.541    0.589   -0.011
+##    .y4                0.016    0.021    0.786    0.432    0.016
+##     fb                0.490    0.120    4.099    0.000    1.000
+##   Std.all
+##    -0.012
+##     0.004
+##    -0.025
+##     0.033
+##     1.000</code></pre>
 <ul>
 <li>Model 4b specifies the same CFA at each level and requires the same factor loadings;</li>
 </ul>
-<div class="sourceCode" id="cb862"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb862-1"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb862-1" aria-hidden="true" tabindex="-1"></a>model4b <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
-<span id="cb862-2"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb862-2" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 1</span></span>
-<span id="cb862-3"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb862-3" aria-hidden="true" tabindex="-1"></a><span class="st">    fw =~ a*y1 + b*y2 + c*y3 + d*y4</span></span>
-<span id="cb862-4"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb862-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb862-5"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb862-5" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 2</span></span>
-<span id="cb862-6"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb862-6" aria-hidden="true" tabindex="-1"></a><span class="st">    fb =~ a*y1 + b*y2 + c*y3 + d*y4</span></span>
-<span id="cb862-7"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb862-7" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span>
-<span id="cb862-8"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb862-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb862-9"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb862-9" aria-hidden="true" tabindex="-1"></a>model4bfit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(model4b, <span class="at">data =</span> Data, </span>
-<span id="cb862-10"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb862-10" aria-hidden="true" tabindex="-1"></a>                         <span class="at">cluster =</span> <span class="st">&quot;clus&quot;</span>,</span>
-<span id="cb862-11"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb862-11" aria-hidden="true" tabindex="-1"></a>                         <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>,</span>
-<span id="cb862-12"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb862-12" aria-hidden="true" tabindex="-1"></a>                         <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
-<pre><code>## Warning in lav_object_post_check(object): lavaan WARNING: some estimated ov variances are negative</code></pre>
-<div class="sourceCode" id="cb864"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb864-1"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb864-1" aria-hidden="true" tabindex="-1"></a>lavaan<span class="sc">::</span><span class="fu">summary</span>(model4bfit, <span class="at">fit.measures =</span> T, <span class="at">standardized =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb875"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb875-1"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb875-1" aria-hidden="true" tabindex="-1"></a>model4b <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
+<span id="cb875-2"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb875-2" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 1</span></span>
+<span id="cb875-3"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb875-3" aria-hidden="true" tabindex="-1"></a><span class="st">    fw =~ a*y1 + b*y2 + c*y3 + d*y4</span></span>
+<span id="cb875-4"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb875-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb875-5"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb875-5" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 2</span></span>
+<span id="cb875-6"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb875-6" aria-hidden="true" tabindex="-1"></a><span class="st">    fb =~ a*y1 + b*y2 + c*y3 + d*y4</span></span>
+<span id="cb875-7"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb875-7" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span>
+<span id="cb875-8"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb875-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb875-9"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb875-9" aria-hidden="true" tabindex="-1"></a>model4bfit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(model4b, <span class="at">data =</span> Data, </span>
+<span id="cb875-10"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb875-10" aria-hidden="true" tabindex="-1"></a>                         <span class="at">cluster =</span> <span class="st">&quot;clus&quot;</span>,</span>
+<span id="cb875-11"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb875-11" aria-hidden="true" tabindex="-1"></a>                         <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>,</span>
+<span id="cb875-12"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb875-12" aria-hidden="true" tabindex="-1"></a>                         <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## Warning in lav_object_post_check(object): lavaan WARNING: some
+## estimated ov variances are negative</code></pre>
+<div class="sourceCode" id="cb877"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb877-1"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb877-1" aria-hidden="true" tabindex="-1"></a>lavaan<span class="sc">::</span><span class="fu">summary</span>(model4bfit, <span class="at">fit.measures =</span> T, <span class="at">standardized =</span> T)</span></code></pre></div>
 <pre><code>## lavaan 0.6-12 ended normally after 44 iterations
 ## 
 ##   Estimator                                         ML
@@ -1196,55 +1297,91 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Level 1 [within]:
 ## 
 ## Latent Variables:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   fw =~                                                                 
-##     y1         (a)    1.000                               1.489    0.832
-##     y2         (b)    0.995    0.031   31.649    0.000    1.482    0.838
-##     y3         (c)    0.983    0.036   27.090    0.000    1.463    0.815
-##     y4         (d)    1.003    0.029   34.668    0.000    1.494    0.829
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   fw =~                                                        
+##     y1         (a)    1.000                               1.489
+##     y2         (b)    0.995    0.031   31.649    0.000    1.482
+##     y3         (c)    0.983    0.036   27.090    0.000    1.463
+##     y4         (d)    1.003    0.029   34.668    0.000    1.494
+##   Std.all
+##          
+##     0.832
+##     0.838
+##     0.815
+##     0.829
 ## 
 ## Intercepts:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .y1                0.000                               0.000    0.000
-##    .y2                0.000                               0.000    0.000
-##    .y3                0.000                               0.000    0.000
-##    .y4                0.000                               0.000    0.000
-##     fw                0.000                               0.000    0.000
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .y1                0.000                               0.000
+##    .y2                0.000                               0.000
+##    .y3                0.000                               0.000
+##    .y4                0.000                               0.000
+##     fw                0.000                               0.000
+##   Std.all
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
 ## 
 ## Variances:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .y1                0.987    0.069   14.228    0.000    0.987    0.308
-##    .y2                0.930    0.061   15.173    0.000    0.930    0.298
-##    .y3                1.081    0.057   18.905    0.000    1.081    0.335
-##    .y4                1.015    0.068   14.877    0.000    1.015    0.313
-##     fw                2.218    0.158   14.021    0.000    1.000    1.000
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .y1                0.987    0.069   14.228    0.000    0.987
+##    .y2                0.930    0.061   15.173    0.000    0.930
+##    .y3                1.081    0.057   18.905    0.000    1.081
+##    .y4                1.015    0.068   14.877    0.000    1.015
+##     fw                2.218    0.158   14.021    0.000    1.000
+##   Std.all
+##     0.308
+##     0.298
+##     0.335
+##     0.313
+##     1.000
 ## 
 ## 
 ## Level 2 [clus]:
 ## 
 ## Latent Variables:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   fb =~                                                                 
-##     y1         (a)    1.000                               0.693    1.005
-##     y2         (b)    0.995    0.031   31.649    0.000    0.690    0.997
-##     y3         (c)    0.983    0.036   27.090    0.000    0.681    1.013
-##     y4         (d)    1.003    0.029   34.668    0.000    0.695    0.984
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   fb =~                                                        
+##     y1         (a)    1.000                               0.693
+##     y2         (b)    0.995    0.031   31.649    0.000    0.690
+##     y3         (c)    0.983    0.036   27.090    0.000    0.681
+##     y4         (d)    1.003    0.029   34.668    0.000    0.695
+##   Std.all
+##          
+##     1.005
+##     0.997
+##     1.013
+##     0.984
 ## 
 ## Intercepts:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .y1               -0.071    0.089   -0.804    0.421   -0.071   -0.103
-##    .y2               -0.066    0.088   -0.746    0.456   -0.066   -0.095
-##    .y3               -0.034    0.086   -0.396    0.692   -0.034   -0.051
-##    .y4               -0.017    0.089   -0.196    0.845   -0.017   -0.025
-##     fb                0.000                               0.000    0.000
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .y1               -0.071    0.089   -0.804    0.421   -0.071
+##    .y2               -0.066    0.088   -0.746    0.456   -0.066
+##    .y3               -0.034    0.086   -0.396    0.692   -0.034
+##    .y4               -0.017    0.089   -0.196    0.845   -0.017
+##     fb                0.000                               0.000
+##   Std.all
+##    -0.103
+##    -0.095
+##    -0.051
+##    -0.025
+##     0.000
 ## 
 ## Variances:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .y1               -0.005    0.016   -0.302    0.763   -0.005   -0.010
-##    .y2                0.003    0.019    0.170    0.865    0.003    0.007
-##    .y3               -0.012    0.020   -0.601    0.548   -0.012   -0.027
-##    .y4                0.016    0.020    0.767    0.443    0.016    0.031
-##     fb                0.480    0.119    4.027    0.000    1.000    1.000</code></pre>
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .y1               -0.005    0.016   -0.302    0.763   -0.005
+##    .y2                0.003    0.019    0.170    0.865    0.003
+##    .y3               -0.012    0.020   -0.601    0.548   -0.012
+##    .y4                0.016    0.020    0.767    0.443    0.016
+##     fb                0.480    0.119    4.027    0.000    1.000
+##   Std.all
+##    -0.010
+##     0.007
+##    -0.027
+##     0.031
+##     1.000</code></pre>
 <!------------------------------>
 </div>
 <div id="part-v-multilevel-cfa-5-shared-configural-construct" class="section level2 hasAnchor" number="22.5">
@@ -1254,24 +1391,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>This model specifies the latent variable both at the within and the between level;</li>
 <li>The CFA at each level should have the same factor structure, but not necessarily the same parameter estimates;</li>
 </ul>
-<div class="sourceCode" id="cb866"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb866-1"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb866-1" aria-hidden="true" tabindex="-1"></a>model5 <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
-<span id="cb866-2"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb866-2" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 1</span></span>
-<span id="cb866-3"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb866-3" aria-hidden="true" tabindex="-1"></a><span class="st">    fw =~ a*y1 + b*y2 + c*y3 + d*y4</span></span>
-<span id="cb866-4"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb866-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb866-5"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb866-5" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 2</span></span>
-<span id="cb866-6"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb866-6" aria-hidden="true" tabindex="-1"></a><span class="st">    fb =~ a*y1 + b*y2 + c*y3 + d*y4   # configural</span></span>
-<span id="cb866-7"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb866-7" aria-hidden="true" tabindex="-1"></a><span class="st">    fs =~ y1 + y2 + y3 + y4           # shared</span></span>
-<span id="cb866-8"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb866-8" aria-hidden="true" tabindex="-1"></a><span class="st">    </span></span>
-<span id="cb866-9"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb866-9" aria-hidden="true" tabindex="-1"></a><span class="st">    # fb and fs must be orthogonal</span></span>
-<span id="cb866-10"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb866-10" aria-hidden="true" tabindex="-1"></a><span class="st">    fs ~~ 0*fb</span></span>
-<span id="cb866-11"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb866-11" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span>
-<span id="cb866-12"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb866-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb866-13"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb866-13" aria-hidden="true" tabindex="-1"></a>model5fit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(model5, <span class="at">data =</span> Data, </span>
-<span id="cb866-14"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb866-14" aria-hidden="true" tabindex="-1"></a>                         <span class="at">cluster =</span> <span class="st">&quot;clus&quot;</span>,</span>
-<span id="cb866-15"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb866-15" aria-hidden="true" tabindex="-1"></a>                         <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>,</span>
-<span id="cb866-16"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb866-16" aria-hidden="true" tabindex="-1"></a>                         <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
-<pre><code>## Warning in lav_object_post_check(object): lavaan WARNING: some estimated ov variances are negative</code></pre>
-<div class="sourceCode" id="cb868"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb868-1"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb868-1" aria-hidden="true" tabindex="-1"></a>lavaan<span class="sc">::</span><span class="fu">summary</span>(model5fit, <span class="at">fit.measures =</span> T, <span class="at">standardized =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb879"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb879-1"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb879-1" aria-hidden="true" tabindex="-1"></a>model5 <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
+<span id="cb879-2"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb879-2" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 1</span></span>
+<span id="cb879-3"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb879-3" aria-hidden="true" tabindex="-1"></a><span class="st">    fw =~ a*y1 + b*y2 + c*y3 + d*y4</span></span>
+<span id="cb879-4"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb879-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb879-5"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb879-5" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 2</span></span>
+<span id="cb879-6"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb879-6" aria-hidden="true" tabindex="-1"></a><span class="st">    fb =~ a*y1 + b*y2 + c*y3 + d*y4   # configural</span></span>
+<span id="cb879-7"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb879-7" aria-hidden="true" tabindex="-1"></a><span class="st">    fs =~ y1 + y2 + y3 + y4           # shared</span></span>
+<span id="cb879-8"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb879-8" aria-hidden="true" tabindex="-1"></a><span class="st">    </span></span>
+<span id="cb879-9"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb879-9" aria-hidden="true" tabindex="-1"></a><span class="st">    # fb and fs must be orthogonal</span></span>
+<span id="cb879-10"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb879-10" aria-hidden="true" tabindex="-1"></a><span class="st">    fs ~~ 0*fb</span></span>
+<span id="cb879-11"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb879-11" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span>
+<span id="cb879-12"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb879-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb879-13"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb879-13" aria-hidden="true" tabindex="-1"></a>model5fit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(model5, <span class="at">data =</span> Data, </span>
+<span id="cb879-14"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb879-14" aria-hidden="true" tabindex="-1"></a>                         <span class="at">cluster =</span> <span class="st">&quot;clus&quot;</span>,</span>
+<span id="cb879-15"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb879-15" aria-hidden="true" tabindex="-1"></a>                         <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>,</span>
+<span id="cb879-16"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb879-16" aria-hidden="true" tabindex="-1"></a>                         <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## Warning in lav_object_post_check(object): lavaan WARNING: some
+## estimated ov variances are negative</code></pre>
+<div class="sourceCode" id="cb881"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb881-1"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb881-1" aria-hidden="true" tabindex="-1"></a>lavaan<span class="sc">::</span><span class="fu">summary</span>(model5fit, <span class="at">fit.measures =</span> T, <span class="at">standardized =</span> T)</span></code></pre></div>
 <pre><code>## lavaan 0.6-12 ended normally after 56 iterations
 ## 
 ##   Estimator                                         ML
@@ -1344,81 +1482,127 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Level 1 [within]:
 ## 
 ## Latent Variables:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   fw =~                                                                 
-##     y1         (a)    1.000                               1.486    0.831
-##     y2         (b)    0.993    0.036   27.488    0.000    1.474    0.836
-##     y3         (c)    0.992    0.042   23.900    0.000    1.473    0.818
-##     y4         (d)    1.007    0.036   28.299    0.000    1.496    0.830
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   fw =~                                                        
+##     y1         (a)    1.000                               1.486
+##     y2         (b)    0.993    0.036   27.488    0.000    1.474
+##     y3         (c)    0.992    0.042   23.900    0.000    1.473
+##     y4         (d)    1.007    0.036   28.299    0.000    1.496
+##   Std.all
+##          
+##     0.831
+##     0.836
+##     0.818
+##     0.830
 ## 
 ## Intercepts:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .y1                0.000                               0.000    0.000
-##    .y2                0.000                               0.000    0.000
-##    .y3                0.000                               0.000    0.000
-##    .y4                0.000                               0.000    0.000
-##     fw                0.000                               0.000    0.000
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .y1                0.000                               0.000
+##    .y2                0.000                               0.000
+##    .y3                0.000                               0.000
+##    .y4                0.000                               0.000
+##     fw                0.000                               0.000
+##   Std.all
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
 ## 
 ## Variances:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .y1                0.989    0.071   13.979    0.000    0.989    0.309
-##    .y2                0.934    0.061   15.212    0.000    0.934    0.301
-##    .y3                1.076    0.057   18.809    0.000    1.076    0.331
-##    .y4                1.014    0.070   14.414    0.000    1.014    0.312
-##     fw                2.207    0.167   13.244    0.000    1.000    1.000
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .y1                0.989    0.071   13.979    0.000    0.989
+##    .y2                0.934    0.061   15.212    0.000    0.934
+##    .y3                1.076    0.057   18.809    0.000    1.076
+##    .y4                1.014    0.070   14.414    0.000    1.014
+##     fw                2.207    0.167   13.244    0.000    1.000
+##   Std.all
+##     0.309
+##     0.301
+##     0.331
+##     0.312
+##     1.000
 ## 
 ## 
 ## Level 2 [clus]:
 ## 
 ## Latent Variables:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   fb =~                                                                 
-##     y1         (a)    1.000                               0.492    0.706
-##     y2         (b)    0.993    0.036   27.488    0.000    0.488    0.692
-##     y3         (c)    0.992    0.042   23.900    0.000    0.488    0.745
-##     y4         (d)    1.007    0.036   28.299    0.000    0.495    0.707
-##   fs =~                                                                 
-##     y1                1.000                               0.499    0.717
-##     y2                1.018    0.288    3.533    0.000    0.508    0.720
-##     y3                0.903    1.179    0.766    0.444    0.450    0.688
-##     y4                0.960    0.690    1.391    0.164    0.479    0.684
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   fb =~                                                        
+##     y1         (a)    1.000                               0.492
+##     y2         (b)    0.993    0.036   27.488    0.000    0.488
+##     y3         (c)    0.992    0.042   23.900    0.000    0.488
+##     y4         (d)    1.007    0.036   28.299    0.000    0.495
+##   fs =~                                                        
+##     y1                1.000                               0.499
+##     y2                1.018    0.288    3.533    0.000    0.508
+##     y3                0.903    1.179    0.766    0.444    0.450
+##     y4                0.960    0.690    1.391    0.164    0.479
+##   Std.all
+##          
+##     0.706
+##     0.692
+##     0.745
+##     0.707
+##          
+##     0.717
+##     0.720
+##     0.688
+##     0.684
 ## 
 ## Covariances:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   fb ~~                                                                 
-##     fs                0.000                               0.000    0.000
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   fb ~~                                                        
+##     fs                0.000                               0.000
+##   Std.all
+##          
+##     0.000
 ## 
 ## Intercepts:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .y1               -0.073    0.089   -0.819    0.413   -0.073   -0.104
-##    .y2               -0.067    0.088   -0.758    0.449   -0.067   -0.095
-##    .y3               -0.035    0.086   -0.406    0.685   -0.035   -0.053
-##    .y4               -0.018    0.089   -0.207    0.836   -0.018   -0.026
-##     fb                0.000                               0.000    0.000
-##     fs                0.000                               0.000    0.000
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .y1               -0.073    0.089   -0.819    0.413   -0.073
+##    .y2               -0.067    0.088   -0.758    0.449   -0.067
+##    .y3               -0.035    0.086   -0.406    0.685   -0.035
+##    .y4               -0.018    0.089   -0.207    0.836   -0.018
+##     fb                0.000                               0.000
+##     fs                0.000                               0.000
+##   Std.all
+##    -0.104
+##    -0.095
+##    -0.053
+##    -0.026
+##     0.000
+##     0.000
 ## 
 ## Variances:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .y1               -0.006    0.018   -0.330    0.742   -0.006   -0.012
-##    .y2                0.001    0.021    0.063    0.950    0.001    0.003
-##    .y3               -0.012    0.027   -0.427    0.670   -0.012   -0.027
-##    .y4                0.016    0.021    0.779    0.436    0.016    0.033
-##     fb                0.242    3.053    0.079    0.937    1.000    1.000
-##     fs                0.249    3.022    0.082    0.934    1.000    1.000</code></pre>
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .y1               -0.006    0.018   -0.330    0.742   -0.006
+##    .y2                0.001    0.021    0.063    0.950    0.001
+##    .y3               -0.012    0.027   -0.427    0.670   -0.012
+##    .y4                0.016    0.021    0.779    0.436    0.016
+##     fb                0.242    3.053    0.079    0.937    1.000
+##     fs                0.249    3.022    0.082    0.934    1.000
+##   Std.all
+##    -0.012
+##     0.003
+##    -0.027
+##     0.033
+##     1.000
+##     1.000</code></pre>
 <!------------------------------>
 </div>
 <div id="part-vi-model-comparison" class="section level2 hasAnchor" number="22.6">
 <h2><span class="header-section-number">22.6</span> PART VI: Model Comparison<a href="week16-lavaan-lab-19-multilevel-sem.html#part-vi-model-comparison" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!------------------------------>
-<div class="sourceCode" id="cb870"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb870-1"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb870-1" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">=</span> <span class="fu">fitMeasures</span>(model1fit, <span class="at">fit.measures =</span> <span class="fu">c</span>(<span class="st">&quot;chisq.scaled&quot;</span>, <span class="st">&quot;df.scaled&quot;</span>, <span class="st">&quot;pvalue.scaled&quot;</span>, <span class="st">&quot;rmsea.robust&quot;</span>, <span class="st">&quot;rmsea.ci.lower.robust&quot;</span>, <span class="st">&quot;rmsea.ci.upper.robust&quot;</span>, <span class="st">&quot;cfi.robust&quot;</span>, <span class="st">&quot;tli.robust&quot;</span>, <span class="st">&quot;srmr_within&quot;</span>, <span class="st">&quot;srmr_between&quot;</span>))</span>
-<span id="cb870-2"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb870-2" aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">=</span> <span class="fu">fitMeasures</span>(model2fit, <span class="at">fit.measures =</span> <span class="fu">c</span>(<span class="st">&quot;chisq.scaled&quot;</span>, <span class="st">&quot;df.scaled&quot;</span>, <span class="st">&quot;pvalue.scaled&quot;</span>, <span class="st">&quot;rmsea.robust&quot;</span>, <span class="st">&quot;rmsea.ci.lower.robust&quot;</span>, <span class="st">&quot;rmsea.ci.upper.robust&quot;</span>, <span class="st">&quot;cfi.robust&quot;</span>, <span class="st">&quot;tli.robust&quot;</span>, <span class="st">&quot;srmr_within&quot;</span>, <span class="st">&quot;srmr_between&quot;</span>))</span>
-<span id="cb870-3"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb870-3" aria-hidden="true" tabindex="-1"></a>m3 <span class="ot">=</span> <span class="fu">fitMeasures</span>(model3fit, <span class="at">fit.measures =</span> <span class="fu">c</span>(<span class="st">&quot;chisq.scaled&quot;</span>, <span class="st">&quot;df.scaled&quot;</span>, <span class="st">&quot;pvalue.scaled&quot;</span>, <span class="st">&quot;rmsea.robust&quot;</span>, <span class="st">&quot;rmsea.ci.lower.robust&quot;</span>, <span class="st">&quot;rmsea.ci.upper.robust&quot;</span>, <span class="st">&quot;cfi.robust&quot;</span>, <span class="st">&quot;tli.robust&quot;</span>, <span class="st">&quot;srmr_within&quot;</span>, <span class="st">&quot;srmr_between&quot;</span>))</span>
-<span id="cb870-4"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb870-4" aria-hidden="true" tabindex="-1"></a>m4a <span class="ot">=</span> <span class="fu">fitMeasures</span>(model4afit, <span class="at">fit.measures =</span> <span class="fu">c</span>(<span class="st">&quot;chisq.scaled&quot;</span>, <span class="st">&quot;df.scaled&quot;</span>, <span class="st">&quot;pvalue.scaled&quot;</span>, <span class="st">&quot;rmsea.robust&quot;</span>, <span class="st">&quot;rmsea.ci.lower.robust&quot;</span>, <span class="st">&quot;rmsea.ci.upper.robust&quot;</span>, <span class="st">&quot;cfi.robust&quot;</span>, <span class="st">&quot;tli.robust&quot;</span>, <span class="st">&quot;srmr_within&quot;</span>, <span class="st">&quot;srmr_between&quot;</span>))</span>
-<span id="cb870-5"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb870-5" aria-hidden="true" tabindex="-1"></a>m4b <span class="ot">=</span> <span class="fu">fitMeasures</span>(model4bfit, <span class="at">fit.measures =</span> <span class="fu">c</span>(<span class="st">&quot;chisq.scaled&quot;</span>, <span class="st">&quot;df.scaled&quot;</span>, <span class="st">&quot;pvalue.scaled&quot;</span>, <span class="st">&quot;rmsea.robust&quot;</span>, <span class="st">&quot;rmsea.ci.lower.robust&quot;</span>, <span class="st">&quot;rmsea.ci.upper.robust&quot;</span>, <span class="st">&quot;cfi.robust&quot;</span>, <span class="st">&quot;tli.robust&quot;</span>, <span class="st">&quot;srmr_within&quot;</span>, <span class="st">&quot;srmr_between&quot;</span>))</span>
-<span id="cb870-6"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb870-6" aria-hidden="true" tabindex="-1"></a>m5 <span class="ot">=</span> <span class="fu">fitMeasures</span>(model5fit, <span class="at">fit.measures =</span> <span class="fu">c</span>(<span class="st">&quot;chisq.scaled&quot;</span>, <span class="st">&quot;df.scaled&quot;</span>, <span class="st">&quot;pvalue.scaled&quot;</span>, <span class="st">&quot;rmsea.robust&quot;</span>, <span class="st">&quot;rmsea.ci.lower.robust&quot;</span>, <span class="st">&quot;rmsea.ci.upper.robust&quot;</span>, <span class="st">&quot;cfi.robust&quot;</span>, <span class="st">&quot;tli.robust&quot;</span>, <span class="st">&quot;srmr_within&quot;</span>, <span class="st">&quot;srmr_between&quot;</span>))</span></code></pre></div>
-<div class="sourceCode" id="cb871"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb871-1"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb871-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages(&#39;qpcR&#39;)</span></span>
-<span id="cb871-2"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb871-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(qpcR)</span>
-<span id="cb871-3"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb871-3" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(qpcR<span class="sc">:::</span><span class="fu">cbind.na</span>(m1, m2, m3, m4a, m4b, m5), <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb883"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb883-1"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb883-1" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">=</span> <span class="fu">fitMeasures</span>(model1fit, <span class="at">fit.measures =</span> <span class="fu">c</span>(<span class="st">&quot;chisq.scaled&quot;</span>, <span class="st">&quot;df.scaled&quot;</span>, <span class="st">&quot;pvalue.scaled&quot;</span>, <span class="st">&quot;rmsea.robust&quot;</span>, <span class="st">&quot;rmsea.ci.lower.robust&quot;</span>, <span class="st">&quot;rmsea.ci.upper.robust&quot;</span>, <span class="st">&quot;cfi.robust&quot;</span>, <span class="st">&quot;tli.robust&quot;</span>, <span class="st">&quot;srmr_within&quot;</span>, <span class="st">&quot;srmr_between&quot;</span>))</span>
+<span id="cb883-2"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb883-2" aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">=</span> <span class="fu">fitMeasures</span>(model2fit, <span class="at">fit.measures =</span> <span class="fu">c</span>(<span class="st">&quot;chisq.scaled&quot;</span>, <span class="st">&quot;df.scaled&quot;</span>, <span class="st">&quot;pvalue.scaled&quot;</span>, <span class="st">&quot;rmsea.robust&quot;</span>, <span class="st">&quot;rmsea.ci.lower.robust&quot;</span>, <span class="st">&quot;rmsea.ci.upper.robust&quot;</span>, <span class="st">&quot;cfi.robust&quot;</span>, <span class="st">&quot;tli.robust&quot;</span>, <span class="st">&quot;srmr_within&quot;</span>, <span class="st">&quot;srmr_between&quot;</span>))</span>
+<span id="cb883-3"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb883-3" aria-hidden="true" tabindex="-1"></a>m3 <span class="ot">=</span> <span class="fu">fitMeasures</span>(model3fit, <span class="at">fit.measures =</span> <span class="fu">c</span>(<span class="st">&quot;chisq.scaled&quot;</span>, <span class="st">&quot;df.scaled&quot;</span>, <span class="st">&quot;pvalue.scaled&quot;</span>, <span class="st">&quot;rmsea.robust&quot;</span>, <span class="st">&quot;rmsea.ci.lower.robust&quot;</span>, <span class="st">&quot;rmsea.ci.upper.robust&quot;</span>, <span class="st">&quot;cfi.robust&quot;</span>, <span class="st">&quot;tli.robust&quot;</span>, <span class="st">&quot;srmr_within&quot;</span>, <span class="st">&quot;srmr_between&quot;</span>))</span>
+<span id="cb883-4"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb883-4" aria-hidden="true" tabindex="-1"></a>m4a <span class="ot">=</span> <span class="fu">fitMeasures</span>(model4afit, <span class="at">fit.measures =</span> <span class="fu">c</span>(<span class="st">&quot;chisq.scaled&quot;</span>, <span class="st">&quot;df.scaled&quot;</span>, <span class="st">&quot;pvalue.scaled&quot;</span>, <span class="st">&quot;rmsea.robust&quot;</span>, <span class="st">&quot;rmsea.ci.lower.robust&quot;</span>, <span class="st">&quot;rmsea.ci.upper.robust&quot;</span>, <span class="st">&quot;cfi.robust&quot;</span>, <span class="st">&quot;tli.robust&quot;</span>, <span class="st">&quot;srmr_within&quot;</span>, <span class="st">&quot;srmr_between&quot;</span>))</span>
+<span id="cb883-5"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb883-5" aria-hidden="true" tabindex="-1"></a>m4b <span class="ot">=</span> <span class="fu">fitMeasures</span>(model4bfit, <span class="at">fit.measures =</span> <span class="fu">c</span>(<span class="st">&quot;chisq.scaled&quot;</span>, <span class="st">&quot;df.scaled&quot;</span>, <span class="st">&quot;pvalue.scaled&quot;</span>, <span class="st">&quot;rmsea.robust&quot;</span>, <span class="st">&quot;rmsea.ci.lower.robust&quot;</span>, <span class="st">&quot;rmsea.ci.upper.robust&quot;</span>, <span class="st">&quot;cfi.robust&quot;</span>, <span class="st">&quot;tli.robust&quot;</span>, <span class="st">&quot;srmr_within&quot;</span>, <span class="st">&quot;srmr_between&quot;</span>))</span>
+<span id="cb883-6"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb883-6" aria-hidden="true" tabindex="-1"></a>m5 <span class="ot">=</span> <span class="fu">fitMeasures</span>(model5fit, <span class="at">fit.measures =</span> <span class="fu">c</span>(<span class="st">&quot;chisq.scaled&quot;</span>, <span class="st">&quot;df.scaled&quot;</span>, <span class="st">&quot;pvalue.scaled&quot;</span>, <span class="st">&quot;rmsea.robust&quot;</span>, <span class="st">&quot;rmsea.ci.lower.robust&quot;</span>, <span class="st">&quot;rmsea.ci.upper.robust&quot;</span>, <span class="st">&quot;cfi.robust&quot;</span>, <span class="st">&quot;tli.robust&quot;</span>, <span class="st">&quot;srmr_within&quot;</span>, <span class="st">&quot;srmr_between&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb884"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb884-1"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb884-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages(&#39;qpcR&#39;)</span></span>
+<span id="cb884-2"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb884-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(qpcR)</span>
+<span id="cb884-3"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb884-3" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(qpcR<span class="sc">:::</span><span class="fu">cbind.na</span>(m1, m2, m3, m4a, m4b, m5), <span class="dv">3</span>)</span></code></pre></div>
 <pre><code>##                           m1    m2      m3   m4a   m4b    m5
 ## chisq.scaled          64.738 0.107 342.869 0.000 0.059 0.000
 ## df.scaled              3.000 2.000   3.000 4.000 7.000 3.000
@@ -1438,21 +1622,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!------------------------------>
 <div id="model-a-adding-a-within-only-covariate" class="section level3 hasAnchor" number="22.7.1">
 <h3><span class="header-section-number">22.7.1</span> Model A: Adding a within-only covariate<a href="week16-lavaan-lab-19-multilevel-sem.html#model-a-adding-a-within-only-covariate" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb873"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb873-1"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb873-1" aria-hidden="true" tabindex="-1"></a>model4wCovA <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
-<span id="cb873-2"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb873-2" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 1</span></span>
-<span id="cb873-3"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb873-3" aria-hidden="true" tabindex="-1"></a><span class="st">    fw =~ a*y1 + b*y2 + c*y3 + d*y4</span></span>
-<span id="cb873-4"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb873-4" aria-hidden="true" tabindex="-1"></a><span class="st">    fw ~ x1</span></span>
-<span id="cb873-5"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb873-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb873-6"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb873-6" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 2</span></span>
-<span id="cb873-7"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb873-7" aria-hidden="true" tabindex="-1"></a><span class="st">    fb =~ a*y1 + b*y2 + c*y3 + d*y4</span></span>
-<span id="cb873-8"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb873-8" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span>
-<span id="cb873-9"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb873-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb873-10"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb873-10" aria-hidden="true" tabindex="-1"></a>model4wCovAfit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(model4wCovA, <span class="at">data =</span> Data, </span>
-<span id="cb873-11"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb873-11" aria-hidden="true" tabindex="-1"></a>                              <span class="at">cluster =</span> <span class="st">&quot;clus&quot;</span>, </span>
-<span id="cb873-12"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb873-12" aria-hidden="true" tabindex="-1"></a>                              <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>,</span>
-<span id="cb873-13"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb873-13" aria-hidden="true" tabindex="-1"></a>                              <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
-<pre><code>## Warning in lav_object_post_check(object): lavaan WARNING: some estimated ov variances are negative</code></pre>
-<div class="sourceCode" id="cb875"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb875-1"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb875-1" aria-hidden="true" tabindex="-1"></a>lavaan<span class="sc">::</span><span class="fu">summary</span>(model4wCovAfit, <span class="at">fit.measures =</span> T, <span class="at">standardized =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb886"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb886-1"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb886-1" aria-hidden="true" tabindex="-1"></a>model4wCovA <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
+<span id="cb886-2"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb886-2" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 1</span></span>
+<span id="cb886-3"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb886-3" aria-hidden="true" tabindex="-1"></a><span class="st">    fw =~ a*y1 + b*y2 + c*y3 + d*y4</span></span>
+<span id="cb886-4"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb886-4" aria-hidden="true" tabindex="-1"></a><span class="st">    fw ~ x1</span></span>
+<span id="cb886-5"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb886-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb886-6"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb886-6" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 2</span></span>
+<span id="cb886-7"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb886-7" aria-hidden="true" tabindex="-1"></a><span class="st">    fb =~ a*y1 + b*y2 + c*y3 + d*y4</span></span>
+<span id="cb886-8"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb886-8" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span>
+<span id="cb886-9"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb886-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb886-10"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb886-10" aria-hidden="true" tabindex="-1"></a>model4wCovAfit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(model4wCovA, <span class="at">data =</span> Data, </span>
+<span id="cb886-11"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb886-11" aria-hidden="true" tabindex="-1"></a>                              <span class="at">cluster =</span> <span class="st">&quot;clus&quot;</span>, </span>
+<span id="cb886-12"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb886-12" aria-hidden="true" tabindex="-1"></a>                              <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>,</span>
+<span id="cb886-13"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb886-13" aria-hidden="true" tabindex="-1"></a>                              <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## Warning in lav_object_post_check(object): lavaan WARNING: some
+## estimated ov variances are negative</code></pre>
+<div class="sourceCode" id="cb888"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb888-1"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb888-1" aria-hidden="true" tabindex="-1"></a>lavaan<span class="sc">::</span><span class="fu">summary</span>(model4wCovAfit, <span class="at">fit.measures =</span> T, <span class="at">standardized =</span> T)</span></code></pre></div>
 <pre><code>## lavaan 0.6-12 ended normally after 54 iterations
 ## 
 ##   Estimator                                         ML
@@ -1525,80 +1710,122 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Level 1 [within]:
 ## 
 ## Latent Variables:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   fw =~                                                                 
-##     y1         (a)    1.000                               1.501    0.834
-##     y2         (b)    0.994    0.031   32.270    0.000    1.491    0.838
-##     y3         (c)    0.984    0.036   27.550    0.000    1.476    0.818
-##     y4         (d)    1.006    0.029   34.896    0.000    1.510    0.834
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   fw =~                                                        
+##     y1         (a)    1.000                               1.501
+##     y2         (b)    0.994    0.031   32.270    0.000    1.491
+##     y3         (c)    0.984    0.036   27.550    0.000    1.476
+##     y4         (d)    1.006    0.029   34.896    0.000    1.510
+##   Std.all
+##          
+##     0.834
+##     0.838
+##     0.818
+##     0.834
 ## 
 ## Regressions:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   fw ~                                                                  
-##     x1                1.002    0.050   20.044    0.000    0.667    0.663
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   fw ~                                                         
+##     x1                1.002    0.050   20.044    0.000    0.667
+##   Std.all
+##          
+##     0.663
 ## 
 ## Intercepts:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .y1                0.000                               0.000    0.000
-##    .y2                0.000                               0.000    0.000
-##    .y3                0.000                               0.000    0.000
-##    .y4                0.000                               0.000    0.000
-##     x1                0.007    0.036    0.195    0.846    0.007    0.007
-##    .fw                0.000                               0.000    0.000
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .y1                0.000                               0.000
+##    .y2                0.000                               0.000
+##    .y3                0.000                               0.000
+##    .y4                0.000                               0.000
+##     x1                0.007    0.036    0.195    0.846    0.007
+##    .fw                0.000                               0.000
+##   Std.all
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.007
+##     0.000
 ## 
 ## Variances:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .y1                0.989    0.065   15.126    0.000    0.989    0.305
-##    .y2                0.942    0.055   17.114    0.000    0.942    0.297
-##    .y3                1.080    0.058   18.491    0.000    1.080    0.331
-##    .y4                1.001    0.065   15.438    0.000    1.001    0.305
-##    .fw                1.264    0.096   13.119    0.000    0.561    0.561
-##     x1                0.985    0.042   23.406    0.000    0.985    1.000
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .y1                0.989    0.065   15.126    0.000    0.989
+##    .y2                0.942    0.055   17.114    0.000    0.942
+##    .y3                1.080    0.058   18.491    0.000    1.080
+##    .y4                1.001    0.065   15.438    0.000    1.001
+##    .fw                1.264    0.096   13.119    0.000    0.561
+##     x1                0.985    0.042   23.406    0.000    0.985
+##   Std.all
+##     0.305
+##     0.297
+##     0.331
+##     0.305
+##     0.561
+##     1.000
 ## 
 ## 
 ## Level 2 [clus]:
 ## 
 ## Latent Variables:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   fb =~                                                                 
-##     y1         (a)    1.000                               0.636    1.004
-##     y2         (b)    0.994    0.031   32.270    0.000    0.632    0.998
-##     y3         (c)    0.984    0.036   27.550    0.000    0.626    1.016
-##     y4         (d)    1.006    0.029   34.896    0.000    0.640    0.982
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   fb =~                                                        
+##     y1         (a)    1.000                               0.636
+##     y2         (b)    0.994    0.031   32.270    0.000    0.632
+##     y3         (c)    0.984    0.036   27.550    0.000    0.626
+##     y4         (d)    1.006    0.029   34.896    0.000    0.640
+##   Std.all
+##          
+##     1.004
+##     0.998
+##     1.016
+##     0.982
 ## 
 ## Intercepts:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .y1               -0.070    0.080   -0.873    0.383   -0.070   -0.110
-##    .y2               -0.064    0.078   -0.823    0.410   -0.064   -0.101
-##    .y3               -0.033    0.076   -0.430    0.667   -0.033   -0.053
-##    .y4               -0.016    0.078   -0.203    0.839   -0.016   -0.024
-##     fb                0.000                               0.000    0.000
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .y1               -0.070    0.080   -0.873    0.383   -0.070
+##    .y2               -0.064    0.078   -0.823    0.410   -0.064
+##    .y3               -0.033    0.076   -0.430    0.667   -0.033
+##    .y4               -0.016    0.078   -0.203    0.839   -0.016
+##     fb                0.000                               0.000
+##   Std.all
+##    -0.110
+##    -0.101
+##    -0.053
+##    -0.024
+##     0.000
 ## 
 ## Variances:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .y1               -0.003    0.017   -0.177    0.860   -0.003   -0.007
-##    .y2                0.002    0.019    0.094    0.925    0.002    0.005
-##    .y3               -0.012    0.020   -0.624    0.533   -0.012   -0.033
-##    .y4                0.015    0.020    0.766    0.444    0.015    0.036
-##     fb                0.405    0.085    4.751    0.000    1.000    1.000</code></pre>
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .y1               -0.003    0.017   -0.177    0.860   -0.003
+##    .y2                0.002    0.019    0.094    0.925    0.002
+##    .y3               -0.012    0.020   -0.624    0.533   -0.012
+##    .y4                0.015    0.020    0.766    0.444    0.015
+##     fb                0.405    0.085    4.751    0.000    1.000
+##   Std.all
+##    -0.007
+##     0.005
+##    -0.033
+##     0.036
+##     1.000</code></pre>
 </div>
 <div id="model-b-adding-a-between-only-covariate" class="section level3 hasAnchor" number="22.7.2">
 <h3><span class="header-section-number">22.7.2</span> Model B: Adding a between-only covariate<a href="week16-lavaan-lab-19-multilevel-sem.html#model-b-adding-a-between-only-covariate" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb877"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb877-1"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb877-1" aria-hidden="true" tabindex="-1"></a>model4wCovB <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
-<span id="cb877-2"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb877-2" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 1</span></span>
-<span id="cb877-3"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb877-3" aria-hidden="true" tabindex="-1"></a><span class="st">    fw =~ a*y1 + b*y2 + c*y3 + d*y4</span></span>
-<span id="cb877-4"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb877-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb877-5"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb877-5" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 2</span></span>
-<span id="cb877-6"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb877-6" aria-hidden="true" tabindex="-1"></a><span class="st">    fb =~ a*y1 + b*y2 + c*y3 + d*y4</span></span>
-<span id="cb877-7"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb877-7" aria-hidden="true" tabindex="-1"></a><span class="st">    fb ~ w</span></span>
-<span id="cb877-8"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb877-8" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span>
-<span id="cb877-9"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb877-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb877-10"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb877-10" aria-hidden="true" tabindex="-1"></a>model4wCovBfit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(model4wCovB, <span class="at">data =</span> Data, </span>
-<span id="cb877-11"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb877-11" aria-hidden="true" tabindex="-1"></a>                              <span class="at">cluster =</span> <span class="st">&quot;clus&quot;</span>, </span>
-<span id="cb877-12"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb877-12" aria-hidden="true" tabindex="-1"></a>                              <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>,</span>
-<span id="cb877-13"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb877-13" aria-hidden="true" tabindex="-1"></a>                              <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
-<pre><code>## Warning in lav_object_post_check(object): lavaan WARNING: some estimated ov variances are negative</code></pre>
-<div class="sourceCode" id="cb879"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb879-1"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb879-1" aria-hidden="true" tabindex="-1"></a>lavaan<span class="sc">::</span><span class="fu">summary</span>(model4wCovBfit, <span class="at">fit.measures =</span> T, <span class="at">standardized =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb890"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb890-1"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb890-1" aria-hidden="true" tabindex="-1"></a>model4wCovB <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
+<span id="cb890-2"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb890-2" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 1</span></span>
+<span id="cb890-3"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb890-3" aria-hidden="true" tabindex="-1"></a><span class="st">    fw =~ a*y1 + b*y2 + c*y3 + d*y4</span></span>
+<span id="cb890-4"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb890-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb890-5"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb890-5" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 2</span></span>
+<span id="cb890-6"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb890-6" aria-hidden="true" tabindex="-1"></a><span class="st">    fb =~ a*y1 + b*y2 + c*y3 + d*y4</span></span>
+<span id="cb890-7"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb890-7" aria-hidden="true" tabindex="-1"></a><span class="st">    fb ~ w</span></span>
+<span id="cb890-8"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb890-8" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span>
+<span id="cb890-9"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb890-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb890-10"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb890-10" aria-hidden="true" tabindex="-1"></a>model4wCovBfit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(model4wCovB, <span class="at">data =</span> Data, </span>
+<span id="cb890-11"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb890-11" aria-hidden="true" tabindex="-1"></a>                              <span class="at">cluster =</span> <span class="st">&quot;clus&quot;</span>, </span>
+<span id="cb890-12"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb890-12" aria-hidden="true" tabindex="-1"></a>                              <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>,</span>
+<span id="cb890-13"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb890-13" aria-hidden="true" tabindex="-1"></a>                              <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## Warning in lav_object_post_check(object): lavaan WARNING: some
+## estimated ov variances are negative</code></pre>
+<div class="sourceCode" id="cb892"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb892-1"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb892-1" aria-hidden="true" tabindex="-1"></a>lavaan<span class="sc">::</span><span class="fu">summary</span>(model4wCovBfit, <span class="at">fit.measures =</span> T, <span class="at">standardized =</span> T)</span></code></pre></div>
 <pre><code>## lavaan 0.6-12 ended normally after 35 iterations
 ## 
 ##   Estimator                                         ML
@@ -1671,81 +1898,123 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Level 1 [within]:
 ## 
 ## Latent Variables:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   fw =~                                                                 
-##     y1         (a)    1.000                               1.491    0.832
-##     y2         (b)    0.994    0.031   31.642    0.000    1.482    0.838
-##     y3         (c)    0.982    0.036   27.079    0.000    1.464    0.815
-##     y4         (d)    1.002    0.029   34.699    0.000    1.494    0.829
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   fw =~                                                        
+##     y1         (a)    1.000                               1.491
+##     y2         (b)    0.994    0.031   31.642    0.000    1.482
+##     y3         (c)    0.982    0.036   27.079    0.000    1.464
+##     y4         (d)    1.002    0.029   34.699    0.000    1.494
+##   Std.all
+##          
+##     0.832
+##     0.838
+##     0.815
+##     0.829
 ## 
 ## Intercepts:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .y1                0.000                               0.000    0.000
-##    .y2                0.000                               0.000    0.000
-##    .y3                0.000                               0.000    0.000
-##    .y4                0.000                               0.000    0.000
-##     fw                0.000                               0.000    0.000
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .y1                0.000                               0.000
+##    .y2                0.000                               0.000
+##    .y3                0.000                               0.000
+##    .y4                0.000                               0.000
+##     fw                0.000                               0.000
+##   Std.all
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
 ## 
 ## Variances:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .y1                0.987    0.069   14.241    0.000    0.987    0.308
-##    .y2                0.929    0.061   15.165    0.000    0.929    0.297
-##    .y3                1.081    0.057   18.940    0.000    1.081    0.335
-##    .y4                1.015    0.068   14.894    0.000    1.015    0.313
-##     fw                2.223    0.159   14.004    0.000    1.000    1.000
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .y1                0.987    0.069   14.241    0.000    0.987
+##    .y2                0.929    0.061   15.165    0.000    0.929
+##    .y3                1.081    0.057   18.940    0.000    1.081
+##    .y4                1.015    0.068   14.894    0.000    1.015
+##     fw                2.223    0.159   14.004    0.000    1.000
+##   Std.all
+##     0.308
+##     0.297
+##     0.335
+##     0.313
+##     1.000
 ## 
 ## 
 ## Level 2 [clus]:
 ## 
 ## Latent Variables:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   fb =~                                                                 
-##     y1         (a)    1.000                               0.687    1.007
-##     y2         (b)    0.994    0.031   31.642    0.000    0.683    0.994
-##     y3         (c)    0.982    0.036   27.079    0.000    0.675    1.015
-##     y4         (d)    1.002    0.029   34.699    0.000    0.688    0.983
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   fb =~                                                        
+##     y1         (a)    1.000                               0.687
+##     y2         (b)    0.994    0.031   31.642    0.000    0.683
+##     y3         (c)    0.982    0.036   27.079    0.000    0.675
+##     y4         (d)    1.002    0.029   34.699    0.000    0.688
+##   Std.all
+##          
+##     1.007
+##     0.994
+##     1.015
+##     0.983
 ## 
 ## Regressions:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   fb ~                                                                  
-##     w                 0.363    0.103    3.533    0.000    0.529    0.477
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   fb ~                                                         
+##     w                 0.363    0.103    3.533    0.000    0.529
+##   Std.all
+##          
+##     0.477
 ## 
 ## Intercepts:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .y1               -0.073    0.081   -0.900    0.368   -0.073   -0.107
-##    .y2               -0.068    0.084   -0.813    0.416   -0.068   -0.099
-##    .y3               -0.036    0.079   -0.451    0.652   -0.036   -0.054
-##    .y4               -0.019    0.083   -0.229    0.819   -0.019   -0.027
-##     w                 0.006    0.086    0.070    0.944    0.006    0.007
-##    .fb                0.000                               0.000    0.000
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .y1               -0.073    0.081   -0.900    0.368   -0.073
+##    .y2               -0.068    0.084   -0.813    0.416   -0.068
+##    .y3               -0.036    0.079   -0.451    0.652   -0.036
+##    .y4               -0.019    0.083   -0.229    0.819   -0.019
+##     w                 0.006    0.086    0.070    0.944    0.006
+##    .fb                0.000                               0.000
+##   Std.all
+##    -0.107
+##    -0.099
+##    -0.054
+##    -0.027
+##     0.007
+##     0.000
 ## 
 ## Variances:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .y1               -0.007    0.016   -0.415    0.678   -0.007   -0.015
-##    .y2                0.006    0.019    0.290    0.772    0.006    0.012
-##    .y3               -0.013    0.020   -0.639    0.523   -0.013   -0.029
-##    .y4                0.016    0.021    0.778    0.437    0.016    0.033
-##    .fb                0.364    0.078    4.645    0.000    0.772    0.772
-##     w                 0.815    0.107    7.638    0.000    0.815    1.000</code></pre>
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .y1               -0.007    0.016   -0.415    0.678   -0.007
+##    .y2                0.006    0.019    0.290    0.772    0.006
+##    .y3               -0.013    0.020   -0.639    0.523   -0.013
+##    .y4                0.016    0.021    0.778    0.437    0.016
+##    .fb                0.364    0.078    4.645    0.000    0.772
+##     w                 0.815    0.107    7.638    0.000    0.815
+##   Std.all
+##    -0.015
+##     0.012
+##    -0.029
+##     0.033
+##     0.772
+##     1.000</code></pre>
 </div>
 <div id="model-c-adding-a-covariate-at-both-levels" class="section level3 hasAnchor" number="22.7.3">
 <h3><span class="header-section-number">22.7.3</span> Model C: Adding a covariate at both levels<a href="week16-lavaan-lab-19-multilevel-sem.html#model-c-adding-a-covariate-at-both-levels" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb881"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb881-1"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb881-1" aria-hidden="true" tabindex="-1"></a>model4wCovC <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
-<span id="cb881-2"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb881-2" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 1</span></span>
-<span id="cb881-3"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb881-3" aria-hidden="true" tabindex="-1"></a><span class="st">    fw =~ a*y1 + b*y2 + c*y3 + d*y4</span></span>
-<span id="cb881-4"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb881-4" aria-hidden="true" tabindex="-1"></a><span class="st">    fw ~ x1</span></span>
-<span id="cb881-5"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb881-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb881-6"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb881-6" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 2</span></span>
-<span id="cb881-7"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb881-7" aria-hidden="true" tabindex="-1"></a><span class="st">    fb =~ a*y1 + b*y2 + c*y3 + d*y4</span></span>
-<span id="cb881-8"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb881-8" aria-hidden="true" tabindex="-1"></a><span class="st">    fb ~ x1</span></span>
-<span id="cb881-9"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb881-9" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span>
-<span id="cb881-10"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb881-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb881-11"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb881-11" aria-hidden="true" tabindex="-1"></a>model4wCovCfit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(model4wCovC, <span class="at">data =</span> Data, </span>
-<span id="cb881-12"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb881-12" aria-hidden="true" tabindex="-1"></a>                              <span class="at">cluster =</span> <span class="st">&quot;clus&quot;</span>, </span>
-<span id="cb881-13"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb881-13" aria-hidden="true" tabindex="-1"></a>                              <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>,</span>
-<span id="cb881-14"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb881-14" aria-hidden="true" tabindex="-1"></a>                              <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
-<pre><code>## Warning in lav_object_post_check(object): lavaan WARNING: some estimated ov variances are negative</code></pre>
-<div class="sourceCode" id="cb883"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb883-1"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb883-1" aria-hidden="true" tabindex="-1"></a>lavaan<span class="sc">::</span><span class="fu">summary</span>(model4wCovCfit, <span class="at">fit.measures =</span> T, <span class="at">standardized =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb894"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb894-1"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb894-1" aria-hidden="true" tabindex="-1"></a>model4wCovC <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
+<span id="cb894-2"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb894-2" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 1</span></span>
+<span id="cb894-3"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb894-3" aria-hidden="true" tabindex="-1"></a><span class="st">    fw =~ a*y1 + b*y2 + c*y3 + d*y4</span></span>
+<span id="cb894-4"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb894-4" aria-hidden="true" tabindex="-1"></a><span class="st">    fw ~ x1</span></span>
+<span id="cb894-5"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb894-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb894-6"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb894-6" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 2</span></span>
+<span id="cb894-7"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb894-7" aria-hidden="true" tabindex="-1"></a><span class="st">    fb =~ a*y1 + b*y2 + c*y3 + d*y4</span></span>
+<span id="cb894-8"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb894-8" aria-hidden="true" tabindex="-1"></a><span class="st">    fb ~ x1</span></span>
+<span id="cb894-9"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb894-9" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span>
+<span id="cb894-10"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb894-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb894-11"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb894-11" aria-hidden="true" tabindex="-1"></a>model4wCovCfit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(model4wCovC, <span class="at">data =</span> Data, </span>
+<span id="cb894-12"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb894-12" aria-hidden="true" tabindex="-1"></a>                              <span class="at">cluster =</span> <span class="st">&quot;clus&quot;</span>, </span>
+<span id="cb894-13"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb894-13" aria-hidden="true" tabindex="-1"></a>                              <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>,</span>
+<span id="cb894-14"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb894-14" aria-hidden="true" tabindex="-1"></a>                              <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## Warning in lav_object_post_check(object): lavaan WARNING: some
+## estimated ov variances are negative</code></pre>
+<div class="sourceCode" id="cb896"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb896-1"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb896-1" aria-hidden="true" tabindex="-1"></a>lavaan<span class="sc">::</span><span class="fu">summary</span>(model4wCovCfit, <span class="at">fit.measures =</span> T, <span class="at">standardized =</span> T)</span></code></pre></div>
 <pre><code>## lavaan 0.6-12 ended normally after 83 iterations
 ## 
 ##   Estimator                                         ML
@@ -1818,91 +2087,138 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Level 1 [within]:
 ## 
 ## Latent Variables:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   fw =~                                                                 
-##     y1         (a)    1.000                               1.489    0.832
-##     y2         (b)    0.994    0.031   32.214    0.000    1.480    0.836
-##     y3         (c)    0.984    0.036   27.538    0.000    1.465    0.816
-##     y4         (d)    1.006    0.029   34.847    0.000    1.499    0.832
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   fw =~                                                        
+##     y1         (a)    1.000                               1.489
+##     y2         (b)    0.994    0.031   32.214    0.000    1.480
+##     y3         (c)    0.984    0.036   27.538    0.000    1.465
+##     y4         (d)    1.006    0.029   34.847    0.000    1.499
+##   Std.all
+##          
+##     0.832
+##     0.836
+##     0.816
+##     0.832
 ## 
 ## Regressions:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   fw ~                                                                  
-##     x1                0.995    0.052   18.985    0.000    0.668    0.656
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   fw ~                                                         
+##     x1                0.995    0.052   18.984    0.000    0.668
+##   Std.all
+##          
+##     0.656
 ## 
 ## Intercepts:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .y1                0.000                               0.000    0.000
-##    .y2                0.000                               0.000    0.000
-##    .y3                0.000                               0.000    0.000
-##    .y4                0.000                               0.000    0.000
-##     x1                0.000                               0.000    0.000
-##    .fw                0.000                               0.000    0.000
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .y1                0.000                               0.000
+##    .y2                0.000                               0.000
+##    .y3                0.000                               0.000
+##    .y4                0.000                               0.000
+##     x1                0.000                               0.000
+##    .fw                0.000                               0.000
+##   Std.all
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
 ## 
 ## Variances:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .y1                0.989    0.065   15.129    0.000    0.989    0.308
-##    .y2                0.942    0.055   17.105    0.000    0.942    0.301
-##    .y3                1.080    0.058   18.488    0.000    1.080    0.335
-##    .y4                1.001    0.065   15.435    0.000    1.001    0.308
-##    .fw                1.263    0.097   13.085    0.000    0.570    0.570
-##     x1                0.965    0.044   21.724    0.000    0.965    1.000
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .y1                0.989    0.065   15.129    0.000    0.989
+##    .y2                0.942    0.055   17.105    0.000    0.942
+##    .y3                1.080    0.058   18.488    0.000    1.080
+##    .y4                1.001    0.065   15.435    0.000    1.001
+##    .fw                1.263    0.097   13.085    0.000    0.570
+##     x1                0.965    0.044   21.724    0.000    0.965
+##   Std.all
+##     0.308
+##     0.301
+##     0.335
+##     0.308
+##     0.570
+##     1.000
 ## 
 ## 
 ## Level 2 [clus]:
 ## 
 ## Latent Variables:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   fb =~                                                                 
-##     y1         (a)    1.000                               0.686    1.003
-##     y2         (b)    0.994    0.031   32.214    0.000    0.682    0.998
-##     y3         (c)    0.984    0.036   27.538    0.000    0.675    1.014
-##     y4         (d)    1.006    0.029   34.847    0.000    0.690    0.984
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   fb =~                                                        
+##     y1         (a)    1.000                               0.686
+##     y2         (b)    0.994    0.031   32.214    0.000    0.682
+##     y3         (c)    0.984    0.036   27.538    0.000    0.675
+##     y4         (d)    1.006    0.029   34.847    0.000    0.690
+##   Std.all
+##          
+##     1.003
+##     0.998
+##     1.014
+##     0.984
 ## 
 ## Regressions:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   fb ~                                                                  
-##     x1                2.069    1.515    1.366    0.172    3.017    0.432
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   fb ~                                                         
+##     x1                2.069    1.515    1.366    0.172    3.017
+##   Std.all
+##          
+##     0.432
 ## 
 ## Intercepts:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .y1               -0.076    0.087   -0.865    0.387   -0.076   -0.110
-##    .y2               -0.070    0.084   -0.839    0.402   -0.070   -0.103
-##    .y3               -0.038    0.082   -0.470    0.638   -0.038   -0.058
-##    .y4               -0.022    0.084   -0.259    0.795   -0.022   -0.031
-##     x1                0.005    0.034    0.141    0.888    0.005    0.034
-##    .fb                0.000                               0.000    0.000
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .y1               -0.076    0.087   -0.865    0.387   -0.076
+##    .y2               -0.070    0.084   -0.839    0.402   -0.070
+##    .y3               -0.038    0.082   -0.470    0.638   -0.038
+##    .y4               -0.022    0.084   -0.259    0.795   -0.022
+##     x1                0.005    0.034    0.141    0.888    0.005
+##    .fb                0.000                               0.000
+##   Std.all
+##    -0.110
+##    -0.103
+##    -0.058
+##    -0.031
+##     0.034
+##     0.000
 ## 
 ## Variances:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .y1               -0.003    0.017   -0.158    0.875   -0.003   -0.006
-##    .y2                0.002    0.019    0.089    0.929    0.002    0.004
-##    .y3               -0.012    0.020   -0.624    0.533   -0.012   -0.028
-##    .y4                0.015    0.020    0.756    0.450    0.015    0.031
-##    .fb                0.383    0.101    3.800    0.000    0.813    0.813
-##     x1                0.021    0.016    1.267    0.205    0.021    1.000</code></pre>
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .y1               -0.003    0.017   -0.158    0.875   -0.003
+##    .y2                0.002    0.019    0.089    0.929    0.002
+##    .y3               -0.012    0.020   -0.624    0.533   -0.012
+##    .y4                0.015    0.020    0.756    0.450    0.015
+##    .fb                0.383    0.101    3.800    0.000    0.813
+##     x1                0.021    0.016    1.267    0.205    0.021
+##   Std.all
+##    -0.006
+##     0.004
+##    -0.028
+##     0.031
+##     0.813
+##     1.000</code></pre>
 <!------------------------------>
 </div>
 </div>
 <div id="part-vii-final-model" class="section level2 hasAnchor" number="22.8">
 <h2><span class="header-section-number">22.8</span> PART VII: Final Model<a href="week16-lavaan-lab-19-multilevel-sem.html#part-vii-final-model" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!------------------------------>
-<div class="sourceCode" id="cb885"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb885-1"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb885-1" aria-hidden="true" tabindex="-1"></a>modelFinal <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
-<span id="cb885-2"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb885-2" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 1</span></span>
-<span id="cb885-3"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb885-3" aria-hidden="true" tabindex="-1"></a><span class="st">    fw =~ a*y1 + b*y2 + c*y3 + d*y4</span></span>
-<span id="cb885-4"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb885-4" aria-hidden="true" tabindex="-1"></a><span class="st">    fw ~ x1 + x2</span></span>
-<span id="cb885-5"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb885-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb885-6"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb885-6" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 2</span></span>
-<span id="cb885-7"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb885-7" aria-hidden="true" tabindex="-1"></a><span class="st">    fb =~ a*y1 + b*y2 + c*y3 + d*y4</span></span>
-<span id="cb885-8"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb885-8" aria-hidden="true" tabindex="-1"></a><span class="st">    fb ~ w</span></span>
-<span id="cb885-9"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb885-9" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span>
-<span id="cb885-10"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb885-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb885-11"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb885-11" aria-hidden="true" tabindex="-1"></a>modelFinalfit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(modelFinal, <span class="at">data =</span> Data, </span>
-<span id="cb885-12"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb885-12" aria-hidden="true" tabindex="-1"></a>                              <span class="at">cluster =</span> <span class="st">&quot;clus&quot;</span>, </span>
-<span id="cb885-13"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb885-13" aria-hidden="true" tabindex="-1"></a>                              <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>,</span>
-<span id="cb885-14"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb885-14" aria-hidden="true" tabindex="-1"></a>                              <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
-<pre><code>## Warning in lav_object_post_check(object): lavaan WARNING: some estimated ov variances are negative</code></pre>
-<div class="sourceCode" id="cb887"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb887-1"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb887-1" aria-hidden="true" tabindex="-1"></a>lavaan<span class="sc">::</span><span class="fu">summary</span>(modelFinalfit, <span class="at">fit.measures =</span> T, <span class="at">standardized =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb898"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb898-1"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb898-1" aria-hidden="true" tabindex="-1"></a>modelFinal <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
+<span id="cb898-2"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb898-2" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 1</span></span>
+<span id="cb898-3"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb898-3" aria-hidden="true" tabindex="-1"></a><span class="st">    fw =~ a*y1 + b*y2 + c*y3 + d*y4</span></span>
+<span id="cb898-4"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb898-4" aria-hidden="true" tabindex="-1"></a><span class="st">    fw ~ x1 + x2</span></span>
+<span id="cb898-5"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb898-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb898-6"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb898-6" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 2</span></span>
+<span id="cb898-7"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb898-7" aria-hidden="true" tabindex="-1"></a><span class="st">    fb =~ a*y1 + b*y2 + c*y3 + d*y4</span></span>
+<span id="cb898-8"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb898-8" aria-hidden="true" tabindex="-1"></a><span class="st">    fb ~ w</span></span>
+<span id="cb898-9"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb898-9" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span>
+<span id="cb898-10"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb898-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb898-11"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb898-11" aria-hidden="true" tabindex="-1"></a>modelFinalfit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(modelFinal, <span class="at">data =</span> Data, </span>
+<span id="cb898-12"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb898-12" aria-hidden="true" tabindex="-1"></a>                              <span class="at">cluster =</span> <span class="st">&quot;clus&quot;</span>, </span>
+<span id="cb898-13"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb898-13" aria-hidden="true" tabindex="-1"></a>                              <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>,</span>
+<span id="cb898-14"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb898-14" aria-hidden="true" tabindex="-1"></a>                              <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## Warning in lav_object_post_check(object): lavaan WARNING: some
+## estimated ov variances are negative</code></pre>
+<div class="sourceCode" id="cb900"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb900-1"><a href="week16-lavaan-lab-19-multilevel-sem.html#cb900-1" aria-hidden="true" tabindex="-1"></a>lavaan<span class="sc">::</span><span class="fu">summary</span>(modelFinalfit, <span class="at">fit.measures =</span> T, <span class="at">standardized =</span> T)</span></code></pre></div>
 <pre><code>## lavaan 0.6-12 ended normally after 48 iterations
 ## 
 ##   Estimator                                         ML
@@ -1975,77 +2291,129 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Level 1 [within]:
 ## 
 ## Latent Variables:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   fw =~                                                                 
-##     y1         (a)    1.000                               1.498    0.834
-##     y2         (b)    0.992    0.031   31.996    0.000    1.485    0.837
-##     y3         (c)    0.982    0.035   27.682    0.000    1.470    0.816
-##     y4         (d)    1.005    0.029   34.760    0.000    1.505    0.833
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   fw =~                                                        
+##     y1         (a)    1.000                               1.498
+##     y2         (b)    0.992    0.031   31.996    0.000    1.485
+##     y3         (c)    0.982    0.035   27.682    0.000    1.470
+##     y4         (d)    1.005    0.029   34.760    0.000    1.505
+##   Std.all
+##          
+##     0.834
+##     0.837
+##     0.816
+##     0.833
 ## 
 ## Regressions:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   fw ~                                                                  
-##     x1                0.980    0.047   20.863    0.000    0.654    0.649
-##     x2                0.515    0.039   13.113    0.000    0.344    0.347
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   fw ~                                                         
+##     x1                0.980    0.047   20.863    0.000    0.654
+##     x2                0.515    0.039   13.113    0.000    0.344
+##   Std.all
+##          
+##     0.649
+##     0.347
 ## 
 ## Covariances:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   x1 ~~                                                                 
-##     x2                0.032    0.033    0.972    0.331    0.032    0.032
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   x1 ~~                                                        
+##     x2                0.032    0.033    0.972    0.331    0.032
+##   Std.all
+##          
+##     0.032
 ## 
 ## Intercepts:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .y1                0.000                               0.000    0.000
-##    .y2                0.000                               0.000    0.000
-##    .y3                0.000                               0.000    0.000
-##    .y4                0.000                               0.000    0.000
-##     x1                0.007    0.036    0.194    0.846    0.007    0.007
-##     x2                0.014    0.038    0.372    0.710    0.014    0.014
-##    .fw                0.000                               0.000    0.000
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .y1                0.000                               0.000
+##    .y2                0.000                               0.000
+##    .y3                0.000                               0.000
+##    .y4                0.000                               0.000
+##     x1                0.007    0.036    0.194    0.846    0.007
+##     x2                0.014    0.038    0.372    0.710    0.014
+##    .fw                0.000                               0.000
+##   Std.all
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.007
+##     0.014
+##     0.000
 ## 
 ## Variances:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .y1                0.983    0.063   15.631    0.000    0.983    0.305
-##    .y2                0.944    0.056   16.896    0.000    0.944    0.300
-##    .y3                1.084    0.057   18.963    0.000    1.084    0.334
-##    .y4                1.001    0.064   15.764    0.000    1.001    0.307
-##    .fw                0.995    0.081   12.358    0.000    0.444    0.444
-##     x1                0.985    0.042   23.406    0.000    0.985    1.000
-##     x2                1.017    0.049   20.603    0.000    1.017    1.000
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .y1                0.983    0.063   15.631    0.000    0.983
+##    .y2                0.944    0.056   16.896    0.000    0.944
+##    .y3                1.084    0.057   18.963    0.000    1.084
+##    .y4                1.001    0.064   15.764    0.000    1.001
+##    .fw                0.995    0.081   12.358    0.000    0.444
+##     x1                0.985    0.042   23.406    0.000    0.985
+##     x2                1.017    0.049   20.603    0.000    1.017
+##   Std.all
+##     0.305
+##     0.300
+##     0.334
+##     0.307
+##     0.444
+##     1.000
+##     1.000
 ## 
 ## 
 ## Level 2 [clus]:
 ## 
 ## Latent Variables:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   fb =~                                                                 
-##     y1         (a)    1.000                               0.653    1.005
-##     y2         (b)    0.992    0.031   31.996    0.000    0.647    0.996
-##     y3         (c)    0.982    0.035   27.682    0.000    0.641    1.017
-##     y4         (d)    1.005    0.029   34.760    0.000    0.656    0.982
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   fb =~                                                        
+##     y1         (a)    1.000                               0.653
+##     y2         (b)    0.992    0.031   31.996    0.000    0.647
+##     y3         (c)    0.982    0.035   27.682    0.000    0.641
+##     y4         (d)    1.005    0.029   34.760    0.000    0.656
+##   Std.all
+##          
+##     1.005
+##     0.996
+##     1.017
+##     0.982
 ## 
 ## Regressions:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   fb ~                                                                  
-##     w                 0.333    0.076    4.389    0.000    0.510    0.461
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   fb ~                                                         
+##     w                 0.333    0.076    4.389    0.000    0.510
+##   Std.all
+##          
+##     0.461
 ## 
 ## Intercepts:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .y1               -0.083    0.072   -1.141    0.254   -0.083   -0.127
-##    .y2               -0.077    0.073   -1.064    0.287   -0.077   -0.119
-##    .y3               -0.045    0.069   -0.654    0.513   -0.045   -0.072
-##    .y4               -0.029    0.072   -0.400    0.689   -0.029   -0.043
-##     w                 0.006    0.086    0.070    0.944    0.006    0.007
-##    .fb                0.000                               0.000    0.000
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .y1               -0.083    0.072   -1.141    0.254   -0.083
+##    .y2               -0.077    0.073   -1.064    0.287   -0.077
+##    .y3               -0.045    0.069   -0.654    0.513   -0.045
+##    .y4               -0.029    0.072   -0.400    0.689   -0.029
+##     w                 0.006    0.086    0.070    0.944    0.006
+##    .fb                0.000                               0.000
+##   Std.all
+##    -0.127
+##    -0.119
+##    -0.072
+##    -0.043
+##     0.007
+##     0.000
 ## 
 ## Variances:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .y1               -0.004    0.016   -0.246    0.806   -0.004   -0.010
-##    .y2                0.003    0.019    0.177    0.859    0.003    0.008
-##    .y3               -0.013    0.020   -0.660    0.509   -0.013   -0.033
-##    .y4                0.016    0.020    0.778    0.436    0.016    0.036
-##    .fb                0.336    0.061    5.520    0.000    0.788    0.788
-##     w                 0.815    0.107    7.638    0.000    0.815    1.000</code></pre>
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .y1               -0.004    0.016   -0.246    0.806   -0.004
+##    .y2                0.003    0.019    0.177    0.859    0.003
+##    .y3               -0.013    0.020   -0.660    0.509   -0.013
+##    .y4                0.016    0.020    0.778    0.436    0.016
+##    .fb                0.336    0.061    5.520    0.000    0.788
+##     w                 0.815    0.107    7.638    0.000    0.815
+##   Std.all
+##    -0.010
+##     0.008
+##    -0.033
+##     0.036
+##     0.788
+##     1.000</code></pre>
 
 </div>
 </div>

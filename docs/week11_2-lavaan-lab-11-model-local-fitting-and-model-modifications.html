@@ -312,6 +312,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="11.4.1" data-path="week8_2-lavaan-lab-8-estimation-methods.html"><a href="week8_2-lavaan-lab-8-estimation-methods.html#ml-estimation"><i class="fa fa-check"></i><b>11.4.1</b> ML Estimation</a></li>
 <li class="chapter" data-level="11.4.2" data-path="week8_2-lavaan-lab-8-estimation-methods.html"><a href="week8_2-lavaan-lab-8-estimation-methods.html#wls-estimation"><i class="fa fa-check"></i><b>11.4.2</b> WLS Estimation</a></li>
 <li class="chapter" data-level="11.4.3" data-path="week8_2-lavaan-lab-8-estimation-methods.html"><a href="week8_2-lavaan-lab-8-estimation-methods.html#compare-the-parameter-estimates"><i class="fa fa-check"></i><b>11.4.3</b> Compare the parameter estimates</a></li>
+<li class="chapter" data-level="11.4.4" data-path="week8_2-lavaan-lab-8-estimation-methods.html"><a href="week8_2-lavaan-lab-8-estimation-methods.html#compare-the-standard-errors"><i class="fa fa-check"></i><b>11.4.4</b> Compare the standard errors:</a></li>
 </ul></li>
 <li class="chapter" data-level="11.5" data-path="week8_2-lavaan-lab-8-estimation-methods.html"><a href="week8_2-lavaan-lab-8-estimation-methods.html#part-v-improper-solutions"><i class="fa fa-check"></i><b>11.5</b> PART V: Improper Solutions</a></li>
 </ul></li>
@@ -511,26 +512,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>how to modify SEM models for improved fit using modification indices</li>
 </ul>
 <p>Load up the lavaan library:</p>
-<div class="sourceCode" id="cb522"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb522-1"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb522-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span></code></pre></div>
+<div class="sourceCode" id="cb535"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb535-1"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb535-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span></code></pre></div>
 <!------------------------------>
 <div id="part-i-local-fit-with-residuals" class="section level2 hasAnchor" number="14.1">
 <h2><span class="header-section-number">14.1</span> PART I: Local Fit with Residuals<a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#part-i-local-fit-with-residuals" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!------------------------------>
 <p>Let’s read in the new dataset ChiStatSimDat.csv:</p>
-<div class="sourceCode" id="cb523"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb523-1"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb523-1" aria-hidden="true" tabindex="-1"></a>cfaData<span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;ChiStatSimDat.csv&quot;</span>, <span class="at">header =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb536"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb536-1"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb536-1" aria-hidden="true" tabindex="-1"></a>cfaData<span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;ChiStatSimDat.csv&quot;</span>, <span class="at">header =</span> T)</span></code></pre></div>
 <p>Write out syntax for a two-factor CFA model:</p>
-<div class="sourceCode" id="cb524"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb524-1"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb524-1" aria-hidden="true" tabindex="-1"></a>fixedIndTwoFacSyntax <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
-<span id="cb524-2"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb524-2" aria-hidden="true" tabindex="-1"></a><span class="st">    #Factor Specification   </span></span>
-<span id="cb524-3"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb524-3" aria-hidden="true" tabindex="-1"></a><span class="st">    posAffect =~ glad + happy + cheerful </span></span>
-<span id="cb524-4"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb524-4" aria-hidden="true" tabindex="-1"></a><span class="st">    satisfaction =~ satisfied + content + comfortable</span></span>
-<span id="cb524-5"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb524-5" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb537"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb537-1"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb537-1" aria-hidden="true" tabindex="-1"></a>fixedIndTwoFacSyntax <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
+<span id="cb537-2"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb537-2" aria-hidden="true" tabindex="-1"></a><span class="st">    #Factor Specification   </span></span>
+<span id="cb537-3"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb537-3" aria-hidden="true" tabindex="-1"></a><span class="st">    posAffect =~ glad + happy + cheerful </span></span>
+<span id="cb537-4"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb537-4" aria-hidden="true" tabindex="-1"></a><span class="st">    satisfaction =~ satisfied + content + comfortable</span></span>
+<span id="cb537-5"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb537-5" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
 <p>Fit the two-factor model:</p>
-<div class="sourceCode" id="cb525"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb525-1"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb525-1" aria-hidden="true" tabindex="-1"></a>fixedIndTwoFacRun <span class="ot">=</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> fixedIndTwoFacSyntax, </span>
-<span id="cb525-2"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb525-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">data =</span> cfaData, </span>
-<span id="cb525-3"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb525-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">fixed.x=</span><span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb538"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb538-1"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb538-1" aria-hidden="true" tabindex="-1"></a>fixedIndTwoFacRun <span class="ot">=</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> fixedIndTwoFacSyntax, </span>
+<span id="cb538-2"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb538-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">data =</span> cfaData, </span>
+<span id="cb538-3"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb538-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">fixed.x=</span><span class="cn">FALSE</span>)</span></code></pre></div>
 <div id="unstandardized-residuals" class="section level3 hasAnchor" number="14.1.1">
 <h3><span class="header-section-number">14.1.1</span> Unstandardized residuals<a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#unstandardized-residuals" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb526"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb526-1"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb526-1" aria-hidden="true" tabindex="-1"></a><span class="fu">resid</span>(fixedIndTwoFacRun)<span class="sc">$</span>cov</span></code></pre></div>
+<div class="sourceCode" id="cb539"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb539-1"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb539-1" aria-hidden="true" tabindex="-1"></a><span class="fu">resid</span>(fixedIndTwoFacRun)<span class="sc">$</span>cov</span></code></pre></div>
 <pre><code>##             glad   happy  cherfl satsfd contnt cmfrtb
 ## glad         0.000                                   
 ## happy        0.017  0.000                            
@@ -542,7 +543,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="standardized-residuals" class="section level3 hasAnchor" number="14.1.2">
 <h3><span class="header-section-number">14.1.2</span> Standardized residuals<a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#standardized-residuals" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb528"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb528-1"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb528-1" aria-hidden="true" tabindex="-1"></a><span class="fu">resid</span>(fixedIndTwoFacRun, <span class="at">type =</span> <span class="st">&quot;standardized&quot;</span>)<span class="sc">$</span>cov</span></code></pre></div>
+<div class="sourceCode" id="cb541"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb541-1"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb541-1" aria-hidden="true" tabindex="-1"></a><span class="fu">resid</span>(fixedIndTwoFacRun, <span class="at">type =</span> <span class="st">&quot;standardized&quot;</span>)<span class="sc">$</span>cov</span></code></pre></div>
 <pre><code>##             glad   happy  cherfl satsfd contnt cmfrtb
 ## glad         0.000                                   
 ## happy        3.950  0.000                            
@@ -553,7 +554,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="normalized-residuals" class="section level3 hasAnchor" number="14.1.3">
 <h3><span class="header-section-number">14.1.3</span> Normalized residuals<a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#normalized-residuals" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb530"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb530-1"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb530-1" aria-hidden="true" tabindex="-1"></a><span class="fu">resid</span>(fixedIndTwoFacRun, <span class="at">type =</span> <span class="st">&quot;normalized&quot;</span>)<span class="sc">$</span>cov</span></code></pre></div>
+<div class="sourceCode" id="cb543"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb543-1"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb543-1" aria-hidden="true" tabindex="-1"></a><span class="fu">resid</span>(fixedIndTwoFacRun, <span class="at">type =</span> <span class="st">&quot;normalized&quot;</span>)<span class="sc">$</span>cov</span></code></pre></div>
 <pre><code>##             glad   happy  cherfl satsfd contnt cmfrtb
 ## glad         0.000                                   
 ## happy        0.117  0.000                            
@@ -573,9 +574,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="part-ii-modification-indices" class="section level2 hasAnchor" number="14.2">
 <h2><span class="header-section-number">14.2</span> PART II: Modification Indices<a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#part-ii-modification-indices" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!------------------------------>
-<div class="sourceCode" id="cb532"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb532-1"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb532-1" aria-hidden="true" tabindex="-1"></a><span class="fu">modindices</span>(fixedIndTwoFacRun)</span></code></pre></div>
+<div class="sourceCode" id="cb545"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb545-1"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb545-1" aria-hidden="true" tabindex="-1"></a><span class="fu">modindices</span>(fixedIndTwoFacRun)</span></code></pre></div>
 <p>Filter output and only show rows with a modification index value equal or higher than 1:</p>
-<div class="sourceCode" id="cb533"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb533-1"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb533-1" aria-hidden="true" tabindex="-1"></a><span class="fu">modindices</span>(fixedIndTwoFacRun, <span class="at">minimum.value =</span> <span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb546"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb546-1"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb546-1" aria-hidden="true" tabindex="-1"></a><span class="fu">modindices</span>(fixedIndTwoFacRun, <span class="at">minimum.value =</span> <span class="dv">10</span>)</span></code></pre></div>
 <pre><code>##             lhs op         rhs     mi    epc sepc.lv sepc.all sepc.nox
 ## 17    posAffect =~     content 17.031 -0.718  -0.801   -0.587   -0.587
 ## 18    posAffect =~ comfortable 14.926  0.500   0.558    0.487    0.487
@@ -588,7 +589,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 34    satisfied ~~     content 14.926  0.303   0.303    1.151    1.151
 ## 35    satisfied ~~ comfortable 17.030 -0.181  -0.181   -0.414   -0.414</code></pre>
 <p>Sort the output using the values of the modification index values. Higher values appear first:</p>
-<div class="sourceCode" id="cb535"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb535-1"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb535-1" aria-hidden="true" tabindex="-1"></a><span class="fu">modindices</span>(fixedIndTwoFacRun, <span class="at">minimum.value =</span> <span class="dv">10</span>, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb548"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb548-1"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb548-1" aria-hidden="true" tabindex="-1"></a><span class="fu">modindices</span>(fixedIndTwoFacRun, <span class="at">minimum.value =</span> <span class="dv">10</span>, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>##             lhs op         rhs     mi    epc sepc.lv sepc.all sepc.nox
 ## 33     cheerful ~~ comfortable 45.215  0.253   0.253    0.521    0.521
 ## 21 satisfaction =~    cheerful 20.960  0.456   0.526    0.501    0.501
@@ -607,17 +608,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <div id="modified-model-1" class="section level3 hasAnchor" number="14.2.1">
 <h3><span class="header-section-number">14.2.1</span> Modified Model 1:<a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#modified-model-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb537"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb537-1"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb537-1" aria-hidden="true" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
-<span id="cb537-2"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb537-2" aria-hidden="true" tabindex="-1"></a><span class="st">    posAffect =~ glad + happy + cheerful </span></span>
-<span id="cb537-3"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb537-3" aria-hidden="true" tabindex="-1"></a><span class="st">    satisfaction =~ satisfied + content + comfortable  </span></span>
-<span id="cb537-4"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb537-4" aria-hidden="true" tabindex="-1"></a><span class="st">    </span></span>
-<span id="cb537-5"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb537-5" aria-hidden="true" tabindex="-1"></a><span class="st">    #residal covariance</span></span>
-<span id="cb537-6"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb537-6" aria-hidden="true" tabindex="-1"></a><span class="st">    cheerful ~~ comfortable</span></span>
-<span id="cb537-7"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb537-7" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
-<div class="sourceCode" id="cb538"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb538-1"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb538-1" aria-hidden="true" tabindex="-1"></a>mod1_fit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(mod1, <span class="at">data =</span> cfaData, </span>
-<span id="cb538-2"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb538-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">std.lv =</span> <span class="cn">TRUE</span>, <span class="at">fixed.x=</span><span class="cn">FALSE</span>)</span>
-<span id="cb538-3"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb538-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb538-4"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb538-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod1_fit, <span class="at">fit.measures =</span> T, <span class="at">standardized =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb550"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb550-1"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb550-1" aria-hidden="true" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
+<span id="cb550-2"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb550-2" aria-hidden="true" tabindex="-1"></a><span class="st">    posAffect =~ glad + happy + cheerful </span></span>
+<span id="cb550-3"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb550-3" aria-hidden="true" tabindex="-1"></a><span class="st">    satisfaction =~ satisfied + content + comfortable  </span></span>
+<span id="cb550-4"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb550-4" aria-hidden="true" tabindex="-1"></a><span class="st">    </span></span>
+<span id="cb550-5"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb550-5" aria-hidden="true" tabindex="-1"></a><span class="st">    #residal covariance</span></span>
+<span id="cb550-6"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb550-6" aria-hidden="true" tabindex="-1"></a><span class="st">    cheerful ~~ comfortable</span></span>
+<span id="cb550-7"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb550-7" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb551"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb551-1"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb551-1" aria-hidden="true" tabindex="-1"></a>mod1_fit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(mod1, <span class="at">data =</span> cfaData, </span>
+<span id="cb551-2"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb551-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">std.lv =</span> <span class="cn">TRUE</span>, <span class="at">fixed.x=</span><span class="cn">FALSE</span>)</span>
+<span id="cb551-3"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb551-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb551-4"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb551-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod1_fit, <span class="at">fit.measures =</span> T, <span class="at">standardized =</span> T)</span></code></pre></div>
 <pre><code>## lavaan 0.6-12 ended normally after 29 iterations
 ## 
 ##   Estimator                                         ML
@@ -670,44 +671,70 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##   Information saturated (h1) model          Structured
 ## 
 ## Latent Variables:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   posAffect =~                                                          
-##     glad              1.111    0.064   17.475    0.000    1.111    0.940
-##     happy             1.221    0.073   16.802    0.000    1.221    0.919
-##     cheerful          0.801    0.060   13.392    0.000    0.801    0.790
-##   satisfaction =~                                                       
-##     satisfied         1.161    0.071   16.389    0.000    1.161    0.910
-##     content           1.262    0.075   16.835    0.000    1.262    0.925
-##     comfortable       0.750    0.069   10.821    0.000    0.750    0.679
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   posAffect =~                                                 
+##     glad              1.111    0.064   17.475    0.000    1.111
+##     happy             1.221    0.073   16.802    0.000    1.221
+##     cheerful          0.801    0.060   13.392    0.000    0.801
+##   satisfaction =~                                              
+##     satisfied         1.161    0.071   16.389    0.000    1.161
+##     content           1.262    0.075   16.835    0.000    1.262
+##     comfortable       0.750    0.069   10.821    0.000    0.750
+##   Std.all
+##          
+##     0.940
+##     0.919
+##     0.790
+##          
+##     0.910
+##     0.925
+##     0.679
 ## 
 ## Covariances:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##  .cheerful ~~                                                           
-##    .comfortable       0.270    0.043    6.230    0.000    0.270    0.536
-##   posAffect ~~                                                          
-##     satisfaction      0.876    0.022   39.298    0.000    0.876    0.876
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##  .cheerful ~~                                                  
+##    .comfortable       0.270    0.043    6.230    0.000    0.270
+##   posAffect ~~                                                 
+##     satisfaction      0.876    0.022   39.298    0.000    0.876
+##   Std.all
+##          
+##     0.536
+##          
+##     0.876
 ## 
 ## Variances:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .glad              0.163    0.031    5.200    0.000    0.163    0.116
-##    .happy             0.274    0.043    6.406    0.000    0.274    0.155
-##    .cheerful          0.386    0.043    8.990    0.000    0.386    0.375
-##    .satisfied         0.281    0.046    6.106    0.000    0.281    0.172
-##    .content           0.271    0.050    5.365    0.000    0.271    0.145
-##    .comfortable       0.657    0.070    9.380    0.000    0.657    0.539
-##     posAffect         1.000                               1.000    1.000
-##     satisfaction      1.000                               1.000    1.000</code></pre>
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .glad              0.163    0.031    5.200    0.000    0.163
+##    .happy             0.274    0.043    6.406    0.000    0.274
+##    .cheerful          0.386    0.043    8.990    0.000    0.386
+##    .satisfied         0.281    0.046    6.106    0.000    0.281
+##    .content           0.271    0.050    5.365    0.000    0.271
+##    .comfortable       0.657    0.070    9.380    0.000    0.657
+##     posAffect         1.000                               1.000
+##     satisfaction      1.000                               1.000
+##   Std.all
+##     0.116
+##     0.155
+##     0.375
+##     0.172
+##     0.145
+##     0.539
+##     1.000
+##     1.000</code></pre>
 <p>Model comparison:</p>
-<div class="sourceCode" id="cb540"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb540-1"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb540-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mod1_fit, fixedIndTwoFacRun)</span></code></pre></div>
+<div class="sourceCode" id="cb553"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb553-1"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb553-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mod1_fit, fixedIndTwoFacRun)</span></code></pre></div>
 <pre><code>## Chi-Squared Difference Test
 ## 
-##                   Df    AIC    BIC   Chisq Chisq diff Df diff Pr(&gt;Chisq)    
-## mod1_fit           7 2800.9 2847.0  60.048                                  
-## fixedIndTwoFacRun  8 2852.4 2895.3 113.638      53.59       1   2.47e-13 ***
+##                   Df    AIC    BIC   Chisq Chisq diff Df diff
+## mod1_fit           7 2800.9 2847.0  60.048                   
+## fixedIndTwoFacRun  8 2852.4 2895.3 113.638      53.59       1
+##                   Pr(&gt;Chisq)    
+## mod1_fit                        
+## fixedIndTwoFacRun   2.47e-13 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>Keep modifying mod1:</p>
-<div class="sourceCode" id="cb542"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb542-1"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb542-1" aria-hidden="true" tabindex="-1"></a><span class="fu">modindices</span>(mod1_fit, <span class="at">minimum.value =</span> <span class="dv">10</span>, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb555"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb555-1"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb555-1" aria-hidden="true" tabindex="-1"></a><span class="fu">modindices</span>(mod1_fit, <span class="at">minimum.value =</span> <span class="dv">10</span>, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>##             lhs op         rhs     mi    epc sepc.lv sepc.all sepc.nox
 ## 22 satisfaction =~    cheerful 27.353  0.612   0.612    0.604    0.604
 ## 23         glad ~~       happy 27.353  0.275   0.275    1.304    1.304
@@ -722,18 +749,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="modified-model-2_1" class="section level3 hasAnchor" number="14.2.2">
 <h3><span class="header-section-number">14.2.2</span> Modified Model 2_1:<a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#modified-model-2_1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb544"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb544-1"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb544-1" aria-hidden="true" tabindex="-1"></a>mod2_1 <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
-<span id="cb544-2"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb544-2" aria-hidden="true" tabindex="-1"></a><span class="st">  # cross loading</span></span>
-<span id="cb544-3"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb544-3" aria-hidden="true" tabindex="-1"></a><span class="st">    posAffect =~ glad + happy + cheerful </span></span>
-<span id="cb544-4"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb544-4" aria-hidden="true" tabindex="-1"></a><span class="st">    satisfaction =~ cheerful + satisfied + content + comfortable  # cheerful also loads on satisfaction</span></span>
-<span id="cb544-5"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb544-5" aria-hidden="true" tabindex="-1"></a><span class="st">    </span></span>
-<span id="cb544-6"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb544-6" aria-hidden="true" tabindex="-1"></a><span class="st">    #residal covariance</span></span>
-<span id="cb544-7"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb544-7" aria-hidden="true" tabindex="-1"></a><span class="st">    cheerful ~~ comfortable</span></span>
-<span id="cb544-8"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb544-8" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
-<div class="sourceCode" id="cb545"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb545-1"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb545-1" aria-hidden="true" tabindex="-1"></a>mod2_1_fit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(mod2_1, <span class="at">data =</span> cfaData, </span>
-<span id="cb545-2"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb545-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">std.lv =</span> <span class="cn">TRUE</span>, <span class="at">fixed.x=</span><span class="cn">FALSE</span>)</span>
-<span id="cb545-3"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb545-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb545-4"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb545-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod2_1_fit, <span class="at">fit.measures =</span> T, <span class="at">standardized =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb557"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb557-1"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb557-1" aria-hidden="true" tabindex="-1"></a>mod2_1 <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
+<span id="cb557-2"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb557-2" aria-hidden="true" tabindex="-1"></a><span class="st">  # cross loading</span></span>
+<span id="cb557-3"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb557-3" aria-hidden="true" tabindex="-1"></a><span class="st">    posAffect =~ glad + happy + cheerful </span></span>
+<span id="cb557-4"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb557-4" aria-hidden="true" tabindex="-1"></a><span class="st">    satisfaction =~ cheerful + satisfied + content + comfortable  # cheerful also loads on satisfaction</span></span>
+<span id="cb557-5"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb557-5" aria-hidden="true" tabindex="-1"></a><span class="st">    </span></span>
+<span id="cb557-6"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb557-6" aria-hidden="true" tabindex="-1"></a><span class="st">    #residal covariance</span></span>
+<span id="cb557-7"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb557-7" aria-hidden="true" tabindex="-1"></a><span class="st">    cheerful ~~ comfortable</span></span>
+<span id="cb557-8"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb557-8" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb558"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb558-1"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb558-1" aria-hidden="true" tabindex="-1"></a>mod2_1_fit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(mod2_1, <span class="at">data =</span> cfaData, </span>
+<span id="cb558-2"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb558-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">std.lv =</span> <span class="cn">TRUE</span>, <span class="at">fixed.x=</span><span class="cn">FALSE</span>)</span>
+<span id="cb558-3"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb558-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb558-4"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb558-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod2_1_fit, <span class="at">fit.measures =</span> T, <span class="at">standardized =</span> T)</span></code></pre></div>
 <pre><code>## lavaan 0.6-12 ended normally after 27 iterations
 ## 
 ##   Estimator                                         ML
@@ -786,36 +813,60 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##   Information saturated (h1) model          Structured
 ## 
 ## Latent Variables:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   posAffect =~                                                          
-##     glad              1.128    0.063   17.786    0.000    1.128    0.954
-##     happy             1.223    0.073   16.752    0.000    1.223    0.921
-##     cheerful          0.389    0.084    4.624    0.000    0.389    0.374
-##   satisfaction =~                                                       
-##     cheerful          0.483    0.089    5.400    0.000    0.483    0.465
-##     satisfied         1.151    0.071   16.168    0.000    1.151    0.902
-##     content           1.284    0.074   17.339    0.000    1.284    0.941
-##     comfortable       0.815    0.072   11.361    0.000    0.815    0.712
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   posAffect =~                                                 
+##     glad              1.128    0.063   17.786    0.000    1.128
+##     happy             1.223    0.073   16.752    0.000    1.223
+##     cheerful          0.389    0.084    4.624    0.000    0.389
+##   satisfaction =~                                              
+##     cheerful          0.483    0.089    5.400    0.000    0.483
+##     satisfied         1.151    0.071   16.168    0.000    1.151
+##     content           1.284    0.074   17.339    0.000    1.284
+##     comfortable       0.815    0.072   11.361    0.000    0.815
+##   Std.all
+##          
+##     0.954
+##     0.921
+##     0.374
+##          
+##     0.465
+##     0.902
+##     0.941
+##     0.712
 ## 
 ## Covariances:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##  .cheerful ~~                                                           
-##    .comfortable       0.262    0.043    6.055    0.000    0.262    0.529
-##   posAffect ~~                                                          
-##     satisfaction      0.835    0.027   30.624    0.000    0.835    0.835
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##  .cheerful ~~                                                  
+##    .comfortable       0.262    0.043    6.055    0.000    0.262
+##   posAffect ~~                                                 
+##     satisfaction      0.835    0.027   30.624    0.000    0.835
+##   Std.all
+##          
+##     0.529
+##          
+##     0.835
 ## 
 ## Variances:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .glad              0.126    0.035    3.618    0.000    0.126    0.090
-##    .happy             0.269    0.047    5.747    0.000    0.269    0.152
-##    .cheerful          0.380    0.041    9.270    0.000    0.380    0.353
-##    .satisfied         0.303    0.047    6.458    0.000    0.303    0.186
-##    .content           0.215    0.049    4.409    0.000    0.215    0.115
-##    .comfortable       0.646    0.070    9.287    0.000    0.646    0.493
-##     posAffect         1.000                               1.000    1.000
-##     satisfaction      1.000                               1.000    1.000</code></pre>
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .glad              0.126    0.035    3.618    0.000    0.126
+##    .happy             0.269    0.047    5.747    0.000    0.269
+##    .cheerful          0.380    0.041    9.270    0.000    0.380
+##    .satisfied         0.303    0.047    6.458    0.000    0.303
+##    .content           0.215    0.049    4.409    0.000    0.215
+##    .comfortable       0.646    0.070    9.287    0.000    0.646
+##     posAffect         1.000                               1.000
+##     satisfaction      1.000                               1.000
+##   Std.all
+##     0.090
+##     0.152
+##     0.353
+##     0.186
+##     0.115
+##     0.493
+##     1.000
+##     1.000</code></pre>
 <p>Model comparison:</p>
-<div class="sourceCode" id="cb547"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb547-1"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb547-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mod2_1_fit, mod1_fit)</span></code></pre></div>
+<div class="sourceCode" id="cb560"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb560-1"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb560-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mod2_1_fit, mod1_fit)</span></code></pre></div>
 <pre><code>## Chi-Squared Difference Test
 ## 
 ##            Df    AIC    BIC  Chisq Chisq diff Df diff Pr(&gt;Chisq)    
@@ -826,18 +877,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="modified-model-2_2" class="section level3 hasAnchor" number="14.2.3">
 <h3><span class="header-section-number">14.2.3</span> Modified Model 2_2:<a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#modified-model-2_2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb549"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb549-1"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb549-1" aria-hidden="true" tabindex="-1"></a>mod2_2 <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
-<span id="cb549-2"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb549-2" aria-hidden="true" tabindex="-1"></a><span class="st">    posAffect =~ glad + happy + cheerful </span></span>
-<span id="cb549-3"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb549-3" aria-hidden="true" tabindex="-1"></a><span class="st">    satisfaction =~ satisfied + content + comfortable </span></span>
-<span id="cb549-4"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb549-4" aria-hidden="true" tabindex="-1"></a><span class="st">    </span></span>
-<span id="cb549-5"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb549-5" aria-hidden="true" tabindex="-1"></a><span class="st">    #residal covariance</span></span>
-<span id="cb549-6"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb549-6" aria-hidden="true" tabindex="-1"></a><span class="st">    cheerful ~~ comfortable</span></span>
-<span id="cb549-7"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb549-7" aria-hidden="true" tabindex="-1"></a><span class="st">    glad ~~ happy</span></span>
-<span id="cb549-8"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb549-8" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
-<div class="sourceCode" id="cb550"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb550-1"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb550-1" aria-hidden="true" tabindex="-1"></a>mod2_2_fit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(mod2_2, <span class="at">data =</span> cfaData, </span>
-<span id="cb550-2"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb550-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">std.lv =</span> <span class="cn">TRUE</span>, <span class="at">fixed.x=</span><span class="cn">FALSE</span>)</span>
-<span id="cb550-3"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb550-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb550-4"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb550-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod2_2_fit, <span class="at">fit.measures =</span> T, <span class="at">standardized =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb562"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb562-1"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb562-1" aria-hidden="true" tabindex="-1"></a>mod2_2 <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
+<span id="cb562-2"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb562-2" aria-hidden="true" tabindex="-1"></a><span class="st">    posAffect =~ glad + happy + cheerful </span></span>
+<span id="cb562-3"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb562-3" aria-hidden="true" tabindex="-1"></a><span class="st">    satisfaction =~ satisfied + content + comfortable </span></span>
+<span id="cb562-4"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb562-4" aria-hidden="true" tabindex="-1"></a><span class="st">    </span></span>
+<span id="cb562-5"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb562-5" aria-hidden="true" tabindex="-1"></a><span class="st">    #residal covariance</span></span>
+<span id="cb562-6"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb562-6" aria-hidden="true" tabindex="-1"></a><span class="st">    cheerful ~~ comfortable</span></span>
+<span id="cb562-7"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb562-7" aria-hidden="true" tabindex="-1"></a><span class="st">    glad ~~ happy</span></span>
+<span id="cb562-8"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb562-8" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb563"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb563-1"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb563-1" aria-hidden="true" tabindex="-1"></a>mod2_2_fit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(mod2_2, <span class="at">data =</span> cfaData, </span>
+<span id="cb563-2"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb563-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">std.lv =</span> <span class="cn">TRUE</span>, <span class="at">fixed.x=</span><span class="cn">FALSE</span>)</span>
+<span id="cb563-3"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb563-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb563-4"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb563-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod2_2_fit, <span class="at">fit.measures =</span> T, <span class="at">standardized =</span> T)</span></code></pre></div>
 <pre><code>## lavaan 0.6-12 ended normally after 31 iterations
 ## 
 ##   Estimator                                         ML
@@ -890,37 +941,62 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##   Information saturated (h1) model          Structured
 ## 
 ## Latent Variables:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   posAffect =~                                                          
-##     glad              1.020    0.069   14.784    0.000    1.020    0.863
-##     happy             1.107    0.079   13.947    0.000    1.107    0.833
-##     cheerful          0.875    0.061   14.323    0.000    0.875    0.843
-##   satisfaction =~                                                       
-##     satisfied         1.151    0.071   16.168    0.000    1.151    0.902
-##     content           1.284    0.074   17.339    0.000    1.284    0.941
-##     comfortable       0.815    0.072   11.361    0.000    0.815    0.712
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   posAffect =~                                                 
+##     glad              1.020    0.069   14.784    0.000    1.020
+##     happy             1.107    0.079   13.947    0.000    1.107
+##     cheerful          0.875    0.061   14.323    0.000    0.875
+##   satisfaction =~                                              
+##     satisfied         1.151    0.071   16.168    0.000    1.151
+##     content           1.284    0.074   17.339    0.000    1.284
+##     comfortable       0.815    0.072   11.361    0.000    0.815
+##   Std.all
+##          
+##     0.863
+##     0.833
+##     0.843
+##          
+##     0.902
+##     0.941
+##     0.712
 ## 
 ## Covariances:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##  .cheerful ~~                                                           
-##    .comfortable       0.262    0.043    6.055    0.000    0.262    0.584
-##  .glad ~~                                                               
-##    .happy             0.250    0.055    4.563    0.000    0.250    0.569
-##   posAffect ~~                                                          
-##     satisfaction      0.923    0.020   46.285    0.000    0.923    0.923
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##  .cheerful ~~                                                  
+##    .comfortable       0.262    0.043    6.055    0.000    0.262
+##  .glad ~~                                                      
+##    .happy             0.250    0.055    4.563    0.000    0.250
+##   posAffect ~~                                                 
+##     satisfaction      0.923    0.020   46.285    0.000    0.923
+##   Std.all
+##          
+##     0.584
+##          
+##     0.569
+##          
+##     0.923
 ## 
 ## Variances:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .glad              0.356    0.053    6.679    0.000    0.356    0.255
-##    .happy             0.540    0.074    7.249    0.000    0.540    0.306
-##    .cheerful          0.312    0.043    7.197    0.000    0.312    0.290
-##    .satisfied         0.303    0.047    6.458    0.000    0.303    0.186
-##    .content           0.215    0.049    4.409    0.000    0.215    0.115
-##    .comfortable       0.646    0.070    9.287    0.000    0.646    0.493
-##     posAffect         1.000                               1.000    1.000
-##     satisfaction      1.000                               1.000    1.000</code></pre>
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .glad              0.356    0.053    6.679    0.000    0.356
+##    .happy             0.540    0.074    7.249    0.000    0.540
+##    .cheerful          0.312    0.043    7.197    0.000    0.312
+##    .satisfied         0.303    0.047    6.458    0.000    0.303
+##    .content           0.215    0.049    4.409    0.000    0.215
+##    .comfortable       0.646    0.070    9.287    0.000    0.646
+##     posAffect         1.000                               1.000
+##     satisfaction      1.000                               1.000
+##   Std.all
+##     0.255
+##     0.306
+##     0.290
+##     0.186
+##     0.115
+##     0.493
+##     1.000
+##     1.000</code></pre>
 <p>Model comparison:</p>
-<div class="sourceCode" id="cb552"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb552-1"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb552-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mod2_2_fit, mod1_fit)</span></code></pre></div>
+<div class="sourceCode" id="cb565"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb565-1"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb565-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mod2_2_fit, mod1_fit)</span></code></pre></div>
 <pre><code>## Chi-Squared Difference Test
 ## 
 ##            Df    AIC    BIC  Chisq Chisq diff Df diff Pr(&gt;Chisq)    
@@ -929,24 +1005,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>Keep modifying 2_2:</p>
-<div class="sourceCode" id="cb554"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb554-1"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb554-1" aria-hidden="true" tabindex="-1"></a><span class="fu">modindices</span>(mod2_2_fit, <span class="at">minimum.value =</span> <span class="dv">10</span>, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb567"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb567-1"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb567-1" aria-hidden="true" tabindex="-1"></a><span class="fu">modindices</span>(mod2_2_fit, <span class="at">minimum.value =</span> <span class="dv">10</span>, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>##      lhs op     rhs    mi    epc sepc.lv sepc.all sepc.nox
 ## 30 happy ~~ content 14.77 -0.117  -0.117   -0.344   -0.344</code></pre>
 </div>
 <div id="modified-model-3" class="section level3 hasAnchor" number="14.2.4">
 <h3><span class="header-section-number">14.2.4</span> Modified Model 3:<a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#modified-model-3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb556"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb556-1"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb556-1" aria-hidden="true" tabindex="-1"></a>mod3 <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
-<span id="cb556-2"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb556-2" aria-hidden="true" tabindex="-1"></a><span class="st">    posAffect =~ glad + happy + cheerful </span></span>
-<span id="cb556-3"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb556-3" aria-hidden="true" tabindex="-1"></a><span class="st">    satisfaction =~ satisfied + content + comfortable </span></span>
-<span id="cb556-4"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb556-4" aria-hidden="true" tabindex="-1"></a><span class="st">    </span></span>
-<span id="cb556-5"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb556-5" aria-hidden="true" tabindex="-1"></a><span class="st">    #residal covariance</span></span>
-<span id="cb556-6"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb556-6" aria-hidden="true" tabindex="-1"></a><span class="st">    cheerful ~~ comfortable</span></span>
-<span id="cb556-7"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb556-7" aria-hidden="true" tabindex="-1"></a><span class="st">    glad ~~ happy</span></span>
-<span id="cb556-8"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb556-8" aria-hidden="true" tabindex="-1"></a><span class="st">    content ~~ happy</span></span>
-<span id="cb556-9"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb556-9" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
-<div class="sourceCode" id="cb557"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb557-1"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb557-1" aria-hidden="true" tabindex="-1"></a>mod3_fit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(mod3, <span class="at">data =</span> cfaData, <span class="at">std.lv =</span> <span class="cn">TRUE</span>, <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb557-2"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb557-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb557-3"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb557-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod3_fit, <span class="at">fit.measures =</span> T, <span class="at">standardized =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb569"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb569-1"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb569-1" aria-hidden="true" tabindex="-1"></a>mod3 <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
+<span id="cb569-2"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb569-2" aria-hidden="true" tabindex="-1"></a><span class="st">    posAffect =~ glad + happy + cheerful </span></span>
+<span id="cb569-3"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb569-3" aria-hidden="true" tabindex="-1"></a><span class="st">    satisfaction =~ satisfied + content + comfortable </span></span>
+<span id="cb569-4"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb569-4" aria-hidden="true" tabindex="-1"></a><span class="st">    </span></span>
+<span id="cb569-5"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb569-5" aria-hidden="true" tabindex="-1"></a><span class="st">    #residal covariance</span></span>
+<span id="cb569-6"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb569-6" aria-hidden="true" tabindex="-1"></a><span class="st">    cheerful ~~ comfortable</span></span>
+<span id="cb569-7"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb569-7" aria-hidden="true" tabindex="-1"></a><span class="st">    glad ~~ happy</span></span>
+<span id="cb569-8"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb569-8" aria-hidden="true" tabindex="-1"></a><span class="st">    content ~~ happy</span></span>
+<span id="cb569-9"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb569-9" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb570"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb570-1"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb570-1" aria-hidden="true" tabindex="-1"></a>mod3_fit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(mod3, <span class="at">data =</span> cfaData, <span class="at">std.lv =</span> <span class="cn">TRUE</span>, <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb570-2"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb570-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb570-3"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb570-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod3_fit, <span class="at">fit.measures =</span> T, <span class="at">standardized =</span> T)</span></code></pre></div>
 <pre><code>## lavaan 0.6-12 ended normally after 33 iterations
 ## 
 ##   Estimator                                         ML
@@ -999,39 +1075,66 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##   Information saturated (h1) model          Structured
 ## 
 ## Latent Variables:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   posAffect =~                                                          
-##     glad              1.017    0.069   14.710    0.000    1.017    0.860
-##     happy             1.152    0.077   14.869    0.000    1.152    0.873
-##     cheerful          0.871    0.061   14.298    0.000    0.871    0.838
-##   satisfaction =~                                                       
-##     satisfied         1.141    0.071   16.002    0.000    1.141    0.895
-##     content           1.293    0.074   17.585    0.000    1.293    0.948
-##     comfortable       0.814    0.071   11.427    0.000    0.814    0.711
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   posAffect =~                                                 
+##     glad              1.017    0.069   14.710    0.000    1.017
+##     happy             1.152    0.077   14.869    0.000    1.152
+##     cheerful          0.871    0.061   14.298    0.000    0.871
+##   satisfaction =~                                              
+##     satisfied         1.141    0.071   16.002    0.000    1.141
+##     content           1.293    0.074   17.585    0.000    1.293
+##     comfortable       0.814    0.071   11.427    0.000    0.814
+##   Std.all
+##          
+##     0.860
+##     0.873
+##     0.838
+##          
+##     0.895
+##     0.948
+##     0.711
 ## 
 ## Covariances:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##  .cheerful ~~                                                           
-##    .comfortable       0.266    0.042    6.285    0.000    0.266    0.583
-##  .glad ~~                                                               
-##    .happy             0.187    0.055    3.384    0.001    0.187    0.484
-##  .happy ~~                                                              
-##    .content          -0.134    0.031   -4.358    0.000   -0.134   -0.484
-##   posAffect ~~                                                          
-##     satisfaction      0.928    0.020   47.200    0.000    0.928    0.928
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##  .cheerful ~~                                                  
+##    .comfortable       0.266    0.042    6.285    0.000    0.266
+##  .glad ~~                                                      
+##    .happy             0.187    0.055    3.384    0.001    0.187
+##  .happy ~~                                                     
+##    .content          -0.134    0.031   -4.358    0.000   -0.134
+##   posAffect ~~                                                 
+##     satisfaction      0.928    0.020   47.200    0.000    0.928
+##   Std.all
+##          
+##     0.583
+##          
+##     0.484
+##          
+##    -0.484
+##          
+##     0.928
 ## 
 ## Variances:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .glad              0.364    0.054    6.787    0.000    0.364    0.260
-##    .happy             0.412    0.073    5.661    0.000    0.412    0.237
-##    .cheerful          0.321    0.042    7.645    0.000    0.321    0.298
-##    .satisfied         0.325    0.046    7.060    0.000    0.325    0.200
-##    .content           0.187    0.048    3.901    0.000    0.187    0.101
-##    .comfortable       0.647    0.068    9.474    0.000    0.647    0.494
-##     posAffect         1.000                               1.000    1.000
-##     satisfaction      1.000                               1.000    1.000</code></pre>
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .glad              0.364    0.054    6.787    0.000    0.364
+##    .happy             0.412    0.073    5.661    0.000    0.412
+##    .cheerful          0.321    0.042    7.645    0.000    0.321
+##    .satisfied         0.325    0.046    7.060    0.000    0.325
+##    .content           0.187    0.048    3.901    0.000    0.187
+##    .comfortable       0.647    0.068    9.474    0.000    0.647
+##     posAffect         1.000                               1.000
+##     satisfaction      1.000                               1.000
+##   Std.all
+##     0.260
+##     0.237
+##     0.298
+##     0.200
+##     0.101
+##     0.494
+##     1.000
+##     1.000</code></pre>
 <p>Model comparison:</p>
-<div class="sourceCode" id="cb559"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb559-1"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb559-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mod3_fit, mod2_2_fit)</span></code></pre></div>
+<div class="sourceCode" id="cb572"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb572-1"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb572-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mod3_fit, mod2_2_fit)</span></code></pre></div>
 <pre><code>## Chi-Squared Difference Test
 ## 
 ##            Df    AIC    BIC  Chisq Chisq diff Df diff Pr(&gt;Chisq)    
@@ -1040,8 +1143,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>Keep modifying mod3:</p>
-<div class="sourceCode" id="cb561"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb561-1"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb561-1" aria-hidden="true" tabindex="-1"></a><span class="fu">modindices</span>(mod3_fit, <span class="at">minimum.value =</span> <span class="dv">10</span>, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<pre><code>## [1] lhs      op       rhs      mi       epc      sepc.lv  sepc.all sepc.nox
+<div class="sourceCode" id="cb574"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb574-1"><a href="week11_2-lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb574-1" aria-hidden="true" tabindex="-1"></a><span class="fu">modindices</span>(mod3_fit, <span class="at">minimum.value =</span> <span class="dv">10</span>, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>## [1] lhs      op       rhs      mi       epc      sepc.lv  sepc.all
+## [8] sepc.nox
 ## &lt;0 rows&gt; (or 0-length row.names)</code></pre>
 <p>No suggestions could decrease the model chisquare by more than 10.</p>
 
