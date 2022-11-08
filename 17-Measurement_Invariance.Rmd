@@ -1,4 +1,4 @@
-# Week13_1: Lavaan Lab 14 Measurement Invariance
+# Lavaan Lab 14: Measurement Invariance
 
 For this lab, we will run the MG-CFA analyses in class using simulated data based on Todd Little's positive affect example.
 

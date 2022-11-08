@@ -1,4 +1,4 @@
-# Week13_2: Lavaan Lab 15 MIMIC & Longitudinal Invariance
+# Lavaan Lab 15: MIMIC & Longitudinal Invariance
 
 + For this lab, we will run Partial Invariance Test and MIMIC Models using simulated data based on Todd Little's positive affect example.
 + We will also test longitudinal measurement invariance using a longitudinal dataset from semTools

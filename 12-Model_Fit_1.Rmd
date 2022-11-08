@@ -1,4 +1,4 @@
-# Week10_2: Lavaan Lab 9 Model Fit Part I (Test Statistics)
+# Lavaan Lab 9: Model Fit Part I (Test Statistics)
 
 
 In this lab, we will learn: 

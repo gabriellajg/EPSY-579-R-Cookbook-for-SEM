@@ -1,4 +1,4 @@
-# Week15_2: Lavaan Lab 18 CFA of MTMM Matrix
+# Lavaan Lab 18: CFA of MTMM Matrix
 
 In this lab, we will:
     

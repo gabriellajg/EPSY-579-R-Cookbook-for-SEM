@@ -1,4 +1,4 @@
-# Week11_2: Lavaan Lab 11 Model Local Fitting and Model Modifications
+# Lavaan Lab 11: Model Local Fitting and Model Modifications
 
 
 In this lab, we will learn: 
@@ -38,6 +38,9 @@ Fit the two-factor model:
 fixedIndTwoFacRun = lavaan::sem(model = fixedIndTwoFacSyntax, 
                         data = cfaData, 
                         fixed.x=FALSE)
+# , estimator = 'MLMV'
+summary(fixedIndTwoFacRun, standardized = T, fit.measures = T)
+
 ```
 
 ### Unstandardized residuals
@@ -193,11 +196,13 @@ mod3 <- "
 	cheerful ~~ comfortable
 	glad ~~ happy
 	content ~~ happy
+	glad ~~ content
 "
 ```
 
 ```{r}
-mod3_fit <- lavaan::sem(mod3, data = cfaData, std.lv = TRUE, fixed.x = FALSE)
+mod3_fit <- lavaan::sem(mod3, data = cfaData, 
+                        std.lv = TRUE, fixed.x = FALSE)
 
 summary(mod3_fit, fit.measures = T, standardized = T)
 ```
@@ -211,7 +216,7 @@ anova(mod3_fit, mod2_2_fit)
 Keep modifying mod3:
 
 ```{r}
-modindices(mod3_fit, minimum.value = 10, sort = TRUE)
+modindices(mod3_fit, minimum.value = 1, sort = TRUE)
 ```
 
 No suggestions could decrease the model chisquare by more than 10. 

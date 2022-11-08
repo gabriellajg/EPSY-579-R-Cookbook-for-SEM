@@ -1,4 +1,4 @@
-# Lavaan Lab 1 Path Analysis Model
+# Lavaan Lab 1: Path Analysis Model
 
 ```{r set-options, echo=FALSE, cache=FALSE, message=FALSE}
 library(knitr)

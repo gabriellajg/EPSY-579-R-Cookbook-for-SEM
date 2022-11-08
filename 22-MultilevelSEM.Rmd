@@ -1,4 +1,4 @@
-# Week16: Lavaan Lab 19 Multilevel SEM
+# Lavaan Lab 19: Multilevel SEM
 
 In this lab, we will:
     

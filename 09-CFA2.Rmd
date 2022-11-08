@@ -1,4 +1,4 @@
-# Week9_1: Lavaan Lab 6 Two-factor CFA Model
+# Lavaan Lab 6: Two-factor CFA Model
 
 
 ## Data Prep

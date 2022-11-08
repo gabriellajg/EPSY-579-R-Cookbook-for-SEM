@@ -1,4 +1,4 @@
-# Week8_2: Lavaan Lab 7 Two-factor SR Model
+# Lavaan Lab 7: Two-factor SR Model
 
 
 ## Data Prep

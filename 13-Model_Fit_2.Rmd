@@ -1,4 +1,4 @@
-# Week11_1: Lavaan Lab 10 Model Fit Part II (Fit Indices)
+# Lavaan Lab 10: Model Fit Part II (Fit Indices)
 
 
 In this lab, we will learn: 
@@ -37,7 +37,8 @@ Fit the model regularly:
 ```{r}
 fixedIndTwoFacRun = lavaan::sem(model = fixedIndTwoFacSyntax, 
                         data = cfaData, 
-                        fixed.x=FALSE)
+                        fixed.x=FALSE,
+                        estimator = 'MLMV')
 ```
 
 Request fit indices by adding fit.measures = T in the summary() function:

@@ -1,4 +1,4 @@
-# Week15_1: Lavaan Lab 17 Second-order and Bifactor Models
+# Lavaan Lab 17: Second-order and Bifactor Models
 
 In this lab, we will evaluate the dimensionality of ISMI-29 by fitting and comparing the following four models:
 

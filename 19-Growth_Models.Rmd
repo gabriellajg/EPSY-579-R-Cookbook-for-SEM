@@ -1,4 +1,4 @@
-# Week14: Lavaan Lab 16 Latent Growth Models
+# Lavaan Lab 16: Latent Growth Models
 
 In this lab, we will:
 

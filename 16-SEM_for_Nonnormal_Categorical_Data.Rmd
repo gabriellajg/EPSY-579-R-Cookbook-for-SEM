@@ -1,4 +1,4 @@
-# Week12_2: Lavaan Lab 13 SEM for Nonnormal and Categorical Data
+# Lavaan Lab 13: SEM for Nonnormal and Categorical Data
 
 Load up the lavaan library:
 

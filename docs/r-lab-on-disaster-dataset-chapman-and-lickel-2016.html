@@ -1,0 +1,1562 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 7 R Lab on Disaster Dataset (Chapman and Lickel, 2016) | R Cookbook for Structural Equation Modeling</title>
+  <meta name="description" content="Chapter 7 R Lab on Disaster Dataset (Chapman and Lickel, 2016) | R Cookbook for Structural Equation Modeling" />
+  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 7 R Lab on Disaster Dataset (Chapman and Lickel, 2016) | R Cookbook for Structural Equation Modeling" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 7 R Lab on Disaster Dataset (Chapman and Lickel, 2016) | R Cookbook for Structural Equation Modeling" />
+  
+  
+  
+
+<meta name="author" content="Ge Jiang" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="lavaan-lab-4-mediated-moderation-moderated-mediation.html"/>
+<link rel="next" href="lavaan-lab-5-one-factor-cfa-model.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">EPSY:579 R Cookbook for SEM</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Course</a></li>
+<li class="chapter" data-level="2" data-path="into-to-r.html"><a href="into-to-r.html"><i class="fa fa-check"></i><b>2</b> Into to R</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="into-to-r.html"><a href="into-to-r.html#r-as-a-calculator"><i class="fa fa-check"></i><b>2.1</b> R as a calculator</a></li>
+<li class="chapter" data-level="2.2" data-path="into-to-r.html"><a href="into-to-r.html#assigning-objects-and-basic-data-entry"><i class="fa fa-check"></i><b>2.2</b> Assigning Objects and Basic Data Entry</a></li>
+<li class="chapter" data-level="2.3" data-path="into-to-r.html"><a href="into-to-r.html#removing-an-object-from-the-workspace"><i class="fa fa-check"></i><b>2.3</b> Removing an object from the workspace</a></li>
+<li class="chapter" data-level="2.4" data-path="into-to-r.html"><a href="into-to-r.html#formal-rules-for-indexing-objects-in-r"><i class="fa fa-check"></i><b>2.4</b> Formal Rules for Indexing Objects in R</a></li>
+<li class="chapter" data-level="2.5" data-path="into-to-r.html"><a href="into-to-r.html#examples"><i class="fa fa-check"></i><b>2.5</b> Examples</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="lavaan-lab-1-path-analysis-model.html"><a href="lavaan-lab-1-path-analysis-model.html"><i class="fa fa-check"></i><b>3</b> Lavaan Lab 1: Path Analysis Model</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="lavaan-lab-1-path-analysis-model.html"><a href="lavaan-lab-1-path-analysis-model.html#reading-in-and-working-with-realistic-datasets-in-r"><i class="fa fa-check"></i><b>3.1</b> Reading-In and Working With Realistic Datasets In R</a></li>
+<li class="chapter" data-level="3.2" data-path="lavaan-lab-1-path-analysis-model.html"><a href="lavaan-lab-1-path-analysis-model.html#sample-covariance-matrices-using-the-cov-function"><i class="fa fa-check"></i><b>3.2</b> Sample Covariance Matrices using the cov() function</a></li>
+<li class="chapter" data-level="3.3" data-path="lavaan-lab-1-path-analysis-model.html"><a href="lavaan-lab-1-path-analysis-model.html#installing-packages"><i class="fa fa-check"></i><b>3.3</b> Installing Packages</a></li>
+<li class="chapter" data-level="3.4" data-path="lavaan-lab-1-path-analysis-model.html"><a href="lavaan-lab-1-path-analysis-model.html#loading-packages-libraries-that-you-have-installed"><i class="fa fa-check"></i><b>3.4</b> Loading Packages (Libraries) That You Have Installed</a></li>
+<li class="chapter" data-level="3.5" data-path="lavaan-lab-1-path-analysis-model.html"><a href="lavaan-lab-1-path-analysis-model.html#using-lavaan-for-path-models"><i class="fa fa-check"></i><b>3.5</b> Using Lavaan For Path Models</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="lavaan-lab-1-path-analysis-model.html"><a href="lavaan-lab-1-path-analysis-model.html#part-i-follow-the-set-of-equations-we-wrote-in-class"><i class="fa fa-check"></i><b>3.5.1</b> PART I: Follow the set of equations we wrote in class:</a></li>
+<li class="chapter" data-level="3.5.2" data-path="lavaan-lab-1-path-analysis-model.html"><a href="lavaan-lab-1-path-analysis-model.html#part-ii-lets-run-our-model"><i class="fa fa-check"></i><b>3.5.2</b> PART II Let’s run our model!</a></li>
+<li class="chapter" data-level="3.5.3" data-path="lavaan-lab-1-path-analysis-model.html"><a href="lavaan-lab-1-path-analysis-model.html#sigma-matrices"><i class="fa fa-check"></i><b>3.5.3</b> Sigma Matrices</a></li>
+<li class="chapter" data-level="3.5.4" data-path="lavaan-lab-1-path-analysis-model.html"><a href="lavaan-lab-1-path-analysis-model.html#part-iii-summarizing-our-analysis"><i class="fa fa-check"></i><b>3.5.4</b> PART III: Summarizing Our Analysis:</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="lavaan-lab-1-path-analysis-model.html"><a href="lavaan-lab-1-path-analysis-model.html#plotting-sem-model"><i class="fa fa-check"></i><b>3.6</b> Plotting SEM model</a>
+<ul>
+<li class="chapter" data-level="3.6.1" data-path="lavaan-lab-1-path-analysis-model.html"><a href="lavaan-lab-1-path-analysis-model.html#customize-it-your-way"><i class="fa fa-check"></i><b>3.6.1</b> customize it your way</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="lavaan-lab-1-path-analysis-model.html"><a href="lavaan-lab-1-path-analysis-model.html#exercise-how-would-you-fit-the-model-in-saunders-et-al.-2016"><i class="fa fa-check"></i><b>3.7</b> Exercise: How would you fit the model in Saunders et al. (2016)?</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="lavaan-lab-2-mediation-and-indirect-effects.html"><a href="lavaan-lab-2-mediation-and-indirect-effects.html"><i class="fa fa-check"></i><b>4</b> Lavaan Lab 2: Mediation and Indirect Effects</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="lavaan-lab-2-mediation-and-indirect-effects.html"><a href="lavaan-lab-2-mediation-and-indirect-effects.html#reading-in-and-working-with-realistic-datasets-in-r-1"><i class="fa fa-check"></i><b>4.1</b> Reading-In and Working With Realistic Datasets In R</a></li>
+<li class="chapter" data-level="4.2" data-path="lavaan-lab-2-mediation-and-indirect-effects.html"><a href="lavaan-lab-2-mediation-and-indirect-effects.html#using-lavaan-for-mediation-models---preacher-hayess"><i class="fa fa-check"></i><b>4.2</b> Using Lavaan For Mediation Models - Preacher &amp; Hayes’s</a></li>
+<li class="chapter" data-level="4.3" data-path="lavaan-lab-2-mediation-and-indirect-effects.html"><a href="lavaan-lab-2-mediation-and-indirect-effects.html#part-i-follow-the-two-equations-of-m-dietse-y-bulimia"><i class="fa fa-check"></i><b>4.3</b> PART I: # Follow the two equations of M (DietSE) &amp; Y (Bulimia)</a></li>
+<li class="chapter" data-level="4.4" data-path="lavaan-lab-2-mediation-and-indirect-effects.html"><a href="lavaan-lab-2-mediation-and-indirect-effects.html#part-ii-lets-run-our-model-1"><i class="fa fa-check"></i><b>4.4</b> PART II Let’s run our model!</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="lavaan-lab-2-mediation-and-indirect-effects.html"><a href="lavaan-lab-2-mediation-and-indirect-effects.html#label-the-mediation-effect"><i class="fa fa-check"></i><b>4.4.1</b> Label the mediation effect</a></li>
+<li class="chapter" data-level="4.4.2" data-path="lavaan-lab-2-mediation-and-indirect-effects.html"><a href="lavaan-lab-2-mediation-and-indirect-effects.html#define-a-new-term-for-the-mediation-effect-ab"><i class="fa fa-check"></i><b>4.4.2</b> Define a new term for the mediation effect a*b</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="lavaan-lab-2-mediation-and-indirect-effects.html"><a href="lavaan-lab-2-mediation-and-indirect-effects.html#part-iii-summarizing-our-analysis-1"><i class="fa fa-check"></i><b>4.5</b> PART III: Summarizing Our Analysis:</a></li>
+<li class="chapter" data-level="4.6" data-path="lavaan-lab-2-mediation-and-indirect-effects.html"><a href="lavaan-lab-2-mediation-and-indirect-effects.html#part-iv-bootstrap-confidence-intervals"><i class="fa fa-check"></i><b>4.6</b> PART IV: Bootstrap confidence intervals</a>
+<ul>
+<li class="chapter" data-level="4.6.1" data-path="lavaan-lab-2-mediation-and-indirect-effects.html"><a href="lavaan-lab-2-mediation-and-indirect-effects.html#the-default-one-is-boot.ci.type-perc"><i class="fa fa-check"></i><b>4.6.1</b> The default one is boot.ci.type = “perc”</a></li>
+<li class="chapter" data-level="4.6.2" data-path="lavaan-lab-2-mediation-and-indirect-effects.html"><a href="lavaan-lab-2-mediation-and-indirect-effects.html#bc-bias-corrected-confidence-interval"><i class="fa fa-check"></i><b>4.6.2</b> BC (bias-corrected) confidence interval</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="lavaan-lab-2-mediation-and-indirect-effects.html"><a href="lavaan-lab-2-mediation-and-indirect-effects.html#in-class-exercise-use-lavaan-to-estimate-and-interpret-the-following-model"><i class="fa fa-check"></i><b>4.7</b> In-Class Exercise: Use Lavaan to estimate and interpret the following model</a></li>
+<li class="chapter" data-level="4.8" data-path="lavaan-lab-2-mediation-and-indirect-effects.html"><a href="lavaan-lab-2-mediation-and-indirect-effects.html#exercise-eating-disorder-mediation-analysis"><i class="fa fa-check"></i><b>4.8</b> Exercise: Eating Disorder Mediation Analysis</a>
+<ul>
+<li class="chapter" data-level="4.8.1" data-path="lavaan-lab-2-mediation-and-indirect-effects.html"><a href="lavaan-lab-2-mediation-and-indirect-effects.html#step-1-labeling-and-defining-the-parameters"><i class="fa fa-check"></i><b>4.8.1</b> Step 1: Labeling and defining the parameters</a></li>
+<li class="chapter" data-level="4.8.2" data-path="lavaan-lab-2-mediation-and-indirect-effects.html"><a href="lavaan-lab-2-mediation-and-indirect-effects.html#step-2-fix-all-disturbance-covariances-at-0"><i class="fa fa-check"></i><b>4.8.2</b> Step 2: Fix all disturbance covariances at 0</a></li>
+<li class="chapter" data-level="4.8.3" data-path="lavaan-lab-2-mediation-and-indirect-effects.html"><a href="lavaan-lab-2-mediation-and-indirect-effects.html#step-3-define-new-terms-for-mediation-effects"><i class="fa fa-check"></i><b>4.8.3</b> Step 3: Define new terms for mediation effects</a></li>
+<li class="chapter" data-level="4.8.4" data-path="lavaan-lab-2-mediation-and-indirect-effects.html"><a href="lavaan-lab-2-mediation-and-indirect-effects.html#step-4-bootstrap-confidence-intervals"><i class="fa fa-check"></i><b>4.8.4</b> Step 4: Bootstrap confidence intervals:</a></li>
+<li class="chapter" data-level="4.8.5" data-path="lavaan-lab-2-mediation-and-indirect-effects.html"><a href="lavaan-lab-2-mediation-and-indirect-effects.html#step-5-print-and-interpret-the-mediation-effects"><i class="fa fa-check"></i><b>4.8.5</b> Step 5: Print and interpret the mediation effects;</a></li>
+<li class="chapter" data-level="4.8.6" data-path="lavaan-lab-2-mediation-and-indirect-effects.html"><a href="lavaan-lab-2-mediation-and-indirect-effects.html#plot-it"><i class="fa fa-check"></i><b>4.8.6</b> Plot it!</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="lavaan-lab-3-moderation-and-conditional-effects.html"><a href="lavaan-lab-3-moderation-and-conditional-effects.html"><i class="fa fa-check"></i><b>5</b> Lavaan Lab 3: Moderation and Conditional Effects</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="lavaan-lab-3-moderation-and-conditional-effects.html"><a href="lavaan-lab-3-moderation-and-conditional-effects.html#reading-in-datasets"><i class="fa fa-check"></i><b>5.1</b> Reading-In Datasets</a></li>
+<li class="chapter" data-level="5.2" data-path="lavaan-lab-3-moderation-and-conditional-effects.html"><a href="lavaan-lab-3-moderation-and-conditional-effects.html#interactions-in-regression-using-lm"><i class="fa fa-check"></i><b>5.2</b> Interactions in Regression Using lm()</a></li>
+<li class="chapter" data-level="5.3" data-path="lavaan-lab-3-moderation-and-conditional-effects.html"><a href="lavaan-lab-3-moderation-and-conditional-effects.html#interactions-in-lavaan"><i class="fa fa-check"></i><b>5.3</b> Interactions in Lavaan</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="lavaan-lab-3-moderation-and-conditional-effects.html"><a href="lavaan-lab-3-moderation-and-conditional-effects.html#important-note"><i class="fa fa-check"></i><b>5.3.1</b> IMPORTANT NOTE</a></li>
+<li class="chapter" data-level="5.3.2" data-path="lavaan-lab-3-moderation-and-conditional-effects.html"><a href="lavaan-lab-3-moderation-and-conditional-effects.html#follow-the-equation-of-y-depression"><i class="fa fa-check"></i><b>5.3.2</b> Follow the equation of Y (Depression):</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="lavaan-lab-3-moderation-and-conditional-effects.html"><a href="lavaan-lab-3-moderation-and-conditional-effects.html#visual-inspection-of-interactions"><i class="fa fa-check"></i><b>5.4</b> Visual inspection of interactions</a></li>
+<li class="chapter" data-level="5.5" data-path="lavaan-lab-3-moderation-and-conditional-effects.html"><a href="lavaan-lab-3-moderation-and-conditional-effects.html#centering-continuous-moderator"><i class="fa fa-check"></i><b>5.5</b> Centering Continuous Moderator</a></li>
+<li class="chapter" data-level="5.6" data-path="lavaan-lab-3-moderation-and-conditional-effects.html"><a href="lavaan-lab-3-moderation-and-conditional-effects.html#interactions-in-lavaan-continuous-moderator"><i class="fa fa-check"></i><b>5.6</b> Interactions in Lavaan (Continuous Moderator)</a></li>
+<li class="chapter" data-level="5.7" data-path="lavaan-lab-3-moderation-and-conditional-effects.html"><a href="lavaan-lab-3-moderation-and-conditional-effects.html#simple-slopes-analysis"><i class="fa fa-check"></i><b>5.7</b> Simple Slopes Analysis</a></li>
+<li class="chapter" data-level="5.8" data-path="lavaan-lab-3-moderation-and-conditional-effects.html"><a href="lavaan-lab-3-moderation-and-conditional-effects.html#visual-inspection-of-interactions-lm-approach"><i class="fa fa-check"></i><b>5.8</b> Visual inspection of interactions (lm approach)</a></li>
+<li class="chapter" data-level="5.9" data-path="lavaan-lab-3-moderation-and-conditional-effects.html"><a href="lavaan-lab-3-moderation-and-conditional-effects.html#johnson-neyman-interval"><i class="fa fa-check"></i><b>5.9</b> JOHNSON-NEYMAN INTERVAL</a></li>
+<li class="chapter" data-level="5.10" data-path="lavaan-lab-3-moderation-and-conditional-effects.html"><a href="lavaan-lab-3-moderation-and-conditional-effects.html#exercise-how-framing-affects-justifications-for-giving-or-withholding-aid-to-disaster-victims"><i class="fa fa-check"></i><b>5.10</b> Exercise: How Framing Affects Justifications for Giving or Withholding Aid to Disaster Victims</a>
+<ul>
+<li class="chapter" data-level="5.10.1" data-path="lavaan-lab-3-moderation-and-conditional-effects.html"><a href="lavaan-lab-3-moderation-and-conditional-effects.html#data-prep"><i class="fa fa-check"></i><b>5.10.1</b> Data Prep</a></li>
+<li class="chapter" data-level="5.10.2" data-path="lavaan-lab-3-moderation-and-conditional-effects.html"><a href="lavaan-lab-3-moderation-and-conditional-effects.html#moderation-with-a-binary-moderator"><i class="fa fa-check"></i><b>5.10.2</b> Moderation with a binary moderator</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="lavaan-lab-4-mediated-moderation-moderated-mediation.html"><a href="lavaan-lab-4-mediated-moderation-moderated-mediation.html"><i class="fa fa-check"></i><b>6</b> Lavaan Lab 4: Mediated Moderation &amp; Moderated Mediation</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="lavaan-lab-4-mediated-moderation-moderated-mediation.html"><a href="lavaan-lab-4-mediated-moderation-moderated-mediation.html#part-1-mediated-moderation-indirect-conditional-effect"><i class="fa fa-check"></i><b>6.1</b> PART 1: Mediated Moderation (Indirect Conditional effect)</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="lavaan-lab-4-mediated-moderation-moderated-mediation.html"><a href="lavaan-lab-4-mediated-moderation-moderated-mediation.html#step-1-read-in-data"><i class="fa fa-check"></i><b>6.1.1</b> Step 1: Read-in Data</a></li>
+<li class="chapter" data-level="6.1.2" data-path="lavaan-lab-4-mediated-moderation-moderated-mediation.html"><a href="lavaan-lab-4-mediated-moderation-moderated-mediation.html#step-2-create-the-interaction-term-for-moderation-analysis"><i class="fa fa-check"></i><b>6.1.2</b> Step 2: Create the interaction term for Moderation Analysis</a></li>
+<li class="chapter" data-level="6.1.3" data-path="lavaan-lab-4-mediated-moderation-moderated-mediation.html"><a href="lavaan-lab-4-mediated-moderation-moderated-mediation.html#step-3-write-the-syntax-and-fit-the-model"><i class="fa fa-check"></i><b>6.1.3</b> Step 3: Write the syntax and Fit the model</a></li>
+<li class="chapter" data-level="6.1.4" data-path="lavaan-lab-4-mediated-moderation-moderated-mediation.html"><a href="lavaan-lab-4-mediated-moderation-moderated-mediation.html#step-4-bootstrap-version"><i class="fa fa-check"></i><b>6.1.4</b> Step 4: Bootstrap Version</a></li>
+<li class="chapter" data-level="6.1.5" data-path="lavaan-lab-4-mediated-moderation-moderated-mediation.html"><a href="lavaan-lab-4-mediated-moderation-moderated-mediation.html#step-5-effect-size-measures"><i class="fa fa-check"></i><b>6.1.5</b> Step 5: Effect size measures</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="lavaan-lab-4-mediated-moderation-moderated-mediation.html"><a href="lavaan-lab-4-mediated-moderation-moderated-mediation.html#part-2-moderated-mediation-conditional-indirect-effect"><i class="fa fa-check"></i><b>6.2</b> PART 2: Moderated Mediation (Conditional Indirect effect)</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="lavaan-lab-4-mediated-moderation-moderated-mediation.html"><a href="lavaan-lab-4-mediated-moderation-moderated-mediation.html#step-1-product-term"><i class="fa fa-check"></i><b>6.2.1</b> Step 1: Product Term</a></li>
+<li class="chapter" data-level="6.2.2" data-path="lavaan-lab-4-mediated-moderation-moderated-mediation.html"><a href="lavaan-lab-4-mediated-moderation-moderated-mediation.html#step-2-write-the-syntax-and-fit-the-model"><i class="fa fa-check"></i><b>6.2.2</b> Step 2: Write the syntax and Fit the model</a></li>
+<li class="chapter" data-level="6.2.3" data-path="lavaan-lab-4-mediated-moderation-moderated-mediation.html"><a href="lavaan-lab-4-mediated-moderation-moderated-mediation.html#step-3-bootstrap-version"><i class="fa fa-check"></i><b>6.2.3</b> Step 3: Bootstrap Version</a></li>
+<li class="chapter" data-level="6.2.4" data-path="lavaan-lab-4-mediated-moderation-moderated-mediation.html"><a href="lavaan-lab-4-mediated-moderation-moderated-mediation.html#step-4-simple-slopes"><i class="fa fa-check"></i><b>6.2.4</b> Step 4: Simple Slopes</a></li>
+<li class="chapter" data-level="6.2.5" data-path="lavaan-lab-4-mediated-moderation-moderated-mediation.html"><a href="lavaan-lab-4-mediated-moderation-moderated-mediation.html#step-5-johnson-neyman-interval"><i class="fa fa-check"></i><b>6.2.5</b> Step 5 JOHNSON-NEYMAN INTERVAL</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><i class="fa fa-check"></i><b>7</b> R Lab on Disaster Dataset (Chapman and Lickel, 2016)</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#data-prep-1"><i class="fa fa-check"></i><b>7.1</b> Data Prep</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#scatterplot-matrix"><i class="fa fa-check"></i><b>7.1.1</b> Scatterplot Matrix</a></li>
+<li class="chapter" data-level="7.1.2" data-path="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#p-value-or-bootstrapped-confidence-interval"><i class="fa fa-check"></i><b>7.1.2</b> p-value or bootstrapped confidence interval?</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#model-1-simple-linear-regression-model"><i class="fa fa-check"></i><b>7.2</b> Model 1: Simple Linear Regression Model</a></li>
+<li class="chapter" data-level="7.3" data-path="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#model-2-simple-mediation-model"><i class="fa fa-check"></i><b>7.3</b> Model 2: Simple Mediation Model</a></li>
+<li class="chapter" data-level="7.4" data-path="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#model-3-simple-moderation-model"><i class="fa fa-check"></i><b>7.4</b> Model 3: Simple Moderation Model</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#johnson-neyman-interval-1"><i class="fa fa-check"></i><b>7.4.1</b> JOHNSON-NEYMAN INTERVAL</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#model-4a-moderated-mediation-model---path-a-only"><i class="fa fa-check"></i><b>7.5</b> Model 4a: Moderated Mediation Model - Path a only</a></li>
+<li class="chapter" data-level="7.6" data-path="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#model-4b-moderated-mediation-model---path-b-only"><i class="fa fa-check"></i><b>7.6</b> Model 4b: Moderated Mediation Model - Path b only</a></li>
+<li class="chapter" data-level="7.7" data-path="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#model-4c-moderation-mediation-model---path-cprime-only"><i class="fa fa-check"></i><b>7.7</b> Model 4c: Moderation &amp; Mediation Model - Path cprime only</a></li>
+<li class="chapter" data-level="7.8" data-path="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#model-4d-moderated-mediation-model---path-a-and-cprime"><i class="fa fa-check"></i><b>7.8</b> Model 4d: Moderated Mediation Model - Path a and cprime</a></li>
+<li class="chapter" data-level="7.9" data-path="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#model-4e-moderated-mediation-model---path-b-and-cprime"><i class="fa fa-check"></i><b>7.9</b> Model 4e: Moderated Mediation Model - Path b and cprime</a></li>
+<li class="chapter" data-level="7.10" data-path="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#model-4f-moderated-mediation-model---path-a-and-b"><i class="fa fa-check"></i><b>7.10</b> Model 4f: Moderated Mediation Model - Path a and b</a></li>
+<li class="chapter" data-level="7.11" data-path="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#model-4g-moderated-mediation-model---path-a-b-and-cprime"><i class="fa fa-check"></i><b>7.11</b> Model 4g: Moderated Mediation Model - Path a, b, and cprime</a></li>
+<li class="chapter" data-level="7.12" data-path="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#conclusions"><i class="fa fa-check"></i><b>7.12</b> Conclusions</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="lavaan-lab-5-one-factor-cfa-model.html"><a href="lavaan-lab-5-one-factor-cfa-model.html"><i class="fa fa-check"></i><b>8</b> Lavaan Lab 5: One-factor CFA Model</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="lavaan-lab-5-one-factor-cfa-model.html"><a href="lavaan-lab-5-one-factor-cfa-model.html#data-prep-2"><i class="fa fa-check"></i><b>8.1</b> Data Prep</a></li>
+<li class="chapter" data-level="8.2" data-path="lavaan-lab-5-one-factor-cfa-model.html"><a href="lavaan-lab-5-one-factor-cfa-model.html#part-i-one-factor-cfa-fixed-loading"><i class="fa fa-check"></i><b>8.2</b> PART I: One-Factor CFA, Fixed Loading</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="lavaan-lab-5-one-factor-cfa-model.html"><a href="lavaan-lab-5-one-factor-cfa-model.html#fixed-loading-aka-marker-variable-method."><i class="fa fa-check"></i><b>8.2.1</b> Fixed Loading, AKA Marker Variable method.</a></li>
+<li class="chapter" data-level="8.2.2" data-path="lavaan-lab-5-one-factor-cfa-model.html"><a href="lavaan-lab-5-one-factor-cfa-model.html#change-marker-indicator"><i class="fa fa-check"></i><b>8.2.2</b> Change marker indicator</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="lavaan-lab-5-one-factor-cfa-model.html"><a href="lavaan-lab-5-one-factor-cfa-model.html#part-ii-one-factor-cfa-fixed-factor-variance"><i class="fa fa-check"></i><b>8.3</b> PART II: One-Factor CFA, Fixed Factor Variance</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="lavaan-lab-5-one-factor-cfa-model.html"><a href="lavaan-lab-5-one-factor-cfa-model.html#fixed-factor-method"><i class="fa fa-check"></i><b>8.3.1</b> Fixed Factor Method</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="lavaan-lab-5-one-factor-cfa-model.html"><a href="lavaan-lab-5-one-factor-cfa-model.html#exercise-one-factor-cfa-model"><i class="fa fa-check"></i><b>8.4</b> Exercise: One-factor CFA Model</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="lavaan-lab-5-one-factor-cfa-model.html"><a href="lavaan-lab-5-one-factor-cfa-model.html#fixed-loading"><i class="fa fa-check"></i><b>8.4.1</b> Fixed Loading</a></li>
+<li class="chapter" data-level="8.4.2" data-path="lavaan-lab-5-one-factor-cfa-model.html"><a href="lavaan-lab-5-one-factor-cfa-model.html#fixed-factor"><i class="fa fa-check"></i><b>8.4.2</b> Fixed Factor</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="lavaan-lab-6-two-factor-cfa-model.html"><a href="lavaan-lab-6-two-factor-cfa-model.html"><i class="fa fa-check"></i><b>9</b> Lavaan Lab 6: Two-factor CFA Model</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="lavaan-lab-6-two-factor-cfa-model.html"><a href="lavaan-lab-6-two-factor-cfa-model.html#data-prep-3"><i class="fa fa-check"></i><b>9.1</b> Data Prep</a></li>
+<li class="chapter" data-level="9.2" data-path="lavaan-lab-6-two-factor-cfa-model.html"><a href="lavaan-lab-6-two-factor-cfa-model.html#part-i-two-factor-cfa-fixed-loading"><i class="fa fa-check"></i><b>9.2</b> PART I: Two-Factor CFA, Fixed Loading</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="lavaan-lab-6-two-factor-cfa-model.html"><a href="lavaan-lab-6-two-factor-cfa-model.html#fixed-loading-aka-marker-variable-method.-1"><i class="fa fa-check"></i><b>9.2.1</b> Fixed Loading, AKA Marker Variable method.</a></li>
+<li class="chapter" data-level="9.2.2" data-path="lavaan-lab-6-two-factor-cfa-model.html"><a href="lavaan-lab-6-two-factor-cfa-model.html#how-well-does-this-model-fit-to-the-data"><i class="fa fa-check"></i><b>9.2.2</b> How well does this model fit to the data?</a></li>
+<li class="chapter" data-level="9.2.3" data-path="lavaan-lab-6-two-factor-cfa-model.html"><a href="lavaan-lab-6-two-factor-cfa-model.html#fundamental-equation-of-sem"><i class="fa fa-check"></i><b>9.2.3</b> Fundamental Equation of SEM</a></li>
+<li class="chapter" data-level="9.2.4" data-path="lavaan-lab-6-two-factor-cfa-model.html"><a href="lavaan-lab-6-two-factor-cfa-model.html#interpretion"><i class="fa fa-check"></i><b>9.2.4</b> Interpretion</a></li>
+<li class="chapter" data-level="9.2.5" data-path="lavaan-lab-6-two-factor-cfa-model.html"><a href="lavaan-lab-6-two-factor-cfa-model.html#standardized-solutions-std.lv-vs.-std.all"><i class="fa fa-check"></i><b>9.2.5</b> Standardized solutions: Std.lv vs. Std.all</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="lavaan-lab-6-two-factor-cfa-model.html"><a href="lavaan-lab-6-two-factor-cfa-model.html#part-ii-two-factor-cfa-fixed-factor-variance"><i class="fa fa-check"></i><b>9.3</b> PART II: Two-Factor CFA, Fixed Factor Variance</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="lavaan-lab-6-two-factor-cfa-model.html"><a href="lavaan-lab-6-two-factor-cfa-model.html#fixed-factor-method-1"><i class="fa fa-check"></i><b>9.3.1</b> Fixed Factor Method</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="lavaan-lab-7-two-factor-sr-model.html"><a href="lavaan-lab-7-two-factor-sr-model.html"><i class="fa fa-check"></i><b>10</b> Lavaan Lab 7: Two-factor SR Model</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="lavaan-lab-7-two-factor-sr-model.html"><a href="lavaan-lab-7-two-factor-sr-model.html#data-prep-4"><i class="fa fa-check"></i><b>10.1</b> Data Prep</a></li>
+<li class="chapter" data-level="10.2" data-path="lavaan-lab-7-two-factor-sr-model.html"><a href="lavaan-lab-7-two-factor-sr-model.html#part-i-two-factor-sr-fixed-loading"><i class="fa fa-check"></i><b>10.2</b> PART I: Two-Factor SR, Fixed Loading</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="lavaan-lab-7-two-factor-sr-model.html"><a href="lavaan-lab-7-two-factor-sr-model.html#fixed-loading-aka-marker-variable-method.-2"><i class="fa fa-check"></i><b>10.2.1</b> Fixed Loading, AKA Marker Variable method.</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="lavaan-lab-7-two-factor-sr-model.html"><a href="lavaan-lab-7-two-factor-sr-model.html#part-ii-two-factor-sr-fixed-factor-variance"><i class="fa fa-check"></i><b>10.3</b> PART II: Two-Factor SR, Fixed Factor Variance</a>
+<ul>
+<li class="chapter" data-level="10.3.1" data-path="lavaan-lab-7-two-factor-sr-model.html"><a href="lavaan-lab-7-two-factor-sr-model.html#fixed-factor-method-2"><i class="fa fa-check"></i><b>10.3.1</b> Fixed Factor Method</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="lavaan-lab-7-two-factor-sr-model.html"><a href="lavaan-lab-7-two-factor-sr-model.html#part-iii-exercise-what-fun-3-factor-sr-model"><i class="fa fa-check"></i><b>10.4</b> PART III: Exercise (what fun!): 3-Factor SR Model</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="lavaan-lab-8-estimation-methods.html"><a href="lavaan-lab-8-estimation-methods.html"><i class="fa fa-check"></i><b>11</b> Lavaan Lab 8: Estimation Methods</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="lavaan-lab-8-estimation-methods.html"><a href="lavaan-lab-8-estimation-methods.html#part-i-hypothetical-example"><i class="fa fa-check"></i><b>11.1</b> PART I: Hypothetical Example</a>
+<ul>
+<li class="chapter" data-level="11.1.1" data-path="lavaan-lab-8-estimation-methods.html"><a href="lavaan-lab-8-estimation-methods.html#one-factor-cfa-model"><i class="fa fa-check"></i><b>11.1.1</b> One-factor CFA model</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="lavaan-lab-8-estimation-methods.html"><a href="lavaan-lab-8-estimation-methods.html#part-ii-uls-on-the-positive-affect-example"><i class="fa fa-check"></i><b>11.2</b> PART II: ULS on the Positive Affect Example</a></li>
+<li class="chapter" data-level="11.3" data-path="lavaan-lab-8-estimation-methods.html"><a href="lavaan-lab-8-estimation-methods.html#part-iii-calculate-uls-test-statistic-manually"><i class="fa fa-check"></i><b>11.3</b> PART III: Calculate ULS test statistic manually</a></li>
+<li class="chapter" data-level="11.4" data-path="lavaan-lab-8-estimation-methods.html"><a href="lavaan-lab-8-estimation-methods.html#part-iv-ml-vs-uls-vs-wls"><i class="fa fa-check"></i><b>11.4</b> PART IV: ML vs ULS vs WLS</a>
+<ul>
+<li class="chapter" data-level="11.4.1" data-path="lavaan-lab-8-estimation-methods.html"><a href="lavaan-lab-8-estimation-methods.html#ml-estimation"><i class="fa fa-check"></i><b>11.4.1</b> ML Estimation</a></li>
+<li class="chapter" data-level="11.4.2" data-path="lavaan-lab-8-estimation-methods.html"><a href="lavaan-lab-8-estimation-methods.html#wls-estimation"><i class="fa fa-check"></i><b>11.4.2</b> WLS Estimation</a></li>
+<li class="chapter" data-level="11.4.3" data-path="lavaan-lab-8-estimation-methods.html"><a href="lavaan-lab-8-estimation-methods.html#compare-the-parameter-estimates"><i class="fa fa-check"></i><b>11.4.3</b> Compare the parameter estimates</a></li>
+<li class="chapter" data-level="11.4.4" data-path="lavaan-lab-8-estimation-methods.html"><a href="lavaan-lab-8-estimation-methods.html#compare-the-standard-errors"><i class="fa fa-check"></i><b>11.4.4</b> Compare the standard errors:</a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="lavaan-lab-8-estimation-methods.html"><a href="lavaan-lab-8-estimation-methods.html#part-v-improper-solutions"><i class="fa fa-check"></i><b>11.5</b> PART V: Improper Solutions</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="lavaan-lab-9-model-fit-part-i-test-statistics.html"><a href="lavaan-lab-9-model-fit-part-i-test-statistics.html"><i class="fa fa-check"></i><b>12</b> Lavaan Lab 9: Model Fit Part I (Test Statistics)</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="lavaan-lab-9-model-fit-part-i-test-statistics.html"><a href="lavaan-lab-9-model-fit-part-i-test-statistics.html#part-i-robust-ml-on-the-positive-affect-example"><i class="fa fa-check"></i><b>12.1</b> PART I: Robust ML on the Positive Affect Example</a>
+<ul>
+<li class="chapter" data-level="12.1.1" data-path="lavaan-lab-9-model-fit-part-i-test-statistics.html"><a href="lavaan-lab-9-model-fit-part-i-test-statistics.html#mean-corrected-statistic-t_m"><i class="fa fa-check"></i><b>12.1.1</b> Mean corrected statistic (T_M)</a></li>
+<li class="chapter" data-level="12.1.2" data-path="lavaan-lab-9-model-fit-part-i-test-statistics.html"><a href="lavaan-lab-9-model-fit-part-i-test-statistics.html#mean-and-variance-adjusted-statistic-t_mv"><i class="fa fa-check"></i><b>12.1.2</b> Mean and variance adjusted statistic (T_MV)</a></li>
+<li class="chapter" data-level="12.1.3" data-path="lavaan-lab-9-model-fit-part-i-test-statistics.html"><a href="lavaan-lab-9-model-fit-part-i-test-statistics.html#yuan-bentler-test-statistic-t_mlr"><i class="fa fa-check"></i><b>12.1.3</b> Yuan-Bentler test statistic (T_MLR)</a></li>
+<li class="chapter" data-level="12.1.4" data-path="lavaan-lab-9-model-fit-part-i-test-statistics.html"><a href="lavaan-lab-9-model-fit-part-i-test-statistics.html#small-sample-correction---f-test"><i class="fa fa-check"></i><b>12.1.4</b> Small sample correction - F test</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="lavaan-lab-9-model-fit-part-i-test-statistics.html"><a href="lavaan-lab-9-model-fit-part-i-test-statistics.html#part-ii-nested-model-comparison"><i class="fa fa-check"></i><b>12.2</b> PART II: Nested Model Comparison</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="lavaan-lab-9-model-fit-part-i-test-statistics.html"><a href="lavaan-lab-9-model-fit-part-i-test-statistics.html#one-factor-model"><i class="fa fa-check"></i><b>12.2.1</b> One-factor model</a></li>
+<li class="chapter" data-level="12.2.2" data-path="lavaan-lab-9-model-fit-part-i-test-statistics.html"><a href="lavaan-lab-9-model-fit-part-i-test-statistics.html#plotting"><i class="fa fa-check"></i><b>12.2.2</b> Plotting</a></li>
+<li class="chapter" data-level="12.2.3" data-path="lavaan-lab-9-model-fit-part-i-test-statistics.html"><a href="lavaan-lab-9-model-fit-part-i-test-statistics.html#comparing-nested-models"><i class="fa fa-check"></i><b>12.2.3</b> Comparing Nested Models</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="lavaan-lab-9-model-fit-part-i-test-statistics.html"><a href="lavaan-lab-9-model-fit-part-i-test-statistics.html#part-iii-exercises-more-nested-models"><i class="fa fa-check"></i><b>12.3</b> PART III: Exercises: More Nested Models</a>
+<ul>
+<li class="chapter" data-level="12.3.1" data-path="lavaan-lab-9-model-fit-part-i-test-statistics.html"><a href="lavaan-lab-9-model-fit-part-i-test-statistics.html#exercises-compare-the-base-model-fixedindtwofacrun-to"><i class="fa fa-check"></i><b>12.3.1</b> Exercises: Compare the base model (fixedIndTwoFacRun) to</a></li>
+<li class="chapter" data-level="12.3.2" data-path="lavaan-lab-9-model-fit-part-i-test-statistics.html"><a href="lavaan-lab-9-model-fit-part-i-test-statistics.html#model-2-orthogonal-factors"><i class="fa fa-check"></i><b>12.3.2</b> Model 2: Orthogonal Factors</a></li>
+<li class="chapter" data-level="12.3.3" data-path="lavaan-lab-9-model-fit-part-i-test-statistics.html"><a href="lavaan-lab-9-model-fit-part-i-test-statistics.html#model-3-cross-loading"><i class="fa fa-check"></i><b>12.3.3</b> Model 3: Cross loading</a></li>
+<li class="chapter" data-level="12.3.4" data-path="lavaan-lab-9-model-fit-part-i-test-statistics.html"><a href="lavaan-lab-9-model-fit-part-i-test-statistics.html#model-4-correlated-unique-factors"><i class="fa fa-check"></i><b>12.3.4</b> Model 4: Correlated Unique Factors</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="lavaan-lab-10-model-fit-part-ii-fit-indices.html"><a href="lavaan-lab-10-model-fit-part-ii-fit-indices.html"><i class="fa fa-check"></i><b>13</b> Lavaan Lab 10: Model Fit Part II (Fit Indices)</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="lavaan-lab-10-model-fit-part-ii-fit-indices.html"><a href="lavaan-lab-10-model-fit-part-ii-fit-indices.html#part-i-fit-indices"><i class="fa fa-check"></i><b>13.1</b> PART I: Fit Indices</a>
+<ul>
+<li class="chapter" data-level="13.1.1" data-path="lavaan-lab-10-model-fit-part-ii-fit-indices.html"><a href="lavaan-lab-10-model-fit-part-ii-fit-indices.html#rmsea"><i class="fa fa-check"></i><b>13.1.1</b> RMSEA</a></li>
+<li class="chapter" data-level="13.1.2" data-path="lavaan-lab-10-model-fit-part-ii-fit-indices.html"><a href="lavaan-lab-10-model-fit-part-ii-fit-indices.html#srmr"><i class="fa fa-check"></i><b>13.1.2</b> SRMR</a></li>
+<li class="chapter" data-level="13.1.3" data-path="lavaan-lab-10-model-fit-part-ii-fit-indices.html"><a href="lavaan-lab-10-model-fit-part-ii-fit-indices.html#null-model-mo"><i class="fa fa-check"></i><b>13.1.3</b> Null Model MO</a></li>
+<li class="chapter" data-level="13.1.4" data-path="lavaan-lab-10-model-fit-part-ii-fit-indices.html"><a href="lavaan-lab-10-model-fit-part-ii-fit-indices.html#cfitli"><i class="fa fa-check"></i><b>13.1.4</b> CFI/TLI</a></li>
+<li class="chapter" data-level="13.1.5" data-path="lavaan-lab-10-model-fit-part-ii-fit-indices.html"><a href="lavaan-lab-10-model-fit-part-ii-fit-indices.html#loglikelihood"><i class="fa fa-check"></i><b>13.1.5</b> Loglikelihood</a></li>
+<li class="chapter" data-level="13.1.6" data-path="lavaan-lab-10-model-fit-part-ii-fit-indices.html"><a href="lavaan-lab-10-model-fit-part-ii-fit-indices.html#aicbic"><i class="fa fa-check"></i><b>13.1.6</b> AIC/BIC</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="lavaan-lab-10-model-fit-part-ii-fit-indices.html"><a href="lavaan-lab-10-model-fit-part-ii-fit-indices.html#part-ii-exercise"><i class="fa fa-check"></i><b>13.2</b> PART II: Exercise</a>
+<ul>
+<li class="chapter" data-level="13.2.1" data-path="lavaan-lab-10-model-fit-part-ii-fit-indices.html"><a href="lavaan-lab-10-model-fit-part-ii-fit-indices.html#part-i-plot-the-distributions-of-all-indicators"><i class="fa fa-check"></i><b>13.2.1</b> PART I: Plot the distributions of all indicators</a></li>
+<li class="chapter" data-level="13.2.2" data-path="lavaan-lab-10-model-fit-part-ii-fit-indices.html"><a href="lavaan-lab-10-model-fit-part-ii-fit-indices.html#part-ii-write-out-the-model-syntax-for-two-factor-model"><i class="fa fa-check"></i><b>13.2.2</b> PART II: Write out the model syntax for two-factor model</a></li>
+<li class="chapter" data-level="13.2.3" data-path="lavaan-lab-10-model-fit-part-ii-fit-indices.html"><a href="lavaan-lab-10-model-fit-part-ii-fit-indices.html#part-iii-fit-the-two-factor-model"><i class="fa fa-check"></i><b>13.2.3</b> PART III: Fit the two-factor model</a></li>
+<li class="chapter" data-level="13.2.4" data-path="lavaan-lab-10-model-fit-part-ii-fit-indices.html"><a href="lavaan-lab-10-model-fit-part-ii-fit-indices.html#part-iv-interpret-the-chisquare-statistic-and-fit-indices"><i class="fa fa-check"></i><b>13.2.4</b> PART IV: Interpret the chisquare statistic and fit indices</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="lavaan-lab-11-model-local-fitting-and-model-modifications.html"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html"><i class="fa fa-check"></i><b>14</b> Lavaan Lab 11: Model Local Fitting and Model Modifications</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="lavaan-lab-11-model-local-fitting-and-model-modifications.html"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#part-i-local-fit-with-residuals"><i class="fa fa-check"></i><b>14.1</b> PART I: Local Fit with Residuals</a>
+<ul>
+<li class="chapter" data-level="14.1.1" data-path="lavaan-lab-11-model-local-fitting-and-model-modifications.html"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#unstandardized-residuals"><i class="fa fa-check"></i><b>14.1.1</b> Unstandardized residuals</a></li>
+<li class="chapter" data-level="14.1.2" data-path="lavaan-lab-11-model-local-fitting-and-model-modifications.html"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#standardized-residuals"><i class="fa fa-check"></i><b>14.1.2</b> Standardized residuals</a></li>
+<li class="chapter" data-level="14.1.3" data-path="lavaan-lab-11-model-local-fitting-and-model-modifications.html"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#normalized-residuals"><i class="fa fa-check"></i><b>14.1.3</b> Normalized residuals</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="lavaan-lab-11-model-local-fitting-and-model-modifications.html"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#part-ii-modification-indices"><i class="fa fa-check"></i><b>14.2</b> PART II: Modification Indices</a>
+<ul>
+<li class="chapter" data-level="14.2.1" data-path="lavaan-lab-11-model-local-fitting-and-model-modifications.html"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#modified-model-1"><i class="fa fa-check"></i><b>14.2.1</b> Modified Model 1:</a></li>
+<li class="chapter" data-level="14.2.2" data-path="lavaan-lab-11-model-local-fitting-and-model-modifications.html"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#modified-model-2_1"><i class="fa fa-check"></i><b>14.2.2</b> Modified Model 2_1:</a></li>
+<li class="chapter" data-level="14.2.3" data-path="lavaan-lab-11-model-local-fitting-and-model-modifications.html"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#modified-model-2_2"><i class="fa fa-check"></i><b>14.2.3</b> Modified Model 2_2:</a></li>
+<li class="chapter" data-level="14.2.4" data-path="lavaan-lab-11-model-local-fitting-and-model-modifications.html"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#modified-model-3"><i class="fa fa-check"></i><b>14.2.4</b> Modified Model 3:</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="lavaan-lab-12-sem-for-missing-data.html"><a href="lavaan-lab-12-sem-for-missing-data.html"><i class="fa fa-check"></i><b>15</b> Lavaan Lab 12: SEM for Missing Data</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="lavaan-lab-12-sem-for-missing-data.html"><a href="lavaan-lab-12-sem-for-missing-data.html#part-i-generate-some-missing-data"><i class="fa fa-check"></i><b>15.1</b> PART I: Generate some missing data</a></li>
+<li class="chapter" data-level="15.2" data-path="lavaan-lab-12-sem-for-missing-data.html"><a href="lavaan-lab-12-sem-for-missing-data.html#part-ii-visualization-of-missing-data-patterns-nice-to-have"><i class="fa fa-check"></i><b>15.2</b> PART II: Visualization of missing data patterns (nice-to-have)</a></li>
+<li class="chapter" data-level="15.3" data-path="lavaan-lab-12-sem-for-missing-data.html"><a href="lavaan-lab-12-sem-for-missing-data.html#part-iii-build-a-cfa-model-with-missing-data"><i class="fa fa-check"></i><b>15.3</b> PART III: Build a CFA model with missing data</a></li>
+<li class="chapter" data-level="15.4" data-path="lavaan-lab-12-sem-for-missing-data.html"><a href="lavaan-lab-12-sem-for-missing-data.html#part-iv-addressing-missing-data"><i class="fa fa-check"></i><b>15.4</b> PART IV: Addressing missing data</a>
+<ul>
+<li class="chapter" data-level="15.4.1" data-path="lavaan-lab-12-sem-for-missing-data.html"><a href="lavaan-lab-12-sem-for-missing-data.html#fiml"><i class="fa fa-check"></i><b>15.4.1</b> FIML</a></li>
+<li class="chapter" data-level="15.4.2" data-path="lavaan-lab-12-sem-for-missing-data.html"><a href="lavaan-lab-12-sem-for-missing-data.html#multiple-imputation"><i class="fa fa-check"></i><b>15.4.2</b> Multiple Imputation</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html"><a href="lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html"><i class="fa fa-check"></i><b>16</b> Lavaan Lab 13: SEM for Nonnormal and Categorical Data</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html"><a href="lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#part-i-nonnormality-diagnosis"><i class="fa fa-check"></i><b>16.1</b> PART I: Nonnormality Diagnosis</a></li>
+<li class="chapter" data-level="16.2" data-path="lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html"><a href="lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#part-ii-robust-corrections"><i class="fa fa-check"></i><b>16.2</b> PART II: Robust corrections</a></li>
+<li class="chapter" data-level="16.3" data-path="lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html"><a href="lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#part-iii-categorical-data-analysis-in-lavaan"><i class="fa fa-check"></i><b>16.3</b> PART III: Categorical Data Analysis in Lavaan</a></li>
+<li class="chapter" data-level="16.4" data-path="lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html"><a href="lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#part-iv-what-if-you-have-it-all"><i class="fa fa-check"></i><b>16.4</b> PART IV: What if you have it all?</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="lavaan-lab-14-measurement-invariance.html"><a href="lavaan-lab-14-measurement-invariance.html"><i class="fa fa-check"></i><b>17</b> Lavaan Lab 14: Measurement Invariance</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="lavaan-lab-14-measurement-invariance.html"><a href="lavaan-lab-14-measurement-invariance.html#part-i-multi-group-analyses-done-incorrectly"><i class="fa fa-check"></i><b>17.1</b> PART I: Multi-Group Analyses, Done Incorrectly</a></li>
+<li class="chapter" data-level="17.2" data-path="lavaan-lab-14-measurement-invariance.html"><a href="lavaan-lab-14-measurement-invariance.html#part-ii-testing-measurement-invariance"><i class="fa fa-check"></i><b>17.2</b> PART II: Testing Measurement Invariance</a>
+<ul>
+<li class="chapter" data-level="17.2.1" data-path="lavaan-lab-14-measurement-invariance.html"><a href="lavaan-lab-14-measurement-invariance.html#step-1-configural-invariance"><i class="fa fa-check"></i><b>17.2.1</b> step 1: Configural invariance</a></li>
+<li class="chapter" data-level="17.2.2" data-path="lavaan-lab-14-measurement-invariance.html"><a href="lavaan-lab-14-measurement-invariance.html#step-2-metric-weak-invariance"><i class="fa fa-check"></i><b>17.2.2</b> step 2: Metric (weak) invariance</a></li>
+<li class="chapter" data-level="17.2.3" data-path="lavaan-lab-14-measurement-invariance.html"><a href="lavaan-lab-14-measurement-invariance.html#step-3-scalar-strong-invariance"><i class="fa fa-check"></i><b>17.2.3</b> step 3: Scalar (strong) Invariance</a></li>
+<li class="chapter" data-level="17.2.4" data-path="lavaan-lab-14-measurement-invariance.html"><a href="lavaan-lab-14-measurement-invariance.html#step-4-optional-residual-variance-strict-invariance"><i class="fa fa-check"></i><b>17.2.4</b> step 4: (Optional) Residual variance (strict) invariance</a></li>
+</ul></li>
+<li class="chapter" data-level="17.3" data-path="lavaan-lab-14-measurement-invariance.html"><a href="lavaan-lab-14-measurement-invariance.html#part-iii-shortcut-to-performing-mi"><i class="fa fa-check"></i><b>17.3</b> PART III: Shortcut to performing MI</a>
+<ul>
+<li class="chapter" data-level="17.3.1" data-path="lavaan-lab-14-measurement-invariance.html"><a href="lavaan-lab-14-measurement-invariance.html#measurementinvariance"><i class="fa fa-check"></i><b>17.3.1</b> measurementInvariance()</a></li>
+<li class="chapter" data-level="17.3.2" data-path="lavaan-lab-14-measurement-invariance.html"><a href="lavaan-lab-14-measurement-invariance.html#measeq.syntax"><i class="fa fa-check"></i><b>17.3.2</b> measEq.syntax()</a></li>
+</ul></li>
+<li class="chapter" data-level="17.4" data-path="lavaan-lab-14-measurement-invariance.html"><a href="lavaan-lab-14-measurement-invariance.html#part-iv-multi-group-cfa-modeling-done-right"><i class="fa fa-check"></i><b>17.4</b> PART IV: Multi-Group CFA Modeling, done right</a>
+<ul>
+<li class="chapter" data-level="17.4.1" data-path="lavaan-lab-14-measurement-invariance.html"><a href="lavaan-lab-14-measurement-invariance.html#statistical-test-of-equal-factor-means"><i class="fa fa-check"></i><b>17.4.1</b> Statistical Test of Equal Factor Means:</a></li>
+<li class="chapter" data-level="17.4.2" data-path="lavaan-lab-14-measurement-invariance.html"><a href="lavaan-lab-14-measurement-invariance.html#statistical-test-of-equal-regression-coefficients"><i class="fa fa-check"></i><b>17.4.2</b> Statistical Test of Equal Regression Coefficients:</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="lavaan-lab-15-mimic-longitudinal-invariance.html"><a href="lavaan-lab-15-mimic-longitudinal-invariance.html"><i class="fa fa-check"></i><b>18</b> Lavaan Lab 15: MIMIC &amp; Longitudinal Invariance</a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="lavaan-lab-15-mimic-longitudinal-invariance.html"><a href="lavaan-lab-15-mimic-longitudinal-invariance.html#part-i-partial-invariance"><i class="fa fa-check"></i><b>18.1</b> PART I: Partial Invariance</a></li>
+<li class="chapter" data-level="18.2" data-path="lavaan-lab-15-mimic-longitudinal-invariance.html"><a href="lavaan-lab-15-mimic-longitudinal-invariance.html#part-ii-mimic"><i class="fa fa-check"></i><b>18.2</b> PART II: MIMIC</a>
+<ul>
+<li class="chapter" data-level="18.2.1" data-path="lavaan-lab-15-mimic-longitudinal-invariance.html"><a href="lavaan-lab-15-mimic-longitudinal-invariance.html#test-metric-invariance"><i class="fa fa-check"></i><b>18.2.1</b> Test Metric Invariance</a></li>
+<li class="chapter" data-level="18.2.2" data-path="lavaan-lab-15-mimic-longitudinal-invariance.html"><a href="lavaan-lab-15-mimic-longitudinal-invariance.html#test-scalar-invariance"><i class="fa fa-check"></i><b>18.2.2</b> Test Scalar Invariance</a></li>
+<li class="chapter" data-level="18.2.3" data-path="lavaan-lab-15-mimic-longitudinal-invariance.html"><a href="lavaan-lab-15-mimic-longitudinal-invariance.html#test-the-hypothesis-of-equal-factor-means"><i class="fa fa-check"></i><b>18.2.3</b> Test The Hypothesis of Equal Factor Means:</a></li>
+</ul></li>
+<li class="chapter" data-level="18.3" data-path="lavaan-lab-15-mimic-longitudinal-invariance.html"><a href="lavaan-lab-15-mimic-longitudinal-invariance.html#part-iii-longitudinal-invariance"><i class="fa fa-check"></i><b>18.3</b> PART III: Longitudinal Invariance</a>
+<ul>
+<li class="chapter" data-level="18.3.1" data-path="lavaan-lab-15-mimic-longitudinal-invariance.html"><a href="lavaan-lab-15-mimic-longitudinal-invariance.html#step-1-configural-invariance-1"><i class="fa fa-check"></i><b>18.3.1</b> step 1: Configural invariance</a></li>
+<li class="chapter" data-level="18.3.2" data-path="lavaan-lab-15-mimic-longitudinal-invariance.html"><a href="lavaan-lab-15-mimic-longitudinal-invariance.html#step-1.5-threshold-invariance-for-categorical-indicators-only"><i class="fa fa-check"></i><b>18.3.2</b> step 1.5: Threshold invariance (for categorical indicators only)</a></li>
+<li class="chapter" data-level="18.3.3" data-path="lavaan-lab-15-mimic-longitudinal-invariance.html"><a href="lavaan-lab-15-mimic-longitudinal-invariance.html#recommended-practice-fit-one-invariance-model-at-a-time"><i class="fa fa-check"></i><b>18.3.3</b> RECOMMENDED PRACTICE: fit one invariance model at a time</a></li>
+<li class="chapter" data-level="18.3.4" data-path="lavaan-lab-15-mimic-longitudinal-invariance.html"><a href="lavaan-lab-15-mimic-longitudinal-invariance.html#step-2-metric-weak-invariance-1"><i class="fa fa-check"></i><b>18.3.4</b> step 2: Metric (weak) invariance</a></li>
+<li class="chapter" data-level="18.3.5" data-path="lavaan-lab-15-mimic-longitudinal-invariance.html"><a href="lavaan-lab-15-mimic-longitudinal-invariance.html#step-3-scalar-strong-invariance-1"><i class="fa fa-check"></i><b>18.3.5</b> step 3: Scalar (strong) Invariance</a></li>
+<li class="chapter" data-level="18.3.6" data-path="lavaan-lab-15-mimic-longitudinal-invariance.html"><a href="lavaan-lab-15-mimic-longitudinal-invariance.html#step-4-residual-variance-strict-invariance"><i class="fa fa-check"></i><b>18.3.6</b> step 4: Residual variance (strict) invariance</a></li>
+<li class="chapter" data-level="18.3.7" data-path="lavaan-lab-15-mimic-longitudinal-invariance.html"><a href="lavaan-lab-15-mimic-longitudinal-invariance.html#shortcut-function"><i class="fa fa-check"></i><b>18.3.7</b> Shortcut Function</a></li>
+<li class="chapter" data-level="18.3.8" data-path="lavaan-lab-15-mimic-longitudinal-invariance.html"><a href="lavaan-lab-15-mimic-longitudinal-invariance.html#not-recommended-fit-several-invariance-models-at-once"><i class="fa fa-check"></i><b>18.3.8</b> NOT RECOMMENDED: fit several invariance models at once</a></li>
+</ul></li>
+<li class="chapter" data-level="18.4" data-path="lavaan-lab-15-mimic-longitudinal-invariance.html"><a href="lavaan-lab-15-mimic-longitudinal-invariance.html#part-iv-exercises-mimic"><i class="fa fa-check"></i><b>18.4</b> PART IV: Exercises: MIMIC</a></li>
+<li class="chapter" data-level="18.5" data-path="lavaan-lab-15-mimic-longitudinal-invariance.html"><a href="lavaan-lab-15-mimic-longitudinal-invariance.html#part-v-exercises-longitudinal-invariance"><i class="fa fa-check"></i><b>18.5</b> PART V: Exercises: Longitudinal Invariance</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="lavaan-lab-16-latent-growth-models.html"><a href="lavaan-lab-16-latent-growth-models.html"><i class="fa fa-check"></i><b>19</b> Lavaan Lab 16: Latent Growth Models</a>
+<ul>
+<li class="chapter" data-level="19.1" data-path="lavaan-lab-16-latent-growth-models.html"><a href="lavaan-lab-16-latent-growth-models.html#part-i-spaghetti-plot"><i class="fa fa-check"></i><b>19.1</b> PART I: Spaghetti Plot</a></li>
+<li class="chapter" data-level="19.2" data-path="lavaan-lab-16-latent-growth-models.html"><a href="lavaan-lab-16-latent-growth-models.html#part-ii-growth-models"><i class="fa fa-check"></i><b>19.2</b> PART II: Growth Models</a>
+<ul>
+<li class="chapter" data-level="19.2.1" data-path="lavaan-lab-16-latent-growth-models.html"><a href="lavaan-lab-16-latent-growth-models.html#no-growth-model"><i class="fa fa-check"></i><b>19.2.1</b> 1. No growth model</a></li>
+<li class="chapter" data-level="19.2.2" data-path="lavaan-lab-16-latent-growth-models.html"><a href="lavaan-lab-16-latent-growth-models.html#linear-growth-model"><i class="fa fa-check"></i><b>19.2.2</b> 2. Linear growth model</a></li>
+<li class="chapter" data-level="19.2.3" data-path="lavaan-lab-16-latent-growth-models.html"><a href="lavaan-lab-16-latent-growth-models.html#quadratic-growth-model"><i class="fa fa-check"></i><b>19.2.3</b> 3. Quadratic growth model</a></li>
+<li class="chapter" data-level="19.2.4" data-path="lavaan-lab-16-latent-growth-models.html"><a href="lavaan-lab-16-latent-growth-models.html#latent-basis-growth-model-extension-of-linear-growth-model"><i class="fa fa-check"></i><b>19.2.4</b> 4. Latent basis growth model (extension of linear growth model)</a></li>
+<li class="chapter" data-level="19.2.5" data-path="lavaan-lab-16-latent-growth-models.html"><a href="lavaan-lab-16-latent-growth-models.html#spline-growth-model"><i class="fa fa-check"></i><b>19.2.5</b> 5. Spline Growth Model</a></li>
+<li class="chapter" data-level="19.2.6" data-path="lavaan-lab-16-latent-growth-models.html"><a href="lavaan-lab-16-latent-growth-models.html#model-comparison"><i class="fa fa-check"></i><b>19.2.6</b> Model Comparison</a></li>
+<li class="chapter" data-level="19.2.7" data-path="lavaan-lab-16-latent-growth-models.html"><a href="lavaan-lab-16-latent-growth-models.html#final-model-spline-growth-model-with-a-binary-treatment-predictor"><i class="fa fa-check"></i><b>19.2.7</b> 6. Final Model: Spline Growth Model with a binary treatment predictor</a></li>
+</ul></li>
+<li class="chapter" data-level="19.3" data-path="lavaan-lab-16-latent-growth-models.html"><a href="lavaan-lab-16-latent-growth-models.html#part-iii-lgm-on-latent-variables"><i class="fa fa-check"></i><b>19.3</b> PART III: LGM on Latent Variables</a>
+<ul>
+<li class="chapter" data-level="19.3.1" data-path="lavaan-lab-16-latent-growth-models.html"><a href="lavaan-lab-16-latent-growth-models.html#example"><i class="fa fa-check"></i><b>19.3.1</b> Example</a></li>
+<li class="chapter" data-level="19.3.2" data-path="lavaan-lab-16-latent-growth-models.html"><a href="lavaan-lab-16-latent-growth-models.html#exercise"><i class="fa fa-check"></i><b>19.3.2</b> Exercise</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="lavaan-lab-17-second-order-and-bifactor-models.html"><a href="lavaan-lab-17-second-order-and-bifactor-models.html"><i class="fa fa-check"></i><b>20</b> Lavaan Lab 17: Second-order and Bifactor Models</a>
+<ul>
+<li class="chapter" data-level="20.1" data-path="lavaan-lab-17-second-order-and-bifactor-models.html"><a href="lavaan-lab-17-second-order-and-bifactor-models.html#part-i-unidimensional-model"><i class="fa fa-check"></i><b>20.1</b> PART I: Unidimensional model</a></li>
+<li class="chapter" data-level="20.2" data-path="lavaan-lab-17-second-order-and-bifactor-models.html"><a href="lavaan-lab-17-second-order-and-bifactor-models.html#part-ii-correlated-factors-model"><i class="fa fa-check"></i><b>20.2</b> PART II: Correlated factors model</a></li>
+<li class="chapter" data-level="20.3" data-path="lavaan-lab-17-second-order-and-bifactor-models.html"><a href="lavaan-lab-17-second-order-and-bifactor-models.html#part-iii-second-order-factor-model"><i class="fa fa-check"></i><b>20.3</b> PART III: Second-order factor Model</a></li>
+<li class="chapter" data-level="20.4" data-path="lavaan-lab-17-second-order-and-bifactor-models.html"><a href="lavaan-lab-17-second-order-and-bifactor-models.html#part-iv-bifactor-model"><i class="fa fa-check"></i><b>20.4</b> PART IV: Bifactor Model</a></li>
+<li class="chapter" data-level="20.5" data-path="lavaan-lab-17-second-order-and-bifactor-models.html"><a href="lavaan-lab-17-second-order-and-bifactor-models.html#part-v-model-comparison"><i class="fa fa-check"></i><b>20.5</b> PART V: Model Comparison</a></li>
+<li class="chapter" data-level="20.6" data-path="lavaan-lab-17-second-order-and-bifactor-models.html"><a href="lavaan-lab-17-second-order-and-bifactor-models.html#exercise-mental-ability-scale"><i class="fa fa-check"></i><b>20.6</b> Exercise: Mental Ability Scale</a></li>
+</ul></li>
+<li class="chapter" data-level="21" data-path="lavaan-lab-18-cfa-of-mtmm-matrix.html"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html"><i class="fa fa-check"></i><b>21</b> Lavaan Lab 18: CFA of MTMM Matrix</a>
+<ul>
+<li class="chapter" data-level="21.1" data-path="lavaan-lab-18-cfa-of-mtmm-matrix.html"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#part-i-correlated-methods-specification"><i class="fa fa-check"></i><b>21.1</b> PART I: Correlated methods specification</a></li>
+<li class="chapter" data-level="21.2" data-path="lavaan-lab-18-cfa-of-mtmm-matrix.html"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#part-ii-correlated-uniqueness-specification"><i class="fa fa-check"></i><b>21.2</b> PART II: Correlated uniqueness specification</a></li>
+</ul></li>
+<li class="chapter" data-level="22" data-path="lavaan-lab-19-multilevel-sem.html"><a href="lavaan-lab-19-multilevel-sem.html"><i class="fa fa-check"></i><b>22</b> Lavaan Lab 19: Multilevel SEM</a>
+<ul>
+<li class="chapter" data-level="22.1" data-path="lavaan-lab-19-multilevel-sem.html"><a href="lavaan-lab-19-multilevel-sem.html#part-i-multilevel-cfa-1-within-only-construct"><i class="fa fa-check"></i><b>22.1</b> PART I: Multilevel CFA 1: within-only construct</a></li>
+<li class="chapter" data-level="22.2" data-path="lavaan-lab-19-multilevel-sem.html"><a href="lavaan-lab-19-multilevel-sem.html#part-ii-multilevel-cfa-2-between-only-construct"><i class="fa fa-check"></i><b>22.2</b> PART II: Multilevel CFA 2: Between-only construct</a></li>
+<li class="chapter" data-level="22.3" data-path="lavaan-lab-19-multilevel-sem.html"><a href="lavaan-lab-19-multilevel-sem.html#part-iii-multilevel-cfa-3-shared-cross-level-construct"><i class="fa fa-check"></i><b>22.3</b> PART III: Multilevel CFA 3: Shared cross-level construct</a></li>
+<li class="chapter" data-level="22.4" data-path="lavaan-lab-19-multilevel-sem.html"><a href="lavaan-lab-19-multilevel-sem.html#part-iv-multilevel-cfa-4-configural-construct"><i class="fa fa-check"></i><b>22.4</b> PART IV: Multilevel CFA 4: Configural construct</a></li>
+<li class="chapter" data-level="22.5" data-path="lavaan-lab-19-multilevel-sem.html"><a href="lavaan-lab-19-multilevel-sem.html#part-v-multilevel-cfa-5-shared-configural-construct"><i class="fa fa-check"></i><b>22.5</b> PART V: Multilevel CFA 5: Shared + Configural construct</a></li>
+<li class="chapter" data-level="22.6" data-path="lavaan-lab-19-multilevel-sem.html"><a href="lavaan-lab-19-multilevel-sem.html#part-vi-model-comparison"><i class="fa fa-check"></i><b>22.6</b> PART VI: Model Comparison</a></li>
+<li class="chapter" data-level="22.7" data-path="lavaan-lab-19-multilevel-sem.html"><a href="lavaan-lab-19-multilevel-sem.html#part-vii-adding-covariates-to-multilevel-sem"><i class="fa fa-check"></i><b>22.7</b> PART VII: Adding Covariates to Multilevel SEM</a>
+<ul>
+<li class="chapter" data-level="22.7.1" data-path="lavaan-lab-19-multilevel-sem.html"><a href="lavaan-lab-19-multilevel-sem.html#model-a-adding-a-within-only-covariate"><i class="fa fa-check"></i><b>22.7.1</b> Model A: Adding a within-only covariate</a></li>
+<li class="chapter" data-level="22.7.2" data-path="lavaan-lab-19-multilevel-sem.html"><a href="lavaan-lab-19-multilevel-sem.html#model-b-adding-a-between-only-covariate"><i class="fa fa-check"></i><b>22.7.2</b> Model B: Adding a between-only covariate</a></li>
+<li class="chapter" data-level="22.7.3" data-path="lavaan-lab-19-multilevel-sem.html"><a href="lavaan-lab-19-multilevel-sem.html#model-c-adding-a-covariate-at-both-levels"><i class="fa fa-check"></i><b>22.7.3</b> Model C: Adding a covariate at both levels</a></li>
+</ul></li>
+<li class="chapter" data-level="22.8" data-path="lavaan-lab-19-multilevel-sem.html"><a href="lavaan-lab-19-multilevel-sem.html#part-vii-final-model"><i class="fa fa-check"></i><b>22.8</b> PART VII: Final Model</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R Cookbook for Structural Equation Modeling</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="r-lab-on-disaster-dataset-chapman-and-lickel-2016" class="section level1 hasAnchor" number="7">
+<h1><span class="header-section-number">Chapter 7</span> R Lab on Disaster Dataset (Chapman and Lickel, 2016)<a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#r-lab-on-disaster-dataset-chapman-and-lickel-2016" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="data-prep-1" class="section level2 hasAnchor" number="7.1">
+<h2><span class="header-section-number">7.1</span> Data Prep<a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#data-prep-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The following example data are from Chapman and Lickel (2016)
+Also example data in Chapter 12 of Hayes (2017)</p>
+<p>Simply load the .rda into R:</p>
+<div class="sourceCode" id="cb272"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb272-1"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb272-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;disaster.rda&quot;</span>)</span>
+<span id="cb272-2"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb272-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb272-3"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb272-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(disaster)</span></code></pre></div>
+<pre><code>##   id frame donate justify skeptic
+## 1  1     1    5.6    2.95     1.8
+## 2  2     1    4.2    2.85     5.2
+## 3  3     1    4.2    3.00     3.2
+## 4  4     1    4.6    3.30     1.0
+## 5  5     1    3.0    5.00     7.6
+## 6  6     0    5.0    3.20     4.2</code></pre>
+<div class="sourceCode" id="cb274"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb274-1"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb274-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(disaster)</span></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    211 obs. of  5 variables:
+##  $ id     : num  1 2 3 4 5 6 7 8 9 10 ...
+##   ..- attr(*, &quot;format.spss&quot;)= chr &quot;F8.0&quot;
+##   ..- attr(*, &quot;display_width&quot;)= int 6
+##  $ frame  : num  1 1 1 1 1 0 0 1 0 0 ...
+##   ..- attr(*, &quot;label&quot;)= chr &quot;Experimental condition&quot;
+##   ..- attr(*, &quot;format.spss&quot;)= chr &quot;F8.2&quot;
+##   ..- attr(*, &quot;labels&quot;)= Named num [1:2] 0 1
+##   .. ..- attr(*, &quot;names&quot;)= chr [1:2] &quot;naturally caused disaster&quot; &quot;climate change caused disaster&quot;
+##  $ donate : num  5.6 4.2 4.2 4.6 3 5 4.8 6 4.2 4.4 ...
+##   ..- attr(*, &quot;label&quot;)= chr &quot;Positive attitudes toward donating&quot;
+##   ..- attr(*, &quot;format.spss&quot;)= chr &quot;F8.2&quot;
+##   ..- attr(*, &quot;display_width&quot;)= int 9
+##  $ justify: num  2.95 2.85 3 3.3 5 3.2 2.9 1.4 3.25 3.55 ...
+##   ..- attr(*, &quot;label&quot;)= chr &quot;Negative justifications&quot;
+##   ..- attr(*, &quot;format.spss&quot;)= chr &quot;F8.2&quot;
+##   ..- attr(*, &quot;display_width&quot;)= int 10
+##  $ skeptic: num  1.8 5.2 3.2 1 7.6 4.2 4.2 1.2 1.8 8.8 ...
+##   ..- attr(*, &quot;label&quot;)= chr &quot;Climate change skepticism&quot;
+##   ..- attr(*, &quot;format.spss&quot;)= chr &quot;F8.2&quot;</code></pre>
+<p>If you are able to install package processR, you can also view its help page:</p>
+<div class="sourceCode" id="cb276"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb276-1"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb276-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;processR&quot;</span>)</span>
+<span id="cb276-2"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb276-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb276-3"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb276-3" aria-hidden="true" tabindex="-1"></a><span class="co"># If error message persists, change the repository to CRAN:</span></span>
+<span id="cb276-4"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb276-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb276-5"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb276-5" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;processR&quot;</span>, <span class="at">repos=</span><span class="st">&quot;https://cran.rstudio.com/&quot;</span>)</span>
+<span id="cb276-6"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb276-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb276-7"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb276-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(processR)</span>
+<span id="cb276-8"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb276-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb276-9"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb276-9" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(disaster)</span>
+<span id="cb276-10"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb276-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb276-11"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb276-11" aria-hidden="true" tabindex="-1"></a><span class="co"># take a look at the dataset: </span></span>
+<span id="cb276-12"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb276-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb276-13"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb276-13" aria-hidden="true" tabindex="-1"></a>?disaster</span></code></pre></div>
+<div class="sourceCode" id="cb277"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb277-1"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb277-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(processR)</span></code></pre></div>
+<p>You probably have to go to <a href="https://www.xquartz.org/" class="uri">https://www.xquartz.org/</a> to download and install X11, which is a server required by many R packages, including processR.</p>
+<p>Disaster is a data.frame with 211 obs. of 5 variables:</p>
+<ul>
+<li>id</li>
+<li>frame: Experimental condition. 0 = naturally caused disaster, 1 = climate change caused disaster</li>
+<li>donate: Positive attitudes toward donating</li>
+<li>justify: Negative justifications</li>
+<li>skeptic: Climate change skepticism</li>
+</ul>
+<div id="scatterplot-matrix" class="section level3 hasAnchor" number="7.1.1">
+<h3><span class="header-section-number">7.1.1</span> Scatterplot Matrix<a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#scatterplot-matrix" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Before we build linear models, we should plot the relationship between pairs of variables:</p>
+<div class="sourceCode" id="cb278"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb278-1"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb278-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(PerformanceAnalytics)</span>
+<span id="cb278-2"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb278-2" aria-hidden="true" tabindex="-1"></a><span class="fu">chart.Correlation</span>(disaster[,<span class="sc">-</span><span class="dv">1</span>])</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-160-1.png" width="480" /></p>
+</div>
+<div id="p-value-or-bootstrapped-confidence-interval" class="section level3 hasAnchor" number="7.1.2">
+<h3><span class="header-section-number">7.1.2</span> p-value or bootstrapped confidence interval?<a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#p-value-or-bootstrapped-confidence-interval" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>For models that involve mediation effects, we prefer to use bootstrap confidence intervals over p-values for evaluating the significance of parameter estimates. That is, in the parameter table generated by parameterEstimates() function:</p>
+<ul>
+<li>A coefficient is considered significant when the interval [ci.lower, ci.upper] does not include zero;</li>
+<li>A coefficient is considered insignificant when the interval [ci.lower, ci.upper] includes zero.</li>
+</ul>
+<p>In most cases, bootstrap confidence intervals and p-values yield the same conclusions regarding the significance of parameter estimates. If not, bootstrap confidence intervals are used to make the final call.</p>
+<p>In this document, all bootstrap confidence intervals and p-values yield the same conclusions regarding significances, so I’ll only refer to p-values for the readability of the analyses.</p>
+</div>
+</div>
+<div id="model-1-simple-linear-regression-model" class="section level2 hasAnchor" number="7.2">
+<h2><span class="header-section-number">7.2</span> Model 1: Simple Linear Regression Model<a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#model-1-simple-linear-regression-model" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>With processR, you can draw concept diagram and statistical diagram of <code>mediation</code> and <code>moderation</code> models quite easily. For example:</p>
+<div class="sourceCode" id="cb279"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb279-1"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb279-1" aria-hidden="true" tabindex="-1"></a>labels<span class="ot">=</span><span class="fu">list</span>(<span class="at">X=</span><span class="st">&quot;frame&quot;</span>,<span class="at">M=</span><span class="st">&quot;justify&quot;</span>,<span class="at">Y=</span><span class="st">&quot;donate&quot;</span>,<span class="at">W=</span><span class="st">&quot;skeptic&quot;</span>)</span>
+<span id="cb279-2"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb279-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">1</span>), <span class="at">mar=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>), <span class="at">oma=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>))</span>
+<span id="cb279-3"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb279-3" aria-hidden="true" tabindex="-1"></a><span class="fu">pmacroModel</span>(<span class="dv">0</span>,<span class="at">labels=</span>labels)</span>
+<span id="cb279-4"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb279-4" aria-hidden="true" tabindex="-1"></a><span class="fu">statisticalDiagram</span>(<span class="dv">0</span>, <span class="at">labels=</span>labels)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/diag%20demo-1.png" width="672" /></p>
+<p>return the diagrams of a simple linear regression model.</p>
+<p>For Model 1, let’s run a simple linear regression using lm() to estimate the total effect of frame on willingness to donate:</p>
+<div class="sourceCode" id="cb280"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb280-1"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb280-1" aria-hidden="true" tabindex="-1"></a>lm1 <span class="ot">=</span> <span class="fu">lm</span>(donate <span class="sc">~</span> frame , <span class="at">data =</span> disaster)</span>
+<span id="cb280-2"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb280-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm1)[[<span class="dv">4</span>]]</span></code></pre></div>
+<pre><code>##               Estimate Std. Error    t value     Pr(&gt;|t|)
+## (Intercept) 4.56363636  0.1258337 36.2672028 3.955220e-92
+## frame       0.08388839  0.1818769  0.4612372 6.451081e-01</code></pre>
+<ul>
+<li><p>Note that the <code>[[4]]</code> was added after <code>summary(lm1)</code> to request the coefficient table only.</p></li>
+<li><p>The total effect is c = 0.084 (p = 0.645), not significant.</p></li>
+<li><p>However, we learned in this class that absence of association between X and Y does NOT mean that X isn’t affecting Y (remember inconsistent mediation?).</p></li>
+</ul>
+<p>So let’s move on…</p>
+<!------------------------------>
+</div>
+<div id="model-2-simple-mediation-model" class="section level2 hasAnchor" number="7.3">
+<h2><span class="header-section-number">7.3</span> Model 2: Simple Mediation Model<a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#model-2-simple-mediation-model" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<!------------------------------>
+<p>Q: If a disaster is framed as the result of a climate change (instead of a natural disaster), do you think it’s justified to withhold aid to the victims, and thus become less willing to donate?</p>
+<div class="sourceCode" id="cb282"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb282-1"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb282-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">mar=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>), <span class="at">oma=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>))</span>
+<span id="cb282-2"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb282-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pmacroModel</span>(<span class="dv">4</span>,<span class="at">labels=</span>labels)</span>
+<span id="cb282-3"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb282-3" aria-hidden="true" tabindex="-1"></a><span class="fu">statisticalDiagram</span>(<span class="dv">4</span>, <span class="at">labels=</span>labels)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/diag2-1.png" width="672" /></p>
+<p>Load the lavaan package:</p>
+<div class="sourceCode" id="cb283"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb283-1"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb283-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span></code></pre></div>
+<p>and test the mediation effect (ab) using bootstrap:</p>
+<div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb284-1"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb284-1" aria-hidden="true" tabindex="-1"></a>lm2.syntax <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
+<span id="cb284-2"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb284-2" aria-hidden="true" tabindex="-1"></a><span class="st">donate ~ b*justify + cprime*frame</span></span>
+<span id="cb284-3"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb284-3" aria-hidden="true" tabindex="-1"></a><span class="st">justify ~ a*frame</span></span>
+<span id="cb284-4"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb284-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb284-5"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb284-5" aria-hidden="true" tabindex="-1"></a><span class="st"># Define new parameters</span></span>
+<span id="cb284-6"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb284-6" aria-hidden="true" tabindex="-1"></a><span class="st">#The := operator in lavaan defines new parameters.</span></span>
+<span id="cb284-7"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb284-7" aria-hidden="true" tabindex="-1"></a><span class="st">ab:= a*b</span></span>
+<span id="cb284-8"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb284-8" aria-hidden="true" tabindex="-1"></a><span class="st">c:= a*b + cprime</span></span>
+<span id="cb284-9"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb284-9" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span>
+<span id="cb284-10"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb284-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb284-11"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb284-11" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2022</span>)</span>
+<span id="cb284-12"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb284-12" aria-hidden="true" tabindex="-1"></a>lm2.bfit <span class="ot">=</span> <span class="fu">sem</span>(lm2.syntax, <span class="at">data =</span> disaster, <span class="at">se =</span> <span class="st">&quot;bootstrap&quot;</span>, <span class="at">bootstrap =</span> <span class="dv">1000</span>, <span class="at">fixed.x=</span><span class="cn">FALSE</span>, <span class="at">meanstructure =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb284-13"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb284-13" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm2.bfit, <span class="at">ci =</span> T)</span></code></pre></div>
+<pre><code>## lavaan 0.6-10 ended normally after 19 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                         9
+##                                                       
+##   Number of observations                           211
+##                                                       
+## Model Test User Model:
+##                                                       
+##   Test statistic                                 0.000
+##   Degrees of freedom                                 0
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                            Bootstrap
+##   Number of requested bootstrap draws             1000
+##   Number of successful bootstrap draws            1000
+## 
+## Regressions:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|) ci.lower ci.upper
+##   donate ~                                                              
+##     justify    (b)   -0.953    0.065  -14.641    0.000   -1.078   -0.823
+##     frame   (cprm)    0.212    0.139    1.526    0.127   -0.065    0.492
+##   justify ~                                                             
+##     frame      (a)    0.134    0.131    1.023    0.306   -0.133    0.393
+## 
+## Intercepts:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|) ci.lower ci.upper
+##    .donate            7.235    0.199   36.380    0.000    6.810    7.595
+##    .justify           2.802    0.083   33.785    0.000    2.644    2.967
+##     frame             0.479    0.036   13.458    0.000    0.403    0.545
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|) ci.lower ci.upper
+##    .donate            0.948    0.118    8.061    0.000    0.712    1.171
+##    .justify           0.856    0.097    8.866    0.000    0.683    1.071
+##     frame             0.250    0.003   97.289    0.000    0.241    0.250
+## 
+## Defined Parameters:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|) ci.lower ci.upper
+##     ab               -0.128    0.125   -1.022    0.307   -0.378    0.125
+##     c                 0.084    0.188    0.447    0.655   -0.253    0.476</code></pre>
+<div class="sourceCode" id="cb286"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb286-1"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb286-1" aria-hidden="true" tabindex="-1"></a><span class="fu">parameterEstimates</span>(lm2.bfit, <span class="at">boot.ci.type =</span> <span class="st">&quot;bca.simple&quot;</span>, <span class="at">standardized =</span> T)</span></code></pre></div>
+<pre><code>##        lhs op        rhs  label    est    se       z pvalue ci.lower ci.upper std.lv std.all std.nox
+## 1   donate  ~    justify      b -0.953 0.065 -14.641  0.000   -1.083   -0.828 -0.953  -0.673  -0.673
+## 2   donate  ~      frame cprime  0.212 0.139   1.526  0.127   -0.062    0.503  0.212   0.081   0.161
+## 3  justify  ~      frame      a  0.134 0.131   1.023  0.306   -0.147    0.380  0.134   0.072   0.145
+## 4   donate ~~     donate         0.948 0.118   8.061  0.000    0.735    1.214  0.948   0.549   0.549
+## 5  justify ~~    justify         0.856 0.097   8.866  0.000    0.699    1.096  0.856   0.995   0.995
+## 6    frame ~~      frame         0.250 0.003  97.289  0.000    0.244    0.250  0.250   1.000   0.250
+## 7   donate ~1                    7.235 0.199  36.380  0.000    6.808    7.590  7.235   5.506   5.506
+## 8  justify ~1                    2.802 0.083  33.785  0.000    2.649    2.976  2.802   3.022   3.022
+## 9    frame ~1                    0.479 0.036  13.458  0.000    0.390    0.536  0.479   0.958   0.479
+## 10      ab :=        a*b     ab -0.128 0.125  -1.022  0.307   -0.362    0.144 -0.128  -0.049  -0.097
+## 11       c := a*b+cprime      c  0.084 0.188   0.447  0.655   -0.233    0.524  0.084   0.032   0.064</code></pre>
+<p>From the coefficient table, we can see:</p>
+<ul>
+<li>a path: a = 0.134 (p = 0.306)</li>
+<li>b path: b = -0.953 (p = 0.000)</li>
+<li>indirect effect: ab = -0.128 (p = 0.307)</li>
+<li>direct effect: cprime = 0.212 (p = 0.127)</li>
+<li>total effect: c = ab + cprime = 0.084 (p = 0.655)</li>
+<li>Except for b path, all effects above are not significant.</li>
+</ul>
+<p>This tells us:</p>
+<ul>
+<li>The framing of the disaster did not significantly change people’s beliefs about whether providing aid to the victims is justified (a path)</li>
+<li>Justification for withholding aid did make participants less willing to donate (b path)</li>
+<li>However, the indirect effect ab was not significant, meaning justification for withholding did not explain the relationship between frame and willingness to donate</li>
+</ul>
+<p>Let’s switch to moderation model:</p>
+<!------------------------------>
+</div>
+<div id="model-3-simple-moderation-model" class="section level2 hasAnchor" number="7.4">
+<h2><span class="header-section-number">7.4</span> Model 3: Simple Moderation Model<a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#model-3-simple-moderation-model" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<!------------------------------>
+<p>Skepticism of climate change cannot be changed by the frame, so skeptic is a moderator, not a mediator, it does not stand in the middle of the pathway</p>
+<div class="sourceCode" id="cb288"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb288-1"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb288-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">mar=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>), <span class="at">oma=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>))</span>
+<span id="cb288-2"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb288-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pmacroModel</span>(<span class="dv">1</span>,<span class="at">labels=</span>labels)</span>
+<span id="cb288-3"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb288-3" aria-hidden="true" tabindex="-1"></a><span class="fu">statisticalDiagram</span>(<span class="dv">1</span>, <span class="at">labels=</span>labels)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/diag3-1.png" width="672" /></p>
+<p>Since the moderator skeptic is a continuous measure, we need to mean center it first:</p>
+<div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb289-1"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb289-1" aria-hidden="true" tabindex="-1"></a>disaster<span class="sc">$</span>skep_raw <span class="ot">=</span> disaster<span class="sc">$</span>skeptic</span>
+<span id="cb289-2"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb289-2" aria-hidden="true" tabindex="-1"></a>disaster<span class="sc">$</span>skeptic <span class="ot">=</span> <span class="fu">scale</span>(disaster<span class="sc">$</span>skep_raw, <span class="at">center =</span> <span class="cn">TRUE</span>, <span class="at">scale =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb289-3"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb289-3" aria-hidden="true" tabindex="-1"></a>disaster<span class="sc">$</span>skep_sd <span class="ot">=</span> <span class="fu">scale</span>(disaster<span class="sc">$</span>skep_raw, <span class="at">center =</span> <span class="cn">TRUE</span>, <span class="at">scale =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb289-4"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb289-4" aria-hidden="true" tabindex="-1"></a>disaster<span class="sc">$</span>skepxframe <span class="ot">=</span> disaster<span class="sc">$</span>skeptic <span class="sc">*</span> disaster<span class="sc">$</span>frame</span></code></pre></div>
+<p>.. and manually create an interaction term by multiplying skeptic and frame:</p>
+<div class="sourceCode" id="cb290"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb290-1"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb290-1" aria-hidden="true" tabindex="-1"></a>disaster<span class="sc">$</span>skepxframe <span class="ot">=</span> disaster<span class="sc">$</span>skeptic <span class="sc">*</span> disaster<span class="sc">$</span>frame</span></code></pre></div>
+<p>Let’s examine their means and standard deviations:</p>
+<div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb291-1"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb291-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">apply</span>(disaster, <span class="dv">2</span>, mean), <span class="dv">2</span>)</span></code></pre></div>
+<pre><code>##         id      frame     donate    justify    skeptic   skep_raw    skep_sd skepxframe 
+##     106.00       0.48       4.60       2.87       0.00       3.38       0.00       0.02</code></pre>
+<div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb293-1"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb293-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">apply</span>(disaster, <span class="dv">2</span>, sd), <span class="dv">2</span>)</span></code></pre></div>
+<pre><code>##         id      frame     donate    justify    skeptic   skep_raw    skep_sd skepxframe 
+##      61.05       0.50       1.32       0.93       2.03       2.03       1.00       1.40</code></pre>
+<p>Let’s write the syntax for the simple moderation model:</p>
+<div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb295-1"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb295-1" aria-hidden="true" tabindex="-1"></a>lm3.syntax <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
+<span id="cb295-2"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb295-2" aria-hidden="true" tabindex="-1"></a><span class="st">#Regression with interaction</span></span>
+<span id="cb295-3"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb295-3" aria-hidden="true" tabindex="-1"></a><span class="st">donate ~ b1*skeptic + b2*frame + b3*skepxframe</span></span>
+<span id="cb295-4"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb295-4" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span>
+<span id="cb295-5"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb295-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb295-6"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb295-6" aria-hidden="true" tabindex="-1"></a>lm3.fit <span class="ot">=</span> <span class="fu">sem</span>(lm3.syntax, <span class="at">data =</span> disaster, <span class="at">fixed.x=</span><span class="cn">FALSE</span>, <span class="at">meanstructure =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb295-7"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb295-7" aria-hidden="true" tabindex="-1"></a><span class="fu">parameterEstimates</span>(lm3.fit, <span class="at">ci =</span> T)</span></code></pre></div>
+<pre><code>##           lhs op        rhs label    est    se      z pvalue ci.lower ci.upper
+## 1      donate  ~    skeptic    b1 -0.140 0.057 -2.433  0.015   -0.252   -0.027
+## 2      donate  ~      frame    b2  0.103 0.169  0.609  0.542   -0.228    0.433
+## 3      donate  ~ skepxframe    b3 -0.171 0.083 -2.054  0.040   -0.334   -0.008
+## 4      donate ~~     donate        1.495 0.146 10.271  0.000    1.210    1.780
+## 5     skeptic ~~    skeptic        4.113 0.400 10.271  0.000    3.328    4.897
+## 6     skeptic ~~      frame        0.021 0.070  0.294  0.769   -0.116    0.157
+## 7     skeptic ~~ skepxframe        1.957 0.237  8.249  0.000    1.492    2.423
+## 8       frame ~~      frame        0.250 0.024 10.271  0.000    0.202    0.297
+## 9       frame ~~ skepxframe        0.011 0.048  0.222  0.824   -0.084    0.105
+## 10 skepxframe ~~ skepxframe        1.957 0.191 10.271  0.000    1.584    2.331
+## 11     donate ~1                   4.558 0.117 39.092  0.000    4.330    4.787
+## 12    skeptic ~1                   0.000 0.140  0.000  1.000   -0.274    0.274
+## 13      frame ~1                   0.479 0.034 13.919  0.000    0.411    0.546
+## 14 skepxframe ~1                   0.021 0.096  0.213  0.831   -0.168    0.209</code></pre>
+<ul>
+<li>b3 = -0.171, p = 0.040</li>
+<li>So this moderator, skeptic, is a significant moderator of the frame-donate path, that is, skepticism of climate change could change the effect of framing on willingness to donate.</li>
+</ul>
+<div id="johnson-neyman-interval-1" class="section level3 hasAnchor" number="7.4.1">
+<h3><span class="header-section-number">7.4.1</span> JOHNSON-NEYMAN INTERVAL<a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#johnson-neyman-interval-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb297-1"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb297-1" aria-hidden="true" tabindex="-1"></a>interactionModel2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(donate <span class="sc">~</span> skeptic<span class="sc">*</span>frame, disaster)</span>
+<span id="cb297-2"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb297-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb297-3"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb297-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(interactionModel2)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = donate ~ skeptic * frame, data = disaster)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -3.8341 -0.7077  0.1659  0.9101  2.6682 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)    4.55815    0.11772  38.719   &lt;2e-16 ***
+## skeptic       -0.13953    0.05790  -2.410   0.0168 *  
+## frame          0.10266    0.17016   0.603   0.5469    
+## skeptic:frame -0.17071    0.08393  -2.034   0.0432 *  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.234 on 207 degrees of freedom
+## Multiple R-squared:  0.1343, Adjusted R-squared:  0.1218 
+## F-statistic: 10.71 on 3 and 207 DF,  p-value: 1.424e-06</code></pre>
+<div class="sourceCode" id="cb299"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb299-1"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb299-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(interactions)</span>
+<span id="cb299-2"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb299-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb299-3"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb299-3" aria-hidden="true" tabindex="-1"></a>interactions<span class="sc">::</span><span class="fu">johnson_neyman</span>(interactionModel2, <span class="at">pred =</span> <span class="st">&quot;frame&quot;</span>, <span class="at">modx =</span> <span class="st">&quot;skeptic&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.05</span>)</span></code></pre></div>
+<pre><code>## JOHNSON-NEYMAN INTERVAL 
+## 
+## When skeptic is OUTSIDE the interval [-2.59, 22.34], the slope of frame is p &lt; .05.
+## 
+## Note: The range of observed values of skeptic is [-2.38, 5.62]</code></pre>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-166-1.png" width="672" /></p>
+<ul>
+<li>As can be seen, it appears that among those low in climate change skepticism (lower than -2.59), framing the drought as caused by climate change produced a greater willingness to donate (simple slopes were significantly positive) compared to when climate change was not described as the cause.</li>
+<li>Among climate change skeptics (i.e., those high on the skepticism scale), the willingness to donate to the victims were not affected the framing of the problem (simple slopes were not significantly different from 0).</li>
+</ul>
+<p>Next, let’s test those Moderated Mediation Models one by one.</p>
+<!------------------------------>
+</div>
+</div>
+<div id="model-4a-moderated-mediation-model---path-a-only" class="section level2 hasAnchor" number="7.5">
+<h2><span class="header-section-number">7.5</span> Model 4a: Moderated Mediation Model - Path a only<a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#model-4a-moderated-mediation-model---path-a-only" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<!------------------------------>
+<div class="sourceCode" id="cb301"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb301-1"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb301-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">mar=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>), <span class="at">oma=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>))</span>
+<span id="cb301-2"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb301-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pmacroModel</span>(<span class="dv">7</span>,<span class="at">labels=</span>labels)</span>
+<span id="cb301-3"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb301-3" aria-hidden="true" tabindex="-1"></a><span class="fu">statisticalDiagram</span>(<span class="dv">7</span>, <span class="at">labels=</span>labels)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/diag4a-1.png" width="672" /></p>
+<ul>
+<li><p>Since the frame-justify (a path) is hypothesized to be moderated by skeptic, the simple slope of justify on frame is a function of skeptic, that is, a1+a3*skeptic</p></li>
+<li><p>The indirect effect through justify also depends on skeptic, calculated as b*(a1+a3*skeptic)</p></li>
+<li><p>Since skeptic is a continuous variable, we will pick three values from it. The chapter in Hayes (2017) picked the 16th, 50th, and 84th percentiles of the distribution using the quantile() function:</p></li>
+</ul>
+<div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb302-1"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb302-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(disaster<span class="sc">$</span>skeptic, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.16</span>, <span class="fl">0.5</span>, <span class="fl">0.84</span>))</span></code></pre></div>
+<pre><code>##        16%        50%        84% 
+## -1.7779621 -0.5779621  1.8220379</code></pre>
+<p>which are:</p>
+<ul>
+<li>low: -1.78</li>
+<li>median: -0.58</li>
+<li>mean: 0 (why)</li>
+<li>high: 1.82</li>
+</ul>
+<p>We’ll also define the index of moderated mediation to be:</p>
+<ul>
+<li>a3*b (refer to slides of week6_1)</li>
+</ul>
+<p>Let’s write the syntax for the moderated mediation model:</p>
+<div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb304-1" aria-hidden="true" tabindex="-1"></a>lm4a.syntax <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
+<span id="cb304-2"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb304-2" aria-hidden="true" tabindex="-1"></a><span class="st">donate ~ b*justify + cprime*frame</span></span>
+<span id="cb304-3"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb304-3" aria-hidden="true" tabindex="-1"></a><span class="st">justify ~ a1*frame + a2*skeptic + a3*skepxframe</span></span>
+<span id="cb304-4"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb304-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb304-5"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb304-5" aria-hidden="true" tabindex="-1"></a><span class="st"># Define simple slopes and conditional indirect effects using :=</span></span>
+<span id="cb304-6"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb304-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb304-7"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb304-7" aria-hidden="true" tabindex="-1"></a><span class="st"># index of moderated mediation</span></span>
+<span id="cb304-8"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb304-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb304-9"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb304-9" aria-hidden="true" tabindex="-1"></a><span class="st">IndMedMod:= a3*b</span></span>
+<span id="cb304-10"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb304-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb304-11"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb304-11" aria-hidden="true" tabindex="-1"></a><span class="st"># simple slope of justify on frame is a1+a3*skeptic</span></span>
+<span id="cb304-12"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb304-12" aria-hidden="true" tabindex="-1"></a><span class="st">aLow: = a1+a3*(-1.78)</span></span>
+<span id="cb304-13"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb304-13" aria-hidden="true" tabindex="-1"></a><span class="st">aMedian: = a1+a3*(-0.58)</span></span>
+<span id="cb304-14"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb304-14" aria-hidden="true" tabindex="-1"></a><span class="st">aMean: = a1+a3*(0)</span></span>
+<span id="cb304-15"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb304-15" aria-hidden="true" tabindex="-1"></a><span class="st">aHigh: = a1+a3*1.82</span></span>
+<span id="cb304-16"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb304-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb304-17"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb304-17" aria-hidden="true" tabindex="-1"></a><span class="st"># conditional indirect effects is b*(a1+a3*skeptic)</span></span>
+<span id="cb304-18"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb304-18" aria-hidden="true" tabindex="-1"></a><span class="st">abLow: = b*aLow</span></span>
+<span id="cb304-19"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb304-19" aria-hidden="true" tabindex="-1"></a><span class="st">abMedian: = b*aMedian</span></span>
+<span id="cb304-20"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb304-20" aria-hidden="true" tabindex="-1"></a><span class="st">abMean: = b*aMean</span></span>
+<span id="cb304-21"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb304-21" aria-hidden="true" tabindex="-1"></a><span class="st">abHigh: = b*aHigh</span></span>
+<span id="cb304-22"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb304-22" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span>
+<span id="cb304-23"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb304-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb304-24"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb304-24" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2022</span>)</span>
+<span id="cb304-25"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb304-25" aria-hidden="true" tabindex="-1"></a>lm4a.fit <span class="ot">=</span> <span class="fu">sem</span>(lm4a.syntax, <span class="at">data =</span> disaster, <span class="at">se =</span> <span class="st">&quot;bootstrap&quot;</span>, <span class="at">bootstrap =</span> <span class="dv">1000</span>, <span class="at">fixed.x=</span><span class="cn">FALSE</span>, <span class="at">meanstructure =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb304-26"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb304-26" aria-hidden="true" tabindex="-1"></a><span class="fu">parameterEstimates</span>(lm4a.fit, <span class="at">level =</span> <span class="fl">0.95</span>, <span class="at">boot.ci.type =</span> <span class="st">&quot;bca.simple&quot;</span>)</span></code></pre></div>
+<pre><code>##           lhs op           rhs     label    est    se       z pvalue ci.lower ci.upper
+## 1      donate  ~       justify         b -0.953 0.065 -14.641  0.000   -1.083   -0.828
+## 2      donate  ~         frame    cprime  0.212 0.139   1.526  0.127   -0.062    0.503
+## 3     justify  ~         frame        a1  0.117 0.114   1.023  0.306   -0.113    0.324
+## 4     justify  ~       skeptic        a2  0.105 0.043   2.459  0.014    0.020    0.194
+## 5     justify  ~    skepxframe        a3  0.201 0.063   3.201  0.001    0.077    0.326
+## 6      donate ~~        donate            0.948 0.118   8.061  0.000    0.735    1.214
+## 7     justify ~~       justify            0.648 0.066   9.767  0.000    0.539    0.809
+## 8       frame ~~         frame            0.250 0.003  97.289  0.000    0.242    0.250
+## 9       frame ~~       skeptic            0.021 0.074   0.277  0.782   -0.125    0.168
+## 10      frame ~~    skepxframe            0.011 0.052   0.207  0.836   -0.089    0.121
+## 11    skeptic ~~       skeptic            4.113 0.498   8.257  0.000    3.211    5.198
+## 12    skeptic ~~    skepxframe            1.957 0.349   5.606  0.000    1.333    2.721
+## 13 skepxframe ~~    skepxframe            1.957 0.348   5.618  0.000    1.328    2.708
+## 14     donate ~1                          7.235 0.199  36.380  0.000    6.808    7.590
+## 15    justify ~1                          2.806 0.079  35.374  0.000    2.659    2.976
+## 16      frame ~1                          0.479 0.036  13.458  0.000    0.396    0.540
+## 17    skeptic ~1                          0.000 0.142   0.000  1.000   -0.274    0.286
+## 18 skepxframe ~1                          0.021 0.099   0.206  0.837   -0.173    0.223
+## 19  IndMedMod :=          a3*b IndMedMod -0.192 0.062  -3.073  0.002   -0.327   -0.076
+## 20       aLow := a1+a3*(-1.78)      aLow -0.241 0.154  -1.568  0.117   -0.563    0.045
+## 21    aMedian := a1+a3*(-0.58)   aMedian  0.000 0.117   0.004  0.997   -0.240    0.209
+## 22      aMean :=     a1+a3*(0)     aMean  0.117 0.115   1.023  0.307   -0.113    0.324
+## 23      aHigh :=    a1+a3*1.82     aHigh  0.483 0.168   2.874  0.004    0.138    0.829
+## 24      abLow :=        b*aLow     abLow  0.230 0.149   1.546  0.122   -0.044    0.540
+## 25   abMedian :=     b*aMedian  abMedian  0.000 0.112  -0.004  0.997   -0.201    0.236
+## 26     abMean :=       b*aMean    abMean -0.112 0.109  -1.027  0.305   -0.306    0.103
+## 27     abHigh :=       b*aHigh    abHigh -0.461 0.164  -2.811  0.005   -0.796   -0.130</code></pre>
+<p>So we have:</p>
+<ul>
+<li>interaction of skepxframe on justify: a3 = 0.201 (p = 0.001)</li>
+</ul>
+<p>The overall effect of frame on justify is significantly moderated by skeptic. That is, how the disaster is framed has a differential effect for people who differ in their climate change skepticism on their beliefs that if it was justified to withhold aid to the victims.</p>
+<p>Let’s look at the simple slopes.</p>
+<ul>
+<li>aLow = -0.241 (p = 0.117)</li>
+<li>aMedian = 0 (p = 0.997)</li>
+<li>aMean = 0.117 (p = 0.307)</li>
+<li>aHigh = 0.483 (p = 0.004)</li>
+</ul>
+<p>Moreover, the simple slope aHigh is positive and aLow is negative. That is, when told that the disaster is the result of climate change instead of natural disaster (changing frame from 0 to 1), those who doubt climate change (high on skepticism) think it’s justified to withhold the aid whereas those who do not doubt (low on skepticism) it think it’s not justified to withhold the aid.</p>
+<p>Okay! The a path is moderated. What about the mediation effect ab?</p>
+<ul>
+<li>IndexOfModMed = -0.192 (p = 0.002)</li>
+</ul>
+<p>IndexOfModMed is sig! Woo-hoo! Indirect effect is moderated, too! So what story does it tell you?</p>
+<ul>
+<li>abLow = 0.230 (p = 0.122)</li>
+<li>abMedian = 0.000 (p = 0.997)</li>
+<li>abMean = -0.112 (p = 0.305)</li>
+<li>abHigh = -0.461 (p = 0.005)</li>
+</ul>
+<p>Furthermore, abHigh is negative and abLow is positive, meaning that framing the disaster as caused by climate change leads to less donation for people who doubt climate change (high on skepticism) but it leads to more donation for people who believe it (low on skepticism). The reason for this differential effect is that those who doubt climate change tend to favor the idea of withholding the aid, thus leading to less donation.</p>
+<!------------------------------>
+</div>
+<div id="model-4b-moderated-mediation-model---path-b-only" class="section level2 hasAnchor" number="7.6">
+<h2><span class="header-section-number">7.6</span> Model 4b: Moderated Mediation Model - Path b only<a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#model-4b-moderated-mediation-model---path-b-only" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<!------------------------------>
+<div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb306-1"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb306-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">mar=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>), <span class="at">oma=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>))</span>
+<span id="cb306-2"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb306-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pmacroModel</span>(<span class="dv">14</span>,<span class="at">labels=</span>labels)</span>
+<span id="cb306-3"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb306-3" aria-hidden="true" tabindex="-1"></a><span class="fu">statisticalDiagram</span>(<span class="dv">14</span>, <span class="at">labels=</span>labels)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/diag4b-1.png" width="672" /></p>
+<p>Since justify is also a continuous measure, we need to mean center it first:</p>
+<div class="sourceCode" id="cb307"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb307-1"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb307-1" aria-hidden="true" tabindex="-1"></a>disaster<span class="sc">$</span>just_raw <span class="ot">=</span> disaster<span class="sc">$</span>justify</span>
+<span id="cb307-2"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb307-2" aria-hidden="true" tabindex="-1"></a>disaster<span class="sc">$</span>justify <span class="ot">=</span> <span class="fu">scale</span>(disaster<span class="sc">$</span>just_raw, <span class="at">center =</span> <span class="cn">TRUE</span>, <span class="at">scale =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb307-3"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb307-3" aria-hidden="true" tabindex="-1"></a>disaster<span class="sc">$</span>just_sd <span class="ot">=</span> <span class="fu">scale</span>(disaster<span class="sc">$</span>just_raw, <span class="at">center =</span> <span class="cn">TRUE</span>, <span class="at">scale =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p>and create an interaction term by multiplying skeptic by justify (note that this is a new interaction term!):</p>
+<div class="sourceCode" id="cb308"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb308-1"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb308-1" aria-hidden="true" tabindex="-1"></a>disaster<span class="sc">$</span>skepxjusti <span class="ot">=</span> disaster<span class="sc">$</span>skeptic <span class="sc">*</span> disaster<span class="sc">$</span>justify</span></code></pre></div>
+<p>Let’s examine their means and standard deviations:</p>
+<div class="sourceCode" id="cb309"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb309-1"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb309-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">apply</span>(disaster[,<span class="sc">-</span><span class="dv">1</span>], <span class="dv">2</span>, mean), <span class="dv">2</span>)</span></code></pre></div>
+<pre><code>##      frame     donate    justify    skeptic   skep_raw    skep_sd skepxframe   just_raw    just_sd skepxjusti 
+##       0.48       4.60       0.00       0.00       3.38       0.00       0.02       2.87       0.00       0.83</code></pre>
+<div class="sourceCode" id="cb311"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb311-1"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb311-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">apply</span>(disaster[,<span class="sc">-</span><span class="dv">1</span>], <span class="dv">2</span>, sd), <span class="dv">2</span>)</span></code></pre></div>
+<pre><code>##      frame     donate    justify    skeptic   skep_raw    skep_sd skepxframe   just_raw    just_sd skepxjusti 
+##       0.50       1.32       0.93       2.03       2.03       1.00       1.40       0.93       1.00       2.66</code></pre>
+<p>Since the b path is hypothesized moderated by skeptic, the simple slope of donation on justify (b path) depends on skeptic, the indirect effect through justify (ab) also depends on skeptic.</p>
+<p>We’ll define an index of moderated mediation to be:</p>
+<ul>
+<li>a*b3 (can you derive this?)</li>
+</ul>
+<p>Let’s write the syntax for the moderated mediation model:</p>
+<div class="sourceCode" id="cb313"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb313-1"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb313-1" aria-hidden="true" tabindex="-1"></a>lm4b.syntax <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
+<span id="cb313-2"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb313-2" aria-hidden="true" tabindex="-1"></a><span class="st">donate ~ b1*justify + cprime*frame + b2*skeptic + b3*skepxjusti</span></span>
+<span id="cb313-3"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb313-3" aria-hidden="true" tabindex="-1"></a><span class="st">justify ~ a*frame</span></span>
+<span id="cb313-4"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb313-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb313-5"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb313-5" aria-hidden="true" tabindex="-1"></a><span class="st"># Define simple slopes and conditional indirect effects using :=</span></span>
+<span id="cb313-6"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb313-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb313-7"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb313-7" aria-hidden="true" tabindex="-1"></a><span class="st"># index of moderated mediation</span></span>
+<span id="cb313-8"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb313-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb313-9"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb313-9" aria-hidden="true" tabindex="-1"></a><span class="st">IndMedMod:= a*b3</span></span>
+<span id="cb313-10"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb313-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb313-11"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb313-11" aria-hidden="true" tabindex="-1"></a><span class="st"># simple slope of donate on justify is b1+b3*skeptic</span></span>
+<span id="cb313-12"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb313-12" aria-hidden="true" tabindex="-1"></a><span class="st">bLow: = b1+b3*(-1.78)</span></span>
+<span id="cb313-13"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb313-13" aria-hidden="true" tabindex="-1"></a><span class="st">bMedian: = b1+b3*(-0.58)</span></span>
+<span id="cb313-14"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb313-14" aria-hidden="true" tabindex="-1"></a><span class="st">bMean: = b1+b3*(0)</span></span>
+<span id="cb313-15"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb313-15" aria-hidden="true" tabindex="-1"></a><span class="st">bHigh: = b1+b3*1.82</span></span>
+<span id="cb313-16"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb313-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb313-17"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb313-17" aria-hidden="true" tabindex="-1"></a><span class="st"># conditional indirect effects is a*(b1+b3*skeptic)</span></span>
+<span id="cb313-18"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb313-18" aria-hidden="true" tabindex="-1"></a><span class="st">abLow: = a*bLow</span></span>
+<span id="cb313-19"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb313-19" aria-hidden="true" tabindex="-1"></a><span class="st">abMedian: = a*bMedian</span></span>
+<span id="cb313-20"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb313-20" aria-hidden="true" tabindex="-1"></a><span class="st">abMean: = a*bMean</span></span>
+<span id="cb313-21"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb313-21" aria-hidden="true" tabindex="-1"></a><span class="st">abHigh: = a*bHigh</span></span>
+<span id="cb313-22"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb313-22" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span>
+<span id="cb313-23"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb313-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb313-24"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb313-24" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2022</span>)</span>
+<span id="cb313-25"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb313-25" aria-hidden="true" tabindex="-1"></a>lm4b.fit <span class="ot">=</span> <span class="fu">sem</span>(lm4b.syntax, <span class="at">data =</span> disaster, <span class="at">se =</span> <span class="st">&quot;bootstrap&quot;</span>, <span class="at">bootstrap =</span> <span class="dv">1000</span>, <span class="at">fixed.x=</span><span class="cn">FALSE</span>, <span class="at">meanstructure =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb313-26"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb313-26" aria-hidden="true" tabindex="-1"></a><span class="fu">parameterEstimates</span>(lm4b.fit, <span class="at">level =</span> <span class="fl">0.95</span>, <span class="at">boot.ci.type =</span> <span class="st">&quot;bca.simple&quot;</span>)</span></code></pre></div>
+<pre><code>##           lhs op           rhs     label    est    se       z pvalue ci.lower ci.upper
+## 1      donate  ~       justify        b1 -0.922 0.079 -11.611  0.000   -1.085   -0.772
+## 2      donate  ~         frame    cprime  0.204 0.140   1.455  0.146   -0.064    0.492
+## 3      donate  ~       skeptic        b2 -0.040 0.041  -0.968  0.333   -0.127    0.039
+## 4      donate  ~    skepxjusti        b3  0.008 0.026   0.327  0.743   -0.043    0.059
+## 5     justify  ~         frame         a  0.134 0.131   1.023  0.306   -0.147    0.380
+## 6      donate ~~        donate            0.943 0.116   8.128  0.000    0.736    1.200
+## 7     justify ~~       justify            0.856 0.097   8.866  0.000    0.699    1.096
+## 8       frame ~~         frame            0.250 0.003  97.289  0.000    0.244    0.250
+## 9       frame ~~       skeptic            0.021 0.074   0.277  0.782   -0.125    0.168
+## 10      frame ~~    skepxjusti            0.204 0.091   2.233  0.026    0.045    0.414
+## 11    skeptic ~~       skeptic            4.113 0.498   8.257  0.000    3.211    5.198
+## 12    skeptic ~~    skepxjusti            2.067 0.867   2.383  0.017    0.691    4.089
+## 13 skepxjusti ~~    skepxjusti            7.017 2.414   2.907  0.004    3.602   13.111
+## 14     donate ~1                          4.499 0.110  40.942  0.000    4.288    4.708
+## 15    justify ~1                         -0.064 0.083  -0.775  0.438   -0.218    0.109
+## 16      frame ~1                          0.479 0.036  13.458  0.000    0.396    0.540
+## 17    skeptic ~1                          0.000 0.142   0.000  1.000   -0.274    0.286
+## 18 skepxjusti ~1                          0.828 0.179   4.632  0.000    0.526    1.218
+## 19  IndMedMod :=          a*b3 IndMedMod  0.001 0.005   0.243  0.808   -0.005    0.018
+## 20       bLow := b1+b3*(-1.78)      bLow -0.937 0.103  -9.140  0.000   -1.138   -0.729
+## 21    bMedian := b1+b3*(-0.58)   bMedian -0.927 0.085 -10.904  0.000   -1.096   -0.758
+## 22      bMean :=     b1+b3*(0)     bMean -0.922 0.079 -11.605  0.000   -1.085   -0.772
+## 23      bHigh :=    b1+b3*1.82     bHigh -0.907 0.079 -11.427  0.000   -1.073   -0.752
+## 24      abLow :=        a*bLow     abLow -0.126 0.123  -1.023  0.306   -0.369    0.130
+## 25   abMedian :=     a*bMedian  abMedian -0.125 0.122  -1.023  0.306   -0.361    0.137
+## 26     abMean :=       a*bMean    abMean -0.124 0.121  -1.022  0.307   -0.360    0.135
+## 27     abHigh :=       a*bHigh    abHigh -0.122 0.120  -1.015  0.310   -0.351    0.130</code></pre>
+<p>So we have:</p>
+<ul>
+<li>b3 = 0.008 (p = 0.743)</li>
+</ul>
+<p>The effect of justify on donate is not moderated by skeptic. That is, justification for withholding aid always leads to less donation has a fixed effect on their willingness to donate (b path) regardless of their climate change skepticism.</p>
+<p>Let’s look at the simple slopes.</p>
+<ul>
+<li>bLow = -0.937 (p = 0.000)</li>
+<li>bMedian = -0.927 (p = 0.000)</li>
+<li>bMean = -0.922 (p = 0.000)</li>
+<li>bHigh = -0.907 (p = 0.000)</li>
+</ul>
+<p>which do not change much as their climate change skepticism change. Justification for withholding aid always leads to less donation. Skeptic is not an effective moderator.</p>
+<p>Let’s look at the indirect effects</p>
+<ul>
+<li>IndexOfModMed = 0.001 (p = 0.808)</li>
+<li>abLow = -0.126 (p = 0.306)</li>
+<li>abMedian = -0.125 (p = 0.306)</li>
+<li>abMean = -0.124 (p = 0.307)</li>
+<li>abHigh = -0.122 (p = 0.310)</li>
+</ul>
+<p>Similarly, skeptic is not a good moderator for the indirect effect given that IndexOfModMed is not significant and the indirect effects at high/low levels of skepticism do not differ much.</p>
+<!------------------------------>
+</div>
+<div id="model-4c-moderation-mediation-model---path-cprime-only" class="section level2 hasAnchor" number="7.7">
+<h2><span class="header-section-number">7.7</span> Model 4c: Moderation &amp; Mediation Model - Path cprime only<a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#model-4c-moderation-mediation-model---path-cprime-only" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<!------------------------------>
+<div class="sourceCode" id="cb315"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb315-1"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb315-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">mar=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>), <span class="at">oma=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>))</span>
+<span id="cb315-2"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb315-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pmacroModel</span>(<span class="dv">5</span>,<span class="at">labels=</span>labels)</span>
+<span id="cb315-3"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb315-3" aria-hidden="true" tabindex="-1"></a><span class="fu">statisticalDiagram</span>(<span class="dv">5</span>, <span class="at">labels=</span>labels)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/diag4c-1.png" width="672" /></p>
+<p>Since there is NO indirect effect being moderated here, we’ll not define any index of moderation mediation. There is only one c3prime coefficient that quantifies the moderation effect of skeptic on frame-donation path.</p>
+<div class="sourceCode" id="cb316"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb316-1"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb316-1" aria-hidden="true" tabindex="-1"></a>lm4c.syntax <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
+<span id="cb316-2"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb316-2" aria-hidden="true" tabindex="-1"></a><span class="st">donate ~ b*justify + c1prime*frame + skeptic + c3prime*skepxframe</span></span>
+<span id="cb316-3"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb316-3" aria-hidden="true" tabindex="-1"></a><span class="st">justify ~ a*frame</span></span>
+<span id="cb316-4"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb316-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb316-5"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb316-5" aria-hidden="true" tabindex="-1"></a><span class="st"># Define new parameters</span></span>
+<span id="cb316-6"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb316-6" aria-hidden="true" tabindex="-1"></a><span class="st">#The := operator in lavaan defines new parameters.</span></span>
+<span id="cb316-7"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb316-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb316-8"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb316-8" aria-hidden="true" tabindex="-1"></a><span class="st"># simple slope of donate on frame is c1prime+c3prime*skeptic</span></span>
+<span id="cb316-9"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb316-9" aria-hidden="true" tabindex="-1"></a><span class="st">cLow: = c1prime+c3prime*(-1.78)</span></span>
+<span id="cb316-10"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb316-10" aria-hidden="true" tabindex="-1"></a><span class="st">cMedian: = c1prime+c3prime*(-0.58)</span></span>
+<span id="cb316-11"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb316-11" aria-hidden="true" tabindex="-1"></a><span class="st">cMean: = c1prime+c3prime*(0)</span></span>
+<span id="cb316-12"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb316-12" aria-hidden="true" tabindex="-1"></a><span class="st">cHigh: = c1prime+c3prime*1.82</span></span>
+<span id="cb316-13"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb316-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb316-14"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb316-14" aria-hidden="true" tabindex="-1"></a><span class="st"># mediation effect</span></span>
+<span id="cb316-15"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb316-15" aria-hidden="true" tabindex="-1"></a><span class="st">ab:= a*b</span></span>
+<span id="cb316-16"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb316-16" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span>
+<span id="cb316-17"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb316-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb316-18"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb316-18" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2022</span>)</span>
+<span id="cb316-19"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb316-19" aria-hidden="true" tabindex="-1"></a>lm4c.fit <span class="ot">=</span> <span class="fu">sem</span>(lm4c.syntax, <span class="at">data =</span> disaster, <span class="at">se =</span> <span class="st">&quot;bootstrap&quot;</span>, <span class="at">bootstrap =</span> <span class="dv">1000</span>, <span class="at">fixed.x=</span><span class="cn">FALSE</span>, <span class="at">meanstructure =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb316-20"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb316-20" aria-hidden="true" tabindex="-1"></a><span class="fu">parameterEstimates</span>(lm4c.fit, <span class="at">level =</span> <span class="fl">0.95</span>, <span class="at">boot.ci.type =</span> <span class="st">&quot;bca.simple&quot;</span>)</span></code></pre></div>
+<pre><code>##           lhs op                     rhs   label    est    se       z pvalue ci.lower ci.upper
+## 1      donate  ~                 justify       b -0.923 0.078 -11.781  0.000   -1.076   -0.764
+## 2      donate  ~                   frame c1prime  0.211 0.140   1.503  0.133   -0.064    0.496
+## 3      donate  ~                 skeptic         -0.043 0.057  -0.742  0.458   -0.165    0.061
+## 4      donate  ~              skepxframe c3prime  0.015 0.074   0.203  0.839   -0.120    0.171
+## 5     justify  ~                   frame       a  0.134 0.131   1.023  0.306   -0.147    0.380
+## 6      donate ~~                  donate          0.943 0.116   8.152  0.000    0.743    1.208
+## 7     justify ~~                 justify          0.856 0.097   8.866  0.000    0.699    1.096
+## 8       frame ~~                   frame          0.250 0.003  97.289  0.000    0.244    0.250
+## 9       frame ~~                 skeptic          0.021 0.074   0.277  0.782   -0.125    0.168
+## 10      frame ~~              skepxframe          0.011 0.052   0.207  0.836   -0.089    0.121
+## 11    skeptic ~~                 skeptic          4.113 0.498   8.257  0.000    3.211    5.198
+## 12    skeptic ~~              skepxframe          1.957 0.349   5.606  0.000    1.333    2.721
+## 13 skepxframe ~~              skepxframe          1.957 0.348   5.618  0.000    1.328    2.708
+## 14     donate ~1                                  4.503 0.109  41.164  0.000    4.283    4.711
+## 15    justify ~1                                 -0.064 0.083  -0.775  0.438   -0.218    0.109
+## 16      frame ~1                                  0.479 0.036  13.458  0.000    0.396    0.540
+## 17    skeptic ~1                                  0.000 0.142   0.000  1.000   -0.274    0.286
+## 18 skepxframe ~1                                  0.021 0.099   0.206  0.837   -0.173    0.223
+## 19       cLow := c1prime+c3prime*(-1.78)    cLow  0.184 0.172   1.074  0.283   -0.150    0.527
+## 20    cMedian := c1prime+c3prime*(-0.58) cMedian  0.202 0.138   1.463  0.143   -0.062    0.482
+## 21      cMean :=     c1prime+c3prime*(0)   cMean  0.211 0.140   1.503  0.133   -0.064    0.496
+## 22      cHigh :=    c1prime+c3prime*1.82   cHigh  0.238 0.213   1.118  0.264   -0.153    0.662
+## 23         ab :=                     a*b      ab -0.124 0.122  -1.020  0.308   -0.356    0.138</code></pre>
+<p>Since we have:</p>
+<ul>
+<li>c3prime = 0.015 (p = 0.839)</li>
+</ul>
+<p>Skeptic is not a moderator for this frame-donation path (cprime).</p>
+<p>The mediation effect:</p>
+<ul>
+<li>ab = -0.124 (p = 0.308)</li>
+</ul>
+<p>is not significant, just like in Model 2.</p>
+<!------------------------------>
+</div>
+<div id="model-4d-moderated-mediation-model---path-a-and-cprime" class="section level2 hasAnchor" number="7.8">
+<h2><span class="header-section-number">7.8</span> Model 4d: Moderated Mediation Model - Path a and cprime<a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#model-4d-moderated-mediation-model---path-a-and-cprime" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<!------------------------------>
+<div class="sourceCode" id="cb318"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb318-1"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb318-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">mar=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>), <span class="at">oma=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>))</span>
+<span id="cb318-2"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb318-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pmacroModel</span>(<span class="dv">8</span>,<span class="at">labels=</span>labels)</span>
+<span id="cb318-3"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb318-3" aria-hidden="true" tabindex="-1"></a><span class="fu">statisticalDiagram</span>(<span class="dv">8</span>, <span class="at">labels=</span>labels)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/diag4d-1.png" width="672" /></p>
+<p>Model 4d is very similar to Model 4a, except that cprime path is also moderated. We’ll still define the index of moderated mediation to be:</p>
+<ul>
+<li>a3*b</li>
+</ul>
+<div class="sourceCode" id="cb319"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb319-1"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb319-1" aria-hidden="true" tabindex="-1"></a>lm4d.syntax <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
+<span id="cb319-2"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb319-2" aria-hidden="true" tabindex="-1"></a><span class="st">donate ~ b*justify + c1prime*frame + c2prime*skeptic + c3prime*skepxframe</span></span>
+<span id="cb319-3"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb319-3" aria-hidden="true" tabindex="-1"></a><span class="st">justify ~ a1*frame + a2*skeptic + a3*skepxframe</span></span>
+<span id="cb319-4"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb319-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb319-5"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb319-5" aria-hidden="true" tabindex="-1"></a><span class="st"># Define simple slopes and conditional indirect effects using :=</span></span>
+<span id="cb319-6"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb319-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb319-7"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb319-7" aria-hidden="true" tabindex="-1"></a><span class="st"># index of moderated mediation</span></span>
+<span id="cb319-8"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb319-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb319-9"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb319-9" aria-hidden="true" tabindex="-1"></a><span class="st">IndMedMod:= a3*b</span></span>
+<span id="cb319-10"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb319-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb319-11"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb319-11" aria-hidden="true" tabindex="-1"></a><span class="st"># simple slope of justify on frame is a1+a3*skeptic</span></span>
+<span id="cb319-12"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb319-12" aria-hidden="true" tabindex="-1"></a><span class="st">aLow: = a1+a3*(-1.78)</span></span>
+<span id="cb319-13"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb319-13" aria-hidden="true" tabindex="-1"></a><span class="st">aMedian: = a1+a3*(-0.58)</span></span>
+<span id="cb319-14"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb319-14" aria-hidden="true" tabindex="-1"></a><span class="st">aMean: = a1+a3*(0)</span></span>
+<span id="cb319-15"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb319-15" aria-hidden="true" tabindex="-1"></a><span class="st">aHigh: = a1+a3*1.82</span></span>
+<span id="cb319-16"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb319-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb319-17"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb319-17" aria-hidden="true" tabindex="-1"></a><span class="st"># conditional indirect effects is b*(a1+a3*skeptic)</span></span>
+<span id="cb319-18"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb319-18" aria-hidden="true" tabindex="-1"></a><span class="st">abLow: = b*aLow</span></span>
+<span id="cb319-19"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb319-19" aria-hidden="true" tabindex="-1"></a><span class="st">abMedian: = b*aMedian</span></span>
+<span id="cb319-20"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb319-20" aria-hidden="true" tabindex="-1"></a><span class="st">abMean: = b*aMean</span></span>
+<span id="cb319-21"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb319-21" aria-hidden="true" tabindex="-1"></a><span class="st">abHigh: = b*aHigh</span></span>
+<span id="cb319-22"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb319-22" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span>
+<span id="cb319-23"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb319-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb319-24"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb319-24" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2022</span>)</span>
+<span id="cb319-25"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb319-25" aria-hidden="true" tabindex="-1"></a>lm4d.fit <span class="ot">=</span> <span class="fu">sem</span>(lm4d.syntax, <span class="at">data =</span> disaster, <span class="at">se =</span> <span class="st">&quot;bootstrap&quot;</span>, <span class="at">bootstrap =</span> <span class="dv">1000</span>, <span class="at">fixed.x=</span><span class="cn">FALSE</span>, <span class="at">meanstructure =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb319-26"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb319-26" aria-hidden="true" tabindex="-1"></a><span class="fu">parameterEstimates</span>(lm4d.fit, <span class="at">level =</span> <span class="fl">0.95</span>, <span class="at">boot.ci.type =</span> <span class="st">&quot;bca.simple&quot;</span>)</span></code></pre></div>
+<pre><code>##           lhs op           rhs     label    est    se       z pvalue ci.lower ci.upper
+## 1      donate  ~       justify         b -0.923 0.078 -11.781  0.000   -1.076   -0.764
+## 2      donate  ~         frame   c1prime  0.211 0.140   1.503  0.133   -0.064    0.496
+## 3      donate  ~       skeptic   c2prime -0.043 0.057  -0.742  0.458   -0.165    0.061
+## 4      donate  ~    skepxframe   c3prime  0.015 0.074   0.203  0.839   -0.120    0.171
+## 5     justify  ~         frame        a1  0.117 0.114   1.023  0.306   -0.113    0.324
+## 6     justify  ~       skeptic        a2  0.105 0.043   2.459  0.014    0.020    0.194
+## 7     justify  ~    skepxframe        a3  0.201 0.063   3.201  0.001    0.077    0.326
+## 8      donate ~~        donate            0.943 0.116   8.152  0.000    0.743    1.208
+## 9     justify ~~       justify            0.648 0.066   9.767  0.000    0.539    0.809
+## 10      frame ~~         frame            0.250 0.003  97.289  0.000    0.244    0.250
+## 11      frame ~~       skeptic            0.021 0.074   0.277  0.782   -0.125    0.168
+## 12      frame ~~    skepxframe            0.011 0.052   0.207  0.836   -0.089    0.121
+## 13    skeptic ~~       skeptic            4.113 0.498   8.257  0.000    3.211    5.198
+## 14    skeptic ~~    skepxframe            1.957 0.349   5.606  0.000    1.333    2.721
+## 15 skepxframe ~~    skepxframe            1.957 0.348   5.618  0.000    1.328    2.708
+## 16     donate ~1                          4.503 0.109  41.164  0.000    4.283    4.711
+## 17    justify ~1                         -0.060 0.079  -0.759  0.448   -0.208    0.109
+## 18      frame ~1                          0.479 0.036  13.458  0.000    0.396    0.540
+## 19    skeptic ~1                          0.000 0.142   0.000  1.000   -0.274    0.286
+## 20 skepxframe ~1                          0.021 0.099   0.206  0.837   -0.173    0.223
+## 21  IndMedMod :=          a3*b IndMedMod -0.186 0.062  -2.979  0.003   -0.318   -0.071
+## 22       aLow := a1+a3*(-1.78)      aLow -0.241 0.154  -1.568  0.117   -0.563    0.045
+## 23    aMedian := a1+a3*(-0.58)   aMedian  0.000 0.117   0.004  0.997   -0.240    0.209
+## 24      aMean :=     a1+a3*(0)     aMean  0.117 0.115   1.023  0.307   -0.113    0.324
+## 25      aHigh :=    a1+a3*1.82     aHigh  0.483 0.168   2.874  0.004    0.138    0.829
+## 26      abLow :=        b*aLow     abLow  0.222 0.146   1.526  0.127   -0.036    0.532
+## 27   abMedian :=     b*aMedian  abMedian  0.000 0.108  -0.004  0.997   -0.194    0.228
+## 28     abMean :=       b*aMean    abMean -0.108 0.105  -1.026  0.305   -0.301    0.095
+## 29     abHigh :=       b*aHigh    abHigh -0.446 0.162  -2.757  0.006   -0.785   -0.127</code></pre>
+<p>Here we have two interaction coefficients:</p>
+<ul>
+<li>a3 = 0.201 (p = 0.001)</li>
+<li>c3prime = 0.015 (p = 0.839)</li>
+</ul>
+<p>so that skeptic is a moderator for the frame-to-justify path (a path) but not a moderator for frame-to-donate path (cprime path). For the frame-to-justify path:</p>
+<ul>
+<li>aLow = -0.241 (p = 0.117)</li>
+<li>aMedian = 0 (p = 0.997)</li>
+<li>aMean = 0.117 (p = 0.307)</li>
+<li>aHigh = 0.483 (p = 0.004)</li>
+</ul>
+<p>which are exactly the same as those in Model 4a. The simple slope aHigh is positive and aLow is negative. Those who are high on climate change skepticism think it’s justified to withhold the aid whereas those who are low on the skepticism do not think it’s justified to withhold the aid.</p>
+<ul>
+<li>IndexOfModMed = -0.186 (p = 0.003)</li>
+<li>abLow = 0.222 (p = 0.127)</li>
+<li>abMedian = 0.000 (p = 0.997)</li>
+<li>abMean = -0.108 (p = 0.305)</li>
+<li>abHigh = -0.446 (p = 0.006)</li>
+</ul>
+<p>which are close to those in Model 4a. The indirect effect of donate on frame through justify (ab path) is moderated by skeptic (IndexOfModMed is sig!). Moreover, abHigh is negative and abLow is positive, meaning that framing the disaster as caused by climate change leads to less donation for people who doubt climate change but it leads to more donation for people who believes it because they do not think it’s justified to withhold the aid.</p>
+<!------------------------------>
+</div>
+<div id="model-4e-moderated-mediation-model---path-b-and-cprime" class="section level2 hasAnchor" number="7.9">
+<h2><span class="header-section-number">7.9</span> Model 4e: Moderated Mediation Model - Path b and cprime<a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#model-4e-moderated-mediation-model---path-b-and-cprime" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<!------------------------------>
+<div class="sourceCode" id="cb321"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb321-1"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb321-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">mar=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>), <span class="at">oma=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>))</span>
+<span id="cb321-2"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb321-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pmacroModel</span>(<span class="dv">15</span>,<span class="at">labels=</span>labels)</span>
+<span id="cb321-3"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb321-3" aria-hidden="true" tabindex="-1"></a><span class="fu">statisticalDiagram</span>(<span class="dv">15</span>, <span class="at">labels=</span>labels)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/diag4e-1.png" width="672" /></p>
+<p>Model 4e is very similar to Model 4b except that cprime path is also moderated. We’ll still define the index of moderated mediation to be:</p>
+<ul>
+<li>a*b3 (actually, a*b2 in this diagram)</li>
+</ul>
+<p>Let’s write the syntax for the moderated mediation model:</p>
+<div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb322-1" aria-hidden="true" tabindex="-1"></a>lm4e.syntax <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
+<span id="cb322-2"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb322-2" aria-hidden="true" tabindex="-1"></a><span class="st">donate ~ b1*justify + b2*skepxjusti + c1prime*frame + c2prime*skeptic + c3prime*skepxframe</span></span>
+<span id="cb322-3"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb322-3" aria-hidden="true" tabindex="-1"></a><span class="st">justify ~ a*frame</span></span>
+<span id="cb322-4"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb322-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb322-5"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb322-5" aria-hidden="true" tabindex="-1"></a><span class="st"># Define simple slopes and conditional indirect effects using :=</span></span>
+<span id="cb322-6"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb322-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb322-7"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb322-7" aria-hidden="true" tabindex="-1"></a><span class="st"># index of moderated mediation</span></span>
+<span id="cb322-8"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb322-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb322-9"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb322-9" aria-hidden="true" tabindex="-1"></a><span class="st">IndMedMod:= a*b2</span></span>
+<span id="cb322-10"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb322-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb322-11"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb322-11" aria-hidden="true" tabindex="-1"></a><span class="st"># simple slope of donate on justify is b1+b2*skeptic</span></span>
+<span id="cb322-12"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb322-12" aria-hidden="true" tabindex="-1"></a><span class="st">bLow: = b1+b2*(-1.78)</span></span>
+<span id="cb322-13"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb322-13" aria-hidden="true" tabindex="-1"></a><span class="st">bMedian: = b1+b2*(-0.58)</span></span>
+<span id="cb322-14"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb322-14" aria-hidden="true" tabindex="-1"></a><span class="st">bMean: = b1+b2*(0)</span></span>
+<span id="cb322-15"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb322-15" aria-hidden="true" tabindex="-1"></a><span class="st">bHigh: = b1+b2*1.82</span></span>
+<span id="cb322-16"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb322-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb322-17"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb322-17" aria-hidden="true" tabindex="-1"></a><span class="st"># conditional indirect effects is a*(b1+b2*skeptic)</span></span>
+<span id="cb322-18"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb322-18" aria-hidden="true" tabindex="-1"></a><span class="st">abLow: = a*bLow</span></span>
+<span id="cb322-19"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb322-19" aria-hidden="true" tabindex="-1"></a><span class="st">abMedian: = a*bMedian</span></span>
+<span id="cb322-20"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb322-20" aria-hidden="true" tabindex="-1"></a><span class="st">abMean: = a*bMean</span></span>
+<span id="cb322-21"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb322-21" aria-hidden="true" tabindex="-1"></a><span class="st">abHigh: = a*bHigh</span></span>
+<span id="cb322-22"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb322-22" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span>
+<span id="cb322-23"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb322-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb322-24"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb322-24" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2022</span>)</span>
+<span id="cb322-25"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb322-25" aria-hidden="true" tabindex="-1"></a>lm4e.fit <span class="ot">=</span> <span class="fu">sem</span>(lm4e.syntax, <span class="at">data =</span> disaster, <span class="at">se =</span> <span class="st">&quot;bootstrap&quot;</span>, <span class="at">bootstrap =</span> <span class="dv">1000</span>, <span class="at">fixed.x=</span><span class="cn">FALSE</span>, <span class="at">meanstructure =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb322-26"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb322-26" aria-hidden="true" tabindex="-1"></a><span class="fu">parameterEstimates</span>(lm4e.fit, <span class="at">level =</span> <span class="fl">0.95</span>, <span class="at">boot.ci.type =</span> <span class="st">&quot;bca.simple&quot;</span>)</span></code></pre></div>
+<pre><code>##           lhs op           rhs     label    est    se       z pvalue ci.lower ci.upper
+## 1      donate  ~       justify        b1 -0.925 0.081 -11.473  0.000   -1.085   -0.762
+## 2      donate  ~    skepxjusti        b2  0.007 0.028   0.258  0.797   -0.047    0.063
+## 3      donate  ~         frame   c1prime  0.205 0.143   1.432  0.152   -0.075    0.500
+## 4      donate  ~       skeptic   c2prime -0.043 0.058  -0.749  0.454   -0.165    0.058
+## 5      donate  ~    skepxframe   c3prime  0.009 0.079   0.119  0.905   -0.139    0.171
+## 6     justify  ~         frame         a  0.134 0.131   1.023  0.306   -0.147    0.380
+## 7      donate ~~        donate            0.943 0.116   8.148  0.000    0.744    1.212
+## 8     justify ~~       justify            0.856 0.097   8.866  0.000    0.699    1.096
+## 9  skepxjusti ~~    skepxjusti            7.017 2.414   2.907  0.004    3.602   13.111
+## 10 skepxjusti ~~         frame            0.204 0.091   2.233  0.026    0.045    0.414
+## 11 skepxjusti ~~       skeptic            2.067 0.867   2.383  0.017    0.691    4.089
+## 12 skepxjusti ~~    skepxframe            1.828 0.784   2.332  0.020    0.600    3.681
+## 13      frame ~~         frame            0.250 0.003  97.289  0.000    0.244    0.250
+## 14      frame ~~       skeptic            0.021 0.074   0.277  0.782   -0.125    0.168
+## 15      frame ~~    skepxframe            0.011 0.052   0.207  0.836   -0.089    0.121
+## 16    skeptic ~~       skeptic            4.113 0.498   8.257  0.000    3.211    5.198
+## 17    skeptic ~~    skepxframe            1.957 0.349   5.606  0.000    1.333    2.721
+## 18 skepxframe ~~    skepxframe            1.957 0.348   5.618  0.000    1.328    2.708
+## 19     donate ~1                          4.499 0.110  40.945  0.000    4.283    4.708
+## 20    justify ~1                         -0.064 0.083  -0.775  0.438   -0.218    0.109
+## 21 skepxjusti ~1                          0.828 0.179   4.632  0.000    0.526    1.218
+## 22      frame ~1                          0.479 0.036  13.458  0.000    0.397    0.540
+## 23    skeptic ~1                          0.000 0.142   0.000  1.000   -0.274    0.286
+## 24 skepxframe ~1                          0.021 0.099   0.206  0.837   -0.173    0.223
+## 25  IndMedMod :=          a*b2 IndMedMod  0.001 0.005   0.189  0.850   -0.006    0.018
+## 26       bLow := b1+b2*(-1.78)      bLow -0.937 0.103  -9.121  0.000   -1.142   -0.730
+## 27    bMedian := b1+b2*(-0.58)   bMedian -0.929 0.085 -10.877  0.000   -1.096   -0.756
+## 28      bMean :=     b1+b2*(0)     bMean -0.925 0.081 -11.467  0.000   -1.085   -0.762
+## 29      bHigh :=    b1+b2*1.82     bHigh -0.912 0.086 -10.622  0.000   -1.084   -0.741
+## 30      abLow :=        a*bLow     abLow -0.126 0.123  -1.024  0.306   -0.372    0.129
+## 31   abMedian :=     a*bMedian  abMedian -0.125 0.122  -1.022  0.307   -0.366    0.127
+## 32     abMean :=       a*bMean    abMean -0.124 0.122  -1.021  0.307   -0.361    0.132
+## 33     abHigh :=       a*bHigh    abHigh -0.122 0.121  -1.012  0.312   -0.349    0.133</code></pre>
+<p>Here we have two interaction coefficients:</p>
+<ul>
+<li>b2 = 0.007 (p = 0.258)</li>
+<li>c3prime = 0.009 (p = 0.905)</li>
+</ul>
+<p>so that skeptic is not a moderator for the b path nor for the cprime path. For the simple slopes of b path:</p>
+<ul>
+<li>bLow = -0.937 (p = 0.000)</li>
+<li>bMedian = -0.929 (p = 0.000)</li>
+<li>bMean = -0.925 (p = 0.000)</li>
+<li>bHigh = -0.912 (p = 0.000)</li>
+</ul>
+<p>which do not change much as their climate change skepticism change. Justification for withholding aid always leads to less donation. Skeptic is not an effective moderator.</p>
+<p>Let’s look at the indirect effects:</p>
+<ul>
+<li>IndexOfModMed = 0.001 (p = 0.850)</li>
+<li>abLow = -0.126 (p = 0.306)</li>
+<li>abMedian = -0.125 (p = 0.307)</li>
+<li>abMean = -0.124 (p = 0.307)</li>
+<li>abHigh = -0.122 (p = 0.312)</li>
+</ul>
+<p>Similarly, skeptic is not a good moderator for the indirect effect given that IndexOfModMed is not significant and the indirect effects at high/low levels of skepticism do not differ much.</p>
+<!------------------------------>
+</div>
+<div id="model-4f-moderated-mediation-model---path-a-and-b" class="section level2 hasAnchor" number="7.10">
+<h2><span class="header-section-number">7.10</span> Model 4f: Moderated Mediation Model - Path a and b<a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#model-4f-moderated-mediation-model---path-a-and-b" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<!------------------------------>
+<div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb324-1"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb324-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">mar=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>), <span class="at">oma=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>))</span>
+<span id="cb324-2"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb324-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pmacroModel</span>(<span class="dv">58</span>,<span class="at">labels=</span>labels)</span>
+<span id="cb324-3"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb324-3" aria-hidden="true" tabindex="-1"></a><span class="fu">statisticalDiagram</span>(<span class="dv">58</span>, <span class="at">labels=</span>labels)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/diag4f-1.png" width="672" /></p>
+<p>When both a and b are moderated by the same moderator, we have:</p>
+<ul>
+<li>a = a1 + a3*skep</li>
+<li>b = b1 + b3*skep</li>
+<li>ab = (a1 + a3*skep)*(b1 + b3*skep) = a1*b1 + (a1*b3+a3*b1)*skep + a3*b3*skep^2</li>
+</ul>
+<p>So the indirect effect does not depend on the moderator in a linear way.</p>
+<p>We don’t have a formal definition of index of moderated mediation in this scenario. If we are lucky, we might get both (a1*b3+a3*b1) and a3*b3 to be significant…</p>
+<p>Let’s write the syntax for the moderated mediation model:</p>
+<div class="sourceCode" id="cb325"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb325-1"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb325-1" aria-hidden="true" tabindex="-1"></a>lm4f.syntax <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
+<span id="cb325-2"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb325-2" aria-hidden="true" tabindex="-1"></a><span class="st">donate ~ b1*justify + b2*skeptic + b3*skepxjusti + cprime*frame</span></span>
+<span id="cb325-3"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb325-3" aria-hidden="true" tabindex="-1"></a><span class="st">justify ~ a1*frame + a2*skeptic + a3*skepxframe</span></span>
+<span id="cb325-4"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb325-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb325-5"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb325-5" aria-hidden="true" tabindex="-1"></a><span class="st"># index of moderated mediation</span></span>
+<span id="cb325-6"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb325-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb325-7"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb325-7" aria-hidden="true" tabindex="-1"></a><span class="st">IndMedMod1:= a1*b3+a3*b1</span></span>
+<span id="cb325-8"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb325-8" aria-hidden="true" tabindex="-1"></a><span class="st">IndMedMod2:= a3*b3</span></span>
+<span id="cb325-9"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb325-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb325-10"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb325-10" aria-hidden="true" tabindex="-1"></a><span class="st"># simple slope of justify on frame is a1+a3*skeptic</span></span>
+<span id="cb325-11"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb325-11" aria-hidden="true" tabindex="-1"></a><span class="st">aLow: = a1+a3*(-1.78)</span></span>
+<span id="cb325-12"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb325-12" aria-hidden="true" tabindex="-1"></a><span class="st">aMedian: = a1+a3*(-0.58)</span></span>
+<span id="cb325-13"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb325-13" aria-hidden="true" tabindex="-1"></a><span class="st">aMean: = a1+a3*(0)</span></span>
+<span id="cb325-14"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb325-14" aria-hidden="true" tabindex="-1"></a><span class="st">aHigh: = a1+a3*1.82</span></span>
+<span id="cb325-15"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb325-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb325-16"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb325-16" aria-hidden="true" tabindex="-1"></a><span class="st"># simple slope of donate on justify is b1+b3*skeptic</span></span>
+<span id="cb325-17"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb325-17" aria-hidden="true" tabindex="-1"></a><span class="st">bLow: = b1+b3*(-1.78)</span></span>
+<span id="cb325-18"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb325-18" aria-hidden="true" tabindex="-1"></a><span class="st">bMedian: = b1+b3*(-0.58)</span></span>
+<span id="cb325-19"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb325-19" aria-hidden="true" tabindex="-1"></a><span class="st">bMean: = b1+b3*(0)</span></span>
+<span id="cb325-20"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb325-20" aria-hidden="true" tabindex="-1"></a><span class="st">bHigh: = b1+b3*1.82</span></span>
+<span id="cb325-21"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb325-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb325-22"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb325-22" aria-hidden="true" tabindex="-1"></a><span class="st"># conditional indirect effects is a*(b1+b3*skeptic)</span></span>
+<span id="cb325-23"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb325-23" aria-hidden="true" tabindex="-1"></a><span class="st">abLow: = aLow*bLow</span></span>
+<span id="cb325-24"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb325-24" aria-hidden="true" tabindex="-1"></a><span class="st">abMedian: = aMedian*bMedian</span></span>
+<span id="cb325-25"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb325-25" aria-hidden="true" tabindex="-1"></a><span class="st">abMean: = aMean*bMean</span></span>
+<span id="cb325-26"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb325-26" aria-hidden="true" tabindex="-1"></a><span class="st">abHigh: = aHigh*bHigh</span></span>
+<span id="cb325-27"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb325-27" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span>
+<span id="cb325-28"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb325-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb325-29"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb325-29" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2022</span>)</span>
+<span id="cb325-30"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb325-30" aria-hidden="true" tabindex="-1"></a>lm4f.fit <span class="ot">=</span> <span class="fu">sem</span>(lm4f.syntax, <span class="at">data =</span> disaster, <span class="at">se =</span> <span class="st">&quot;bootstrap&quot;</span>, <span class="at">bootstrap =</span> <span class="dv">1000</span>, <span class="at">fixed.x=</span><span class="cn">FALSE</span>, <span class="at">meanstructure =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb325-31"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb325-31" aria-hidden="true" tabindex="-1"></a><span class="fu">parameterEstimates</span>(lm4f.fit, <span class="at">level =</span> <span class="fl">0.95</span>, <span class="at">boot.ci.type =</span> <span class="st">&quot;bca.simple&quot;</span>)</span></code></pre></div>
+<pre><code>##           lhs op             rhs      label    est    se       z pvalue ci.lower ci.upper
+## 1      donate  ~         justify         b1 -0.922 0.079 -11.611  0.000   -1.085   -0.772
+## 2      donate  ~         skeptic         b2 -0.040 0.041  -0.968  0.333   -0.127    0.039
+## 3      donate  ~      skepxjusti         b3  0.008 0.026   0.327  0.743   -0.043    0.059
+## 4      donate  ~           frame     cprime  0.204 0.140   1.455  0.146   -0.064    0.492
+## 5     justify  ~           frame         a1  0.117 0.114   1.023  0.306   -0.113    0.324
+## 6     justify  ~         skeptic         a2  0.105 0.043   2.459  0.014    0.020    0.194
+## 7     justify  ~      skepxframe         a3  0.201 0.063   3.201  0.001    0.077    0.326
+## 8      donate ~~          donate             0.943 0.116   8.129  0.000    0.736    1.200
+## 9     justify ~~         justify             0.648 0.066   9.767  0.000    0.539    0.809
+## 10    skeptic ~~         skeptic             4.113 0.498   8.257  0.000    3.211    5.198
+## 11    skeptic ~~      skepxjusti             2.067 0.867   2.383  0.017    0.691    4.089
+## 12    skeptic ~~           frame             0.021 0.074   0.277  0.782   -0.125    0.168
+## 13    skeptic ~~      skepxframe             1.957 0.349   5.606  0.000    1.333    2.721
+## 14 skepxjusti ~~      skepxjusti             7.017 2.414   2.907  0.004    3.602   13.111
+## 15 skepxjusti ~~           frame             0.204 0.091   2.233  0.026    0.045    0.414
+## 16 skepxjusti ~~      skepxframe             1.828 0.784   2.332  0.020    0.600    3.681
+## 17      frame ~~           frame             0.250 0.003  97.289  0.000    0.244    0.250
+## 18      frame ~~      skepxframe             0.011 0.052   0.207  0.836   -0.089    0.121
+## 19 skepxframe ~~      skepxframe             1.957 0.348   5.618  0.000    1.328    2.708
+## 20     donate ~1                             4.499 0.110  40.942  0.000    4.288    4.708
+## 21    justify ~1                            -0.060 0.079  -0.759  0.448   -0.208    0.109
+## 22    skeptic ~1                             0.000 0.142   0.000  1.000   -0.274    0.286
+## 23 skepxjusti ~1                             0.828 0.179   4.632  0.000    0.526    1.218
+## 24      frame ~1                             0.479 0.036  13.458  0.000    0.396    0.540
+## 25 skepxframe ~1                             0.021 0.099   0.206  0.837   -0.173    0.223
+## 26 IndMedMod1 :=     a1*b3+a3*b1 IndMedMod1 -0.185 0.062  -2.975  0.003   -0.324   -0.071
+## 27 IndMedMod2 :=           a3*b3 IndMedMod2  0.002 0.005   0.330  0.741   -0.009    0.012
+## 28       aLow :=   a1+a3*(-1.78)       aLow -0.241 0.154  -1.568  0.117   -0.563    0.045
+## 29    aMedian :=   a1+a3*(-0.58)    aMedian  0.000 0.117   0.004  0.997   -0.240    0.209
+## 30      aMean :=       a1+a3*(0)      aMean  0.117 0.115   1.023  0.307   -0.113    0.324
+## 31      aHigh :=      a1+a3*1.82      aHigh  0.483 0.168   2.874  0.004    0.138    0.829
+## 32       bLow :=   b1+b3*(-1.78)       bLow -0.937 0.103  -9.140  0.000   -1.138   -0.729
+## 33    bMedian :=   b1+b3*(-0.58)    bMedian -0.927 0.085 -10.904  0.000   -1.096   -0.758
+## 34      bMean :=       b1+b3*(0)      bMean -0.922 0.079 -11.605  0.000   -1.085   -0.772
+## 35      bHigh :=      b1+b3*1.82      bHigh -0.907 0.079 -11.427  0.000   -1.073   -0.752
+## 36      abLow :=       aLow*bLow      abLow  0.226 0.150   1.501  0.133   -0.035    0.578
+## 37   abMedian := aMedian*bMedian   abMedian  0.000 0.109  -0.004  0.997   -0.192    0.234
+## 38     abMean :=     aMean*bMean     abMean -0.108 0.105  -1.028  0.304   -0.304    0.096
+## 39     abHigh :=     aHigh*bHigh     abHigh -0.438 0.161  -2.727  0.006   -0.779   -0.123</code></pre>
+<p>Here we have two interaction terms:</p>
+<ul>
+<li>a3 = 0.201 (p = 0.001)</li>
+<li>b3 = 0.008 (p = 0.743)</li>
+</ul>
+<p>which means that skeptic is a moderator for the a path but not a moderator for the b path.</p>
+<p>As for the index of moderated mediation:</p>
+<ul>
+<li>IndMedMod1 = -0.185 (p = 0.003)</li>
+<li>IndMedMod2 = 0.002 (p = 0.741)</li>
+</ul>
+<p>So IndMedMod1 is sig but IndMedMod2 is not (meh)… Let’s examine the indirect effects at different levels:</p>
+<ul>
+<li>abLow = 0.226 (p = 0.133)</li>
+<li>abMedian = 0.000 (p = 0.997)</li>
+<li>abMean = -0.108 (p = 0.304)</li>
+<li>abHigh = -0.438 (p = 0.006)</li>
+</ul>
+<p>which does vary as a function of skepticism. So, we still have a significant moderated mediation in this model.</p>
+<!------------------------------>
+</div>
+<div id="model-4g-moderated-mediation-model---path-a-b-and-cprime" class="section level2 hasAnchor" number="7.11">
+<h2><span class="header-section-number">7.11</span> Model 4g: Moderated Mediation Model - Path a, b, and cprime<a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#model-4g-moderated-mediation-model---path-a-b-and-cprime" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<!------------------------------>
+<div class="sourceCode" id="cb327"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb327-1"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb327-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">mar=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>), <span class="at">oma=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>))</span>
+<span id="cb327-2"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb327-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pmacroModel</span>(<span class="dv">59</span>,<span class="at">labels=</span>labels)</span>
+<span id="cb327-3"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb327-3" aria-hidden="true" tabindex="-1"></a><span class="fu">statisticalDiagram</span>(<span class="dv">59</span>, <span class="at">labels=</span>labels)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/diag4g-1.png" width="672" /></p>
+<p>Let’s write the syntax for the moderated mediation model:</p>
+<div class="sourceCode" id="cb328"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb328-1"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb328-1" aria-hidden="true" tabindex="-1"></a>lm4g.syntax <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
+<span id="cb328-2"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb328-2" aria-hidden="true" tabindex="-1"></a><span class="st">donate ~ b1*justify + b2*skepxjusti + c1prime*frame + c2prime*skeptic + c3prime*skepxframe</span></span>
+<span id="cb328-3"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb328-3" aria-hidden="true" tabindex="-1"></a><span class="st">justify ~ a1*frame + a2*skeptic + a3*skepxframe</span></span>
+<span id="cb328-4"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb328-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb328-5"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb328-5" aria-hidden="true" tabindex="-1"></a><span class="st"># index of moderated mediation</span></span>
+<span id="cb328-6"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb328-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb328-7"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb328-7" aria-hidden="true" tabindex="-1"></a><span class="st">IndMedMod1:= a1*b2+a3*b1</span></span>
+<span id="cb328-8"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb328-8" aria-hidden="true" tabindex="-1"></a><span class="st">IndMedMod2:= a3*b2</span></span>
+<span id="cb328-9"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb328-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb328-10"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb328-10" aria-hidden="true" tabindex="-1"></a><span class="st"># simple slope of justify on frame is a1+a3*skeptic</span></span>
+<span id="cb328-11"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb328-11" aria-hidden="true" tabindex="-1"></a><span class="st">aLow: = a1+a3*(-1.78)</span></span>
+<span id="cb328-12"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb328-12" aria-hidden="true" tabindex="-1"></a><span class="st">aMedian: = a1+a3*(-0.58)</span></span>
+<span id="cb328-13"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb328-13" aria-hidden="true" tabindex="-1"></a><span class="st">aMean: = a1+a3*(0)</span></span>
+<span id="cb328-14"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb328-14" aria-hidden="true" tabindex="-1"></a><span class="st">aHigh: = a1+a3*1.82</span></span>
+<span id="cb328-15"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb328-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb328-16"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb328-16" aria-hidden="true" tabindex="-1"></a><span class="st"># simple slope of donate on justify is b1+b2*skeptic</span></span>
+<span id="cb328-17"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb328-17" aria-hidden="true" tabindex="-1"></a><span class="st">bLow: = b1+b2*(-1.78)</span></span>
+<span id="cb328-18"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb328-18" aria-hidden="true" tabindex="-1"></a><span class="st">bMedian: = b1+b2*(-0.58)</span></span>
+<span id="cb328-19"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb328-19" aria-hidden="true" tabindex="-1"></a><span class="st">bMean: = b1+b2*(0)</span></span>
+<span id="cb328-20"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb328-20" aria-hidden="true" tabindex="-1"></a><span class="st">bHigh: = b1+b2*1.82</span></span>
+<span id="cb328-21"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb328-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb328-22"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb328-22" aria-hidden="true" tabindex="-1"></a><span class="st"># conditional indirect effects is a*(b1+b2*skeptic)</span></span>
+<span id="cb328-23"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb328-23" aria-hidden="true" tabindex="-1"></a><span class="st">abLow: = aLow*bLow</span></span>
+<span id="cb328-24"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb328-24" aria-hidden="true" tabindex="-1"></a><span class="st">abMedian: = aMedian*bMedian</span></span>
+<span id="cb328-25"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb328-25" aria-hidden="true" tabindex="-1"></a><span class="st">abMean: = aMean*bMean</span></span>
+<span id="cb328-26"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb328-26" aria-hidden="true" tabindex="-1"></a><span class="st">abHigh: = aHigh*bHigh</span></span>
+<span id="cb328-27"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb328-27" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span>
+<span id="cb328-28"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb328-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb328-29"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb328-29" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2022</span>)</span>
+<span id="cb328-30"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb328-30" aria-hidden="true" tabindex="-1"></a>lm4g.fit <span class="ot">=</span> <span class="fu">sem</span>(lm4g.syntax, <span class="at">data =</span> disaster, <span class="at">se =</span> <span class="st">&quot;bootstrap&quot;</span>, <span class="at">bootstrap =</span> <span class="dv">1000</span>, <span class="at">fixed.x=</span><span class="cn">FALSE</span>, <span class="at">meanstructure =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb328-31"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#cb328-31" aria-hidden="true" tabindex="-1"></a><span class="fu">parameterEstimates</span>(lm4g.fit, <span class="at">level =</span> <span class="fl">0.95</span>, <span class="at">boot.ci.type =</span> <span class="st">&quot;bca.simple&quot;</span>)</span></code></pre></div>
+<pre><code>##           lhs op             rhs      label    est    se       z pvalue ci.lower ci.upper
+## 1      donate  ~         justify         b1 -0.925 0.081 -11.473  0.000   -1.085   -0.762
+## 2      donate  ~      skepxjusti         b2  0.007 0.028   0.258  0.797   -0.047    0.063
+## 3      donate  ~           frame    c1prime  0.205 0.143   1.432  0.152   -0.075    0.500
+## 4      donate  ~         skeptic    c2prime -0.043 0.058  -0.749  0.454   -0.165    0.058
+## 5      donate  ~      skepxframe    c3prime  0.009 0.079   0.119  0.905   -0.139    0.171
+## 6     justify  ~           frame         a1  0.117 0.114   1.023  0.306   -0.113    0.324
+## 7     justify  ~         skeptic         a2  0.105 0.043   2.459  0.014    0.020    0.194
+## 8     justify  ~      skepxframe         a3  0.201 0.063   3.201  0.001    0.077    0.326
+## 9      donate ~~          donate             0.943 0.116   8.148  0.000    0.744    1.212
+## 10    justify ~~         justify             0.648 0.066   9.767  0.000    0.539    0.809
+## 11 skepxjusti ~~      skepxjusti             7.017 2.414   2.907  0.004    3.602   13.111
+## 12 skepxjusti ~~           frame             0.204 0.091   2.233  0.026    0.045    0.414
+## 13 skepxjusti ~~         skeptic             2.067 0.867   2.383  0.017    0.691    4.089
+## 14 skepxjusti ~~      skepxframe             1.828 0.784   2.332  0.020    0.600    3.681
+## 15      frame ~~           frame             0.250 0.003  97.289  0.000    0.245    0.250
+## 16      frame ~~         skeptic             0.021 0.074   0.277  0.782   -0.125    0.168
+## 17      frame ~~      skepxframe             0.011 0.052   0.207  0.836   -0.089    0.121
+## 18    skeptic ~~         skeptic             4.113 0.498   8.257  0.000    3.211    5.198
+## 19    skeptic ~~      skepxframe             1.957 0.349   5.606  0.000    1.333    2.721
+## 20 skepxframe ~~      skepxframe             1.957 0.348   5.618  0.000    1.328    2.708
+## 21     donate ~1                             4.499 0.110  40.945  0.000    4.283    4.708
+## 22    justify ~1                            -0.060 0.079  -0.759  0.448   -0.208    0.109
+## 23 skepxjusti ~1                             0.828 0.179   4.632  0.000    0.526    1.218
+## 24      frame ~1                             0.479 0.036  13.458  0.000    0.396    0.540
+## 25    skeptic ~1                             0.000 0.142   0.000  1.000   -0.274    0.286
+## 26 skepxframe ~1                             0.021 0.099   0.206  0.837   -0.173    0.223
+## 27 IndMedMod1 :=     a1*b2+a3*b1 IndMedMod1 -0.185 0.063  -2.948  0.003   -0.321   -0.071
+## 28 IndMedMod2 :=           a3*b2 IndMedMod2  0.001 0.006   0.257  0.797   -0.009    0.014
+## 29       aLow :=   a1+a3*(-1.78)       aLow -0.241 0.154  -1.568  0.117   -0.563    0.045
+## 30    aMedian :=   a1+a3*(-0.58)    aMedian  0.000 0.117   0.004  0.997   -0.240    0.209
+## 31      aMean :=       a1+a3*(0)      aMean  0.117 0.115   1.023  0.307   -0.113    0.324
+## 32      aHigh :=      a1+a3*1.82      aHigh  0.483 0.168   2.874  0.004    0.138    0.829
+## 33       bLow :=   b1+b2*(-1.78)       bLow -0.937 0.103  -9.121  0.000   -1.142   -0.730
+## 34    bMedian :=   b1+b2*(-0.58)    bMedian -0.929 0.085 -10.877  0.000   -1.096   -0.756
+## 35      bMean :=       b1+b2*(0)      bMean -0.925 0.081 -11.467  0.000   -1.085   -0.762
+## 36      bHigh :=      b1+b2*1.82      bHigh -0.912 0.086 -10.622  0.000   -1.084   -0.741
+## 37      abLow :=       aLow*bLow      abLow  0.226 0.151   1.500  0.134   -0.036    0.580
+## 38   abMedian := aMedian*bMedian   abMedian  0.000 0.109  -0.004  0.997   -0.194    0.233
+## 39     abMean :=     aMean*bMean     abMean -0.108 0.105  -1.027  0.304   -0.306    0.094
+## 40     abHigh :=     aHigh*bHigh     abHigh -0.441 0.164  -2.685  0.007   -0.783   -0.118</code></pre>
+<p>Here we have interaction terms:</p>
+<ul>
+<li>a3 = 0.201 (p = 0.001)</li>
+<li>b2 = 0.007 (p = 0.797)</li>
+<li>c3prime = 0.009 (p = 0.905)</li>
+</ul>
+<p>which means that skeptic is a moderator for the a path but not a moderator for the b path or the cprime path.</p>
+<p>As for the index of moderated mediation:</p>
+<ul>
+<li>IndMedMod1 = -0.185 (p = 0.003)</li>
+<li>IndMedMod2 = 0.001 (p = 0.797)</li>
+</ul>
+<p>So IndMedMod1 is sig but IndMedMod2 is not (again)… Let’s examine the indirect effects at different levels:</p>
+<ul>
+<li>abLow = 0.226 (p = 0.134)</li>
+<li>abMedian = 0.000 (p = 0.997)</li>
+<li>abMean = -0.108 (p = 0.304)</li>
+<li>abHigh = -0.441 (p = 0.007)</li>
+</ul>
+<p>which does vary as a function of skepticism. So, we still have a significant moderated mediation in this model.</p>
+<!------------------------------>
+</div>
+<div id="conclusions" class="section level2 hasAnchor" number="7.12">
+<h2><span class="header-section-number">7.12</span> Conclusions<a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#conclusions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<!------------------------------>
+<ul>
+<li>Although the total effect of frame on donation is not significant to begin with (in Model 1), it should not discourage you from looking for mediators and moderators on any of the paths.</li>
+<li>In the simple mediation model (model 2), only b path is significantly negative, meaning that justification for withholding aid always leads to less donation regardless of the skepticism towards climate change. Although a path was not significant, again, it should not discourage you from looking for mediators and moderators on that a path.</li>
+<li>Including a moderator skeptic for a path and testing the moderated mediation models in Model 4a-Model 4g showed that skeptic is only a moderator for the a path, meaning that those who are high on climate change skepticism think it’s justified to withhold the aid whereas those who are low on the skepticism think it’s not justified to withhold the aid.</li>
+<li>Comparing Model 4a/4d/4f/4g (which all involve moderate a path), all the simple slopes and indirect effects of a path are more or less the same, and I recommend reported model 4g.</li>
+<li>Our final conclusion is: a path was moderated by skepticism, b path was not moderated by skepticism but b path itself is significant, cprime was not moderated by skepticism. The indirect path ab was also moderated by skepticism. In particular, framing the disaster as caused by climate change (X) leads to less donation (Y) for people who doubt climate change (W_high) but it leads to more donation (Y) for people who believes it (W_low) because they do not think it’s justified to withhold the aid (M). Ignoring this moderator leads to an insignificant mediation effect in Model 2.</li>
+</ul>
+<p>According to Hayes (2017, p. 439):</p>
+<p>“Climate change skeptics seem to feel that victims of a climate change induced disaster (compared to one not attributed to climate change) don’t deserve assistance, and this belief may translate into a reduced willingness to personally donate to the victims. This is a negative indirect effect. But among believers in climate change, the opposite effect is observed, with a climate change induced disaster leading believers to see the victims as more worthy of assistance than if the disaster wasn’t caused by climate change, and this is related to a greater willingness to donate. This is a positive indirect effect. Ignoring the contingency of the indirect effect by failing to include moderation by climate change skepticism in the mediation model obscures the conditional nature of the mechanism at work.”</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="lavaan-lab-4-mediated-moderation-moderated-mediation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="lavaan-lab-5-one-factor-cfa-model.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 14 Lavaan Lab 11: Model Local Fitting and Model Modifications | R Cookbook for Structural Equation Modeling</title>
+  <meta name="description" content="Chapter 14 Lavaan Lab 11: Model Local Fitting and Model Modifications | R Cookbook for Structural Equation Modeling" />
+  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 14 Lavaan Lab 11: Model Local Fitting and Model Modifications | R Cookbook for Structural Equation Modeling" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 14 Lavaan Lab 11: Model Local Fitting and Model Modifications | R Cookbook for Structural Equation Modeling" />
+  
+  
+  
+
+<meta name="author" content="Ge Jiang" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="lavaan-lab-10-model-fit-part-ii-fit-indices.html"/>
+<link rel="next" href="lavaan-lab-12-sem-for-missing-data.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">EPSY:579 R Cookbook for SEM</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Course</a></li>
+<li class="chapter" data-level="2" data-path="into-to-r.html"><a href="into-to-r.html"><i class="fa fa-check"></i><b>2</b> Into to R</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="into-to-r.html"><a href="into-to-r.html#r-as-a-calculator"><i class="fa fa-check"></i><b>2.1</b> R as a calculator</a></li>
+<li class="chapter" data-level="2.2" data-path="into-to-r.html"><a href="into-to-r.html#assigning-objects-and-basic-data-entry"><i class="fa fa-check"></i><b>2.2</b> Assigning Objects and Basic Data Entry</a></li>
+<li class="chapter" data-level="2.3" data-path="into-to-r.html"><a href="into-to-r.html#removing-an-object-from-the-workspace"><i class="fa fa-check"></i><b>2.3</b> Removing an object from the workspace</a></li>
+<li class="chapter" data-level="2.4" data-path="into-to-r.html"><a href="into-to-r.html#formal-rules-for-indexing-objects-in-r"><i class="fa fa-check"></i><b>2.4</b> Formal Rules for Indexing Objects in R</a></li>
+<li class="chapter" data-level="2.5" data-path="into-to-r.html"><a href="into-to-r.html#examples"><i class="fa fa-check"></i><b>2.5</b> Examples</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="lavaan-lab-1-path-analysis-model.html"><a href="lavaan-lab-1-path-analysis-model.html"><i class="fa fa-check"></i><b>3</b> Lavaan Lab 1: Path Analysis Model</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="lavaan-lab-1-path-analysis-model.html"><a href="lavaan-lab-1-path-analysis-model.html#reading-in-and-working-with-realistic-datasets-in-r"><i class="fa fa-check"></i><b>3.1</b> Reading-In and Working With Realistic Datasets In R</a></li>
+<li class="chapter" data-level="3.2" data-path="lavaan-lab-1-path-analysis-model.html"><a href="lavaan-lab-1-path-analysis-model.html#sample-covariance-matrices-using-the-cov-function"><i class="fa fa-check"></i><b>3.2</b> Sample Covariance Matrices using the cov() function</a></li>
+<li class="chapter" data-level="3.3" data-path="lavaan-lab-1-path-analysis-model.html"><a href="lavaan-lab-1-path-analysis-model.html#installing-packages"><i class="fa fa-check"></i><b>3.3</b> Installing Packages</a></li>
+<li class="chapter" data-level="3.4" data-path="lavaan-lab-1-path-analysis-model.html"><a href="lavaan-lab-1-path-analysis-model.html#loading-packages-libraries-that-you-have-installed"><i class="fa fa-check"></i><b>3.4</b> Loading Packages (Libraries) That You Have Installed</a></li>
+<li class="chapter" data-level="3.5" data-path="lavaan-lab-1-path-analysis-model.html"><a href="lavaan-lab-1-path-analysis-model.html#using-lavaan-for-path-models"><i class="fa fa-check"></i><b>3.5</b> Using Lavaan For Path Models</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="lavaan-lab-1-path-analysis-model.html"><a href="lavaan-lab-1-path-analysis-model.html#part-i-follow-the-set-of-equations-we-wrote-in-class"><i class="fa fa-check"></i><b>3.5.1</b> PART I: Follow the set of equations we wrote in class:</a></li>
+<li class="chapter" data-level="3.5.2" data-path="lavaan-lab-1-path-analysis-model.html"><a href="lavaan-lab-1-path-analysis-model.html#part-ii-lets-run-our-model"><i class="fa fa-check"></i><b>3.5.2</b> PART II Let’s run our model!</a></li>
+<li class="chapter" data-level="3.5.3" data-path="lavaan-lab-1-path-analysis-model.html"><a href="lavaan-lab-1-path-analysis-model.html#sigma-matrices"><i class="fa fa-check"></i><b>3.5.3</b> Sigma Matrices</a></li>
+<li class="chapter" data-level="3.5.4" data-path="lavaan-lab-1-path-analysis-model.html"><a href="lavaan-lab-1-path-analysis-model.html#part-iii-summarizing-our-analysis"><i class="fa fa-check"></i><b>3.5.4</b> PART III: Summarizing Our Analysis:</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="lavaan-lab-1-path-analysis-model.html"><a href="lavaan-lab-1-path-analysis-model.html#plotting-sem-model"><i class="fa fa-check"></i><b>3.6</b> Plotting SEM model</a>
+<ul>
+<li class="chapter" data-level="3.6.1" data-path="lavaan-lab-1-path-analysis-model.html"><a href="lavaan-lab-1-path-analysis-model.html#customize-it-your-way"><i class="fa fa-check"></i><b>3.6.1</b> customize it your way</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="lavaan-lab-1-path-analysis-model.html"><a href="lavaan-lab-1-path-analysis-model.html#exercise-how-would-you-fit-the-model-in-saunders-et-al.-2016"><i class="fa fa-check"></i><b>3.7</b> Exercise: How would you fit the model in Saunders et al. (2016)?</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="lavaan-lab-2-mediation-and-indirect-effects.html"><a href="lavaan-lab-2-mediation-and-indirect-effects.html"><i class="fa fa-check"></i><b>4</b> Lavaan Lab 2: Mediation and Indirect Effects</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="lavaan-lab-2-mediation-and-indirect-effects.html"><a href="lavaan-lab-2-mediation-and-indirect-effects.html#reading-in-and-working-with-realistic-datasets-in-r-1"><i class="fa fa-check"></i><b>4.1</b> Reading-In and Working With Realistic Datasets In R</a></li>
+<li class="chapter" data-level="4.2" data-path="lavaan-lab-2-mediation-and-indirect-effects.html"><a href="lavaan-lab-2-mediation-and-indirect-effects.html#using-lavaan-for-mediation-models---preacher-hayess"><i class="fa fa-check"></i><b>4.2</b> Using Lavaan For Mediation Models - Preacher &amp; Hayes’s</a></li>
+<li class="chapter" data-level="4.3" data-path="lavaan-lab-2-mediation-and-indirect-effects.html"><a href="lavaan-lab-2-mediation-and-indirect-effects.html#part-i-follow-the-two-equations-of-m-dietse-y-bulimia"><i class="fa fa-check"></i><b>4.3</b> PART I: # Follow the two equations of M (DietSE) &amp; Y (Bulimia)</a></li>
+<li class="chapter" data-level="4.4" data-path="lavaan-lab-2-mediation-and-indirect-effects.html"><a href="lavaan-lab-2-mediation-and-indirect-effects.html#part-ii-lets-run-our-model-1"><i class="fa fa-check"></i><b>4.4</b> PART II Let’s run our model!</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="lavaan-lab-2-mediation-and-indirect-effects.html"><a href="lavaan-lab-2-mediation-and-indirect-effects.html#label-the-mediation-effect"><i class="fa fa-check"></i><b>4.4.1</b> Label the mediation effect</a></li>
+<li class="chapter" data-level="4.4.2" data-path="lavaan-lab-2-mediation-and-indirect-effects.html"><a href="lavaan-lab-2-mediation-and-indirect-effects.html#define-a-new-term-for-the-mediation-effect-ab"><i class="fa fa-check"></i><b>4.4.2</b> Define a new term for the mediation effect a*b</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="lavaan-lab-2-mediation-and-indirect-effects.html"><a href="lavaan-lab-2-mediation-and-indirect-effects.html#part-iii-summarizing-our-analysis-1"><i class="fa fa-check"></i><b>4.5</b> PART III: Summarizing Our Analysis:</a></li>
+<li class="chapter" data-level="4.6" data-path="lavaan-lab-2-mediation-and-indirect-effects.html"><a href="lavaan-lab-2-mediation-and-indirect-effects.html#part-iv-bootstrap-confidence-intervals"><i class="fa fa-check"></i><b>4.6</b> PART IV: Bootstrap confidence intervals</a>
+<ul>
+<li class="chapter" data-level="4.6.1" data-path="lavaan-lab-2-mediation-and-indirect-effects.html"><a href="lavaan-lab-2-mediation-and-indirect-effects.html#the-default-one-is-boot.ci.type-perc"><i class="fa fa-check"></i><b>4.6.1</b> The default one is boot.ci.type = “perc”</a></li>
+<li class="chapter" data-level="4.6.2" data-path="lavaan-lab-2-mediation-and-indirect-effects.html"><a href="lavaan-lab-2-mediation-and-indirect-effects.html#bc-bias-corrected-confidence-interval"><i class="fa fa-check"></i><b>4.6.2</b> BC (bias-corrected) confidence interval</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="lavaan-lab-2-mediation-and-indirect-effects.html"><a href="lavaan-lab-2-mediation-and-indirect-effects.html#in-class-exercise-use-lavaan-to-estimate-and-interpret-the-following-model"><i class="fa fa-check"></i><b>4.7</b> In-Class Exercise: Use Lavaan to estimate and interpret the following model</a></li>
+<li class="chapter" data-level="4.8" data-path="lavaan-lab-2-mediation-and-indirect-effects.html"><a href="lavaan-lab-2-mediation-and-indirect-effects.html#exercise-eating-disorder-mediation-analysis"><i class="fa fa-check"></i><b>4.8</b> Exercise: Eating Disorder Mediation Analysis</a>
+<ul>
+<li class="chapter" data-level="4.8.1" data-path="lavaan-lab-2-mediation-and-indirect-effects.html"><a href="lavaan-lab-2-mediation-and-indirect-effects.html#step-1-labeling-and-defining-the-parameters"><i class="fa fa-check"></i><b>4.8.1</b> Step 1: Labeling and defining the parameters</a></li>
+<li class="chapter" data-level="4.8.2" data-path="lavaan-lab-2-mediation-and-indirect-effects.html"><a href="lavaan-lab-2-mediation-and-indirect-effects.html#step-2-fix-all-disturbance-covariances-at-0"><i class="fa fa-check"></i><b>4.8.2</b> Step 2: Fix all disturbance covariances at 0</a></li>
+<li class="chapter" data-level="4.8.3" data-path="lavaan-lab-2-mediation-and-indirect-effects.html"><a href="lavaan-lab-2-mediation-and-indirect-effects.html#step-3-define-new-terms-for-mediation-effects"><i class="fa fa-check"></i><b>4.8.3</b> Step 3: Define new terms for mediation effects</a></li>
+<li class="chapter" data-level="4.8.4" data-path="lavaan-lab-2-mediation-and-indirect-effects.html"><a href="lavaan-lab-2-mediation-and-indirect-effects.html#step-4-bootstrap-confidence-intervals"><i class="fa fa-check"></i><b>4.8.4</b> Step 4: Bootstrap confidence intervals:</a></li>
+<li class="chapter" data-level="4.8.5" data-path="lavaan-lab-2-mediation-and-indirect-effects.html"><a href="lavaan-lab-2-mediation-and-indirect-effects.html#step-5-print-and-interpret-the-mediation-effects"><i class="fa fa-check"></i><b>4.8.5</b> Step 5: Print and interpret the mediation effects;</a></li>
+<li class="chapter" data-level="4.8.6" data-path="lavaan-lab-2-mediation-and-indirect-effects.html"><a href="lavaan-lab-2-mediation-and-indirect-effects.html#plot-it"><i class="fa fa-check"></i><b>4.8.6</b> Plot it!</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="lavaan-lab-3-moderation-and-conditional-effects.html"><a href="lavaan-lab-3-moderation-and-conditional-effects.html"><i class="fa fa-check"></i><b>5</b> Lavaan Lab 3: Moderation and Conditional Effects</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="lavaan-lab-3-moderation-and-conditional-effects.html"><a href="lavaan-lab-3-moderation-and-conditional-effects.html#reading-in-datasets"><i class="fa fa-check"></i><b>5.1</b> Reading-In Datasets</a></li>
+<li class="chapter" data-level="5.2" data-path="lavaan-lab-3-moderation-and-conditional-effects.html"><a href="lavaan-lab-3-moderation-and-conditional-effects.html#interactions-in-regression-using-lm"><i class="fa fa-check"></i><b>5.2</b> Interactions in Regression Using lm()</a></li>
+<li class="chapter" data-level="5.3" data-path="lavaan-lab-3-moderation-and-conditional-effects.html"><a href="lavaan-lab-3-moderation-and-conditional-effects.html#interactions-in-lavaan"><i class="fa fa-check"></i><b>5.3</b> Interactions in Lavaan</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="lavaan-lab-3-moderation-and-conditional-effects.html"><a href="lavaan-lab-3-moderation-and-conditional-effects.html#important-note"><i class="fa fa-check"></i><b>5.3.1</b> IMPORTANT NOTE</a></li>
+<li class="chapter" data-level="5.3.2" data-path="lavaan-lab-3-moderation-and-conditional-effects.html"><a href="lavaan-lab-3-moderation-and-conditional-effects.html#follow-the-equation-of-y-depression"><i class="fa fa-check"></i><b>5.3.2</b> Follow the equation of Y (Depression):</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="lavaan-lab-3-moderation-and-conditional-effects.html"><a href="lavaan-lab-3-moderation-and-conditional-effects.html#visual-inspection-of-interactions"><i class="fa fa-check"></i><b>5.4</b> Visual inspection of interactions</a></li>
+<li class="chapter" data-level="5.5" data-path="lavaan-lab-3-moderation-and-conditional-effects.html"><a href="lavaan-lab-3-moderation-and-conditional-effects.html#centering-continuous-moderator"><i class="fa fa-check"></i><b>5.5</b> Centering Continuous Moderator</a></li>
+<li class="chapter" data-level="5.6" data-path="lavaan-lab-3-moderation-and-conditional-effects.html"><a href="lavaan-lab-3-moderation-and-conditional-effects.html#interactions-in-lavaan-continuous-moderator"><i class="fa fa-check"></i><b>5.6</b> Interactions in Lavaan (Continuous Moderator)</a></li>
+<li class="chapter" data-level="5.7" data-path="lavaan-lab-3-moderation-and-conditional-effects.html"><a href="lavaan-lab-3-moderation-and-conditional-effects.html#simple-slopes-analysis"><i class="fa fa-check"></i><b>5.7</b> Simple Slopes Analysis</a></li>
+<li class="chapter" data-level="5.8" data-path="lavaan-lab-3-moderation-and-conditional-effects.html"><a href="lavaan-lab-3-moderation-and-conditional-effects.html#visual-inspection-of-interactions-lm-approach"><i class="fa fa-check"></i><b>5.8</b> Visual inspection of interactions (lm approach)</a></li>
+<li class="chapter" data-level="5.9" data-path="lavaan-lab-3-moderation-and-conditional-effects.html"><a href="lavaan-lab-3-moderation-and-conditional-effects.html#johnson-neyman-interval"><i class="fa fa-check"></i><b>5.9</b> JOHNSON-NEYMAN INTERVAL</a></li>
+<li class="chapter" data-level="5.10" data-path="lavaan-lab-3-moderation-and-conditional-effects.html"><a href="lavaan-lab-3-moderation-and-conditional-effects.html#exercise-how-framing-affects-justifications-for-giving-or-withholding-aid-to-disaster-victims"><i class="fa fa-check"></i><b>5.10</b> Exercise: How Framing Affects Justifications for Giving or Withholding Aid to Disaster Victims</a>
+<ul>
+<li class="chapter" data-level="5.10.1" data-path="lavaan-lab-3-moderation-and-conditional-effects.html"><a href="lavaan-lab-3-moderation-and-conditional-effects.html#data-prep"><i class="fa fa-check"></i><b>5.10.1</b> Data Prep</a></li>
+<li class="chapter" data-level="5.10.2" data-path="lavaan-lab-3-moderation-and-conditional-effects.html"><a href="lavaan-lab-3-moderation-and-conditional-effects.html#moderation-with-a-binary-moderator"><i class="fa fa-check"></i><b>5.10.2</b> Moderation with a binary moderator</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="lavaan-lab-4-mediated-moderation-moderated-mediation.html"><a href="lavaan-lab-4-mediated-moderation-moderated-mediation.html"><i class="fa fa-check"></i><b>6</b> Lavaan Lab 4: Mediated Moderation &amp; Moderated Mediation</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="lavaan-lab-4-mediated-moderation-moderated-mediation.html"><a href="lavaan-lab-4-mediated-moderation-moderated-mediation.html#part-1-mediated-moderation-indirect-conditional-effect"><i class="fa fa-check"></i><b>6.1</b> PART 1: Mediated Moderation (Indirect Conditional effect)</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="lavaan-lab-4-mediated-moderation-moderated-mediation.html"><a href="lavaan-lab-4-mediated-moderation-moderated-mediation.html#step-1-read-in-data"><i class="fa fa-check"></i><b>6.1.1</b> Step 1: Read-in Data</a></li>
+<li class="chapter" data-level="6.1.2" data-path="lavaan-lab-4-mediated-moderation-moderated-mediation.html"><a href="lavaan-lab-4-mediated-moderation-moderated-mediation.html#step-2-create-the-interaction-term-for-moderation-analysis"><i class="fa fa-check"></i><b>6.1.2</b> Step 2: Create the interaction term for Moderation Analysis</a></li>
+<li class="chapter" data-level="6.1.3" data-path="lavaan-lab-4-mediated-moderation-moderated-mediation.html"><a href="lavaan-lab-4-mediated-moderation-moderated-mediation.html#step-3-write-the-syntax-and-fit-the-model"><i class="fa fa-check"></i><b>6.1.3</b> Step 3: Write the syntax and Fit the model</a></li>
+<li class="chapter" data-level="6.1.4" data-path="lavaan-lab-4-mediated-moderation-moderated-mediation.html"><a href="lavaan-lab-4-mediated-moderation-moderated-mediation.html#step-4-bootstrap-version"><i class="fa fa-check"></i><b>6.1.4</b> Step 4: Bootstrap Version</a></li>
+<li class="chapter" data-level="6.1.5" data-path="lavaan-lab-4-mediated-moderation-moderated-mediation.html"><a href="lavaan-lab-4-mediated-moderation-moderated-mediation.html#step-5-effect-size-measures"><i class="fa fa-check"></i><b>6.1.5</b> Step 5: Effect size measures</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="lavaan-lab-4-mediated-moderation-moderated-mediation.html"><a href="lavaan-lab-4-mediated-moderation-moderated-mediation.html#part-2-moderated-mediation-conditional-indirect-effect"><i class="fa fa-check"></i><b>6.2</b> PART 2: Moderated Mediation (Conditional Indirect effect)</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="lavaan-lab-4-mediated-moderation-moderated-mediation.html"><a href="lavaan-lab-4-mediated-moderation-moderated-mediation.html#step-1-product-term"><i class="fa fa-check"></i><b>6.2.1</b> Step 1: Product Term</a></li>
+<li class="chapter" data-level="6.2.2" data-path="lavaan-lab-4-mediated-moderation-moderated-mediation.html"><a href="lavaan-lab-4-mediated-moderation-moderated-mediation.html#step-2-write-the-syntax-and-fit-the-model"><i class="fa fa-check"></i><b>6.2.2</b> Step 2: Write the syntax and Fit the model</a></li>
+<li class="chapter" data-level="6.2.3" data-path="lavaan-lab-4-mediated-moderation-moderated-mediation.html"><a href="lavaan-lab-4-mediated-moderation-moderated-mediation.html#step-3-bootstrap-version"><i class="fa fa-check"></i><b>6.2.3</b> Step 3: Bootstrap Version</a></li>
+<li class="chapter" data-level="6.2.4" data-path="lavaan-lab-4-mediated-moderation-moderated-mediation.html"><a href="lavaan-lab-4-mediated-moderation-moderated-mediation.html#step-4-simple-slopes"><i class="fa fa-check"></i><b>6.2.4</b> Step 4: Simple Slopes</a></li>
+<li class="chapter" data-level="6.2.5" data-path="lavaan-lab-4-mediated-moderation-moderated-mediation.html"><a href="lavaan-lab-4-mediated-moderation-moderated-mediation.html#step-5-johnson-neyman-interval"><i class="fa fa-check"></i><b>6.2.5</b> Step 5 JOHNSON-NEYMAN INTERVAL</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><i class="fa fa-check"></i><b>7</b> R Lab on Disaster Dataset (Chapman and Lickel, 2016)</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#data-prep-1"><i class="fa fa-check"></i><b>7.1</b> Data Prep</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#scatterplot-matrix"><i class="fa fa-check"></i><b>7.1.1</b> Scatterplot Matrix</a></li>
+<li class="chapter" data-level="7.1.2" data-path="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#p-value-or-bootstrapped-confidence-interval"><i class="fa fa-check"></i><b>7.1.2</b> p-value or bootstrapped confidence interval?</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#model-1-simple-linear-regression-model"><i class="fa fa-check"></i><b>7.2</b> Model 1: Simple Linear Regression Model</a></li>
+<li class="chapter" data-level="7.3" data-path="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#model-2-simple-mediation-model"><i class="fa fa-check"></i><b>7.3</b> Model 2: Simple Mediation Model</a></li>
+<li class="chapter" data-level="7.4" data-path="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#model-3-simple-moderation-model"><i class="fa fa-check"></i><b>7.4</b> Model 3: Simple Moderation Model</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#johnson-neyman-interval-1"><i class="fa fa-check"></i><b>7.4.1</b> JOHNSON-NEYMAN INTERVAL</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#model-4a-moderated-mediation-model---path-a-only"><i class="fa fa-check"></i><b>7.5</b> Model 4a: Moderated Mediation Model - Path a only</a></li>
+<li class="chapter" data-level="7.6" data-path="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#model-4b-moderated-mediation-model---path-b-only"><i class="fa fa-check"></i><b>7.6</b> Model 4b: Moderated Mediation Model - Path b only</a></li>
+<li class="chapter" data-level="7.7" data-path="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#model-4c-moderation-mediation-model---path-cprime-only"><i class="fa fa-check"></i><b>7.7</b> Model 4c: Moderation &amp; Mediation Model - Path cprime only</a></li>
+<li class="chapter" data-level="7.8" data-path="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#model-4d-moderated-mediation-model---path-a-and-cprime"><i class="fa fa-check"></i><b>7.8</b> Model 4d: Moderated Mediation Model - Path a and cprime</a></li>
+<li class="chapter" data-level="7.9" data-path="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#model-4e-moderated-mediation-model---path-b-and-cprime"><i class="fa fa-check"></i><b>7.9</b> Model 4e: Moderated Mediation Model - Path b and cprime</a></li>
+<li class="chapter" data-level="7.10" data-path="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#model-4f-moderated-mediation-model---path-a-and-b"><i class="fa fa-check"></i><b>7.10</b> Model 4f: Moderated Mediation Model - Path a and b</a></li>
+<li class="chapter" data-level="7.11" data-path="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#model-4g-moderated-mediation-model---path-a-b-and-cprime"><i class="fa fa-check"></i><b>7.11</b> Model 4g: Moderated Mediation Model - Path a, b, and cprime</a></li>
+<li class="chapter" data-level="7.12" data-path="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html"><a href="r-lab-on-disaster-dataset-chapman-and-lickel-2016.html#conclusions"><i class="fa fa-check"></i><b>7.12</b> Conclusions</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="lavaan-lab-5-one-factor-cfa-model.html"><a href="lavaan-lab-5-one-factor-cfa-model.html"><i class="fa fa-check"></i><b>8</b> Lavaan Lab 5: One-factor CFA Model</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="lavaan-lab-5-one-factor-cfa-model.html"><a href="lavaan-lab-5-one-factor-cfa-model.html#data-prep-2"><i class="fa fa-check"></i><b>8.1</b> Data Prep</a></li>
+<li class="chapter" data-level="8.2" data-path="lavaan-lab-5-one-factor-cfa-model.html"><a href="lavaan-lab-5-one-factor-cfa-model.html#part-i-one-factor-cfa-fixed-loading"><i class="fa fa-check"></i><b>8.2</b> PART I: One-Factor CFA, Fixed Loading</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="lavaan-lab-5-one-factor-cfa-model.html"><a href="lavaan-lab-5-one-factor-cfa-model.html#fixed-loading-aka-marker-variable-method."><i class="fa fa-check"></i><b>8.2.1</b> Fixed Loading, AKA Marker Variable method.</a></li>
+<li class="chapter" data-level="8.2.2" data-path="lavaan-lab-5-one-factor-cfa-model.html"><a href="lavaan-lab-5-one-factor-cfa-model.html#change-marker-indicator"><i class="fa fa-check"></i><b>8.2.2</b> Change marker indicator</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="lavaan-lab-5-one-factor-cfa-model.html"><a href="lavaan-lab-5-one-factor-cfa-model.html#part-ii-one-factor-cfa-fixed-factor-variance"><i class="fa fa-check"></i><b>8.3</b> PART II: One-Factor CFA, Fixed Factor Variance</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="lavaan-lab-5-one-factor-cfa-model.html"><a href="lavaan-lab-5-one-factor-cfa-model.html#fixed-factor-method"><i class="fa fa-check"></i><b>8.3.1</b> Fixed Factor Method</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="lavaan-lab-5-one-factor-cfa-model.html"><a href="lavaan-lab-5-one-factor-cfa-model.html#exercise-one-factor-cfa-model"><i class="fa fa-check"></i><b>8.4</b> Exercise: One-factor CFA Model</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="lavaan-lab-5-one-factor-cfa-model.html"><a href="lavaan-lab-5-one-factor-cfa-model.html#fixed-loading"><i class="fa fa-check"></i><b>8.4.1</b> Fixed Loading</a></li>
+<li class="chapter" data-level="8.4.2" data-path="lavaan-lab-5-one-factor-cfa-model.html"><a href="lavaan-lab-5-one-factor-cfa-model.html#fixed-factor"><i class="fa fa-check"></i><b>8.4.2</b> Fixed Factor</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="lavaan-lab-6-two-factor-cfa-model.html"><a href="lavaan-lab-6-two-factor-cfa-model.html"><i class="fa fa-check"></i><b>9</b> Lavaan Lab 6: Two-factor CFA Model</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="lavaan-lab-6-two-factor-cfa-model.html"><a href="lavaan-lab-6-two-factor-cfa-model.html#data-prep-3"><i class="fa fa-check"></i><b>9.1</b> Data Prep</a></li>
+<li class="chapter" data-level="9.2" data-path="lavaan-lab-6-two-factor-cfa-model.html"><a href="lavaan-lab-6-two-factor-cfa-model.html#part-i-two-factor-cfa-fixed-loading"><i class="fa fa-check"></i><b>9.2</b> PART I: Two-Factor CFA, Fixed Loading</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="lavaan-lab-6-two-factor-cfa-model.html"><a href="lavaan-lab-6-two-factor-cfa-model.html#fixed-loading-aka-marker-variable-method.-1"><i class="fa fa-check"></i><b>9.2.1</b> Fixed Loading, AKA Marker Variable method.</a></li>
+<li class="chapter" data-level="9.2.2" data-path="lavaan-lab-6-two-factor-cfa-model.html"><a href="lavaan-lab-6-two-factor-cfa-model.html#how-well-does-this-model-fit-to-the-data"><i class="fa fa-check"></i><b>9.2.2</b> How well does this model fit to the data?</a></li>
+<li class="chapter" data-level="9.2.3" data-path="lavaan-lab-6-two-factor-cfa-model.html"><a href="lavaan-lab-6-two-factor-cfa-model.html#fundamental-equation-of-sem"><i class="fa fa-check"></i><b>9.2.3</b> Fundamental Equation of SEM</a></li>
+<li class="chapter" data-level="9.2.4" data-path="lavaan-lab-6-two-factor-cfa-model.html"><a href="lavaan-lab-6-two-factor-cfa-model.html#interpretion"><i class="fa fa-check"></i><b>9.2.4</b> Interpretion</a></li>
+<li class="chapter" data-level="9.2.5" data-path="lavaan-lab-6-two-factor-cfa-model.html"><a href="lavaan-lab-6-two-factor-cfa-model.html#standardized-solutions-std.lv-vs.-std.all"><i class="fa fa-check"></i><b>9.2.5</b> Standardized solutions: Std.lv vs. Std.all</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="lavaan-lab-6-two-factor-cfa-model.html"><a href="lavaan-lab-6-two-factor-cfa-model.html#part-ii-two-factor-cfa-fixed-factor-variance"><i class="fa fa-check"></i><b>9.3</b> PART II: Two-Factor CFA, Fixed Factor Variance</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="lavaan-lab-6-two-factor-cfa-model.html"><a href="lavaan-lab-6-two-factor-cfa-model.html#fixed-factor-method-1"><i class="fa fa-check"></i><b>9.3.1</b> Fixed Factor Method</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="lavaan-lab-7-two-factor-sr-model.html"><a href="lavaan-lab-7-two-factor-sr-model.html"><i class="fa fa-check"></i><b>10</b> Lavaan Lab 7: Two-factor SR Model</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="lavaan-lab-7-two-factor-sr-model.html"><a href="lavaan-lab-7-two-factor-sr-model.html#data-prep-4"><i class="fa fa-check"></i><b>10.1</b> Data Prep</a></li>
+<li class="chapter" data-level="10.2" data-path="lavaan-lab-7-two-factor-sr-model.html"><a href="lavaan-lab-7-two-factor-sr-model.html#part-i-two-factor-sr-fixed-loading"><i class="fa fa-check"></i><b>10.2</b> PART I: Two-Factor SR, Fixed Loading</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="lavaan-lab-7-two-factor-sr-model.html"><a href="lavaan-lab-7-two-factor-sr-model.html#fixed-loading-aka-marker-variable-method.-2"><i class="fa fa-check"></i><b>10.2.1</b> Fixed Loading, AKA Marker Variable method.</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="lavaan-lab-7-two-factor-sr-model.html"><a href="lavaan-lab-7-two-factor-sr-model.html#part-ii-two-factor-sr-fixed-factor-variance"><i class="fa fa-check"></i><b>10.3</b> PART II: Two-Factor SR, Fixed Factor Variance</a>
+<ul>
+<li class="chapter" data-level="10.3.1" data-path="lavaan-lab-7-two-factor-sr-model.html"><a href="lavaan-lab-7-two-factor-sr-model.html#fixed-factor-method-2"><i class="fa fa-check"></i><b>10.3.1</b> Fixed Factor Method</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="lavaan-lab-7-two-factor-sr-model.html"><a href="lavaan-lab-7-two-factor-sr-model.html#part-iii-exercise-what-fun-3-factor-sr-model"><i class="fa fa-check"></i><b>10.4</b> PART III: Exercise (what fun!): 3-Factor SR Model</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="lavaan-lab-8-estimation-methods.html"><a href="lavaan-lab-8-estimation-methods.html"><i class="fa fa-check"></i><b>11</b> Lavaan Lab 8: Estimation Methods</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="lavaan-lab-8-estimation-methods.html"><a href="lavaan-lab-8-estimation-methods.html#part-i-hypothetical-example"><i class="fa fa-check"></i><b>11.1</b> PART I: Hypothetical Example</a>
+<ul>
+<li class="chapter" data-level="11.1.1" data-path="lavaan-lab-8-estimation-methods.html"><a href="lavaan-lab-8-estimation-methods.html#one-factor-cfa-model"><i class="fa fa-check"></i><b>11.1.1</b> One-factor CFA model</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="lavaan-lab-8-estimation-methods.html"><a href="lavaan-lab-8-estimation-methods.html#part-ii-uls-on-the-positive-affect-example"><i class="fa fa-check"></i><b>11.2</b> PART II: ULS on the Positive Affect Example</a></li>
+<li class="chapter" data-level="11.3" data-path="lavaan-lab-8-estimation-methods.html"><a href="lavaan-lab-8-estimation-methods.html#part-iii-calculate-uls-test-statistic-manually"><i class="fa fa-check"></i><b>11.3</b> PART III: Calculate ULS test statistic manually</a></li>
+<li class="chapter" data-level="11.4" data-path="lavaan-lab-8-estimation-methods.html"><a href="lavaan-lab-8-estimation-methods.html#part-iv-ml-vs-uls-vs-wls"><i class="fa fa-check"></i><b>11.4</b> PART IV: ML vs ULS vs WLS</a>
+<ul>
+<li class="chapter" data-level="11.4.1" data-path="lavaan-lab-8-estimation-methods.html"><a href="lavaan-lab-8-estimation-methods.html#ml-estimation"><i class="fa fa-check"></i><b>11.4.1</b> ML Estimation</a></li>
+<li class="chapter" data-level="11.4.2" data-path="lavaan-lab-8-estimation-methods.html"><a href="lavaan-lab-8-estimation-methods.html#wls-estimation"><i class="fa fa-check"></i><b>11.4.2</b> WLS Estimation</a></li>
+<li class="chapter" data-level="11.4.3" data-path="lavaan-lab-8-estimation-methods.html"><a href="lavaan-lab-8-estimation-methods.html#compare-the-parameter-estimates"><i class="fa fa-check"></i><b>11.4.3</b> Compare the parameter estimates</a></li>
+<li class="chapter" data-level="11.4.4" data-path="lavaan-lab-8-estimation-methods.html"><a href="lavaan-lab-8-estimation-methods.html#compare-the-standard-errors"><i class="fa fa-check"></i><b>11.4.4</b> Compare the standard errors:</a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="lavaan-lab-8-estimation-methods.html"><a href="lavaan-lab-8-estimation-methods.html#part-v-improper-solutions"><i class="fa fa-check"></i><b>11.5</b> PART V: Improper Solutions</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="lavaan-lab-9-model-fit-part-i-test-statistics.html"><a href="lavaan-lab-9-model-fit-part-i-test-statistics.html"><i class="fa fa-check"></i><b>12</b> Lavaan Lab 9: Model Fit Part I (Test Statistics)</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="lavaan-lab-9-model-fit-part-i-test-statistics.html"><a href="lavaan-lab-9-model-fit-part-i-test-statistics.html#part-i-robust-ml-on-the-positive-affect-example"><i class="fa fa-check"></i><b>12.1</b> PART I: Robust ML on the Positive Affect Example</a>
+<ul>
+<li class="chapter" data-level="12.1.1" data-path="lavaan-lab-9-model-fit-part-i-test-statistics.html"><a href="lavaan-lab-9-model-fit-part-i-test-statistics.html#mean-corrected-statistic-t_m"><i class="fa fa-check"></i><b>12.1.1</b> Mean corrected statistic (T_M)</a></li>
+<li class="chapter" data-level="12.1.2" data-path="lavaan-lab-9-model-fit-part-i-test-statistics.html"><a href="lavaan-lab-9-model-fit-part-i-test-statistics.html#mean-and-variance-adjusted-statistic-t_mv"><i class="fa fa-check"></i><b>12.1.2</b> Mean and variance adjusted statistic (T_MV)</a></li>
+<li class="chapter" data-level="12.1.3" data-path="lavaan-lab-9-model-fit-part-i-test-statistics.html"><a href="lavaan-lab-9-model-fit-part-i-test-statistics.html#yuan-bentler-test-statistic-t_mlr"><i class="fa fa-check"></i><b>12.1.3</b> Yuan-Bentler test statistic (T_MLR)</a></li>
+<li class="chapter" data-level="12.1.4" data-path="lavaan-lab-9-model-fit-part-i-test-statistics.html"><a href="lavaan-lab-9-model-fit-part-i-test-statistics.html#small-sample-correction---f-test"><i class="fa fa-check"></i><b>12.1.4</b> Small sample correction - F test</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="lavaan-lab-9-model-fit-part-i-test-statistics.html"><a href="lavaan-lab-9-model-fit-part-i-test-statistics.html#part-ii-nested-model-comparison"><i class="fa fa-check"></i><b>12.2</b> PART II: Nested Model Comparison</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="lavaan-lab-9-model-fit-part-i-test-statistics.html"><a href="lavaan-lab-9-model-fit-part-i-test-statistics.html#one-factor-model"><i class="fa fa-check"></i><b>12.2.1</b> One-factor model</a></li>
+<li class="chapter" data-level="12.2.2" data-path="lavaan-lab-9-model-fit-part-i-test-statistics.html"><a href="lavaan-lab-9-model-fit-part-i-test-statistics.html#plotting"><i class="fa fa-check"></i><b>12.2.2</b> Plotting</a></li>
+<li class="chapter" data-level="12.2.3" data-path="lavaan-lab-9-model-fit-part-i-test-statistics.html"><a href="lavaan-lab-9-model-fit-part-i-test-statistics.html#comparing-nested-models"><i class="fa fa-check"></i><b>12.2.3</b> Comparing Nested Models</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="lavaan-lab-9-model-fit-part-i-test-statistics.html"><a href="lavaan-lab-9-model-fit-part-i-test-statistics.html#part-iii-exercises-more-nested-models"><i class="fa fa-check"></i><b>12.3</b> PART III: Exercises: More Nested Models</a>
+<ul>
+<li class="chapter" data-level="12.3.1" data-path="lavaan-lab-9-model-fit-part-i-test-statistics.html"><a href="lavaan-lab-9-model-fit-part-i-test-statistics.html#exercises-compare-the-base-model-fixedindtwofacrun-to"><i class="fa fa-check"></i><b>12.3.1</b> Exercises: Compare the base model (fixedIndTwoFacRun) to</a></li>
+<li class="chapter" data-level="12.3.2" data-path="lavaan-lab-9-model-fit-part-i-test-statistics.html"><a href="lavaan-lab-9-model-fit-part-i-test-statistics.html#model-2-orthogonal-factors"><i class="fa fa-check"></i><b>12.3.2</b> Model 2: Orthogonal Factors</a></li>
+<li class="chapter" data-level="12.3.3" data-path="lavaan-lab-9-model-fit-part-i-test-statistics.html"><a href="lavaan-lab-9-model-fit-part-i-test-statistics.html#model-3-cross-loading"><i class="fa fa-check"></i><b>12.3.3</b> Model 3: Cross loading</a></li>
+<li class="chapter" data-level="12.3.4" data-path="lavaan-lab-9-model-fit-part-i-test-statistics.html"><a href="lavaan-lab-9-model-fit-part-i-test-statistics.html#model-4-correlated-unique-factors"><i class="fa fa-check"></i><b>12.3.4</b> Model 4: Correlated Unique Factors</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="lavaan-lab-10-model-fit-part-ii-fit-indices.html"><a href="lavaan-lab-10-model-fit-part-ii-fit-indices.html"><i class="fa fa-check"></i><b>13</b> Lavaan Lab 10: Model Fit Part II (Fit Indices)</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="lavaan-lab-10-model-fit-part-ii-fit-indices.html"><a href="lavaan-lab-10-model-fit-part-ii-fit-indices.html#part-i-fit-indices"><i class="fa fa-check"></i><b>13.1</b> PART I: Fit Indices</a>
+<ul>
+<li class="chapter" data-level="13.1.1" data-path="lavaan-lab-10-model-fit-part-ii-fit-indices.html"><a href="lavaan-lab-10-model-fit-part-ii-fit-indices.html#rmsea"><i class="fa fa-check"></i><b>13.1.1</b> RMSEA</a></li>
+<li class="chapter" data-level="13.1.2" data-path="lavaan-lab-10-model-fit-part-ii-fit-indices.html"><a href="lavaan-lab-10-model-fit-part-ii-fit-indices.html#srmr"><i class="fa fa-check"></i><b>13.1.2</b> SRMR</a></li>
+<li class="chapter" data-level="13.1.3" data-path="lavaan-lab-10-model-fit-part-ii-fit-indices.html"><a href="lavaan-lab-10-model-fit-part-ii-fit-indices.html#null-model-mo"><i class="fa fa-check"></i><b>13.1.3</b> Null Model MO</a></li>
+<li class="chapter" data-level="13.1.4" data-path="lavaan-lab-10-model-fit-part-ii-fit-indices.html"><a href="lavaan-lab-10-model-fit-part-ii-fit-indices.html#cfitli"><i class="fa fa-check"></i><b>13.1.4</b> CFI/TLI</a></li>
+<li class="chapter" data-level="13.1.5" data-path="lavaan-lab-10-model-fit-part-ii-fit-indices.html"><a href="lavaan-lab-10-model-fit-part-ii-fit-indices.html#loglikelihood"><i class="fa fa-check"></i><b>13.1.5</b> Loglikelihood</a></li>
+<li class="chapter" data-level="13.1.6" data-path="lavaan-lab-10-model-fit-part-ii-fit-indices.html"><a href="lavaan-lab-10-model-fit-part-ii-fit-indices.html#aicbic"><i class="fa fa-check"></i><b>13.1.6</b> AIC/BIC</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="lavaan-lab-10-model-fit-part-ii-fit-indices.html"><a href="lavaan-lab-10-model-fit-part-ii-fit-indices.html#part-ii-exercise"><i class="fa fa-check"></i><b>13.2</b> PART II: Exercise</a>
+<ul>
+<li class="chapter" data-level="13.2.1" data-path="lavaan-lab-10-model-fit-part-ii-fit-indices.html"><a href="lavaan-lab-10-model-fit-part-ii-fit-indices.html#part-i-plot-the-distributions-of-all-indicators"><i class="fa fa-check"></i><b>13.2.1</b> PART I: Plot the distributions of all indicators</a></li>
+<li class="chapter" data-level="13.2.2" data-path="lavaan-lab-10-model-fit-part-ii-fit-indices.html"><a href="lavaan-lab-10-model-fit-part-ii-fit-indices.html#part-ii-write-out-the-model-syntax-for-two-factor-model"><i class="fa fa-check"></i><b>13.2.2</b> PART II: Write out the model syntax for two-factor model</a></li>
+<li class="chapter" data-level="13.2.3" data-path="lavaan-lab-10-model-fit-part-ii-fit-indices.html"><a href="lavaan-lab-10-model-fit-part-ii-fit-indices.html#part-iii-fit-the-two-factor-model"><i class="fa fa-check"></i><b>13.2.3</b> PART III: Fit the two-factor model</a></li>
+<li class="chapter" data-level="13.2.4" data-path="lavaan-lab-10-model-fit-part-ii-fit-indices.html"><a href="lavaan-lab-10-model-fit-part-ii-fit-indices.html#part-iv-interpret-the-chisquare-statistic-and-fit-indices"><i class="fa fa-check"></i><b>13.2.4</b> PART IV: Interpret the chisquare statistic and fit indices</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="lavaan-lab-11-model-local-fitting-and-model-modifications.html"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html"><i class="fa fa-check"></i><b>14</b> Lavaan Lab 11: Model Local Fitting and Model Modifications</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="lavaan-lab-11-model-local-fitting-and-model-modifications.html"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#part-i-local-fit-with-residuals"><i class="fa fa-check"></i><b>14.1</b> PART I: Local Fit with Residuals</a>
+<ul>
+<li class="chapter" data-level="14.1.1" data-path="lavaan-lab-11-model-local-fitting-and-model-modifications.html"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#unstandardized-residuals"><i class="fa fa-check"></i><b>14.1.1</b> Unstandardized residuals</a></li>
+<li class="chapter" data-level="14.1.2" data-path="lavaan-lab-11-model-local-fitting-and-model-modifications.html"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#standardized-residuals"><i class="fa fa-check"></i><b>14.1.2</b> Standardized residuals</a></li>
+<li class="chapter" data-level="14.1.3" data-path="lavaan-lab-11-model-local-fitting-and-model-modifications.html"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#normalized-residuals"><i class="fa fa-check"></i><b>14.1.3</b> Normalized residuals</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="lavaan-lab-11-model-local-fitting-and-model-modifications.html"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#part-ii-modification-indices"><i class="fa fa-check"></i><b>14.2</b> PART II: Modification Indices</a>
+<ul>
+<li class="chapter" data-level="14.2.1" data-path="lavaan-lab-11-model-local-fitting-and-model-modifications.html"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#modified-model-1"><i class="fa fa-check"></i><b>14.2.1</b> Modified Model 1:</a></li>
+<li class="chapter" data-level="14.2.2" data-path="lavaan-lab-11-model-local-fitting-and-model-modifications.html"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#modified-model-2_1"><i class="fa fa-check"></i><b>14.2.2</b> Modified Model 2_1:</a></li>
+<li class="chapter" data-level="14.2.3" data-path="lavaan-lab-11-model-local-fitting-and-model-modifications.html"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#modified-model-2_2"><i class="fa fa-check"></i><b>14.2.3</b> Modified Model 2_2:</a></li>
+<li class="chapter" data-level="14.2.4" data-path="lavaan-lab-11-model-local-fitting-and-model-modifications.html"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#modified-model-3"><i class="fa fa-check"></i><b>14.2.4</b> Modified Model 3:</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="lavaan-lab-12-sem-for-missing-data.html"><a href="lavaan-lab-12-sem-for-missing-data.html"><i class="fa fa-check"></i><b>15</b> Lavaan Lab 12: SEM for Missing Data</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="lavaan-lab-12-sem-for-missing-data.html"><a href="lavaan-lab-12-sem-for-missing-data.html#part-i-generate-some-missing-data"><i class="fa fa-check"></i><b>15.1</b> PART I: Generate some missing data</a></li>
+<li class="chapter" data-level="15.2" data-path="lavaan-lab-12-sem-for-missing-data.html"><a href="lavaan-lab-12-sem-for-missing-data.html#part-ii-visualization-of-missing-data-patterns-nice-to-have"><i class="fa fa-check"></i><b>15.2</b> PART II: Visualization of missing data patterns (nice-to-have)</a></li>
+<li class="chapter" data-level="15.3" data-path="lavaan-lab-12-sem-for-missing-data.html"><a href="lavaan-lab-12-sem-for-missing-data.html#part-iii-build-a-cfa-model-with-missing-data"><i class="fa fa-check"></i><b>15.3</b> PART III: Build a CFA model with missing data</a></li>
+<li class="chapter" data-level="15.4" data-path="lavaan-lab-12-sem-for-missing-data.html"><a href="lavaan-lab-12-sem-for-missing-data.html#part-iv-addressing-missing-data"><i class="fa fa-check"></i><b>15.4</b> PART IV: Addressing missing data</a>
+<ul>
+<li class="chapter" data-level="15.4.1" data-path="lavaan-lab-12-sem-for-missing-data.html"><a href="lavaan-lab-12-sem-for-missing-data.html#fiml"><i class="fa fa-check"></i><b>15.4.1</b> FIML</a></li>
+<li class="chapter" data-level="15.4.2" data-path="lavaan-lab-12-sem-for-missing-data.html"><a href="lavaan-lab-12-sem-for-missing-data.html#multiple-imputation"><i class="fa fa-check"></i><b>15.4.2</b> Multiple Imputation</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html"><a href="lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html"><i class="fa fa-check"></i><b>16</b> Lavaan Lab 13: SEM for Nonnormal and Categorical Data</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html"><a href="lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#part-i-nonnormality-diagnosis"><i class="fa fa-check"></i><b>16.1</b> PART I: Nonnormality Diagnosis</a></li>
+<li class="chapter" data-level="16.2" data-path="lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html"><a href="lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#part-ii-robust-corrections"><i class="fa fa-check"></i><b>16.2</b> PART II: Robust corrections</a></li>
+<li class="chapter" data-level="16.3" data-path="lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html"><a href="lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#part-iii-categorical-data-analysis-in-lavaan"><i class="fa fa-check"></i><b>16.3</b> PART III: Categorical Data Analysis in Lavaan</a></li>
+<li class="chapter" data-level="16.4" data-path="lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html"><a href="lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#part-iv-what-if-you-have-it-all"><i class="fa fa-check"></i><b>16.4</b> PART IV: What if you have it all?</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="lavaan-lab-14-measurement-invariance.html"><a href="lavaan-lab-14-measurement-invariance.html"><i class="fa fa-check"></i><b>17</b> Lavaan Lab 14: Measurement Invariance</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="lavaan-lab-14-measurement-invariance.html"><a href="lavaan-lab-14-measurement-invariance.html#part-i-multi-group-analyses-done-incorrectly"><i class="fa fa-check"></i><b>17.1</b> PART I: Multi-Group Analyses, Done Incorrectly</a></li>
+<li class="chapter" data-level="17.2" data-path="lavaan-lab-14-measurement-invariance.html"><a href="lavaan-lab-14-measurement-invariance.html#part-ii-testing-measurement-invariance"><i class="fa fa-check"></i><b>17.2</b> PART II: Testing Measurement Invariance</a>
+<ul>
+<li class="chapter" data-level="17.2.1" data-path="lavaan-lab-14-measurement-invariance.html"><a href="lavaan-lab-14-measurement-invariance.html#step-1-configural-invariance"><i class="fa fa-check"></i><b>17.2.1</b> step 1: Configural invariance</a></li>
+<li class="chapter" data-level="17.2.2" data-path="lavaan-lab-14-measurement-invariance.html"><a href="lavaan-lab-14-measurement-invariance.html#step-2-metric-weak-invariance"><i class="fa fa-check"></i><b>17.2.2</b> step 2: Metric (weak) invariance</a></li>
+<li class="chapter" data-level="17.2.3" data-path="lavaan-lab-14-measurement-invariance.html"><a href="lavaan-lab-14-measurement-invariance.html#step-3-scalar-strong-invariance"><i class="fa fa-check"></i><b>17.2.3</b> step 3: Scalar (strong) Invariance</a></li>
+<li class="chapter" data-level="17.2.4" data-path="lavaan-lab-14-measurement-invariance.html"><a href="lavaan-lab-14-measurement-invariance.html#step-4-optional-residual-variance-strict-invariance"><i class="fa fa-check"></i><b>17.2.4</b> step 4: (Optional) Residual variance (strict) invariance</a></li>
+</ul></li>
+<li class="chapter" data-level="17.3" data-path="lavaan-lab-14-measurement-invariance.html"><a href="lavaan-lab-14-measurement-invariance.html#part-iii-shortcut-to-performing-mi"><i class="fa fa-check"></i><b>17.3</b> PART III: Shortcut to performing MI</a>
+<ul>
+<li class="chapter" data-level="17.3.1" data-path="lavaan-lab-14-measurement-invariance.html"><a href="lavaan-lab-14-measurement-invariance.html#measurementinvariance"><i class="fa fa-check"></i><b>17.3.1</b> measurementInvariance()</a></li>
+<li class="chapter" data-level="17.3.2" data-path="lavaan-lab-14-measurement-invariance.html"><a href="lavaan-lab-14-measurement-invariance.html#measeq.syntax"><i class="fa fa-check"></i><b>17.3.2</b> measEq.syntax()</a></li>
+</ul></li>
+<li class="chapter" data-level="17.4" data-path="lavaan-lab-14-measurement-invariance.html"><a href="lavaan-lab-14-measurement-invariance.html#part-iv-multi-group-cfa-modeling-done-right"><i class="fa fa-check"></i><b>17.4</b> PART IV: Multi-Group CFA Modeling, done right</a>
+<ul>
+<li class="chapter" data-level="17.4.1" data-path="lavaan-lab-14-measurement-invariance.html"><a href="lavaan-lab-14-measurement-invariance.html#statistical-test-of-equal-factor-means"><i class="fa fa-check"></i><b>17.4.1</b> Statistical Test of Equal Factor Means:</a></li>
+<li class="chapter" data-level="17.4.2" data-path="lavaan-lab-14-measurement-invariance.html"><a href="lavaan-lab-14-measurement-invariance.html#statistical-test-of-equal-regression-coefficients"><i class="fa fa-check"></i><b>17.4.2</b> Statistical Test of Equal Regression Coefficients:</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="lavaan-lab-15-mimic-longitudinal-invariance.html"><a href="lavaan-lab-15-mimic-longitudinal-invariance.html"><i class="fa fa-check"></i><b>18</b> Lavaan Lab 15: MIMIC &amp; Longitudinal Invariance</a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="lavaan-lab-15-mimic-longitudinal-invariance.html"><a href="lavaan-lab-15-mimic-longitudinal-invariance.html#part-i-partial-invariance"><i class="fa fa-check"></i><b>18.1</b> PART I: Partial Invariance</a></li>
+<li class="chapter" data-level="18.2" data-path="lavaan-lab-15-mimic-longitudinal-invariance.html"><a href="lavaan-lab-15-mimic-longitudinal-invariance.html#part-ii-mimic"><i class="fa fa-check"></i><b>18.2</b> PART II: MIMIC</a>
+<ul>
+<li class="chapter" data-level="18.2.1" data-path="lavaan-lab-15-mimic-longitudinal-invariance.html"><a href="lavaan-lab-15-mimic-longitudinal-invariance.html#test-metric-invariance"><i class="fa fa-check"></i><b>18.2.1</b> Test Metric Invariance</a></li>
+<li class="chapter" data-level="18.2.2" data-path="lavaan-lab-15-mimic-longitudinal-invariance.html"><a href="lavaan-lab-15-mimic-longitudinal-invariance.html#test-scalar-invariance"><i class="fa fa-check"></i><b>18.2.2</b> Test Scalar Invariance</a></li>
+<li class="chapter" data-level="18.2.3" data-path="lavaan-lab-15-mimic-longitudinal-invariance.html"><a href="lavaan-lab-15-mimic-longitudinal-invariance.html#test-the-hypothesis-of-equal-factor-means"><i class="fa fa-check"></i><b>18.2.3</b> Test The Hypothesis of Equal Factor Means:</a></li>
+</ul></li>
+<li class="chapter" data-level="18.3" data-path="lavaan-lab-15-mimic-longitudinal-invariance.html"><a href="lavaan-lab-15-mimic-longitudinal-invariance.html#part-iii-longitudinal-invariance"><i class="fa fa-check"></i><b>18.3</b> PART III: Longitudinal Invariance</a>
+<ul>
+<li class="chapter" data-level="18.3.1" data-path="lavaan-lab-15-mimic-longitudinal-invariance.html"><a href="lavaan-lab-15-mimic-longitudinal-invariance.html#step-1-configural-invariance-1"><i class="fa fa-check"></i><b>18.3.1</b> step 1: Configural invariance</a></li>
+<li class="chapter" data-level="18.3.2" data-path="lavaan-lab-15-mimic-longitudinal-invariance.html"><a href="lavaan-lab-15-mimic-longitudinal-invariance.html#step-1.5-threshold-invariance-for-categorical-indicators-only"><i class="fa fa-check"></i><b>18.3.2</b> step 1.5: Threshold invariance (for categorical indicators only)</a></li>
+<li class="chapter" data-level="18.3.3" data-path="lavaan-lab-15-mimic-longitudinal-invariance.html"><a href="lavaan-lab-15-mimic-longitudinal-invariance.html#recommended-practice-fit-one-invariance-model-at-a-time"><i class="fa fa-check"></i><b>18.3.3</b> RECOMMENDED PRACTICE: fit one invariance model at a time</a></li>
+<li class="chapter" data-level="18.3.4" data-path="lavaan-lab-15-mimic-longitudinal-invariance.html"><a href="lavaan-lab-15-mimic-longitudinal-invariance.html#step-2-metric-weak-invariance-1"><i class="fa fa-check"></i><b>18.3.4</b> step 2: Metric (weak) invariance</a></li>
+<li class="chapter" data-level="18.3.5" data-path="lavaan-lab-15-mimic-longitudinal-invariance.html"><a href="lavaan-lab-15-mimic-longitudinal-invariance.html#step-3-scalar-strong-invariance-1"><i class="fa fa-check"></i><b>18.3.5</b> step 3: Scalar (strong) Invariance</a></li>
+<li class="chapter" data-level="18.3.6" data-path="lavaan-lab-15-mimic-longitudinal-invariance.html"><a href="lavaan-lab-15-mimic-longitudinal-invariance.html#step-4-residual-variance-strict-invariance"><i class="fa fa-check"></i><b>18.3.6</b> step 4: Residual variance (strict) invariance</a></li>
+<li class="chapter" data-level="18.3.7" data-path="lavaan-lab-15-mimic-longitudinal-invariance.html"><a href="lavaan-lab-15-mimic-longitudinal-invariance.html#shortcut-function"><i class="fa fa-check"></i><b>18.3.7</b> Shortcut Function</a></li>
+<li class="chapter" data-level="18.3.8" data-path="lavaan-lab-15-mimic-longitudinal-invariance.html"><a href="lavaan-lab-15-mimic-longitudinal-invariance.html#not-recommended-fit-several-invariance-models-at-once"><i class="fa fa-check"></i><b>18.3.8</b> NOT RECOMMENDED: fit several invariance models at once</a></li>
+</ul></li>
+<li class="chapter" data-level="18.4" data-path="lavaan-lab-15-mimic-longitudinal-invariance.html"><a href="lavaan-lab-15-mimic-longitudinal-invariance.html#part-iv-exercises-mimic"><i class="fa fa-check"></i><b>18.4</b> PART IV: Exercises: MIMIC</a></li>
+<li class="chapter" data-level="18.5" data-path="lavaan-lab-15-mimic-longitudinal-invariance.html"><a href="lavaan-lab-15-mimic-longitudinal-invariance.html#part-v-exercises-longitudinal-invariance"><i class="fa fa-check"></i><b>18.5</b> PART V: Exercises: Longitudinal Invariance</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="lavaan-lab-16-latent-growth-models.html"><a href="lavaan-lab-16-latent-growth-models.html"><i class="fa fa-check"></i><b>19</b> Lavaan Lab 16: Latent Growth Models</a>
+<ul>
+<li class="chapter" data-level="19.1" data-path="lavaan-lab-16-latent-growth-models.html"><a href="lavaan-lab-16-latent-growth-models.html#part-i-spaghetti-plot"><i class="fa fa-check"></i><b>19.1</b> PART I: Spaghetti Plot</a></li>
+<li class="chapter" data-level="19.2" data-path="lavaan-lab-16-latent-growth-models.html"><a href="lavaan-lab-16-latent-growth-models.html#part-ii-growth-models"><i class="fa fa-check"></i><b>19.2</b> PART II: Growth Models</a>
+<ul>
+<li class="chapter" data-level="19.2.1" data-path="lavaan-lab-16-latent-growth-models.html"><a href="lavaan-lab-16-latent-growth-models.html#no-growth-model"><i class="fa fa-check"></i><b>19.2.1</b> 1. No growth model</a></li>
+<li class="chapter" data-level="19.2.2" data-path="lavaan-lab-16-latent-growth-models.html"><a href="lavaan-lab-16-latent-growth-models.html#linear-growth-model"><i class="fa fa-check"></i><b>19.2.2</b> 2. Linear growth model</a></li>
+<li class="chapter" data-level="19.2.3" data-path="lavaan-lab-16-latent-growth-models.html"><a href="lavaan-lab-16-latent-growth-models.html#quadratic-growth-model"><i class="fa fa-check"></i><b>19.2.3</b> 3. Quadratic growth model</a></li>
+<li class="chapter" data-level="19.2.4" data-path="lavaan-lab-16-latent-growth-models.html"><a href="lavaan-lab-16-latent-growth-models.html#latent-basis-growth-model-extension-of-linear-growth-model"><i class="fa fa-check"></i><b>19.2.4</b> 4. Latent basis growth model (extension of linear growth model)</a></li>
+<li class="chapter" data-level="19.2.5" data-path="lavaan-lab-16-latent-growth-models.html"><a href="lavaan-lab-16-latent-growth-models.html#spline-growth-model"><i class="fa fa-check"></i><b>19.2.5</b> 5. Spline Growth Model</a></li>
+<li class="chapter" data-level="19.2.6" data-path="lavaan-lab-16-latent-growth-models.html"><a href="lavaan-lab-16-latent-growth-models.html#model-comparison"><i class="fa fa-check"></i><b>19.2.6</b> Model Comparison</a></li>
+<li class="chapter" data-level="19.2.7" data-path="lavaan-lab-16-latent-growth-models.html"><a href="lavaan-lab-16-latent-growth-models.html#final-model-spline-growth-model-with-a-binary-treatment-predictor"><i class="fa fa-check"></i><b>19.2.7</b> 6. Final Model: Spline Growth Model with a binary treatment predictor</a></li>
+</ul></li>
+<li class="chapter" data-level="19.3" data-path="lavaan-lab-16-latent-growth-models.html"><a href="lavaan-lab-16-latent-growth-models.html#part-iii-lgm-on-latent-variables"><i class="fa fa-check"></i><b>19.3</b> PART III: LGM on Latent Variables</a>
+<ul>
+<li class="chapter" data-level="19.3.1" data-path="lavaan-lab-16-latent-growth-models.html"><a href="lavaan-lab-16-latent-growth-models.html#example"><i class="fa fa-check"></i><b>19.3.1</b> Example</a></li>
+<li class="chapter" data-level="19.3.2" data-path="lavaan-lab-16-latent-growth-models.html"><a href="lavaan-lab-16-latent-growth-models.html#exercise"><i class="fa fa-check"></i><b>19.3.2</b> Exercise</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="lavaan-lab-17-second-order-and-bifactor-models.html"><a href="lavaan-lab-17-second-order-and-bifactor-models.html"><i class="fa fa-check"></i><b>20</b> Lavaan Lab 17: Second-order and Bifactor Models</a>
+<ul>
+<li class="chapter" data-level="20.1" data-path="lavaan-lab-17-second-order-and-bifactor-models.html"><a href="lavaan-lab-17-second-order-and-bifactor-models.html#part-i-unidimensional-model"><i class="fa fa-check"></i><b>20.1</b> PART I: Unidimensional model</a></li>
+<li class="chapter" data-level="20.2" data-path="lavaan-lab-17-second-order-and-bifactor-models.html"><a href="lavaan-lab-17-second-order-and-bifactor-models.html#part-ii-correlated-factors-model"><i class="fa fa-check"></i><b>20.2</b> PART II: Correlated factors model</a></li>
+<li class="chapter" data-level="20.3" data-path="lavaan-lab-17-second-order-and-bifactor-models.html"><a href="lavaan-lab-17-second-order-and-bifactor-models.html#part-iii-second-order-factor-model"><i class="fa fa-check"></i><b>20.3</b> PART III: Second-order factor Model</a></li>
+<li class="chapter" data-level="20.4" data-path="lavaan-lab-17-second-order-and-bifactor-models.html"><a href="lavaan-lab-17-second-order-and-bifactor-models.html#part-iv-bifactor-model"><i class="fa fa-check"></i><b>20.4</b> PART IV: Bifactor Model</a></li>
+<li class="chapter" data-level="20.5" data-path="lavaan-lab-17-second-order-and-bifactor-models.html"><a href="lavaan-lab-17-second-order-and-bifactor-models.html#part-v-model-comparison"><i class="fa fa-check"></i><b>20.5</b> PART V: Model Comparison</a></li>
+<li class="chapter" data-level="20.6" data-path="lavaan-lab-17-second-order-and-bifactor-models.html"><a href="lavaan-lab-17-second-order-and-bifactor-models.html#exercise-mental-ability-scale"><i class="fa fa-check"></i><b>20.6</b> Exercise: Mental Ability Scale</a></li>
+</ul></li>
+<li class="chapter" data-level="21" data-path="lavaan-lab-18-cfa-of-mtmm-matrix.html"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html"><i class="fa fa-check"></i><b>21</b> Lavaan Lab 18: CFA of MTMM Matrix</a>
+<ul>
+<li class="chapter" data-level="21.1" data-path="lavaan-lab-18-cfa-of-mtmm-matrix.html"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#part-i-correlated-methods-specification"><i class="fa fa-check"></i><b>21.1</b> PART I: Correlated methods specification</a></li>
+<li class="chapter" data-level="21.2" data-path="lavaan-lab-18-cfa-of-mtmm-matrix.html"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#part-ii-correlated-uniqueness-specification"><i class="fa fa-check"></i><b>21.2</b> PART II: Correlated uniqueness specification</a></li>
+</ul></li>
+<li class="chapter" data-level="22" data-path="lavaan-lab-19-multilevel-sem.html"><a href="lavaan-lab-19-multilevel-sem.html"><i class="fa fa-check"></i><b>22</b> Lavaan Lab 19: Multilevel SEM</a>
+<ul>
+<li class="chapter" data-level="22.1" data-path="lavaan-lab-19-multilevel-sem.html"><a href="lavaan-lab-19-multilevel-sem.html#part-i-multilevel-cfa-1-within-only-construct"><i class="fa fa-check"></i><b>22.1</b> PART I: Multilevel CFA 1: within-only construct</a></li>
+<li class="chapter" data-level="22.2" data-path="lavaan-lab-19-multilevel-sem.html"><a href="lavaan-lab-19-multilevel-sem.html#part-ii-multilevel-cfa-2-between-only-construct"><i class="fa fa-check"></i><b>22.2</b> PART II: Multilevel CFA 2: Between-only construct</a></li>
+<li class="chapter" data-level="22.3" data-path="lavaan-lab-19-multilevel-sem.html"><a href="lavaan-lab-19-multilevel-sem.html#part-iii-multilevel-cfa-3-shared-cross-level-construct"><i class="fa fa-check"></i><b>22.3</b> PART III: Multilevel CFA 3: Shared cross-level construct</a></li>
+<li class="chapter" data-level="22.4" data-path="lavaan-lab-19-multilevel-sem.html"><a href="lavaan-lab-19-multilevel-sem.html#part-iv-multilevel-cfa-4-configural-construct"><i class="fa fa-check"></i><b>22.4</b> PART IV: Multilevel CFA 4: Configural construct</a></li>
+<li class="chapter" data-level="22.5" data-path="lavaan-lab-19-multilevel-sem.html"><a href="lavaan-lab-19-multilevel-sem.html#part-v-multilevel-cfa-5-shared-configural-construct"><i class="fa fa-check"></i><b>22.5</b> PART V: Multilevel CFA 5: Shared + Configural construct</a></li>
+<li class="chapter" data-level="22.6" data-path="lavaan-lab-19-multilevel-sem.html"><a href="lavaan-lab-19-multilevel-sem.html#part-vi-model-comparison"><i class="fa fa-check"></i><b>22.6</b> PART VI: Model Comparison</a></li>
+<li class="chapter" data-level="22.7" data-path="lavaan-lab-19-multilevel-sem.html"><a href="lavaan-lab-19-multilevel-sem.html#part-vii-adding-covariates-to-multilevel-sem"><i class="fa fa-check"></i><b>22.7</b> PART VII: Adding Covariates to Multilevel SEM</a>
+<ul>
+<li class="chapter" data-level="22.7.1" data-path="lavaan-lab-19-multilevel-sem.html"><a href="lavaan-lab-19-multilevel-sem.html#model-a-adding-a-within-only-covariate"><i class="fa fa-check"></i><b>22.7.1</b> Model A: Adding a within-only covariate</a></li>
+<li class="chapter" data-level="22.7.2" data-path="lavaan-lab-19-multilevel-sem.html"><a href="lavaan-lab-19-multilevel-sem.html#model-b-adding-a-between-only-covariate"><i class="fa fa-check"></i><b>22.7.2</b> Model B: Adding a between-only covariate</a></li>
+<li class="chapter" data-level="22.7.3" data-path="lavaan-lab-19-multilevel-sem.html"><a href="lavaan-lab-19-multilevel-sem.html#model-c-adding-a-covariate-at-both-levels"><i class="fa fa-check"></i><b>22.7.3</b> Model C: Adding a covariate at both levels</a></li>
+</ul></li>
+<li class="chapter" data-level="22.8" data-path="lavaan-lab-19-multilevel-sem.html"><a href="lavaan-lab-19-multilevel-sem.html#part-vii-final-model"><i class="fa fa-check"></i><b>22.8</b> PART VII: Final Model</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R Cookbook for Structural Equation Modeling</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="lavaan-lab-11-model-local-fitting-and-model-modifications" class="section level1 hasAnchor" number="14">
+<h1><span class="header-section-number">Chapter 14</span> Lavaan Lab 11: Model Local Fitting and Model Modifications<a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#lavaan-lab-11-model-local-fitting-and-model-modifications" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>In this lab, we will learn:</p>
+<ul>
+<li>how to examine SEM local fit using residuals</li>
+<li>how to modify SEM models for improved fit using modification indices</li>
+</ul>
+<p>Load up the lavaan library:</p>
+<div class="sourceCode" id="cb536"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb536-1"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb536-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span></code></pre></div>
+<!------------------------------>
+<div id="part-i-local-fit-with-residuals" class="section level2 hasAnchor" number="14.1">
+<h2><span class="header-section-number">14.1</span> PART I: Local Fit with Residuals<a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#part-i-local-fit-with-residuals" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<!------------------------------>
+<p>Let’s read in the new dataset ChiStatSimDat.csv:</p>
+<div class="sourceCode" id="cb537"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb537-1"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb537-1" aria-hidden="true" tabindex="-1"></a>cfaData<span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;ChiStatSimDat.csv&quot;</span>, <span class="at">header =</span> T)</span></code></pre></div>
+<p>Write out syntax for a two-factor CFA model:</p>
+<div class="sourceCode" id="cb538"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb538-1"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb538-1" aria-hidden="true" tabindex="-1"></a>fixedIndTwoFacSyntax <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
+<span id="cb538-2"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb538-2" aria-hidden="true" tabindex="-1"></a><span class="st">    #Factor Specification   </span></span>
+<span id="cb538-3"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb538-3" aria-hidden="true" tabindex="-1"></a><span class="st">    posAffect =~ glad + happy + cheerful </span></span>
+<span id="cb538-4"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb538-4" aria-hidden="true" tabindex="-1"></a><span class="st">    satisfaction =~ satisfied + content + comfortable</span></span>
+<span id="cb538-5"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb538-5" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
+<p>Fit the two-factor model:</p>
+<div class="sourceCode" id="cb539"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb539-1"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb539-1" aria-hidden="true" tabindex="-1"></a>fixedIndTwoFacRun <span class="ot">=</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(<span class="at">model =</span> fixedIndTwoFacSyntax, </span>
+<span id="cb539-2"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb539-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">data =</span> cfaData, </span>
+<span id="cb539-3"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb539-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">fixed.x=</span><span class="cn">FALSE</span>)</span>
+<span id="cb539-4"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb539-4" aria-hidden="true" tabindex="-1"></a><span class="co"># , estimator = &#39;MLMV&#39;</span></span>
+<span id="cb539-5"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb539-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fixedIndTwoFacRun, <span class="at">standardized =</span> T, <span class="at">fit.measures =</span> T)</span></code></pre></div>
+<pre><code>## lavaan 0.6-12 ended normally after 29 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                        13
+## 
+##   Number of observations                           200
+## 
+## Model Test User Model:
+##                                                       
+##   Test statistic                               113.638
+##   Degrees of freedom                                 8
+##   P-value (Chi-square)                           0.000
+## 
+## Model Test Baseline Model:
+## 
+##   Test statistic                              1168.055
+##   Degrees of freedom                                15
+##   P-value                                        0.000
+## 
+## User Model versus Baseline Model:
+## 
+##   Comparative Fit Index (CFI)                    0.908
+##   Tucker-Lewis Index (TLI)                       0.828
+## 
+## Loglikelihood and Information Criteria:
+## 
+##   Loglikelihood user model (H0)              -1413.224
+##   Loglikelihood unrestricted model (H1)      -1356.405
+##                                                       
+##   Akaike (AIC)                                2852.449
+##   Bayesian (BIC)                              2895.327
+##   Sample-size adjusted Bayesian (BIC)         2854.141
+## 
+## Root Mean Square Error of Approximation:
+## 
+##   RMSEA                                          0.257
+##   90 Percent confidence interval - lower         0.216
+##   90 Percent confidence interval - upper         0.300
+##   P-value RMSEA &lt;= 0.05                          0.000
+## 
+## Standardized Root Mean Square Residual:
+## 
+##   SRMR                                           0.070
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Expected
+##   Information saturated (h1) model          Structured
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   posAffect =~                                                          
+##     glad              1.000                               1.115    0.943
+##     happy             1.095    0.048   22.882    0.000    1.221    0.919
+##     cheerful          0.763    0.046   16.739    0.000    0.851    0.812
+##   satisfaction =~                                                       
+##     satisfied         1.000                               1.152    0.902
+##     content           1.110    0.054   20.462    0.000    1.278    0.936
+##     comfortable       0.715    0.057   12.548    0.000    0.823    0.719
+## 
+## Covariances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   posAffect ~~                                                          
+##     satisfaction      1.104    0.131    8.425    0.000    0.859    0.859
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .glad              0.154    0.031    4.966    0.000    0.154    0.110
+##    .happy             0.274    0.043    6.398    0.000    0.274    0.155
+##    .cheerful          0.374    0.042    8.851    0.000    0.374    0.341
+##    .satisfied         0.302    0.047    6.492    0.000    0.302    0.186
+##    .content           0.230    0.048    4.742    0.000    0.230    0.123
+##    .comfortable       0.632    0.068    9.253    0.000    0.632    0.482
+##     posAffect         1.244    0.142    8.790    0.000    1.000    1.000
+##     satisfaction      1.326    0.164    8.093    0.000    1.000    1.000</code></pre>
+<div id="unstandardized-residuals" class="section level3 hasAnchor" number="14.1.1">
+<h3><span class="header-section-number">14.1.1</span> Unstandardized residuals<a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#unstandardized-residuals" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb541"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb541-1"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb541-1" aria-hidden="true" tabindex="-1"></a><span class="fu">resid</span>(fixedIndTwoFacRun)<span class="sc">$</span>cov</span></code></pre></div>
+<pre><code>##             glad   happy  cherfl satsfd contnt cmfrtb
+## glad         0.000                                   
+## happy        0.017  0.000                            
+## cheerful    -0.028 -0.010  0.000                     
+## satisfied   -0.001  0.011  0.038  0.000              
+## content     -0.030 -0.114  0.113  0.017  0.000       
+## comfortable  0.078  0.063  0.344 -0.090  0.012  0.000</code></pre>
+<p>What does this mean? What is the metric?</p>
+</div>
+<div id="standardized-residuals" class="section level3 hasAnchor" number="14.1.2">
+<h3><span class="header-section-number">14.1.2</span> Standardized residuals<a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#standardized-residuals" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb543"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb543-1"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb543-1" aria-hidden="true" tabindex="-1"></a><span class="fu">resid</span>(fixedIndTwoFacRun, <span class="at">type =</span> <span class="st">&quot;standardized&quot;</span>)<span class="sc">$</span>cov</span></code></pre></div>
+<pre><code>##             glad   happy  cherfl satsfd contnt cmfrtb
+## glad         0.000                                   
+## happy        3.950  0.000                            
+## cheerful    -3.732 -0.764  0.000                     
+## satisfied   -0.035  0.431  1.189  0.000              
+## content     -2.164 -5.979  3.164  3.410  0.000       
+## comfortable  2.079  1.383  7.821 -4.755  0.762  0.000</code></pre>
+</div>
+<div id="normalized-residuals" class="section level3 hasAnchor" number="14.1.3">
+<h3><span class="header-section-number">14.1.3</span> Normalized residuals<a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#normalized-residuals" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb545"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb545-1"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb545-1" aria-hidden="true" tabindex="-1"></a><span class="fu">resid</span>(fixedIndTwoFacRun, <span class="at">type =</span> <span class="st">&quot;normalized&quot;</span>)<span class="sc">$</span>cov</span></code></pre></div>
+<pre><code>##             glad   happy  cherfl satsfd contnt cmfrtb
+## glad         0.000                                   
+## happy        0.117  0.000                            
+## cheerful    -0.254 -0.081  0.000                     
+## satisfied   -0.004  0.073  0.337  0.000              
+## content     -0.214 -0.738  0.903  0.105  0.000       
+## comfortable  0.686  0.502  3.187 -0.751  0.087  0.000</code></pre>
+<ul>
+<li>Different residuals, same story</li>
+<li>The covariance residual between cheerful and comfortable is the largest and positive</li>
+<li>The model under-predicts this covariance</li>
+<li>Fix!</li>
+</ul>
+<!------------------------------>
+</div>
+</div>
+<div id="part-ii-modification-indices" class="section level2 hasAnchor" number="14.2">
+<h2><span class="header-section-number">14.2</span> PART II: Modification Indices<a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#part-ii-modification-indices" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<!------------------------------>
+<div class="sourceCode" id="cb547"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb547-1"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb547-1" aria-hidden="true" tabindex="-1"></a><span class="fu">modindices</span>(fixedIndTwoFacRun)</span></code></pre></div>
+<p>Filter output and only show rows with a modification index value equal or higher than 1:</p>
+<div class="sourceCode" id="cb548"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb548-1"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb548-1" aria-hidden="true" tabindex="-1"></a><span class="fu">modindices</span>(fixedIndTwoFacRun, <span class="at">minimum.value =</span> <span class="dv">10</span>)</span></code></pre></div>
+<pre><code>##             lhs op         rhs     mi    epc sepc.lv sepc.all sepc.nox
+## 17    posAffect =~     content 17.031 -0.718  -0.801   -0.587   -0.587
+## 18    posAffect =~ comfortable 14.926  0.500   0.558    0.487    0.487
+## 20 satisfaction =~       happy 10.239 -0.390  -0.450   -0.338   -0.338
+## 21 satisfaction =~    cheerful 20.960  0.456   0.526    0.501    0.501
+## 22         glad ~~       happy 20.960  0.256   0.256    1.245    1.245
+## 23         glad ~~    cheerful 10.239 -0.106  -0.106   -0.443   -0.443
+## 29        happy ~~     content 18.588 -0.132  -0.132   -0.525   -0.525
+## 33     cheerful ~~ comfortable 45.215  0.253   0.253    0.521    0.521
+## 34    satisfied ~~     content 14.926  0.303   0.303    1.151    1.151
+## 35    satisfied ~~ comfortable 17.030 -0.181  -0.181   -0.414   -0.414</code></pre>
+<p>Sort the output using the values of the modification index values. Higher values appear first:</p>
+<div class="sourceCode" id="cb550"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb550-1"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb550-1" aria-hidden="true" tabindex="-1"></a><span class="fu">modindices</span>(fixedIndTwoFacRun, <span class="at">minimum.value =</span> <span class="dv">10</span>, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>##             lhs op         rhs     mi    epc sepc.lv sepc.all sepc.nox
+## 33     cheerful ~~ comfortable 45.215  0.253   0.253    0.521    0.521
+## 21 satisfaction =~    cheerful 20.960  0.456   0.526    0.501    0.501
+## 22         glad ~~       happy 20.960  0.256   0.256    1.245    1.245
+## 29        happy ~~     content 18.588 -0.132  -0.132   -0.525   -0.525
+## 17    posAffect =~     content 17.031 -0.718  -0.801   -0.587   -0.587
+## 35    satisfied ~~ comfortable 17.030 -0.181  -0.181   -0.414   -0.414
+## 18    posAffect =~ comfortable 14.926  0.500   0.558    0.487    0.487
+## 34    satisfied ~~     content 14.926  0.303   0.303    1.151    1.151
+## 20 satisfaction =~       happy 10.239 -0.390  -0.450   -0.338   -0.338
+## 23         glad ~~    cheerful 10.239 -0.106  -0.106   -0.443   -0.443</code></pre>
+<ul>
+<li>op ~~ : a correlation between two unique factors</li>
+<li>op =~ : cross-loading</li>
+<li>This indicates that the parameters lavaan detects for you to free up are all residual covariances.</li>
+</ul>
+<div id="modified-model-1" class="section level3 hasAnchor" number="14.2.1">
+<h3><span class="header-section-number">14.2.1</span> Modified Model 1:<a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#modified-model-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb552"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb552-1"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb552-1" aria-hidden="true" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
+<span id="cb552-2"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb552-2" aria-hidden="true" tabindex="-1"></a><span class="st">    posAffect =~ glad + happy + cheerful </span></span>
+<span id="cb552-3"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb552-3" aria-hidden="true" tabindex="-1"></a><span class="st">    satisfaction =~ satisfied + content + comfortable  </span></span>
+<span id="cb552-4"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb552-4" aria-hidden="true" tabindex="-1"></a><span class="st">    </span></span>
+<span id="cb552-5"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb552-5" aria-hidden="true" tabindex="-1"></a><span class="st">    #residal covariance</span></span>
+<span id="cb552-6"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb552-6" aria-hidden="true" tabindex="-1"></a><span class="st">    cheerful ~~ comfortable</span></span>
+<span id="cb552-7"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb552-7" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb553"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb553-1"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb553-1" aria-hidden="true" tabindex="-1"></a>mod1_fit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(mod1, <span class="at">data =</span> cfaData, </span>
+<span id="cb553-2"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb553-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">std.lv =</span> <span class="cn">TRUE</span>, <span class="at">fixed.x=</span><span class="cn">FALSE</span>)</span>
+<span id="cb553-3"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb553-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb553-4"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb553-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod1_fit, <span class="at">fit.measures =</span> T, <span class="at">standardized =</span> T)</span></code></pre></div>
+<pre><code>## lavaan 0.6-12 ended normally after 29 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                        14
+## 
+##   Number of observations                           200
+## 
+## Model Test User Model:
+##                                                       
+##   Test statistic                                60.048
+##   Degrees of freedom                                 7
+##   P-value (Chi-square)                           0.000
+## 
+## Model Test Baseline Model:
+## 
+##   Test statistic                              1168.055
+##   Degrees of freedom                                15
+##   P-value                                        0.000
+## 
+## User Model versus Baseline Model:
+## 
+##   Comparative Fit Index (CFI)                    0.954
+##   Tucker-Lewis Index (TLI)                       0.901
+## 
+## Loglikelihood and Information Criteria:
+## 
+##   Loglikelihood user model (H0)              -1386.429
+##   Loglikelihood unrestricted model (H1)      -1356.405
+##                                                       
+##   Akaike (AIC)                                2800.859
+##   Bayesian (BIC)                              2847.035
+##   Sample-size adjusted Bayesian (BIC)         2802.682
+## 
+## Root Mean Square Error of Approximation:
+## 
+##   RMSEA                                          0.195
+##   90 Percent confidence interval - lower         0.151
+##   90 Percent confidence interval - upper         0.241
+##   P-value RMSEA &lt;= 0.05                          0.000
+## 
+## Standardized Root Mean Square Residual:
+## 
+##   SRMR                                           0.058
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Expected
+##   Information saturated (h1) model          Structured
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   posAffect =~                                                          
+##     glad              1.111    0.064   17.475    0.000    1.111    0.940
+##     happy             1.221    0.073   16.802    0.000    1.221    0.919
+##     cheerful          0.801    0.060   13.392    0.000    0.801    0.790
+##   satisfaction =~                                                       
+##     satisfied         1.161    0.071   16.389    0.000    1.161    0.910
+##     content           1.262    0.075   16.835    0.000    1.262    0.925
+##     comfortable       0.750    0.069   10.821    0.000    0.750    0.679
+## 
+## Covariances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##  .cheerful ~~                                                           
+##    .comfortable       0.270    0.043    6.230    0.000    0.270    0.536
+##   posAffect ~~                                                          
+##     satisfaction      0.876    0.022   39.298    0.000    0.876    0.876
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .glad              0.163    0.031    5.200    0.000    0.163    0.116
+##    .happy             0.274    0.043    6.406    0.000    0.274    0.155
+##    .cheerful          0.386    0.043    8.990    0.000    0.386    0.375
+##    .satisfied         0.281    0.046    6.106    0.000    0.281    0.172
+##    .content           0.271    0.050    5.365    0.000    0.271    0.145
+##    .comfortable       0.657    0.070    9.380    0.000    0.657    0.539
+##     posAffect         1.000                               1.000    1.000
+##     satisfaction      1.000                               1.000    1.000</code></pre>
+<p>Model comparison:</p>
+<div class="sourceCode" id="cb555"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb555-1"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb555-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mod1_fit, fixedIndTwoFacRun)</span></code></pre></div>
+<pre><code>## Chi-Squared Difference Test
+## 
+##                   Df    AIC    BIC   Chisq Chisq diff Df diff Pr(&gt;Chisq)    
+## mod1_fit           7 2800.9 2847.0  60.048                                  
+## fixedIndTwoFacRun  8 2852.4 2895.3 113.638      53.59       1   2.47e-13 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>Keep modifying mod1:</p>
+<div class="sourceCode" id="cb557"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb557-1"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb557-1" aria-hidden="true" tabindex="-1"></a><span class="fu">modindices</span>(mod1_fit, <span class="at">minimum.value =</span> <span class="dv">10</span>, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>##             lhs op         rhs     mi    epc sepc.lv sepc.all sepc.nox
+## 22 satisfaction =~    cheerful 27.353  0.612   0.612    0.604    0.604
+## 23         glad ~~       happy 27.353  0.275   0.275    1.304    1.304
+## 34    satisfied ~~     content 23.194  0.369   0.369    1.340    1.340
+## 19    posAffect =~ comfortable 23.194  0.711   0.711    0.644    0.644
+## 30        happy ~~     content 22.974 -0.157  -0.157   -0.576   -0.576
+## 33     cheerful ~~     content 16.477  0.113   0.113    0.348    0.348
+## 24         glad ~~    cheerful 11.873 -0.098  -0.098   -0.392   -0.392
+## 21 satisfaction =~       happy 11.872 -0.506  -0.506   -0.381   -0.381
+## 35    satisfied ~~ comfortable 11.662 -0.127  -0.127   -0.297   -0.297
+## 18    posAffect =~     content 11.661 -0.695  -0.695   -0.509   -0.509</code></pre>
+</div>
+<div id="modified-model-2_1" class="section level3 hasAnchor" number="14.2.2">
+<h3><span class="header-section-number">14.2.2</span> Modified Model 2_1:<a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#modified-model-2_1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb559"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb559-1"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb559-1" aria-hidden="true" tabindex="-1"></a>mod2_1 <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
+<span id="cb559-2"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb559-2" aria-hidden="true" tabindex="-1"></a><span class="st">  # cross loading</span></span>
+<span id="cb559-3"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb559-3" aria-hidden="true" tabindex="-1"></a><span class="st">    posAffect =~ glad + happy + cheerful </span></span>
+<span id="cb559-4"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb559-4" aria-hidden="true" tabindex="-1"></a><span class="st">    satisfaction =~ cheerful + satisfied + content + comfortable  # cheerful also loads on satisfaction</span></span>
+<span id="cb559-5"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb559-5" aria-hidden="true" tabindex="-1"></a><span class="st">    </span></span>
+<span id="cb559-6"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb559-6" aria-hidden="true" tabindex="-1"></a><span class="st">    #residal covariance</span></span>
+<span id="cb559-7"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb559-7" aria-hidden="true" tabindex="-1"></a><span class="st">    cheerful ~~ comfortable</span></span>
+<span id="cb559-8"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb559-8" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb560"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb560-1"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb560-1" aria-hidden="true" tabindex="-1"></a>mod2_1_fit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(mod2_1, <span class="at">data =</span> cfaData, </span>
+<span id="cb560-2"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb560-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">std.lv =</span> <span class="cn">TRUE</span>, <span class="at">fixed.x=</span><span class="cn">FALSE</span>)</span>
+<span id="cb560-3"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb560-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb560-4"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb560-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod2_1_fit, <span class="at">fit.measures =</span> T, <span class="at">standardized =</span> T)</span></code></pre></div>
+<pre><code>## lavaan 0.6-12 ended normally after 27 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                        15
+## 
+##   Number of observations                           200
+## 
+## Model Test User Model:
+##                                                       
+##   Test statistic                                34.265
+##   Degrees of freedom                                 6
+##   P-value (Chi-square)                           0.000
+## 
+## Model Test Baseline Model:
+## 
+##   Test statistic                              1168.055
+##   Degrees of freedom                                15
+##   P-value                                        0.000
+## 
+## User Model versus Baseline Model:
+## 
+##   Comparative Fit Index (CFI)                    0.975
+##   Tucker-Lewis Index (TLI)                       0.939
+## 
+## Loglikelihood and Information Criteria:
+## 
+##   Loglikelihood user model (H0)              -1373.538
+##   Loglikelihood unrestricted model (H1)      -1356.405
+##                                                       
+##   Akaike (AIC)                                2777.076
+##   Bayesian (BIC)                              2826.551
+##   Sample-size adjusted Bayesian (BIC)         2779.029
+## 
+## Root Mean Square Error of Approximation:
+## 
+##   RMSEA                                          0.153
+##   90 Percent confidence interval - lower         0.106
+##   90 Percent confidence interval - upper         0.205
+##   P-value RMSEA &lt;= 0.05                          0.000
+## 
+## Standardized Root Mean Square Residual:
+## 
+##   SRMR                                           0.031
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Expected
+##   Information saturated (h1) model          Structured
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   posAffect =~                                                          
+##     glad              1.128    0.063   17.786    0.000    1.128    0.954
+##     happy             1.223    0.073   16.752    0.000    1.223    0.921
+##     cheerful          0.389    0.084    4.624    0.000    0.389    0.374
+##   satisfaction =~                                                       
+##     cheerful          0.483    0.089    5.400    0.000    0.483    0.465
+##     satisfied         1.151    0.071   16.168    0.000    1.151    0.902
+##     content           1.284    0.074   17.339    0.000    1.284    0.941
+##     comfortable       0.815    0.072   11.361    0.000    0.815    0.712
+## 
+## Covariances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##  .cheerful ~~                                                           
+##    .comfortable       0.262    0.043    6.055    0.000    0.262    0.529
+##   posAffect ~~                                                          
+##     satisfaction      0.835    0.027   30.624    0.000    0.835    0.835
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .glad              0.126    0.035    3.618    0.000    0.126    0.090
+##    .happy             0.269    0.047    5.747    0.000    0.269    0.152
+##    .cheerful          0.380    0.041    9.270    0.000    0.380    0.353
+##    .satisfied         0.303    0.047    6.458    0.000    0.303    0.186
+##    .content           0.215    0.049    4.409    0.000    0.215    0.115
+##    .comfortable       0.646    0.070    9.287    0.000    0.646    0.493
+##     posAffect         1.000                               1.000    1.000
+##     satisfaction      1.000                               1.000    1.000</code></pre>
+<p>Model comparison:</p>
+<div class="sourceCode" id="cb562"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb562-1"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb562-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mod2_1_fit, mod1_fit)</span></code></pre></div>
+<pre><code>## Chi-Squared Difference Test
+## 
+##            Df    AIC    BIC  Chisq Chisq diff Df diff Pr(&gt;Chisq)    
+## mod2_1_fit  6 2777.1 2826.6 34.265                                  
+## mod1_fit    7 2800.9 2847.0 60.048     25.783       1  3.821e-07 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+</div>
+<div id="modified-model-2_2" class="section level3 hasAnchor" number="14.2.3">
+<h3><span class="header-section-number">14.2.3</span> Modified Model 2_2:<a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#modified-model-2_2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb564"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb564-1"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb564-1" aria-hidden="true" tabindex="-1"></a>mod2_2 <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
+<span id="cb564-2"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb564-2" aria-hidden="true" tabindex="-1"></a><span class="st">    posAffect =~ glad + happy + cheerful </span></span>
+<span id="cb564-3"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb564-3" aria-hidden="true" tabindex="-1"></a><span class="st">    satisfaction =~ satisfied + content + comfortable </span></span>
+<span id="cb564-4"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb564-4" aria-hidden="true" tabindex="-1"></a><span class="st">    </span></span>
+<span id="cb564-5"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb564-5" aria-hidden="true" tabindex="-1"></a><span class="st">    #residal covariance</span></span>
+<span id="cb564-6"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb564-6" aria-hidden="true" tabindex="-1"></a><span class="st">    cheerful ~~ comfortable</span></span>
+<span id="cb564-7"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb564-7" aria-hidden="true" tabindex="-1"></a><span class="st">    glad ~~ happy</span></span>
+<span id="cb564-8"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb564-8" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb565"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb565-1"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb565-1" aria-hidden="true" tabindex="-1"></a>mod2_2_fit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(mod2_2, <span class="at">data =</span> cfaData, </span>
+<span id="cb565-2"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb565-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">std.lv =</span> <span class="cn">TRUE</span>, <span class="at">fixed.x=</span><span class="cn">FALSE</span>)</span>
+<span id="cb565-3"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb565-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb565-4"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb565-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod2_2_fit, <span class="at">fit.measures =</span> T, <span class="at">standardized =</span> T)</span></code></pre></div>
+<pre><code>## lavaan 0.6-12 ended normally after 31 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                        15
+## 
+##   Number of observations                           200
+## 
+## Model Test User Model:
+##                                                       
+##   Test statistic                                34.265
+##   Degrees of freedom                                 6
+##   P-value (Chi-square)                           0.000
+## 
+## Model Test Baseline Model:
+## 
+##   Test statistic                              1168.055
+##   Degrees of freedom                                15
+##   P-value                                        0.000
+## 
+## User Model versus Baseline Model:
+## 
+##   Comparative Fit Index (CFI)                    0.975
+##   Tucker-Lewis Index (TLI)                       0.939
+## 
+## Loglikelihood and Information Criteria:
+## 
+##   Loglikelihood user model (H0)              -1373.538
+##   Loglikelihood unrestricted model (H1)      -1356.405
+##                                                       
+##   Akaike (AIC)                                2777.076
+##   Bayesian (BIC)                              2826.551
+##   Sample-size adjusted Bayesian (BIC)         2779.029
+## 
+## Root Mean Square Error of Approximation:
+## 
+##   RMSEA                                          0.153
+##   90 Percent confidence interval - lower         0.106
+##   90 Percent confidence interval - upper         0.205
+##   P-value RMSEA &lt;= 0.05                          0.000
+## 
+## Standardized Root Mean Square Residual:
+## 
+##   SRMR                                           0.031
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Expected
+##   Information saturated (h1) model          Structured
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   posAffect =~                                                          
+##     glad              1.020    0.069   14.784    0.000    1.020    0.863
+##     happy             1.107    0.079   13.947    0.000    1.107    0.833
+##     cheerful          0.875    0.061   14.323    0.000    0.875    0.843
+##   satisfaction =~                                                       
+##     satisfied         1.151    0.071   16.168    0.000    1.151    0.902
+##     content           1.284    0.074   17.339    0.000    1.284    0.941
+##     comfortable       0.815    0.072   11.361    0.000    0.815    0.712
+## 
+## Covariances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##  .cheerful ~~                                                           
+##    .comfortable       0.262    0.043    6.055    0.000    0.262    0.584
+##  .glad ~~                                                               
+##    .happy             0.250    0.055    4.563    0.000    0.250    0.569
+##   posAffect ~~                                                          
+##     satisfaction      0.923    0.020   46.285    0.000    0.923    0.923
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .glad              0.356    0.053    6.679    0.000    0.356    0.255
+##    .happy             0.540    0.074    7.249    0.000    0.540    0.306
+##    .cheerful          0.312    0.043    7.197    0.000    0.312    0.290
+##    .satisfied         0.303    0.047    6.458    0.000    0.303    0.186
+##    .content           0.215    0.049    4.409    0.000    0.215    0.115
+##    .comfortable       0.646    0.070    9.287    0.000    0.646    0.493
+##     posAffect         1.000                               1.000    1.000
+##     satisfaction      1.000                               1.000    1.000</code></pre>
+<p>Model comparison:</p>
+<div class="sourceCode" id="cb567"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb567-1"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb567-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mod2_2_fit, mod1_fit)</span></code></pre></div>
+<pre><code>## Chi-Squared Difference Test
+## 
+##            Df    AIC    BIC  Chisq Chisq diff Df diff Pr(&gt;Chisq)    
+## mod2_2_fit  6 2777.1 2826.6 34.265                                  
+## mod1_fit    7 2800.9 2847.0 60.048     25.783       1  3.821e-07 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>Keep modifying 2_2:</p>
+<div class="sourceCode" id="cb569"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb569-1"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb569-1" aria-hidden="true" tabindex="-1"></a><span class="fu">modindices</span>(mod2_2_fit, <span class="at">minimum.value =</span> <span class="dv">10</span>, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>##      lhs op     rhs    mi    epc sepc.lv sepc.all sepc.nox
+## 30 happy ~~ content 14.77 -0.117  -0.117   -0.344   -0.344</code></pre>
+</div>
+<div id="modified-model-3" class="section level3 hasAnchor" number="14.2.4">
+<h3><span class="header-section-number">14.2.4</span> Modified Model 3:<a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#modified-model-3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb571"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb571-1"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb571-1" aria-hidden="true" tabindex="-1"></a>mod3 <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
+<span id="cb571-2"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb571-2" aria-hidden="true" tabindex="-1"></a><span class="st">    posAffect =~ glad + happy + cheerful </span></span>
+<span id="cb571-3"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb571-3" aria-hidden="true" tabindex="-1"></a><span class="st">    satisfaction =~ satisfied + content + comfortable </span></span>
+<span id="cb571-4"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb571-4" aria-hidden="true" tabindex="-1"></a><span class="st">    </span></span>
+<span id="cb571-5"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb571-5" aria-hidden="true" tabindex="-1"></a><span class="st">    #residal covariance</span></span>
+<span id="cb571-6"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb571-6" aria-hidden="true" tabindex="-1"></a><span class="st">    cheerful ~~ comfortable</span></span>
+<span id="cb571-7"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb571-7" aria-hidden="true" tabindex="-1"></a><span class="st">    glad ~~ happy</span></span>
+<span id="cb571-8"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb571-8" aria-hidden="true" tabindex="-1"></a><span class="st">    content ~~ happy</span></span>
+<span id="cb571-9"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb571-9" aria-hidden="true" tabindex="-1"></a><span class="st">    glad ~~ content</span></span>
+<span id="cb571-10"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb571-10" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb572"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb572-1"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb572-1" aria-hidden="true" tabindex="-1"></a>mod3_fit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(mod3, <span class="at">data =</span> cfaData, </span>
+<span id="cb572-2"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb572-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">std.lv =</span> <span class="cn">TRUE</span>, <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## Warning in lav_object_post_check(object): lavaan WARNING: the covariance matrix of the residuals of the observed
+##                 variables (theta) is not positive definite;
+##                 use lavInspect(fit, &quot;theta&quot;) to investigate.</code></pre>
+<div class="sourceCode" id="cb574"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb574-1"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb574-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod3_fit, <span class="at">fit.measures =</span> T, <span class="at">standardized =</span> T)</span></code></pre></div>
+<pre><code>## lavaan 0.6-12 ended normally after 35 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                        17
+## 
+##   Number of observations                           200
+## 
+## Model Test User Model:
+##                                                       
+##   Test statistic                                 4.950
+##   Degrees of freedom                                 4
+##   P-value (Chi-square)                           0.292
+## 
+## Model Test Baseline Model:
+## 
+##   Test statistic                              1168.055
+##   Degrees of freedom                                15
+##   P-value                                        0.000
+## 
+## User Model versus Baseline Model:
+## 
+##   Comparative Fit Index (CFI)                    0.999
+##   Tucker-Lewis Index (TLI)                       0.997
+## 
+## Loglikelihood and Information Criteria:
+## 
+##   Loglikelihood user model (H0)              -1358.880
+##   Loglikelihood unrestricted model (H1)      -1356.405
+##                                                       
+##   Akaike (AIC)                                2751.761
+##   Bayesian (BIC)                              2807.832
+##   Sample-size adjusted Bayesian (BIC)         2753.975
+## 
+## Root Mean Square Error of Approximation:
+## 
+##   RMSEA                                          0.034
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.117
+##   P-value RMSEA &lt;= 0.05                          0.524
+## 
+## Standardized Root Mean Square Residual:
+## 
+##   SRMR                                           0.013
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Expected
+##   Information saturated (h1) model          Structured
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   posAffect =~                                                          
+##     glad              1.071    0.069   15.446    0.000    1.071    0.908
+##     happy             1.190    0.079   15.143    0.000    1.190    0.898
+##     cheerful          0.837    0.063   13.355    0.000    0.837    0.802
+##   satisfaction =~                                                       
+##     satisfied         1.101    0.074   14.921    0.000    1.101    0.863
+##     content           1.341    0.073   18.279    0.000    1.341    0.983
+##     comfortable       0.805    0.071   11.327    0.000    0.805    0.703
+## 
+## Covariances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##  .cheerful ~~                                                           
+##    .comfortable       0.299    0.046    6.433    0.000    0.299    0.590
+##  .glad ~~                                                               
+##    .happy             0.098    0.063    1.563    0.118    0.098    0.339
+##  .happy ~~                                                              
+##    .content          -0.277    0.055   -4.998    0.000   -0.277   -1.896
+##  .glad ~~                                                               
+##    .content          -0.166    0.050   -3.344    0.001   -0.166   -1.341
+##   posAffect ~~                                                          
+##     satisfaction      0.946    0.020   47.894    0.000    0.946    0.946
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .glad              0.246    0.062    3.962    0.000    0.246    0.176
+##    .happy             0.341    0.080    4.267    0.000    0.341    0.194
+##    .cheerful          0.389    0.048    8.016    0.000    0.389    0.357
+##    .satisfied         0.416    0.058    7.200    0.000    0.416    0.256
+##    .content           0.062    0.065    0.966    0.334    0.062    0.034
+##    .comfortable       0.662    0.069    9.660    0.000    0.662    0.505
+##     posAffect         1.000                               1.000    1.000
+##     satisfaction      1.000                               1.000    1.000</code></pre>
+<p>Model comparison:</p>
+<div class="sourceCode" id="cb576"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb576-1"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb576-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mod3_fit, mod2_2_fit)</span></code></pre></div>
+<pre><code>## Chi-Squared Difference Test
+## 
+##            Df    AIC    BIC   Chisq Chisq diff Df diff Pr(&gt;Chisq)    
+## mod3_fit    4 2751.8 2807.8  4.9499                                  
+## mod2_2_fit  6 2777.1 2826.6 34.2652     29.315       2  4.308e-07 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>Keep modifying mod3:</p>
+<div class="sourceCode" id="cb578"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb578-1"><a href="lavaan-lab-11-model-local-fitting-and-model-modifications.html#cb578-1" aria-hidden="true" tabindex="-1"></a><span class="fu">modindices</span>(mod3_fit, <span class="at">minimum.value =</span> <span class="dv">1</span>, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>## Warning in lav_start_check_cov(lavpartable = lavpartable, start = START): lavaan WARNING: starting values imply a correlation larger than 1;
+##                    variables involved are:  happy   content</code></pre>
+<pre><code>## Warning in lav_start_check_cov(lavpartable = lavpartable, start = START): lavaan WARNING: starting values imply a correlation larger than 1;
+##                    variables involved are:  glad   content</code></pre>
+<pre><code>## [1] lhs      op       rhs      mi       epc      sepc.lv  sepc.all sepc.nox
+## &lt;0 rows&gt; (or 0-length row.names)</code></pre>
+<p>No suggestions could decrease the model chisquare by more than 10.</p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="lavaan-lab-10-model-fit-part-ii-fit-indices.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="lavaan-lab-12-sem-for-missing-data.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

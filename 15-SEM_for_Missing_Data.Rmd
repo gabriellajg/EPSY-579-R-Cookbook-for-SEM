@@ -1,4 +1,4 @@
-# Week12_1: Lavaan Lab 12 SEM for Missing Data
+# Lavaan Lab 12: SEM for Missing Data
 
 In this lab, we'll use an example dataset HolzingerSwineford1939 in the package lavaan. Hence, lavaan must be installed.
 
