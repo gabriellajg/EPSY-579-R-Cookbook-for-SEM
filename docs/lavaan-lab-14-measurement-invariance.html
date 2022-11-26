@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 17 Lavaan Lab 14: Measurement Invariance | R Cookbook for Structural Equation Modeling</title>
   <meta name="description" content="Chapter 17 Lavaan Lab 14: Measurement Invariance | R Cookbook for Structural Equation Modeling" />
-  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.30 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 17 Lavaan Lab 14: Measurement Invariance | R Cookbook for Structural Equation Modeling" />
   <meta property="og:type" content="book" />
@@ -1275,7 +1275,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!------------------------------>
 <div id="measurementinvariance" class="section level3 hasAnchor" number="17.3.1">
 <h3><span class="header-section-number">17.3.1</span> measurementInvariance()<a href="lavaan-lab-14-measurement-invariance.html#measurementinvariance" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>There is a shortcut function in package ‘semTools’ that performsinvariance testing in one place, but unfornately it will soon retire…</p>
+<p>There is a shortcut function in package ‘semTools’ that performs invariance testing in one place, but unfortunately it will soon retire…</p>
 <div class="sourceCode" id="cb655"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb655-1"><a href="lavaan-lab-14-measurement-invariance.html#cb655-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(semTools)</span>
 <span id="cb655-2"><a href="lavaan-lab-14-measurement-invariance.html#cb655-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb655-3"><a href="lavaan-lab-14-measurement-invariance.html#cb655-3" aria-hidden="true" tabindex="-1"></a><span class="fu">measurementInvariance</span>(<span class="at">model =</span> srSyntax, </span>
@@ -1341,8 +1341,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb659-18"><a href="lavaan-lab-14-measurement-invariance.html#cb659-18" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">group.equal =</span> group.equal,</span>
 <span id="cb659-19"><a href="lavaan-lab-14-measurement-invariance.html#cb659-19" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">return.fit =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb659-20"><a href="lavaan-lab-14-measurement-invariance.html#cb659-20" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<div class="sourceCode" id="cb660"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb660-1"><a href="lavaan-lab-14-measurement-invariance.html#cb660-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">=</span> <span class="fu">compareFit</span>(meq.list)</span>
-<span id="cb660-2"><a href="lavaan-lab-14-measurement-invariance.html#cb660-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">compareFit</span>(meq.list))</span></code></pre></div>
+<div class="sourceCode" id="cb660"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb660-1"><a href="lavaan-lab-14-measurement-invariance.html#cb660-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">compareFit</span>(meq.list))</span></code></pre></div>
 <pre><code>## ################### Nested Model Comparison #########################
 ## Scaled Chi-Squared Difference Test (method = &quot;satorra.bentler.2001&quot;)
 ## 

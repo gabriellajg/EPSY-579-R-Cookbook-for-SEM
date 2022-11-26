@@ -164,7 +164,7 @@ anova(resVarFit, scalarFit)
 
 ### measurementInvariance()
 
-There is a shortcut function in package 'semTools' that performsinvariance testing in one place, but unfornately it will soon retire...
+There is a shortcut function in package 'semTools' that performs invariance testing in one place, but unfortunately it will soon retire...
 
 ```{r, message=FALSE}
 library(semTools)
@@ -211,7 +211,6 @@ for (i in 0:length(test.seq)) {
 ```
 
 ```{r}
-a = compareFit(meq.list)
 summary(compareFit(meq.list))
 ```
 
