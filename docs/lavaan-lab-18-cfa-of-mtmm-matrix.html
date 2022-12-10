@@ -511,16 +511,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>run CFA on MTMM Matrix to investigate convergent and discrimative validity</li>
 </ul>
 <p>Load up the lavaan and semPlot libraries:</p>
-<div class="sourceCode" id="cb831"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb831-1"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb831-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span>
-<span id="cb831-2"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb831-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(semPlot)</span></code></pre></div>
+<div class="sourceCode" id="cb833"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb833-1"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb833-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span>
+<span id="cb833-2"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb833-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(semPlot)</span></code></pre></div>
 <ul>
 <li>Let’s read in a simulated MTMM matrix:</li>
 </ul>
-<div class="sourceCode" id="cb832"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb832-1"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb832-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;MTMM.RData&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb834"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb834-1"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb834-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;MTMM.RData&quot;</span>)</span></code></pre></div>
 <p>Take a look at the matrix:</p>
-<div class="sourceCode" id="cb833"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb833-1"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb833-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(MTMM)</span></code></pre></div>
+<div class="sourceCode" id="cb835"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb835-1"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb835-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(MTMM)</span></code></pre></div>
 <pre><code>## [1] 9 9</code></pre>
-<div class="sourceCode" id="cb835"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb835-1"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb835-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(MTMM)</span></code></pre></div>
+<div class="sourceCode" id="cb837"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb837-1"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb837-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(MTMM)</span></code></pre></div>
 <pre><code>##           PARI      SZTI      SZDI     PARC     SZTC     SZDC     PARO     SZTO     SZDO
 ## PARI 13.032100  3.831654  4.821083 6.230066 2.198598 2.242893 4.463909 1.712295 1.612804
 ## SZTI  3.831654 13.395600  6.280633 2.560975 6.498623 2.931111 1.852546 5.704037 1.799402
@@ -529,7 +529,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## SZTC  2.198598  6.498623  1.370590 1.897447 9.180900 0.829008 1.627837 4.700197 1.038442
 ## SZDC  2.242893  2.931111  6.967652 1.633905 0.829008 8.122500 1.467864 1.710456 4.354686</code></pre>
 <p>This is a covariance matrix. You could also convert it to a correlation matrix:</p>
-<div class="sourceCode" id="cb837"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb837-1"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb837-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cov2cor</span>(MTMM)</span></code></pre></div>
+<div class="sourceCode" id="cb839"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb839-1"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb839-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cov2cor</span>(MTMM)</span></code></pre></div>
 <pre><code>##       PARI  SZTI  SZDI  PARC  SZTC  SZDC  PARO  SZTO  SZDO
 ## PARI 1.000 0.290 0.372 0.587 0.201 0.218 0.557 0.196 0.219
 ## SZTI 0.290 1.000 0.478 0.238 0.586 0.281 0.228 0.644 0.241
@@ -545,75 +545,75 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">21.1</span> PART I: Correlated methods specification<a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#part-i-correlated-methods-specification" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!------------------------------>
 <p>This model specifies both traits and methods factors:</p>
-<div class="sourceCode" id="cb839"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb839-1"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb839-1" aria-hidden="true" tabindex="-1"></a>MTMM.model.spec1.wrong <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
-<span id="cb839-2"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb839-2" aria-hidden="true" tabindex="-1"></a><span class="st"># trait factors</span></span>
-<span id="cb839-3"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb839-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb839-4"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb839-4" aria-hidden="true" tabindex="-1"></a><span class="st">paranoid =~ PARI +  PARC + PARO   </span></span>
-<span id="cb839-5"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb839-5" aria-hidden="true" tabindex="-1"></a><span class="st">schizotypal =~ SZTI + SZTC + SZTO</span></span>
-<span id="cb839-6"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb839-6" aria-hidden="true" tabindex="-1"></a><span class="st">schizoid =~ SZDI + SZDC + SZDO</span></span>
-<span id="cb839-7"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb839-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb839-8"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb839-8" aria-hidden="true" tabindex="-1"></a><span class="st"># method factors</span></span>
-<span id="cb839-9"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb839-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb839-10"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb839-10" aria-hidden="true" tabindex="-1"></a><span class="st">inventory =~ SZTI + PARI + SZDI</span></span>
-<span id="cb839-11"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb839-11" aria-hidden="true" tabindex="-1"></a><span class="st">clininter =~ PARC + SZTC + SZDC</span></span>
-<span id="cb839-12"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb839-12" aria-hidden="true" tabindex="-1"></a><span class="st">obsrating =~ PARO + SZTO + SZDO</span></span>
-<span id="cb839-13"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb839-13" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span></code></pre></div>
+<div class="sourceCode" id="cb841"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb841-1"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb841-1" aria-hidden="true" tabindex="-1"></a>MTMM.model.spec1.wrong <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
+<span id="cb841-2"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb841-2" aria-hidden="true" tabindex="-1"></a><span class="st"># trait factors</span></span>
+<span id="cb841-3"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb841-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb841-4"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb841-4" aria-hidden="true" tabindex="-1"></a><span class="st">paranoid =~ PARI +  PARC + PARO   </span></span>
+<span id="cb841-5"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb841-5" aria-hidden="true" tabindex="-1"></a><span class="st">schizotypal =~ SZTI + SZTC + SZTO</span></span>
+<span id="cb841-6"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb841-6" aria-hidden="true" tabindex="-1"></a><span class="st">schizoid =~ SZDI + SZDC + SZDO</span></span>
+<span id="cb841-7"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb841-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb841-8"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb841-8" aria-hidden="true" tabindex="-1"></a><span class="st"># method factors</span></span>
+<span id="cb841-9"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb841-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb841-10"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb841-10" aria-hidden="true" tabindex="-1"></a><span class="st">inventory =~ SZTI + PARI + SZDI</span></span>
+<span id="cb841-11"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb841-11" aria-hidden="true" tabindex="-1"></a><span class="st">clininter =~ PARC + SZTC + SZDC</span></span>
+<span id="cb841-12"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb841-12" aria-hidden="true" tabindex="-1"></a><span class="st">obsrating =~ PARO + SZTO + SZDO</span></span>
+<span id="cb841-13"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb841-13" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span></code></pre></div>
 <p>Fit the model:</p>
 <ul>
 <li>Since MTMM is a covariance matrix, we supply the sample size 500;</li>
 </ul>
-<div class="sourceCode" id="cb840"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb840-1"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb840-1" aria-hidden="true" tabindex="-1"></a>fit1 <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(MTMM.model.spec1.wrong, </span>
-<span id="cb840-2"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb840-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">sample.cov=</span>MTMM, <span class="at">sample.nobs=</span><span class="dv">500</span>,</span>
-<span id="cb840-3"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb840-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">fixed.x =</span> F)</span></code></pre></div>
+<div class="sourceCode" id="cb842"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb842-1"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb842-1" aria-hidden="true" tabindex="-1"></a>fit1 <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(MTMM.model.spec1.wrong, </span>
+<span id="cb842-2"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb842-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">sample.cov=</span>MTMM, <span class="at">sample.nobs=</span><span class="dv">500</span>,</span>
+<span id="cb842-3"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb842-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">fixed.x =</span> F)</span></code></pre></div>
 <pre><code>## Warning in lavaan::lavaan(model = MTMM.model.spec1.wrong, sample.cov = MTMM, : lavaan WARNING:
 ##     the optimizer (NLMINB) claimed the model converged, but not all
 ##     elements of the gradient are (near) zero; the optimizer may not
 ##     have found a local solution use check.gradient = FALSE to skip
 ##     this check.</code></pre>
 <p>You might get the following warning message:</p>
-<div class="sourceCode" id="cb842"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb842-1"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb842-1" aria-hidden="true" tabindex="-1"></a>Warning message<span class="sc">:</span></span>
-<span id="cb842-2"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb842-2" aria-hidden="true" tabindex="-1"></a>  In lavaan<span class="sc">::</span><span class="fu">lavaan</span>(<span class="at">model =</span> MTMM.model.spec1.wrong, <span class="at">sample.cov =</span> MTMM,  <span class="sc">:</span></span>
-<span id="cb842-3"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb842-3" aria-hidden="true" tabindex="-1"></a>        lavaan WARNING<span class="sc">:</span></span>
-<span id="cb842-4"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb842-4" aria-hidden="true" tabindex="-1"></a>        the <span class="fu">optimizer</span> (NLMINB) claimed the model converged, but not all</span>
-<span id="cb842-5"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb842-5" aria-hidden="true" tabindex="-1"></a>        elements of the gradient <span class="fu">are</span> (near) zero; the optimizer may not</span>
-<span id="cb842-6"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb842-6" aria-hidden="true" tabindex="-1"></a>        have found a local solution use <span class="at">check.gradient =</span> <span class="cn">FALSE</span> to skip</span>
-<span id="cb842-7"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb842-7" aria-hidden="true" tabindex="-1"></a>        this check.                        </span></code></pre></div>
+<div class="sourceCode" id="cb844"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb844-1"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb844-1" aria-hidden="true" tabindex="-1"></a>Warning message<span class="sc">:</span></span>
+<span id="cb844-2"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb844-2" aria-hidden="true" tabindex="-1"></a>  In lavaan<span class="sc">::</span><span class="fu">lavaan</span>(<span class="at">model =</span> MTMM.model.spec1.wrong, <span class="at">sample.cov =</span> MTMM,  <span class="sc">:</span></span>
+<span id="cb844-3"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb844-3" aria-hidden="true" tabindex="-1"></a>        lavaan WARNING<span class="sc">:</span></span>
+<span id="cb844-4"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb844-4" aria-hidden="true" tabindex="-1"></a>        the <span class="fu">optimizer</span> (NLMINB) claimed the model converged, but not all</span>
+<span id="cb844-5"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb844-5" aria-hidden="true" tabindex="-1"></a>        elements of the gradient <span class="fu">are</span> (near) zero; the optimizer may not</span>
+<span id="cb844-6"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb844-6" aria-hidden="true" tabindex="-1"></a>        have found a local solution use <span class="at">check.gradient =</span> <span class="cn">FALSE</span> to skip</span>
+<span id="cb844-7"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb844-7" aria-hidden="true" tabindex="-1"></a>        this check.                        </span></code></pre></div>
 <ul>
 <li>The problem is by default lavaan correlates all traits and methods factors;</li>
 <li>To get the model to fit, we need to manually uncorrelate traits and methods factors;</li>
 </ul>
-<div class="sourceCode" id="cb843"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb843-1"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb843-1" aria-hidden="true" tabindex="-1"></a>MTMM.model.spec1 <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
-<span id="cb843-2"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb843-2" aria-hidden="true" tabindex="-1"></a><span class="st"># trait factors</span></span>
-<span id="cb843-3"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb843-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb843-4"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb843-4" aria-hidden="true" tabindex="-1"></a><span class="st">paranoid =~ PARI +  PARC + PARO   </span></span>
-<span id="cb843-5"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb843-5" aria-hidden="true" tabindex="-1"></a><span class="st">schizotypal =~ SZTI + SZTC + SZTO</span></span>
-<span id="cb843-6"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb843-6" aria-hidden="true" tabindex="-1"></a><span class="st">schizoid =~ SZDI + SZDC + SZDO</span></span>
-<span id="cb843-7"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb843-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb843-8"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb843-8" aria-hidden="true" tabindex="-1"></a><span class="st"># method factors</span></span>
-<span id="cb843-9"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb843-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb843-10"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb843-10" aria-hidden="true" tabindex="-1"></a><span class="st">inventory =~ SZTI + PARI + SZDI</span></span>
-<span id="cb843-11"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb843-11" aria-hidden="true" tabindex="-1"></a><span class="st">clininter =~ PARC + SZTC + SZDC</span></span>
-<span id="cb843-12"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb843-12" aria-hidden="true" tabindex="-1"></a><span class="st">obsrating =~ PARO + SZTO + SZDO</span></span>
-<span id="cb843-13"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb843-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb843-14"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb843-14" aria-hidden="true" tabindex="-1"></a><span class="st"># uncorrelated trait and method</span></span>
-<span id="cb843-15"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb843-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb843-16"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb843-16" aria-hidden="true" tabindex="-1"></a><span class="st">paranoid ~~ 0*inventory</span></span>
-<span id="cb843-17"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb843-17" aria-hidden="true" tabindex="-1"></a><span class="st">paranoid ~~ 0*clininter</span></span>
-<span id="cb843-18"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb843-18" aria-hidden="true" tabindex="-1"></a><span class="st">paranoid ~~ 0*obsrating</span></span>
-<span id="cb843-19"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb843-19" aria-hidden="true" tabindex="-1"></a><span class="st">schizotypal ~~ 0*inventory</span></span>
-<span id="cb843-20"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb843-20" aria-hidden="true" tabindex="-1"></a><span class="st">schizotypal ~~ 0*clininter</span></span>
-<span id="cb843-21"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb843-21" aria-hidden="true" tabindex="-1"></a><span class="st">schizotypal ~~ 0*obsrating</span></span>
-<span id="cb843-22"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb843-22" aria-hidden="true" tabindex="-1"></a><span class="st">schizoid ~~ 0*inventory</span></span>
-<span id="cb843-23"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb843-23" aria-hidden="true" tabindex="-1"></a><span class="st">schizoid ~~ 0*clininter</span></span>
-<span id="cb843-24"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb843-24" aria-hidden="true" tabindex="-1"></a><span class="st">schizoid ~~ 0*obsrating</span></span>
-<span id="cb843-25"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb843-25" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span></code></pre></div>
+<div class="sourceCode" id="cb845"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb845-1"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb845-1" aria-hidden="true" tabindex="-1"></a>MTMM.model.spec1 <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
+<span id="cb845-2"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb845-2" aria-hidden="true" tabindex="-1"></a><span class="st"># trait factors</span></span>
+<span id="cb845-3"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb845-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb845-4"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb845-4" aria-hidden="true" tabindex="-1"></a><span class="st">paranoid =~ PARI +  PARC + PARO   </span></span>
+<span id="cb845-5"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb845-5" aria-hidden="true" tabindex="-1"></a><span class="st">schizotypal =~ SZTI + SZTC + SZTO</span></span>
+<span id="cb845-6"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb845-6" aria-hidden="true" tabindex="-1"></a><span class="st">schizoid =~ SZDI + SZDC + SZDO</span></span>
+<span id="cb845-7"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb845-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb845-8"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb845-8" aria-hidden="true" tabindex="-1"></a><span class="st"># method factors</span></span>
+<span id="cb845-9"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb845-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb845-10"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb845-10" aria-hidden="true" tabindex="-1"></a><span class="st">inventory =~ SZTI + PARI + SZDI</span></span>
+<span id="cb845-11"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb845-11" aria-hidden="true" tabindex="-1"></a><span class="st">clininter =~ PARC + SZTC + SZDC</span></span>
+<span id="cb845-12"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb845-12" aria-hidden="true" tabindex="-1"></a><span class="st">obsrating =~ PARO + SZTO + SZDO</span></span>
+<span id="cb845-13"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb845-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb845-14"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb845-14" aria-hidden="true" tabindex="-1"></a><span class="st"># uncorrelated trait and method</span></span>
+<span id="cb845-15"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb845-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb845-16"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb845-16" aria-hidden="true" tabindex="-1"></a><span class="st">paranoid ~~ 0*inventory</span></span>
+<span id="cb845-17"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb845-17" aria-hidden="true" tabindex="-1"></a><span class="st">paranoid ~~ 0*clininter</span></span>
+<span id="cb845-18"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb845-18" aria-hidden="true" tabindex="-1"></a><span class="st">paranoid ~~ 0*obsrating</span></span>
+<span id="cb845-19"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb845-19" aria-hidden="true" tabindex="-1"></a><span class="st">schizotypal ~~ 0*inventory</span></span>
+<span id="cb845-20"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb845-20" aria-hidden="true" tabindex="-1"></a><span class="st">schizotypal ~~ 0*clininter</span></span>
+<span id="cb845-21"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb845-21" aria-hidden="true" tabindex="-1"></a><span class="st">schizotypal ~~ 0*obsrating</span></span>
+<span id="cb845-22"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb845-22" aria-hidden="true" tabindex="-1"></a><span class="st">schizoid ~~ 0*inventory</span></span>
+<span id="cb845-23"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb845-23" aria-hidden="true" tabindex="-1"></a><span class="st">schizoid ~~ 0*clininter</span></span>
+<span id="cb845-24"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb845-24" aria-hidden="true" tabindex="-1"></a><span class="st">schizoid ~~ 0*obsrating</span></span>
+<span id="cb845-25"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb845-25" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span></code></pre></div>
 <p>Model fit:</p>
-<div class="sourceCode" id="cb844"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb844-1"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb844-1" aria-hidden="true" tabindex="-1"></a>fit2 <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(MTMM.model.spec1, </span>
-<span id="cb844-2"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb844-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">sample.cov=</span>MTMM, <span class="at">sample.nobs=</span><span class="dv">500</span>,</span>
-<span id="cb844-3"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb844-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">fixed.x =</span> F)</span></code></pre></div>
+<div class="sourceCode" id="cb846"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb846-1"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb846-1" aria-hidden="true" tabindex="-1"></a>fit2 <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(MTMM.model.spec1, </span>
+<span id="cb846-2"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb846-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">sample.cov=</span>MTMM, <span class="at">sample.nobs=</span><span class="dv">500</span>,</span>
+<span id="cb846-3"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb846-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">fixed.x =</span> F)</span></code></pre></div>
 <pre><code>## Warning in lav_object_post_check(object): lavaan WARNING: some estimated ov variances are negative</code></pre>
 <pre><code>## Warning in lav_object_post_check(object): lavaan WARNING: some estimated lv variances are negative</code></pre>
-<div class="sourceCode" id="cb847"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb847-1"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb847-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit2, <span class="at">standardized =</span> T, <span class="at">fit.measures =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb849"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb849-1"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb849-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit2, <span class="at">standardized =</span> T, <span class="at">fit.measures =</span> T)</span></code></pre></div>
 <pre><code>## lavaan 0.6-12 ended normally after 246 iterations
 ## 
 ##   Estimator                                         ML
@@ -734,19 +734,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##     inventory         2.172    0.521    4.171    0.000    1.000    1.000
 ##     clininter        -0.005    0.014   -0.337    0.736       NA       NA
 ##     obsrating         0.482    0.210    2.300    0.021    1.000    1.000</code></pre>
-<div class="sourceCode" id="cb849"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb849-1"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb849-1" aria-hidden="true" tabindex="-1"></a>Heywood case</span>
-<span id="cb849-2"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb849-2" aria-hidden="true" tabindex="-1"></a>Warning messages<span class="sc">:</span></span>
-<span id="cb849-3"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb849-3" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">:</span> In <span class="fu">lav_object_post_check</span>(object) <span class="sc">:</span></span>
-<span id="cb849-4"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb849-4" aria-hidden="true" tabindex="-1"></a>  lavaan WARNING<span class="sc">:</span> some estimated ov variances are negative</span></code></pre></div>
+<div class="sourceCode" id="cb851"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb851-1"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb851-1" aria-hidden="true" tabindex="-1"></a>Heywood case</span>
+<span id="cb851-2"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb851-2" aria-hidden="true" tabindex="-1"></a>Warning messages<span class="sc">:</span></span>
+<span id="cb851-3"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb851-3" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">:</span> In <span class="fu">lav_object_post_check</span>(object) <span class="sc">:</span></span>
+<span id="cb851-4"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb851-4" aria-hidden="true" tabindex="-1"></a>  lavaan WARNING<span class="sc">:</span> some estimated ov variances are negative</span></code></pre></div>
 <p>Plot the path diagram:</p>
-<div class="sourceCode" id="cb850"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb850-1"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb850-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(fit2, <span class="at">what=</span><span class="st">&#39;std&#39;</span>, </span>
-<span id="cb850-2"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb850-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">nCharNodes =</span> <span class="dv">0</span>,</span>
-<span id="cb850-3"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb850-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">nCharEdges =</span> <span class="dv">0</span>, <span class="co"># don&#39;t limit variable name lengths</span></span>
-<span id="cb850-4"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb850-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">curvePivot =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb850-5"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb850-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">curve =</span> <span class="fl">1.1</span>, <span class="co"># pull covariances&#39; curves out a little</span></span>
-<span id="cb850-6"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb850-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">fade=</span><span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb852"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb852-1"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb852-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(fit2, <span class="at">what=</span><span class="st">&#39;std&#39;</span>, </span>
+<span id="cb852-2"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb852-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">nCharNodes =</span> <span class="dv">0</span>,</span>
+<span id="cb852-3"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb852-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">nCharEdges =</span> <span class="dv">0</span>, <span class="co"># don&#39;t limit variable name lengths</span></span>
+<span id="cb852-4"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb852-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">curvePivot =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb852-5"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb852-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">curve =</span> <span class="fl">1.1</span>, <span class="co"># pull covariances&#39; curves out a little</span></span>
+<span id="cb852-6"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb852-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">fade=</span><span class="cn">FALSE</span>)</span></code></pre></div>
 <pre><code>## Warning in qgraph::qgraph(Edgelist, labels = nLab, bidirectional = Bidir, : Non-finite weights are omitted</code></pre>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-492-1.png" width="672" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-493-1.png" width="672" /></p>
 <!------------------------------>
 </div>
 <div id="part-ii-correlated-uniqueness-specification" class="section level2 hasAnchor" number="21.2">
@@ -757,36 +757,36 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>There is no method factor;</li>
 <li>Instead, the unique factors are correlated within method blocks;</li>
 </ul>
-<div class="sourceCode" id="cb852"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb852-1"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb852-1" aria-hidden="true" tabindex="-1"></a>MTMM.model.spec2 <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
-<span id="cb852-2"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb852-2" aria-hidden="true" tabindex="-1"></a><span class="st"># trait factors</span></span>
-<span id="cb852-3"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb852-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb852-4"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb852-4" aria-hidden="true" tabindex="-1"></a><span class="st">paranoid =~ PARI + PARC + PARO   </span></span>
-<span id="cb852-5"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb852-5" aria-hidden="true" tabindex="-1"></a><span class="st">schizotypal =~ SZTI + SZTC + SZTO</span></span>
-<span id="cb852-6"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb852-6" aria-hidden="true" tabindex="-1"></a><span class="st">schizoid =~ SZDI + SZDC + SZDO</span></span>
-<span id="cb852-7"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb852-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb852-8"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb852-8" aria-hidden="true" tabindex="-1"></a><span class="st"># no method factors</span></span>
-<span id="cb852-9"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb852-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb852-10"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb852-10" aria-hidden="true" tabindex="-1"></a><span class="st"># correlated residual covariances</span></span>
-<span id="cb852-11"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb852-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb852-12"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb852-12" aria-hidden="true" tabindex="-1"></a><span class="st"># Method 1 Block</span></span>
-<span id="cb852-13"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb852-13" aria-hidden="true" tabindex="-1"></a><span class="st">PARI ~~ SZTI + SZDI</span></span>
-<span id="cb852-14"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb852-14" aria-hidden="true" tabindex="-1"></a><span class="st">SZTI ~~ SZDI</span></span>
-<span id="cb852-15"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb852-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb852-16"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb852-16" aria-hidden="true" tabindex="-1"></a><span class="st"># Method 2 Block</span></span>
-<span id="cb852-17"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb852-17" aria-hidden="true" tabindex="-1"></a><span class="st">PARC ~~ SZTC + SZDC</span></span>
-<span id="cb852-18"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb852-18" aria-hidden="true" tabindex="-1"></a><span class="st">SZTC ~~ SZDC</span></span>
-<span id="cb852-19"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb852-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb852-20"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb852-20" aria-hidden="true" tabindex="-1"></a><span class="st"># Method 3 Block</span></span>
-<span id="cb852-21"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb852-21" aria-hidden="true" tabindex="-1"></a><span class="st">PARO ~~ SZTO + SZDO</span></span>
-<span id="cb852-22"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb852-22" aria-hidden="true" tabindex="-1"></a><span class="st">SZTO ~~ SZDO</span></span>
-<span id="cb852-23"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb852-23" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span></code></pre></div>
+<div class="sourceCode" id="cb854"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb854-1"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb854-1" aria-hidden="true" tabindex="-1"></a>MTMM.model.spec2 <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
+<span id="cb854-2"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb854-2" aria-hidden="true" tabindex="-1"></a><span class="st"># trait factors</span></span>
+<span id="cb854-3"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb854-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb854-4"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb854-4" aria-hidden="true" tabindex="-1"></a><span class="st">paranoid =~ PARI + PARC + PARO   </span></span>
+<span id="cb854-5"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb854-5" aria-hidden="true" tabindex="-1"></a><span class="st">schizotypal =~ SZTI + SZTC + SZTO</span></span>
+<span id="cb854-6"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb854-6" aria-hidden="true" tabindex="-1"></a><span class="st">schizoid =~ SZDI + SZDC + SZDO</span></span>
+<span id="cb854-7"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb854-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb854-8"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb854-8" aria-hidden="true" tabindex="-1"></a><span class="st"># no method factors</span></span>
+<span id="cb854-9"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb854-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb854-10"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb854-10" aria-hidden="true" tabindex="-1"></a><span class="st"># correlated residual covariances</span></span>
+<span id="cb854-11"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb854-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb854-12"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb854-12" aria-hidden="true" tabindex="-1"></a><span class="st"># Method 1 Block</span></span>
+<span id="cb854-13"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb854-13" aria-hidden="true" tabindex="-1"></a><span class="st">PARI ~~ SZTI + SZDI</span></span>
+<span id="cb854-14"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb854-14" aria-hidden="true" tabindex="-1"></a><span class="st">SZTI ~~ SZDI</span></span>
+<span id="cb854-15"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb854-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb854-16"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb854-16" aria-hidden="true" tabindex="-1"></a><span class="st"># Method 2 Block</span></span>
+<span id="cb854-17"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb854-17" aria-hidden="true" tabindex="-1"></a><span class="st">PARC ~~ SZTC + SZDC</span></span>
+<span id="cb854-18"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb854-18" aria-hidden="true" tabindex="-1"></a><span class="st">SZTC ~~ SZDC</span></span>
+<span id="cb854-19"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb854-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb854-20"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb854-20" aria-hidden="true" tabindex="-1"></a><span class="st"># Method 3 Block</span></span>
+<span id="cb854-21"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb854-21" aria-hidden="true" tabindex="-1"></a><span class="st">PARO ~~ SZTO + SZDO</span></span>
+<span id="cb854-22"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb854-22" aria-hidden="true" tabindex="-1"></a><span class="st">SZTO ~~ SZDO</span></span>
+<span id="cb854-23"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb854-23" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span></code></pre></div>
 <p>Model fit:</p>
-<div class="sourceCode" id="cb853"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb853-1"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb853-1" aria-hidden="true" tabindex="-1"></a>fit3 <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(MTMM.model.spec2, </span>
-<span id="cb853-2"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb853-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">sample.cov=</span>MTMM, <span class="at">sample.nobs=</span><span class="dv">500</span>,</span>
-<span id="cb853-3"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb853-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">fixed.x =</span> F, <span class="at">std.lv =</span> T)</span>
-<span id="cb853-4"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb853-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb853-5"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb853-5" aria-hidden="true" tabindex="-1"></a><span class="co">#results with standardized parameter estimates</span></span>
-<span id="cb853-6"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb853-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit3, <span class="at">standardized=</span><span class="cn">TRUE</span>, <span class="at">fit.measures=</span><span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb855"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb855-1"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb855-1" aria-hidden="true" tabindex="-1"></a>fit3 <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(MTMM.model.spec2, </span>
+<span id="cb855-2"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb855-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">sample.cov=</span>MTMM, <span class="at">sample.nobs=</span><span class="dv">500</span>,</span>
+<span id="cb855-3"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb855-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">fixed.x =</span> F, <span class="at">std.lv =</span> T)</span>
+<span id="cb855-4"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb855-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb855-5"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb855-5" aria-hidden="true" tabindex="-1"></a><span class="co">#results with standardized parameter estimates</span></span>
+<span id="cb855-6"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb855-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit3, <span class="at">standardized=</span><span class="cn">TRUE</span>, <span class="at">fit.measures=</span><span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>## lavaan 0.6-12 ended normally after 59 iterations
 ## 
 ##   Estimator                                         ML
@@ -890,13 +890,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##     paranoid          1.000                               1.000    1.000
 ##     schizotypal       1.000                               1.000    1.000
 ##     schizoid          1.000                               1.000    1.000</code></pre>
-<div class="sourceCode" id="cb855"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb855-1"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb855-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(fit3, <span class="at">what=</span><span class="st">&#39;std&#39;</span>, </span>
-<span id="cb855-2"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb855-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">nCharNodes =</span> <span class="dv">0</span>,</span>
-<span id="cb855-3"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb855-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">nCharEdges =</span> <span class="dv">0</span>, <span class="co"># don&#39;t limit variable name lengths</span></span>
-<span id="cb855-4"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb855-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">curvePivot =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb855-5"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb855-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">curve =</span> <span class="fl">1.1</span>, <span class="co"># pull covariances&#39; curves out a little</span></span>
-<span id="cb855-6"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb855-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">fade=</span><span class="cn">FALSE</span>)</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-495-1.png" width="672" /></p>
+<div class="sourceCode" id="cb857"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb857-1"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb857-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(fit3, <span class="at">what=</span><span class="st">&#39;std&#39;</span>, </span>
+<span id="cb857-2"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb857-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">nCharNodes =</span> <span class="dv">0</span>,</span>
+<span id="cb857-3"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb857-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">nCharEdges =</span> <span class="dv">0</span>, <span class="co"># don&#39;t limit variable name lengths</span></span>
+<span id="cb857-4"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb857-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">curvePivot =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb857-5"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb857-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">curve =</span> <span class="fl">1.1</span>, <span class="co"># pull covariances&#39; curves out a little</span></span>
+<span id="cb857-6"><a href="lavaan-lab-18-cfa-of-mtmm-matrix.html#cb857-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">fade=</span><span class="cn">FALSE</span>)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-496-1.png" width="672" /></p>
 
 </div>
 </div>

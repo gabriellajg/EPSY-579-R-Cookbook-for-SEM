@@ -1870,13 +1870,60 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## cfi.scaled                0.894      0.934       0.924    0.947
 ## tli.scaled                0.886      0.927       0.917    0.938</code></pre>
 <p>Bifactor model wins!</p>
+<p>Bifactor indices:</p>
+<div class="sourceCode" id="cb825"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb825-1"><a href="lavaan-lab-17-second-order-and-bifactor-models.html#cb825-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(BifactorIndicesCalculator)</span>
+<span id="cb825-2"><a href="lavaan-lab-17-second-order-and-bifactor-models.html#cb825-2" aria-hidden="true" tabindex="-1"></a><span class="fu">bifactorIndices</span>(bifac.model.fit)</span></code></pre></div>
+<pre><code>## $ModelLevelIndices
+##    ECV.GEN        PUC  Omega.GEN OmegaH.GEN 
+##  0.7629284  0.8251232  0.9475706  0.9021135 
+## 
+## $FactorLevelIndices
+##                   ECV_SS     ECV_SG    ECV_GS     Omega     OmegaH         H        FD
+## Alienation     0.1978116 0.04500342 0.8021884 0.8576852 0.12689280 0.4702717 0.7798457
+## Stereotype     0.2660867 0.05719306 0.7339133 0.8185651 0.20058412 0.5260601 0.7721520
+## Discrimination 0.3156019 0.06635217 0.6843981 0.8568937 0.21680402 0.5773888 0.8395134
+## Withdrawal     0.1247961 0.02879844 0.8752039 0.8607013 0.08233921 0.3428283 0.7144528
+## Stigma         0.3408425 0.03972453 0.6591575 0.6197695 0.24248454 0.4234151 0.6776788
+## GEN            0.7629284 0.76292837 0.7629284 0.9475706 0.90211349 0.9584643 0.9703199
+## 
+## $ItemLevelIndices
+##          IECV
+## V1  0.9888314
+## V2  0.9610230
+## V3  0.9942462
+## V4  0.6576392
+## V5  0.6005025
+## V6  0.7590656
+## V7  0.9593062
+## V8  0.8840932
+## V9  0.2706826
+## V10 0.8554197
+## V11 0.7203853
+## V12 0.4616681
+## V13 0.8845161
+## V14 0.5944395
+## V15 0.6092544
+## V16 0.5915492
+## V17 0.6430917
+## V18 0.9983599
+## V19 0.9195231
+## V20 0.7188428
+## V21 0.9891905
+## V22 0.8024897
+## V23 0.9780720
+## V24 0.9194145
+## V25 0.0190688
+## V26 0.9942829
+## V27 0.8426852
+## V28 0.3454092
+## V29 0.2580677</code></pre>
 <!------------------------------>
 </div>
 <div id="exercise-mental-ability-scale" class="section level2 hasAnchor" number="20.6">
 <h2><span class="header-section-number">20.6</span> Exercise: Mental Ability Scale<a href="lavaan-lab-17-second-order-and-bifactor-models.html#exercise-mental-ability-scale" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!------------------------------>
 <p>Let’s bring our Holzinger and Swineford Dataset back:</p>
-<div class="sourceCode" id="cb825"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb825-1"><a href="lavaan-lab-17-second-order-and-bifactor-models.html#cb825-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(HolzingerSwineford1939)</span></code></pre></div>
+<div class="sourceCode" id="cb827"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb827-1"><a href="lavaan-lab-17-second-order-and-bifactor-models.html#cb827-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(HolzingerSwineford1939)</span></code></pre></div>
 <pre><code>##   id sex ageyr agemo  school grade       x1   x2    x3       x4   x5        x6       x7   x8       x9
 ## 1  1   1    13     1 Pasteur     7 3.333333 7.75 0.375 2.333333 5.75 1.2857143 3.391304 5.75 6.361111
 ## 2  2   2    13     7 Pasteur     7 5.333333 5.25 2.125 1.666667 3.00 1.2857143 3.782609 6.25 7.916667
@@ -1884,33 +1931,33 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 4  4   1    13     2 Pasteur     7 5.333333 7.75 3.000 2.666667 4.50 2.4285714 3.000000 5.30 4.861111
 ## 5  5   2    12     2 Pasteur     7 4.833333 4.75 0.875 2.666667 4.00 2.5714286 3.695652 6.30 5.916667
 ## 6  6   2    14     1 Pasteur     7 5.333333 5.00 2.250 1.000000 3.00 0.8571429 4.347826 6.65 7.500000</code></pre>
-<div class="sourceCode" id="cb827"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb827-1"><a href="lavaan-lab-17-second-order-and-bifactor-models.html#cb827-1" aria-hidden="true" tabindex="-1"></a>?HolzingerSwineford1939</span></code></pre></div>
+<div class="sourceCode" id="cb829"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb829-1"><a href="lavaan-lab-17-second-order-and-bifactor-models.html#cb829-1" aria-hidden="true" tabindex="-1"></a>?HolzingerSwineford1939</span></code></pre></div>
 <p>This dataset has 301 cases with 9 mental ability items.</p>
 <p><strong>Assignment: Could you use the four models above to examine the dimensionality of this ODD Subscale?</strong></p>
 <p>Here is a factor structure that you may need:</p>
-<div class="sourceCode" id="cb828"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb828-1"><a href="lavaan-lab-17-second-order-and-bifactor-models.html#cb828-1" aria-hidden="true" tabindex="-1"></a>cor.fac.HS.model <span class="ot">=</span> <span class="st">&#39;</span></span>
-<span id="cb828-2"><a href="lavaan-lab-17-second-order-and-bifactor-models.html#cb828-2" aria-hidden="true" tabindex="-1"></a><span class="st">visual  =~ x1 + x2 + x3</span></span>
-<span id="cb828-3"><a href="lavaan-lab-17-second-order-and-bifactor-models.html#cb828-3" aria-hidden="true" tabindex="-1"></a><span class="st">textual =~ x4 + x5 + x6</span></span>
-<span id="cb828-4"><a href="lavaan-lab-17-second-order-and-bifactor-models.html#cb828-4" aria-hidden="true" tabindex="-1"></a><span class="st">speed   =~ x7 + x8 + x9</span></span>
-<span id="cb828-5"><a href="lavaan-lab-17-second-order-and-bifactor-models.html#cb828-5" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span></code></pre></div>
+<div class="sourceCode" id="cb830"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb830-1"><a href="lavaan-lab-17-second-order-and-bifactor-models.html#cb830-1" aria-hidden="true" tabindex="-1"></a>cor.fac.HS.model <span class="ot">=</span> <span class="st">&#39;</span></span>
+<span id="cb830-2"><a href="lavaan-lab-17-second-order-and-bifactor-models.html#cb830-2" aria-hidden="true" tabindex="-1"></a><span class="st">visual  =~ x1 + x2 + x3</span></span>
+<span id="cb830-3"><a href="lavaan-lab-17-second-order-and-bifactor-models.html#cb830-3" aria-hidden="true" tabindex="-1"></a><span class="st">textual =~ x4 + x5 + x6</span></span>
+<span id="cb830-4"><a href="lavaan-lab-17-second-order-and-bifactor-models.html#cb830-4" aria-hidden="true" tabindex="-1"></a><span class="st">speed   =~ x7 + x8 + x9</span></span>
+<span id="cb830-5"><a href="lavaan-lab-17-second-order-and-bifactor-models.html#cb830-5" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span></code></pre></div>
 <p>Good luck!</p>
-<div class="sourceCode" id="cb829"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb829-1"><a href="lavaan-lab-17-second-order-and-bifactor-models.html#cb829-1" aria-hidden="true" tabindex="-1"></a>bifac.model <span class="ot">=</span> <span class="st">&#39;</span></span>
-<span id="cb829-2"><a href="lavaan-lab-17-second-order-and-bifactor-models.html#cb829-2" aria-hidden="true" tabindex="-1"></a><span class="st"># specific factors</span></span>
-<span id="cb829-3"><a href="lavaan-lab-17-second-order-and-bifactor-models.html#cb829-3" aria-hidden="true" tabindex="-1"></a><span class="st">visual  =~ x2 + x3 # remove x1 because of heywood case</span></span>
-<span id="cb829-4"><a href="lavaan-lab-17-second-order-and-bifactor-models.html#cb829-4" aria-hidden="true" tabindex="-1"></a><span class="st">textual =~ x4 + x5 + x6</span></span>
-<span id="cb829-5"><a href="lavaan-lab-17-second-order-and-bifactor-models.html#cb829-5" aria-hidden="true" tabindex="-1"></a><span class="st">speed   =~ x7 + x8 + x9</span></span>
-<span id="cb829-6"><a href="lavaan-lab-17-second-order-and-bifactor-models.html#cb829-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb829-7"><a href="lavaan-lab-17-second-order-and-bifactor-models.html#cb829-7" aria-hidden="true" tabindex="-1"></a><span class="st"># general factor GEN</span></span>
-<span id="cb829-8"><a href="lavaan-lab-17-second-order-and-bifactor-models.html#cb829-8" aria-hidden="true" tabindex="-1"></a><span class="st">G =~ x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9</span></span>
-<span id="cb829-9"><a href="lavaan-lab-17-second-order-and-bifactor-models.html#cb829-9" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span>
-<span id="cb829-10"><a href="lavaan-lab-17-second-order-and-bifactor-models.html#cb829-10" aria-hidden="true" tabindex="-1"></a>bifac.model.fit <span class="ot">=</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(bifac.model, </span>
-<span id="cb829-11"><a href="lavaan-lab-17-second-order-and-bifactor-models.html#cb829-11" aria-hidden="true" tabindex="-1"></a>                      <span class="at">data=</span>HolzingerSwineford1939, </span>
-<span id="cb829-12"><a href="lavaan-lab-17-second-order-and-bifactor-models.html#cb829-12" aria-hidden="true" tabindex="-1"></a>                      <span class="co">#ordered = colnames(odd), </span></span>
-<span id="cb829-13"><a href="lavaan-lab-17-second-order-and-bifactor-models.html#cb829-13" aria-hidden="true" tabindex="-1"></a>                      <span class="at">std.lv =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb829-14"><a href="lavaan-lab-17-second-order-and-bifactor-models.html#cb829-14" aria-hidden="true" tabindex="-1"></a>                      <span class="at">fixed.x =</span> F,</span>
-<span id="cb829-15"><a href="lavaan-lab-17-second-order-and-bifactor-models.html#cb829-15" aria-hidden="true" tabindex="-1"></a>                      <span class="at">orthogonal =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb829-16"><a href="lavaan-lab-17-second-order-and-bifactor-models.html#cb829-16" aria-hidden="true" tabindex="-1"></a>                      <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>)</span>
-<span id="cb829-17"><a href="lavaan-lab-17-second-order-and-bifactor-models.html#cb829-17" aria-hidden="true" tabindex="-1"></a>lavaan<span class="sc">:::</span><span class="fu">summary</span>(bifac.model.fit, <span class="at">standardized =</span> <span class="cn">TRUE</span>, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb831"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb831-1"><a href="lavaan-lab-17-second-order-and-bifactor-models.html#cb831-1" aria-hidden="true" tabindex="-1"></a>bifac.model <span class="ot">=</span> <span class="st">&#39;</span></span>
+<span id="cb831-2"><a href="lavaan-lab-17-second-order-and-bifactor-models.html#cb831-2" aria-hidden="true" tabindex="-1"></a><span class="st"># specific factors</span></span>
+<span id="cb831-3"><a href="lavaan-lab-17-second-order-and-bifactor-models.html#cb831-3" aria-hidden="true" tabindex="-1"></a><span class="st">visual  =~ x2 + x3 # remove x1 because of heywood case</span></span>
+<span id="cb831-4"><a href="lavaan-lab-17-second-order-and-bifactor-models.html#cb831-4" aria-hidden="true" tabindex="-1"></a><span class="st">textual =~ x4 + x5 + x6</span></span>
+<span id="cb831-5"><a href="lavaan-lab-17-second-order-and-bifactor-models.html#cb831-5" aria-hidden="true" tabindex="-1"></a><span class="st">speed   =~ x7 + x8 + x9</span></span>
+<span id="cb831-6"><a href="lavaan-lab-17-second-order-and-bifactor-models.html#cb831-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb831-7"><a href="lavaan-lab-17-second-order-and-bifactor-models.html#cb831-7" aria-hidden="true" tabindex="-1"></a><span class="st"># general factor GEN &lt;- </span></span>
+<span id="cb831-8"><a href="lavaan-lab-17-second-order-and-bifactor-models.html#cb831-8" aria-hidden="true" tabindex="-1"></a><span class="st">G =~ x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9</span></span>
+<span id="cb831-9"><a href="lavaan-lab-17-second-order-and-bifactor-models.html#cb831-9" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span>
+<span id="cb831-10"><a href="lavaan-lab-17-second-order-and-bifactor-models.html#cb831-10" aria-hidden="true" tabindex="-1"></a>bifac.model.fit <span class="ot">=</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(bifac.model, </span>
+<span id="cb831-11"><a href="lavaan-lab-17-second-order-and-bifactor-models.html#cb831-11" aria-hidden="true" tabindex="-1"></a>                      <span class="at">data=</span>HolzingerSwineford1939, </span>
+<span id="cb831-12"><a href="lavaan-lab-17-second-order-and-bifactor-models.html#cb831-12" aria-hidden="true" tabindex="-1"></a>                      <span class="co">#ordered = colnames(odd), </span></span>
+<span id="cb831-13"><a href="lavaan-lab-17-second-order-and-bifactor-models.html#cb831-13" aria-hidden="true" tabindex="-1"></a>                      <span class="at">std.lv =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb831-14"><a href="lavaan-lab-17-second-order-and-bifactor-models.html#cb831-14" aria-hidden="true" tabindex="-1"></a>                      <span class="at">fixed.x =</span> F,</span>
+<span id="cb831-15"><a href="lavaan-lab-17-second-order-and-bifactor-models.html#cb831-15" aria-hidden="true" tabindex="-1"></a>                      <span class="at">orthogonal =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb831-16"><a href="lavaan-lab-17-second-order-and-bifactor-models.html#cb831-16" aria-hidden="true" tabindex="-1"></a>                      <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>)</span>
+<span id="cb831-17"><a href="lavaan-lab-17-second-order-and-bifactor-models.html#cb831-17" aria-hidden="true" tabindex="-1"></a>lavaan<span class="sc">:::</span><span class="fu">summary</span>(bifac.model.fit, <span class="at">standardized =</span> <span class="cn">TRUE</span>, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>## lavaan 0.6-12 ended normally after 24 iterations
 ## 
 ##   Estimator                                         ML

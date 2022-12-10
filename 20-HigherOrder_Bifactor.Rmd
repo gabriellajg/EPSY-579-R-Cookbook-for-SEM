@@ -193,6 +193,13 @@ round(cbind(UniFactor, FiveFactor, SecondOrder, Bifactor), 3)
 
 Bifactor model wins!
 
+Bifactor indices:
+
+```{r}
+library(BifactorIndicesCalculator)
+bifactorIndices(bifac.model.fit)
+```
+
 
 <!------------------------------>
 ## Exercise: Mental Ability Scale
@@ -228,7 +235,7 @@ visual  =~ x2 + x3 # remove x1 because of heywood case
 textual =~ x4 + x5 + x6
 speed   =~ x7 + x8 + x9
 
-# general factor GEN
+# general factor GEN <- 
 G =~ x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9
 '
 bifac.model.fit = lavaan::sem(bifac.model, 

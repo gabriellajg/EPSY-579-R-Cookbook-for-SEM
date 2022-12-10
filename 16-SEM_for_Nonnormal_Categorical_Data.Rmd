@@ -51,7 +51,7 @@ Write out syntax for a one-factor CFA model:
 ```{r}
 cfaSyn <- "
 	odd =~ odd1 + odd2 + odd3 + odd4 + odd5 + odd6 + odd7 + odd8
-"
+	"
 ```
 
 Fit the one-factor model:
@@ -94,7 +94,8 @@ oddOneFac = '
 oneFacFit <- lavaan::sem(oddOneFac, 
                  data = odd,
                  ordered=c('odd1','odd2','odd3','odd4','odd5','odd6','odd7','odd8'), 
-                 fixed.x = FALSE) 
+                 fixed.x = FALSE,
+                 parameterization = 'theta')  # or delta 
 #declare these as ordered variable
 
 summary(oneFacFit, fit.measures = T)

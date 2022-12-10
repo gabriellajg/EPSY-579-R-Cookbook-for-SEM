@@ -512,12 +512,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>add covariates at both the between and the within level</li>
 </ul>
 <p>Load up the lavaan library:</p>
-<div class="sourceCode" id="cb856"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb856-1"><a href="lavaan-lab-19-multilevel-sem.html#cb856-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span></code></pre></div>
+<div class="sourceCode" id="cb858"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb858-1"><a href="lavaan-lab-19-multilevel-sem.html#cb858-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span></code></pre></div>
 <p>Let’s read in a Mplus example dataset from an online location</p>
-<div class="sourceCode" id="cb857"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb857-1"><a href="lavaan-lab-19-multilevel-sem.html#cb857-1" aria-hidden="true" tabindex="-1"></a>Data <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;http://statmodel.com/usersguide/chap9/ex9.6.dat&quot;</span>)</span>
-<span id="cb857-2"><a href="lavaan-lab-19-multilevel-sem.html#cb857-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(Data) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;y1&quot;</span>, <span class="st">&quot;y2&quot;</span>, <span class="st">&quot;y3&quot;</span>, <span class="st">&quot;y4&quot;</span>, <span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>, <span class="st">&quot;w&quot;</span>, <span class="st">&quot;clus&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb859"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb859-1"><a href="lavaan-lab-19-multilevel-sem.html#cb859-1" aria-hidden="true" tabindex="-1"></a>Data <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;http://statmodel.com/usersguide/chap9/ex9.6.dat&quot;</span>)</span>
+<span id="cb859-2"><a href="lavaan-lab-19-multilevel-sem.html#cb859-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(Data) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;y1&quot;</span>, <span class="st">&quot;y2&quot;</span>, <span class="st">&quot;y3&quot;</span>, <span class="st">&quot;y4&quot;</span>, <span class="st">&quot;x1&quot;</span>, <span class="st">&quot;x2&quot;</span>, <span class="st">&quot;w&quot;</span>, <span class="st">&quot;clus&quot;</span>)</span></code></pre></div>
 <p>Take a look at the matrix:</p>
-<div class="sourceCode" id="cb858"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb858-1"><a href="lavaan-lab-19-multilevel-sem.html#cb858-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Data)</span></code></pre></div>
+<div class="sourceCode" id="cb860"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb860-1"><a href="lavaan-lab-19-multilevel-sem.html#cb860-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Data)</span></code></pre></div>
 <pre><code>##          y1        y2        y3        y4        x1        x2         w clus
 ## 1  2.203250  1.858861  1.738477  2.244863  1.142800 -0.796987 -0.149501    1
 ## 2  1.934917  2.127876  0.083120  2.509436  1.949033 -0.122764 -0.149501    1
@@ -525,9 +525,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 4  0.073154 -1.743092 -2.310271 -1.514332 -2.649131  0.637570 -0.149501    1
 ## 5 -1.214906  0.452618  0.372610 -1.790372 -0.262916  0.302564 -0.149501    1
 ## 6  0.298330 -1.820272  0.561335 -2.090582 -0.944963  1.363045  0.319335    2</code></pre>
-<div class="sourceCode" id="cb860"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb860-1"><a href="lavaan-lab-19-multilevel-sem.html#cb860-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(Data)</span></code></pre></div>
+<div class="sourceCode" id="cb862"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb862-1"><a href="lavaan-lab-19-multilevel-sem.html#cb862-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(Data)</span></code></pre></div>
 <pre><code>## [1] 1000    8</code></pre>
-<div class="sourceCode" id="cb862"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb862-1"><a href="lavaan-lab-19-multilevel-sem.html#cb862-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">unique</span>(Data<span class="sc">$</span>clus))</span></code></pre></div>
+<div class="sourceCode" id="cb864"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb864-1"><a href="lavaan-lab-19-multilevel-sem.html#cb864-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">unique</span>(Data<span class="sc">$</span>clus))</span></code></pre></div>
 <pre><code>## [1] 110</code></pre>
 <ul>
 <li>there are 1000 individual observations in 110 clusters</li>
@@ -541,25 +541,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">22.1</span> PART I: Multilevel CFA 1: within-only construct<a href="lavaan-lab-19-multilevel-sem.html#part-i-multilevel-cfa-1-within-only-construct" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!------------------------------>
 <p>This model specifies the latent variable only at the within level:</p>
-<div class="sourceCode" id="cb864"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb864-1"><a href="lavaan-lab-19-multilevel-sem.html#cb864-1" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
-<span id="cb864-2"><a href="lavaan-lab-19-multilevel-sem.html#cb864-2" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 1</span></span>
-<span id="cb864-3"><a href="lavaan-lab-19-multilevel-sem.html#cb864-3" aria-hidden="true" tabindex="-1"></a><span class="st">    fw =~ y1 + y2 + y3 + y4</span></span>
-<span id="cb864-4"><a href="lavaan-lab-19-multilevel-sem.html#cb864-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb864-5"><a href="lavaan-lab-19-multilevel-sem.html#cb864-5" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 2</span></span>
-<span id="cb864-6"><a href="lavaan-lab-19-multilevel-sem.html#cb864-6" aria-hidden="true" tabindex="-1"></a><span class="st">    y1 ~~ y1 + y2 + y3 + y4</span></span>
-<span id="cb864-7"><a href="lavaan-lab-19-multilevel-sem.html#cb864-7" aria-hidden="true" tabindex="-1"></a><span class="st">    y2 ~~ y2 + y2 + y3</span></span>
-<span id="cb864-8"><a href="lavaan-lab-19-multilevel-sem.html#cb864-8" aria-hidden="true" tabindex="-1"></a><span class="st">    y3 ~~ y3 + y4</span></span>
-<span id="cb864-9"><a href="lavaan-lab-19-multilevel-sem.html#cb864-9" aria-hidden="true" tabindex="-1"></a><span class="st">    y4 ~~ y4</span></span>
-<span id="cb864-10"><a href="lavaan-lab-19-multilevel-sem.html#cb864-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb864-11"><a href="lavaan-lab-19-multilevel-sem.html#cb864-11" aria-hidden="true" tabindex="-1"></a><span class="st">    # all variances and covariances are freely estimated</span></span>
-<span id="cb864-12"><a href="lavaan-lab-19-multilevel-sem.html#cb864-12" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span></code></pre></div>
+<div class="sourceCode" id="cb866"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb866-1"><a href="lavaan-lab-19-multilevel-sem.html#cb866-1" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
+<span id="cb866-2"><a href="lavaan-lab-19-multilevel-sem.html#cb866-2" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 1</span></span>
+<span id="cb866-3"><a href="lavaan-lab-19-multilevel-sem.html#cb866-3" aria-hidden="true" tabindex="-1"></a><span class="st">    fw =~ y1 + y2 + y3 + y4</span></span>
+<span id="cb866-4"><a href="lavaan-lab-19-multilevel-sem.html#cb866-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb866-5"><a href="lavaan-lab-19-multilevel-sem.html#cb866-5" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 2</span></span>
+<span id="cb866-6"><a href="lavaan-lab-19-multilevel-sem.html#cb866-6" aria-hidden="true" tabindex="-1"></a><span class="st">    y1 ~~ y1 + y2 + y3 + y4</span></span>
+<span id="cb866-7"><a href="lavaan-lab-19-multilevel-sem.html#cb866-7" aria-hidden="true" tabindex="-1"></a><span class="st">    y2 ~~ y2 + y2 + y3</span></span>
+<span id="cb866-8"><a href="lavaan-lab-19-multilevel-sem.html#cb866-8" aria-hidden="true" tabindex="-1"></a><span class="st">    y3 ~~ y3 + y4</span></span>
+<span id="cb866-9"><a href="lavaan-lab-19-multilevel-sem.html#cb866-9" aria-hidden="true" tabindex="-1"></a><span class="st">    y4 ~~ y4</span></span>
+<span id="cb866-10"><a href="lavaan-lab-19-multilevel-sem.html#cb866-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb866-11"><a href="lavaan-lab-19-multilevel-sem.html#cb866-11" aria-hidden="true" tabindex="-1"></a><span class="st">    # all variances and covariances are freely estimated</span></span>
+<span id="cb866-12"><a href="lavaan-lab-19-multilevel-sem.html#cb866-12" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span></code></pre></div>
 <p>Fit the model:</p>
-<div class="sourceCode" id="cb865"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb865-1"><a href="lavaan-lab-19-multilevel-sem.html#cb865-1" aria-hidden="true" tabindex="-1"></a>model1fit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(model1, <span class="at">data =</span> Data, </span>
-<span id="cb865-2"><a href="lavaan-lab-19-multilevel-sem.html#cb865-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">cluster =</span> <span class="st">&quot;clus&quot;</span>,</span>
-<span id="cb865-3"><a href="lavaan-lab-19-multilevel-sem.html#cb865-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>,</span>
-<span id="cb865-4"><a href="lavaan-lab-19-multilevel-sem.html#cb865-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb865-5"><a href="lavaan-lab-19-multilevel-sem.html#cb865-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb865-6"><a href="lavaan-lab-19-multilevel-sem.html#cb865-6" aria-hidden="true" tabindex="-1"></a>lavaan<span class="sc">::</span><span class="fu">summary</span>(model1fit, <span class="at">fit.measures =</span> T, <span class="at">standardized =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb867"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb867-1"><a href="lavaan-lab-19-multilevel-sem.html#cb867-1" aria-hidden="true" tabindex="-1"></a>model1fit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(model1, <span class="at">data =</span> Data, </span>
+<span id="cb867-2"><a href="lavaan-lab-19-multilevel-sem.html#cb867-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">cluster =</span> <span class="st">&quot;clus&quot;</span>,</span>
+<span id="cb867-3"><a href="lavaan-lab-19-multilevel-sem.html#cb867-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>,</span>
+<span id="cb867-4"><a href="lavaan-lab-19-multilevel-sem.html#cb867-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb867-5"><a href="lavaan-lab-19-multilevel-sem.html#cb867-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb867-6"><a href="lavaan-lab-19-multilevel-sem.html#cb867-6" aria-hidden="true" tabindex="-1"></a>lavaan<span class="sc">::</span><span class="fu">summary</span>(model1fit, <span class="at">fit.measures =</span> T, <span class="at">standardized =</span> T)</span></code></pre></div>
 <pre><code>## lavaan 0.6-12 ended normally after 57 iterations
 ## 
 ##   Estimator                                         ML
@@ -692,30 +692,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>We may collect other variables from students/teachers in the schools though</li>
 </ul>
 <p>Note that the following model syntax:</p>
-<div class="sourceCode" id="cb867"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb867-1"><a href="lavaan-lab-19-multilevel-sem.html#cb867-1" aria-hidden="true" tabindex="-1"></a>model2.wrong <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
-<span id="cb867-2"><a href="lavaan-lab-19-multilevel-sem.html#cb867-2" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 1</span></span>
-<span id="cb867-3"><a href="lavaan-lab-19-multilevel-sem.html#cb867-3" aria-hidden="true" tabindex="-1"></a><span class="st">  # perhaps other level-1 variables</span></span>
-<span id="cb867-4"><a href="lavaan-lab-19-multilevel-sem.html#cb867-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb867-5"><a href="lavaan-lab-19-multilevel-sem.html#cb867-5" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 2</span></span>
-<span id="cb867-6"><a href="lavaan-lab-19-multilevel-sem.html#cb867-6" aria-hidden="true" tabindex="-1"></a><span class="st">    fb =~ y1 + y2 + y3 + y4</span></span>
-<span id="cb867-7"><a href="lavaan-lab-19-multilevel-sem.html#cb867-7" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span>
-<span id="cb867-8"><a href="lavaan-lab-19-multilevel-sem.html#cb867-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb867-9"><a href="lavaan-lab-19-multilevel-sem.html#cb867-9" aria-hidden="true" tabindex="-1"></a>model2fit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(model2.wrong, <span class="at">data =</span> Data, </span>
-<span id="cb867-10"><a href="lavaan-lab-19-multilevel-sem.html#cb867-10" aria-hidden="true" tabindex="-1"></a>                         <span class="at">cluster =</span> <span class="st">&quot;clus&quot;</span>,</span>
-<span id="cb867-11"><a href="lavaan-lab-19-multilevel-sem.html#cb867-11" aria-hidden="true" tabindex="-1"></a>                         <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>,</span>
-<span id="cb867-12"><a href="lavaan-lab-19-multilevel-sem.html#cb867-12" aria-hidden="true" tabindex="-1"></a>                         <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb868"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb868-1"><a href="lavaan-lab-19-multilevel-sem.html#cb868-1" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> <span class="fu">lav_partable_vnames</span>(tmp.lav, <span class="at">type =</span> <span class="st">&quot;ov&quot;</span>, <span class="at">level =</span> tmp.level.values[l]) <span class="sc">:</span> lavaan ERROR<span class="sc">:</span> level column does not contain value <span class="st">`</span><span class="at">1&#39;</span></span></code></pre></div>
+<div class="sourceCode" id="cb869"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb869-1"><a href="lavaan-lab-19-multilevel-sem.html#cb869-1" aria-hidden="true" tabindex="-1"></a>model2.wrong <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
+<span id="cb869-2"><a href="lavaan-lab-19-multilevel-sem.html#cb869-2" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 1</span></span>
+<span id="cb869-3"><a href="lavaan-lab-19-multilevel-sem.html#cb869-3" aria-hidden="true" tabindex="-1"></a><span class="st">  # perhaps other level-1 variables</span></span>
+<span id="cb869-4"><a href="lavaan-lab-19-multilevel-sem.html#cb869-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb869-5"><a href="lavaan-lab-19-multilevel-sem.html#cb869-5" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 2</span></span>
+<span id="cb869-6"><a href="lavaan-lab-19-multilevel-sem.html#cb869-6" aria-hidden="true" tabindex="-1"></a><span class="st">    fb =~ y1 + y2 + y3 + y4</span></span>
+<span id="cb869-7"><a href="lavaan-lab-19-multilevel-sem.html#cb869-7" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span>
+<span id="cb869-8"><a href="lavaan-lab-19-multilevel-sem.html#cb869-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb869-9"><a href="lavaan-lab-19-multilevel-sem.html#cb869-9" aria-hidden="true" tabindex="-1"></a>model2fit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(model2.wrong, <span class="at">data =</span> Data, </span>
+<span id="cb869-10"><a href="lavaan-lab-19-multilevel-sem.html#cb869-10" aria-hidden="true" tabindex="-1"></a>                         <span class="at">cluster =</span> <span class="st">&quot;clus&quot;</span>,</span>
+<span id="cb869-11"><a href="lavaan-lab-19-multilevel-sem.html#cb869-11" aria-hidden="true" tabindex="-1"></a>                         <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>,</span>
+<span id="cb869-12"><a href="lavaan-lab-19-multilevel-sem.html#cb869-12" aria-hidden="true" tabindex="-1"></a>                         <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb870"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb870-1"><a href="lavaan-lab-19-multilevel-sem.html#cb870-1" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> <span class="fu">lav_partable_vnames</span>(tmp.lav, <span class="at">type =</span> <span class="st">&quot;ov&quot;</span>, <span class="at">level =</span> tmp.level.values[l]) <span class="sc">:</span> lavaan ERROR<span class="sc">:</span> level column does not contain value <span class="st">`</span><span class="at">1&#39;</span></span></code></pre></div>
 <p>won’t work because there is nothing at level 1. Instead, specify this model just like a regular CFA model:</p>
-<div class="sourceCode" id="cb869"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb869-1"><a href="lavaan-lab-19-multilevel-sem.html#cb869-1" aria-hidden="true" tabindex="-1"></a>model2 <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
-<span id="cb869-2"><a href="lavaan-lab-19-multilevel-sem.html#cb869-2" aria-hidden="true" tabindex="-1"></a><span class="st">    fb =~ y1 + y2 + y3 + y4</span></span>
-<span id="cb869-3"><a href="lavaan-lab-19-multilevel-sem.html#cb869-3" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span></code></pre></div>
+<div class="sourceCode" id="cb871"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb871-1"><a href="lavaan-lab-19-multilevel-sem.html#cb871-1" aria-hidden="true" tabindex="-1"></a>model2 <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
+<span id="cb871-2"><a href="lavaan-lab-19-multilevel-sem.html#cb871-2" aria-hidden="true" tabindex="-1"></a><span class="st">    fb =~ y1 + y2 + y3 + y4</span></span>
+<span id="cb871-3"><a href="lavaan-lab-19-multilevel-sem.html#cb871-3" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span></code></pre></div>
 <p>Fit the model:</p>
-<div class="sourceCode" id="cb870"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb870-1"><a href="lavaan-lab-19-multilevel-sem.html#cb870-1" aria-hidden="true" tabindex="-1"></a>model2fit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(model2, <span class="at">data =</span> Data, </span>
-<span id="cb870-2"><a href="lavaan-lab-19-multilevel-sem.html#cb870-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">cluster =</span> <span class="st">&quot;clus&quot;</span>,</span>
-<span id="cb870-3"><a href="lavaan-lab-19-multilevel-sem.html#cb870-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>,</span>
-<span id="cb870-4"><a href="lavaan-lab-19-multilevel-sem.html#cb870-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb870-5"><a href="lavaan-lab-19-multilevel-sem.html#cb870-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb870-6"><a href="lavaan-lab-19-multilevel-sem.html#cb870-6" aria-hidden="true" tabindex="-1"></a>lavaan<span class="sc">::</span><span class="fu">summary</span>(model2fit, <span class="at">fit.measures =</span> T, <span class="at">standardized =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb872"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb872-1"><a href="lavaan-lab-19-multilevel-sem.html#cb872-1" aria-hidden="true" tabindex="-1"></a>model2fit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(model2, <span class="at">data =</span> Data, </span>
+<span id="cb872-2"><a href="lavaan-lab-19-multilevel-sem.html#cb872-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">cluster =</span> <span class="st">&quot;clus&quot;</span>,</span>
+<span id="cb872-3"><a href="lavaan-lab-19-multilevel-sem.html#cb872-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>,</span>
+<span id="cb872-4"><a href="lavaan-lab-19-multilevel-sem.html#cb872-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb872-5"><a href="lavaan-lab-19-multilevel-sem.html#cb872-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb872-6"><a href="lavaan-lab-19-multilevel-sem.html#cb872-6" aria-hidden="true" tabindex="-1"></a>lavaan<span class="sc">::</span><span class="fu">summary</span>(model2fit, <span class="at">fit.measures =</span> T, <span class="at">standardized =</span> T)</span></code></pre></div>
 <pre><code>## lavaan 0.6-12 ended normally after 20 iterations
 ## 
 ##   Estimator                                         ML
@@ -815,29 +815,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>However, the latent variable only makes sense at the between level so SEM model is only built at the between level;</li>
 <li>The indicators are correlated at the within level;</li>
 </ul>
-<div class="sourceCode" id="cb872"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb872-1"><a href="lavaan-lab-19-multilevel-sem.html#cb872-1" aria-hidden="true" tabindex="-1"></a>model3 <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
-<span id="cb872-2"><a href="lavaan-lab-19-multilevel-sem.html#cb872-2" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 1</span></span>
-<span id="cb872-3"><a href="lavaan-lab-19-multilevel-sem.html#cb872-3" aria-hidden="true" tabindex="-1"></a><span class="st">    y1 ~~ y1 + y2 + y3 + y4</span></span>
-<span id="cb872-4"><a href="lavaan-lab-19-multilevel-sem.html#cb872-4" aria-hidden="true" tabindex="-1"></a><span class="st">    y2 ~~ y2 + y3 + y4</span></span>
-<span id="cb872-5"><a href="lavaan-lab-19-multilevel-sem.html#cb872-5" aria-hidden="true" tabindex="-1"></a><span class="st">    y3 ~~ y3 + y4</span></span>
-<span id="cb872-6"><a href="lavaan-lab-19-multilevel-sem.html#cb872-6" aria-hidden="true" tabindex="-1"></a><span class="st">    y4 ~~ y4</span></span>
-<span id="cb872-7"><a href="lavaan-lab-19-multilevel-sem.html#cb872-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb872-8"><a href="lavaan-lab-19-multilevel-sem.html#cb872-8" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 2</span></span>
-<span id="cb872-9"><a href="lavaan-lab-19-multilevel-sem.html#cb872-9" aria-hidden="true" tabindex="-1"></a><span class="st">    fs =~ y1 + y2 + y3 + y4</span></span>
-<span id="cb872-10"><a href="lavaan-lab-19-multilevel-sem.html#cb872-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb872-11"><a href="lavaan-lab-19-multilevel-sem.html#cb872-11" aria-hidden="true" tabindex="-1"></a><span class="st"> # Fix Significant Heywood Cases</span></span>
-<span id="cb872-12"><a href="lavaan-lab-19-multilevel-sem.html#cb872-12" aria-hidden="true" tabindex="-1"></a><span class="st">  y2 ~~ v2*y2</span></span>
-<span id="cb872-13"><a href="lavaan-lab-19-multilevel-sem.html#cb872-13" aria-hidden="true" tabindex="-1"></a><span class="st">  y4 ~~ v4*y4</span></span>
-<span id="cb872-14"><a href="lavaan-lab-19-multilevel-sem.html#cb872-14" aria-hidden="true" tabindex="-1"></a><span class="st">  v2 &gt; 0</span></span>
-<span id="cb872-15"><a href="lavaan-lab-19-multilevel-sem.html#cb872-15" aria-hidden="true" tabindex="-1"></a><span class="st">  v4 &gt; 0 </span></span>
-<span id="cb872-16"><a href="lavaan-lab-19-multilevel-sem.html#cb872-16" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span></code></pre></div>
+<div class="sourceCode" id="cb874"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb874-1"><a href="lavaan-lab-19-multilevel-sem.html#cb874-1" aria-hidden="true" tabindex="-1"></a>model3 <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
+<span id="cb874-2"><a href="lavaan-lab-19-multilevel-sem.html#cb874-2" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 1</span></span>
+<span id="cb874-3"><a href="lavaan-lab-19-multilevel-sem.html#cb874-3" aria-hidden="true" tabindex="-1"></a><span class="st">    y1 ~~ y1 + y2 + y3 + y4</span></span>
+<span id="cb874-4"><a href="lavaan-lab-19-multilevel-sem.html#cb874-4" aria-hidden="true" tabindex="-1"></a><span class="st">    y2 ~~ y2 + y3 + y4</span></span>
+<span id="cb874-5"><a href="lavaan-lab-19-multilevel-sem.html#cb874-5" aria-hidden="true" tabindex="-1"></a><span class="st">    y3 ~~ y3 + y4</span></span>
+<span id="cb874-6"><a href="lavaan-lab-19-multilevel-sem.html#cb874-6" aria-hidden="true" tabindex="-1"></a><span class="st">    y4 ~~ y4</span></span>
+<span id="cb874-7"><a href="lavaan-lab-19-multilevel-sem.html#cb874-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb874-8"><a href="lavaan-lab-19-multilevel-sem.html#cb874-8" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 2</span></span>
+<span id="cb874-9"><a href="lavaan-lab-19-multilevel-sem.html#cb874-9" aria-hidden="true" tabindex="-1"></a><span class="st">    fs =~ y1 + y2 + y3 + y4</span></span>
+<span id="cb874-10"><a href="lavaan-lab-19-multilevel-sem.html#cb874-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb874-11"><a href="lavaan-lab-19-multilevel-sem.html#cb874-11" aria-hidden="true" tabindex="-1"></a><span class="st"> # Fix Significant Heywood Cases</span></span>
+<span id="cb874-12"><a href="lavaan-lab-19-multilevel-sem.html#cb874-12" aria-hidden="true" tabindex="-1"></a><span class="st">  y2 ~~ v2*y2</span></span>
+<span id="cb874-13"><a href="lavaan-lab-19-multilevel-sem.html#cb874-13" aria-hidden="true" tabindex="-1"></a><span class="st">  y4 ~~ v4*y4</span></span>
+<span id="cb874-14"><a href="lavaan-lab-19-multilevel-sem.html#cb874-14" aria-hidden="true" tabindex="-1"></a><span class="st">  v2 &gt; 0</span></span>
+<span id="cb874-15"><a href="lavaan-lab-19-multilevel-sem.html#cb874-15" aria-hidden="true" tabindex="-1"></a><span class="st">  v4 &gt; 0 </span></span>
+<span id="cb874-16"><a href="lavaan-lab-19-multilevel-sem.html#cb874-16" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span></code></pre></div>
 <p>Fit the model:</p>
-<div class="sourceCode" id="cb873"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb873-1"><a href="lavaan-lab-19-multilevel-sem.html#cb873-1" aria-hidden="true" tabindex="-1"></a>model3fit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(model3, <span class="at">data =</span> Data, </span>
-<span id="cb873-2"><a href="lavaan-lab-19-multilevel-sem.html#cb873-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">cluster =</span> <span class="st">&quot;clus&quot;</span>,</span>
-<span id="cb873-3"><a href="lavaan-lab-19-multilevel-sem.html#cb873-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>,</span>
-<span id="cb873-4"><a href="lavaan-lab-19-multilevel-sem.html#cb873-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb875"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb875-1"><a href="lavaan-lab-19-multilevel-sem.html#cb875-1" aria-hidden="true" tabindex="-1"></a>model3fit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(model3, <span class="at">data =</span> Data, </span>
+<span id="cb875-2"><a href="lavaan-lab-19-multilevel-sem.html#cb875-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">cluster =</span> <span class="st">&quot;clus&quot;</span>,</span>
+<span id="cb875-3"><a href="lavaan-lab-19-multilevel-sem.html#cb875-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>,</span>
+<span id="cb875-4"><a href="lavaan-lab-19-multilevel-sem.html#cb875-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <pre><code>## Warning in lav_object_post_check(object): lavaan WARNING: some estimated ov variances are negative</code></pre>
-<div class="sourceCode" id="cb875"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb875-1"><a href="lavaan-lab-19-multilevel-sem.html#cb875-1" aria-hidden="true" tabindex="-1"></a>lavaan<span class="sc">::</span><span class="fu">summary</span>(model3fit, <span class="at">standardized =</span> T, <span class="at">fit.measures =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb877"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb877-1"><a href="lavaan-lab-19-multilevel-sem.html#cb877-1" aria-hidden="true" tabindex="-1"></a>lavaan<span class="sc">::</span><span class="fu">summary</span>(model3fit, <span class="at">standardized =</span> T, <span class="at">fit.measures =</span> T)</span></code></pre></div>
 <pre><code>## lavaan 0.6-11 ended normally after 94 iterations
 ## 
 ##   Estimator                                         ML
@@ -974,20 +974,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Model 4a specifies the latent variable both at the within and the between level;</li>
 <li>The CFA at each level should have the same factor structure, but not necessarily the same parameter estimates;</li>
 </ul>
-<div class="sourceCode" id="cb877"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb877-1"><a href="lavaan-lab-19-multilevel-sem.html#cb877-1" aria-hidden="true" tabindex="-1"></a>model4a <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
-<span id="cb877-2"><a href="lavaan-lab-19-multilevel-sem.html#cb877-2" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 1</span></span>
-<span id="cb877-3"><a href="lavaan-lab-19-multilevel-sem.html#cb877-3" aria-hidden="true" tabindex="-1"></a><span class="st">    fw =~ y1 + y2 + y3 + y4</span></span>
-<span id="cb877-4"><a href="lavaan-lab-19-multilevel-sem.html#cb877-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb877-5"><a href="lavaan-lab-19-multilevel-sem.html#cb877-5" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 2</span></span>
-<span id="cb877-6"><a href="lavaan-lab-19-multilevel-sem.html#cb877-6" aria-hidden="true" tabindex="-1"></a><span class="st">    fb =~ y1 + y2 + y3 + y4</span></span>
-<span id="cb877-7"><a href="lavaan-lab-19-multilevel-sem.html#cb877-7" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span>
-<span id="cb877-8"><a href="lavaan-lab-19-multilevel-sem.html#cb877-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb877-9"><a href="lavaan-lab-19-multilevel-sem.html#cb877-9" aria-hidden="true" tabindex="-1"></a>model4afit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(model4a, <span class="at">data =</span> Data, </span>
-<span id="cb877-10"><a href="lavaan-lab-19-multilevel-sem.html#cb877-10" aria-hidden="true" tabindex="-1"></a>                         <span class="at">cluster =</span> <span class="st">&quot;clus&quot;</span>,</span>
-<span id="cb877-11"><a href="lavaan-lab-19-multilevel-sem.html#cb877-11" aria-hidden="true" tabindex="-1"></a>                         <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>,</span>
-<span id="cb877-12"><a href="lavaan-lab-19-multilevel-sem.html#cb877-12" aria-hidden="true" tabindex="-1"></a>                         <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb879"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb879-1"><a href="lavaan-lab-19-multilevel-sem.html#cb879-1" aria-hidden="true" tabindex="-1"></a>model4a <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
+<span id="cb879-2"><a href="lavaan-lab-19-multilevel-sem.html#cb879-2" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 1</span></span>
+<span id="cb879-3"><a href="lavaan-lab-19-multilevel-sem.html#cb879-3" aria-hidden="true" tabindex="-1"></a><span class="st">    fw =~ y1 + y2 + y3 + y4</span></span>
+<span id="cb879-4"><a href="lavaan-lab-19-multilevel-sem.html#cb879-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb879-5"><a href="lavaan-lab-19-multilevel-sem.html#cb879-5" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 2</span></span>
+<span id="cb879-6"><a href="lavaan-lab-19-multilevel-sem.html#cb879-6" aria-hidden="true" tabindex="-1"></a><span class="st">    fb =~ y1 + y2 + y3 + y4</span></span>
+<span id="cb879-7"><a href="lavaan-lab-19-multilevel-sem.html#cb879-7" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span>
+<span id="cb879-8"><a href="lavaan-lab-19-multilevel-sem.html#cb879-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb879-9"><a href="lavaan-lab-19-multilevel-sem.html#cb879-9" aria-hidden="true" tabindex="-1"></a>model4afit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(model4a, <span class="at">data =</span> Data, </span>
+<span id="cb879-10"><a href="lavaan-lab-19-multilevel-sem.html#cb879-10" aria-hidden="true" tabindex="-1"></a>                         <span class="at">cluster =</span> <span class="st">&quot;clus&quot;</span>,</span>
+<span id="cb879-11"><a href="lavaan-lab-19-multilevel-sem.html#cb879-11" aria-hidden="true" tabindex="-1"></a>                         <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>,</span>
+<span id="cb879-12"><a href="lavaan-lab-19-multilevel-sem.html#cb879-12" aria-hidden="true" tabindex="-1"></a>                         <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <pre><code>## Warning in lav_object_post_check(object): lavaan WARNING: some estimated ov variances are negative</code></pre>
-<div class="sourceCode" id="cb879"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb879-1"><a href="lavaan-lab-19-multilevel-sem.html#cb879-1" aria-hidden="true" tabindex="-1"></a>lavaan<span class="sc">::</span><span class="fu">summary</span>(model4afit, <span class="at">fit.measures =</span> T, <span class="at">standardized =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb881"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb881-1"><a href="lavaan-lab-19-multilevel-sem.html#cb881-1" aria-hidden="true" tabindex="-1"></a>lavaan<span class="sc">::</span><span class="fu">summary</span>(model4afit, <span class="at">fit.measures =</span> T, <span class="at">standardized =</span> T)</span></code></pre></div>
 <pre><code>## lavaan 0.6-12 ended normally after 50 iterations
 ## 
 ##   Estimator                                         ML
@@ -1111,20 +1111,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li>Model 4b specifies the same CFA at each level and requires the same factor loadings;</li>
 </ul>
-<div class="sourceCode" id="cb881"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb881-1"><a href="lavaan-lab-19-multilevel-sem.html#cb881-1" aria-hidden="true" tabindex="-1"></a>model4b <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
-<span id="cb881-2"><a href="lavaan-lab-19-multilevel-sem.html#cb881-2" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 1</span></span>
-<span id="cb881-3"><a href="lavaan-lab-19-multilevel-sem.html#cb881-3" aria-hidden="true" tabindex="-1"></a><span class="st">    fw =~ a*y1 + b*y2 + c*y3 + d*y4</span></span>
-<span id="cb881-4"><a href="lavaan-lab-19-multilevel-sem.html#cb881-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb881-5"><a href="lavaan-lab-19-multilevel-sem.html#cb881-5" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 2</span></span>
-<span id="cb881-6"><a href="lavaan-lab-19-multilevel-sem.html#cb881-6" aria-hidden="true" tabindex="-1"></a><span class="st">    fb =~ a*y1 + b*y2 + c*y3 + d*y4</span></span>
-<span id="cb881-7"><a href="lavaan-lab-19-multilevel-sem.html#cb881-7" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span>
-<span id="cb881-8"><a href="lavaan-lab-19-multilevel-sem.html#cb881-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb881-9"><a href="lavaan-lab-19-multilevel-sem.html#cb881-9" aria-hidden="true" tabindex="-1"></a>model4bfit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(model4b, <span class="at">data =</span> Data, </span>
-<span id="cb881-10"><a href="lavaan-lab-19-multilevel-sem.html#cb881-10" aria-hidden="true" tabindex="-1"></a>                         <span class="at">cluster =</span> <span class="st">&quot;clus&quot;</span>,</span>
-<span id="cb881-11"><a href="lavaan-lab-19-multilevel-sem.html#cb881-11" aria-hidden="true" tabindex="-1"></a>                         <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>,</span>
-<span id="cb881-12"><a href="lavaan-lab-19-multilevel-sem.html#cb881-12" aria-hidden="true" tabindex="-1"></a>                         <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb883"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb883-1"><a href="lavaan-lab-19-multilevel-sem.html#cb883-1" aria-hidden="true" tabindex="-1"></a>model4b <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
+<span id="cb883-2"><a href="lavaan-lab-19-multilevel-sem.html#cb883-2" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 1</span></span>
+<span id="cb883-3"><a href="lavaan-lab-19-multilevel-sem.html#cb883-3" aria-hidden="true" tabindex="-1"></a><span class="st">    fw =~ a*y1 + b*y2 + c*y3 + d*y4</span></span>
+<span id="cb883-4"><a href="lavaan-lab-19-multilevel-sem.html#cb883-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb883-5"><a href="lavaan-lab-19-multilevel-sem.html#cb883-5" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 2</span></span>
+<span id="cb883-6"><a href="lavaan-lab-19-multilevel-sem.html#cb883-6" aria-hidden="true" tabindex="-1"></a><span class="st">    fb =~ a*y1 + b*y2 + c*y3 + d*y4</span></span>
+<span id="cb883-7"><a href="lavaan-lab-19-multilevel-sem.html#cb883-7" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span>
+<span id="cb883-8"><a href="lavaan-lab-19-multilevel-sem.html#cb883-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb883-9"><a href="lavaan-lab-19-multilevel-sem.html#cb883-9" aria-hidden="true" tabindex="-1"></a>model4bfit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(model4b, <span class="at">data =</span> Data, </span>
+<span id="cb883-10"><a href="lavaan-lab-19-multilevel-sem.html#cb883-10" aria-hidden="true" tabindex="-1"></a>                         <span class="at">cluster =</span> <span class="st">&quot;clus&quot;</span>,</span>
+<span id="cb883-11"><a href="lavaan-lab-19-multilevel-sem.html#cb883-11" aria-hidden="true" tabindex="-1"></a>                         <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>,</span>
+<span id="cb883-12"><a href="lavaan-lab-19-multilevel-sem.html#cb883-12" aria-hidden="true" tabindex="-1"></a>                         <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <pre><code>## Warning in lav_object_post_check(object): lavaan WARNING: some estimated ov variances are negative</code></pre>
-<div class="sourceCode" id="cb883"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb883-1"><a href="lavaan-lab-19-multilevel-sem.html#cb883-1" aria-hidden="true" tabindex="-1"></a>lavaan<span class="sc">::</span><span class="fu">summary</span>(model4bfit, <span class="at">fit.measures =</span> T, <span class="at">standardized =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb885"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb885-1"><a href="lavaan-lab-19-multilevel-sem.html#cb885-1" aria-hidden="true" tabindex="-1"></a>lavaan<span class="sc">::</span><span class="fu">summary</span>(model4bfit, <span class="at">fit.measures =</span> T, <span class="at">standardized =</span> T)</span></code></pre></div>
 <pre><code>## lavaan 0.6-12 ended normally after 44 iterations
 ## 
 ##   Estimator                                         ML
@@ -1255,24 +1255,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>This model specifies the latent variable both at the within and the between level;</li>
 <li>The CFA at each level should have the same factor structure, but not necessarily the same parameter estimates;</li>
 </ul>
-<div class="sourceCode" id="cb885"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb885-1"><a href="lavaan-lab-19-multilevel-sem.html#cb885-1" aria-hidden="true" tabindex="-1"></a>model5 <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
-<span id="cb885-2"><a href="lavaan-lab-19-multilevel-sem.html#cb885-2" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 1</span></span>
-<span id="cb885-3"><a href="lavaan-lab-19-multilevel-sem.html#cb885-3" aria-hidden="true" tabindex="-1"></a><span class="st">    fw =~ a*y1 + b*y2 + c*y3 + d*y4</span></span>
-<span id="cb885-4"><a href="lavaan-lab-19-multilevel-sem.html#cb885-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb885-5"><a href="lavaan-lab-19-multilevel-sem.html#cb885-5" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 2</span></span>
-<span id="cb885-6"><a href="lavaan-lab-19-multilevel-sem.html#cb885-6" aria-hidden="true" tabindex="-1"></a><span class="st">    fb =~ a*y1 + b*y2 + c*y3 + d*y4   # configural</span></span>
-<span id="cb885-7"><a href="lavaan-lab-19-multilevel-sem.html#cb885-7" aria-hidden="true" tabindex="-1"></a><span class="st">    fs =~ y1 + y2 + y3 + y4           # shared</span></span>
-<span id="cb885-8"><a href="lavaan-lab-19-multilevel-sem.html#cb885-8" aria-hidden="true" tabindex="-1"></a><span class="st">    </span></span>
-<span id="cb885-9"><a href="lavaan-lab-19-multilevel-sem.html#cb885-9" aria-hidden="true" tabindex="-1"></a><span class="st">    # fb and fs must be orthogonal</span></span>
-<span id="cb885-10"><a href="lavaan-lab-19-multilevel-sem.html#cb885-10" aria-hidden="true" tabindex="-1"></a><span class="st">    fs ~~ 0*fb</span></span>
-<span id="cb885-11"><a href="lavaan-lab-19-multilevel-sem.html#cb885-11" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span>
-<span id="cb885-12"><a href="lavaan-lab-19-multilevel-sem.html#cb885-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb885-13"><a href="lavaan-lab-19-multilevel-sem.html#cb885-13" aria-hidden="true" tabindex="-1"></a>model5fit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(model5, <span class="at">data =</span> Data, </span>
-<span id="cb885-14"><a href="lavaan-lab-19-multilevel-sem.html#cb885-14" aria-hidden="true" tabindex="-1"></a>                         <span class="at">cluster =</span> <span class="st">&quot;clus&quot;</span>,</span>
-<span id="cb885-15"><a href="lavaan-lab-19-multilevel-sem.html#cb885-15" aria-hidden="true" tabindex="-1"></a>                         <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>,</span>
-<span id="cb885-16"><a href="lavaan-lab-19-multilevel-sem.html#cb885-16" aria-hidden="true" tabindex="-1"></a>                         <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb887"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb887-1"><a href="lavaan-lab-19-multilevel-sem.html#cb887-1" aria-hidden="true" tabindex="-1"></a>model5 <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
+<span id="cb887-2"><a href="lavaan-lab-19-multilevel-sem.html#cb887-2" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 1</span></span>
+<span id="cb887-3"><a href="lavaan-lab-19-multilevel-sem.html#cb887-3" aria-hidden="true" tabindex="-1"></a><span class="st">    fw =~ a*y1 + b*y2 + c*y3 + d*y4</span></span>
+<span id="cb887-4"><a href="lavaan-lab-19-multilevel-sem.html#cb887-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb887-5"><a href="lavaan-lab-19-multilevel-sem.html#cb887-5" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 2</span></span>
+<span id="cb887-6"><a href="lavaan-lab-19-multilevel-sem.html#cb887-6" aria-hidden="true" tabindex="-1"></a><span class="st">    fb =~ a*y1 + b*y2 + c*y3 + d*y4   # configural</span></span>
+<span id="cb887-7"><a href="lavaan-lab-19-multilevel-sem.html#cb887-7" aria-hidden="true" tabindex="-1"></a><span class="st">    fs =~ y1 + y2 + y3 + y4           # shared</span></span>
+<span id="cb887-8"><a href="lavaan-lab-19-multilevel-sem.html#cb887-8" aria-hidden="true" tabindex="-1"></a><span class="st">    </span></span>
+<span id="cb887-9"><a href="lavaan-lab-19-multilevel-sem.html#cb887-9" aria-hidden="true" tabindex="-1"></a><span class="st">    # fb and fs must be orthogonal</span></span>
+<span id="cb887-10"><a href="lavaan-lab-19-multilevel-sem.html#cb887-10" aria-hidden="true" tabindex="-1"></a><span class="st">    fs ~~ 0*fb</span></span>
+<span id="cb887-11"><a href="lavaan-lab-19-multilevel-sem.html#cb887-11" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span>
+<span id="cb887-12"><a href="lavaan-lab-19-multilevel-sem.html#cb887-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb887-13"><a href="lavaan-lab-19-multilevel-sem.html#cb887-13" aria-hidden="true" tabindex="-1"></a>model5fit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(model5, <span class="at">data =</span> Data, </span>
+<span id="cb887-14"><a href="lavaan-lab-19-multilevel-sem.html#cb887-14" aria-hidden="true" tabindex="-1"></a>                         <span class="at">cluster =</span> <span class="st">&quot;clus&quot;</span>,</span>
+<span id="cb887-15"><a href="lavaan-lab-19-multilevel-sem.html#cb887-15" aria-hidden="true" tabindex="-1"></a>                         <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>,</span>
+<span id="cb887-16"><a href="lavaan-lab-19-multilevel-sem.html#cb887-16" aria-hidden="true" tabindex="-1"></a>                         <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <pre><code>## Warning in lav_object_post_check(object): lavaan WARNING: some estimated ov variances are negative</code></pre>
-<div class="sourceCode" id="cb887"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb887-1"><a href="lavaan-lab-19-multilevel-sem.html#cb887-1" aria-hidden="true" tabindex="-1"></a>lavaan<span class="sc">::</span><span class="fu">summary</span>(model5fit, <span class="at">fit.measures =</span> T, <span class="at">standardized =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb889"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb889-1"><a href="lavaan-lab-19-multilevel-sem.html#cb889-1" aria-hidden="true" tabindex="-1"></a>lavaan<span class="sc">::</span><span class="fu">summary</span>(model5fit, <span class="at">fit.measures =</span> T, <span class="at">standardized =</span> T)</span></code></pre></div>
 <pre><code>## lavaan 0.6-12 ended normally after 56 iterations
 ## 
 ##   Estimator                                         ML
@@ -1411,15 +1411,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="part-vi-model-comparison" class="section level2 hasAnchor" number="22.6">
 <h2><span class="header-section-number">22.6</span> PART VI: Model Comparison<a href="lavaan-lab-19-multilevel-sem.html#part-vi-model-comparison" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!------------------------------>
-<div class="sourceCode" id="cb889"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb889-1"><a href="lavaan-lab-19-multilevel-sem.html#cb889-1" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">=</span> <span class="fu">fitMeasures</span>(model1fit, <span class="at">fit.measures =</span> <span class="fu">c</span>(<span class="st">&quot;chisq.scaled&quot;</span>, <span class="st">&quot;df.scaled&quot;</span>, <span class="st">&quot;pvalue.scaled&quot;</span>, <span class="st">&quot;rmsea.robust&quot;</span>, <span class="st">&quot;rmsea.ci.lower.robust&quot;</span>, <span class="st">&quot;rmsea.ci.upper.robust&quot;</span>, <span class="st">&quot;cfi.robust&quot;</span>, <span class="st">&quot;tli.robust&quot;</span>, <span class="st">&quot;srmr_within&quot;</span>, <span class="st">&quot;srmr_between&quot;</span>))</span>
-<span id="cb889-2"><a href="lavaan-lab-19-multilevel-sem.html#cb889-2" aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">=</span> <span class="fu">fitMeasures</span>(model2fit, <span class="at">fit.measures =</span> <span class="fu">c</span>(<span class="st">&quot;chisq.scaled&quot;</span>, <span class="st">&quot;df.scaled&quot;</span>, <span class="st">&quot;pvalue.scaled&quot;</span>, <span class="st">&quot;rmsea.robust&quot;</span>, <span class="st">&quot;rmsea.ci.lower.robust&quot;</span>, <span class="st">&quot;rmsea.ci.upper.robust&quot;</span>, <span class="st">&quot;cfi.robust&quot;</span>, <span class="st">&quot;tli.robust&quot;</span>, <span class="st">&quot;srmr_within&quot;</span>, <span class="st">&quot;srmr_between&quot;</span>))</span>
-<span id="cb889-3"><a href="lavaan-lab-19-multilevel-sem.html#cb889-3" aria-hidden="true" tabindex="-1"></a>m3 <span class="ot">=</span> <span class="fu">fitMeasures</span>(model3fit, <span class="at">fit.measures =</span> <span class="fu">c</span>(<span class="st">&quot;chisq.scaled&quot;</span>, <span class="st">&quot;df.scaled&quot;</span>, <span class="st">&quot;pvalue.scaled&quot;</span>, <span class="st">&quot;rmsea.robust&quot;</span>, <span class="st">&quot;rmsea.ci.lower.robust&quot;</span>, <span class="st">&quot;rmsea.ci.upper.robust&quot;</span>, <span class="st">&quot;cfi.robust&quot;</span>, <span class="st">&quot;tli.robust&quot;</span>, <span class="st">&quot;srmr_within&quot;</span>, <span class="st">&quot;srmr_between&quot;</span>))</span>
-<span id="cb889-4"><a href="lavaan-lab-19-multilevel-sem.html#cb889-4" aria-hidden="true" tabindex="-1"></a>m4a <span class="ot">=</span> <span class="fu">fitMeasures</span>(model4afit, <span class="at">fit.measures =</span> <span class="fu">c</span>(<span class="st">&quot;chisq.scaled&quot;</span>, <span class="st">&quot;df.scaled&quot;</span>, <span class="st">&quot;pvalue.scaled&quot;</span>, <span class="st">&quot;rmsea.robust&quot;</span>, <span class="st">&quot;rmsea.ci.lower.robust&quot;</span>, <span class="st">&quot;rmsea.ci.upper.robust&quot;</span>, <span class="st">&quot;cfi.robust&quot;</span>, <span class="st">&quot;tli.robust&quot;</span>, <span class="st">&quot;srmr_within&quot;</span>, <span class="st">&quot;srmr_between&quot;</span>))</span>
-<span id="cb889-5"><a href="lavaan-lab-19-multilevel-sem.html#cb889-5" aria-hidden="true" tabindex="-1"></a>m4b <span class="ot">=</span> <span class="fu">fitMeasures</span>(model4bfit, <span class="at">fit.measures =</span> <span class="fu">c</span>(<span class="st">&quot;chisq.scaled&quot;</span>, <span class="st">&quot;df.scaled&quot;</span>, <span class="st">&quot;pvalue.scaled&quot;</span>, <span class="st">&quot;rmsea.robust&quot;</span>, <span class="st">&quot;rmsea.ci.lower.robust&quot;</span>, <span class="st">&quot;rmsea.ci.upper.robust&quot;</span>, <span class="st">&quot;cfi.robust&quot;</span>, <span class="st">&quot;tli.robust&quot;</span>, <span class="st">&quot;srmr_within&quot;</span>, <span class="st">&quot;srmr_between&quot;</span>))</span>
-<span id="cb889-6"><a href="lavaan-lab-19-multilevel-sem.html#cb889-6" aria-hidden="true" tabindex="-1"></a>m5 <span class="ot">=</span> <span class="fu">fitMeasures</span>(model5fit, <span class="at">fit.measures =</span> <span class="fu">c</span>(<span class="st">&quot;chisq.scaled&quot;</span>, <span class="st">&quot;df.scaled&quot;</span>, <span class="st">&quot;pvalue.scaled&quot;</span>, <span class="st">&quot;rmsea.robust&quot;</span>, <span class="st">&quot;rmsea.ci.lower.robust&quot;</span>, <span class="st">&quot;rmsea.ci.upper.robust&quot;</span>, <span class="st">&quot;cfi.robust&quot;</span>, <span class="st">&quot;tli.robust&quot;</span>, <span class="st">&quot;srmr_within&quot;</span>, <span class="st">&quot;srmr_between&quot;</span>))</span></code></pre></div>
-<div class="sourceCode" id="cb890"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb890-1"><a href="lavaan-lab-19-multilevel-sem.html#cb890-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages(&#39;qpcR&#39;)</span></span>
-<span id="cb890-2"><a href="lavaan-lab-19-multilevel-sem.html#cb890-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(qpcR)</span>
-<span id="cb890-3"><a href="lavaan-lab-19-multilevel-sem.html#cb890-3" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(qpcR<span class="sc">:::</span><span class="fu">cbind.na</span>(m1, m2, m3, m4a, m4b, m5), <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb891"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb891-1"><a href="lavaan-lab-19-multilevel-sem.html#cb891-1" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">=</span> <span class="fu">fitMeasures</span>(model1fit, <span class="at">fit.measures =</span> <span class="fu">c</span>(<span class="st">&quot;chisq.scaled&quot;</span>, <span class="st">&quot;df.scaled&quot;</span>, <span class="st">&quot;pvalue.scaled&quot;</span>, <span class="st">&quot;rmsea.robust&quot;</span>, <span class="st">&quot;rmsea.ci.lower.robust&quot;</span>, <span class="st">&quot;rmsea.ci.upper.robust&quot;</span>, <span class="st">&quot;cfi.robust&quot;</span>, <span class="st">&quot;tli.robust&quot;</span>, <span class="st">&quot;srmr_within&quot;</span>, <span class="st">&quot;srmr_between&quot;</span>))</span>
+<span id="cb891-2"><a href="lavaan-lab-19-multilevel-sem.html#cb891-2" aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">=</span> <span class="fu">fitMeasures</span>(model2fit, <span class="at">fit.measures =</span> <span class="fu">c</span>(<span class="st">&quot;chisq.scaled&quot;</span>, <span class="st">&quot;df.scaled&quot;</span>, <span class="st">&quot;pvalue.scaled&quot;</span>, <span class="st">&quot;rmsea.robust&quot;</span>, <span class="st">&quot;rmsea.ci.lower.robust&quot;</span>, <span class="st">&quot;rmsea.ci.upper.robust&quot;</span>, <span class="st">&quot;cfi.robust&quot;</span>, <span class="st">&quot;tli.robust&quot;</span>, <span class="st">&quot;srmr_within&quot;</span>, <span class="st">&quot;srmr_between&quot;</span>))</span>
+<span id="cb891-3"><a href="lavaan-lab-19-multilevel-sem.html#cb891-3" aria-hidden="true" tabindex="-1"></a>m3 <span class="ot">=</span> <span class="fu">fitMeasures</span>(model3fit, <span class="at">fit.measures =</span> <span class="fu">c</span>(<span class="st">&quot;chisq.scaled&quot;</span>, <span class="st">&quot;df.scaled&quot;</span>, <span class="st">&quot;pvalue.scaled&quot;</span>, <span class="st">&quot;rmsea.robust&quot;</span>, <span class="st">&quot;rmsea.ci.lower.robust&quot;</span>, <span class="st">&quot;rmsea.ci.upper.robust&quot;</span>, <span class="st">&quot;cfi.robust&quot;</span>, <span class="st">&quot;tli.robust&quot;</span>, <span class="st">&quot;srmr_within&quot;</span>, <span class="st">&quot;srmr_between&quot;</span>))</span>
+<span id="cb891-4"><a href="lavaan-lab-19-multilevel-sem.html#cb891-4" aria-hidden="true" tabindex="-1"></a>m4a <span class="ot">=</span> <span class="fu">fitMeasures</span>(model4afit, <span class="at">fit.measures =</span> <span class="fu">c</span>(<span class="st">&quot;chisq.scaled&quot;</span>, <span class="st">&quot;df.scaled&quot;</span>, <span class="st">&quot;pvalue.scaled&quot;</span>, <span class="st">&quot;rmsea.robust&quot;</span>, <span class="st">&quot;rmsea.ci.lower.robust&quot;</span>, <span class="st">&quot;rmsea.ci.upper.robust&quot;</span>, <span class="st">&quot;cfi.robust&quot;</span>, <span class="st">&quot;tli.robust&quot;</span>, <span class="st">&quot;srmr_within&quot;</span>, <span class="st">&quot;srmr_between&quot;</span>))</span>
+<span id="cb891-5"><a href="lavaan-lab-19-multilevel-sem.html#cb891-5" aria-hidden="true" tabindex="-1"></a>m4b <span class="ot">=</span> <span class="fu">fitMeasures</span>(model4bfit, <span class="at">fit.measures =</span> <span class="fu">c</span>(<span class="st">&quot;chisq.scaled&quot;</span>, <span class="st">&quot;df.scaled&quot;</span>, <span class="st">&quot;pvalue.scaled&quot;</span>, <span class="st">&quot;rmsea.robust&quot;</span>, <span class="st">&quot;rmsea.ci.lower.robust&quot;</span>, <span class="st">&quot;rmsea.ci.upper.robust&quot;</span>, <span class="st">&quot;cfi.robust&quot;</span>, <span class="st">&quot;tli.robust&quot;</span>, <span class="st">&quot;srmr_within&quot;</span>, <span class="st">&quot;srmr_between&quot;</span>))</span>
+<span id="cb891-6"><a href="lavaan-lab-19-multilevel-sem.html#cb891-6" aria-hidden="true" tabindex="-1"></a>m5 <span class="ot">=</span> <span class="fu">fitMeasures</span>(model5fit, <span class="at">fit.measures =</span> <span class="fu">c</span>(<span class="st">&quot;chisq.scaled&quot;</span>, <span class="st">&quot;df.scaled&quot;</span>, <span class="st">&quot;pvalue.scaled&quot;</span>, <span class="st">&quot;rmsea.robust&quot;</span>, <span class="st">&quot;rmsea.ci.lower.robust&quot;</span>, <span class="st">&quot;rmsea.ci.upper.robust&quot;</span>, <span class="st">&quot;cfi.robust&quot;</span>, <span class="st">&quot;tli.robust&quot;</span>, <span class="st">&quot;srmr_within&quot;</span>, <span class="st">&quot;srmr_between&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb892"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb892-1"><a href="lavaan-lab-19-multilevel-sem.html#cb892-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages(&#39;qpcR&#39;)</span></span>
+<span id="cb892-2"><a href="lavaan-lab-19-multilevel-sem.html#cb892-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(qpcR)</span>
+<span id="cb892-3"><a href="lavaan-lab-19-multilevel-sem.html#cb892-3" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(qpcR<span class="sc">:::</span><span class="fu">cbind.na</span>(m1, m2, m3, m4a, m4b, m5), <span class="dv">3</span>)</span></code></pre></div>
 <pre><code>##                           m1    m2      m3   m4a   m4b    m5
 ## chisq.scaled          64.738 0.107 342.869 0.000 0.059 0.000
 ## df.scaled              3.000 2.000   3.000 4.000 7.000 3.000
@@ -1439,21 +1439,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!------------------------------>
 <div id="model-a-adding-a-within-only-covariate" class="section level3 hasAnchor" number="22.7.1">
 <h3><span class="header-section-number">22.7.1</span> Model A: Adding a within-only covariate<a href="lavaan-lab-19-multilevel-sem.html#model-a-adding-a-within-only-covariate" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb892"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb892-1"><a href="lavaan-lab-19-multilevel-sem.html#cb892-1" aria-hidden="true" tabindex="-1"></a>model4wCovA <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
-<span id="cb892-2"><a href="lavaan-lab-19-multilevel-sem.html#cb892-2" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 1</span></span>
-<span id="cb892-3"><a href="lavaan-lab-19-multilevel-sem.html#cb892-3" aria-hidden="true" tabindex="-1"></a><span class="st">    fw =~ a*y1 + b*y2 + c*y3 + d*y4</span></span>
-<span id="cb892-4"><a href="lavaan-lab-19-multilevel-sem.html#cb892-4" aria-hidden="true" tabindex="-1"></a><span class="st">    fw ~ x1</span></span>
-<span id="cb892-5"><a href="lavaan-lab-19-multilevel-sem.html#cb892-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb892-6"><a href="lavaan-lab-19-multilevel-sem.html#cb892-6" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 2</span></span>
-<span id="cb892-7"><a href="lavaan-lab-19-multilevel-sem.html#cb892-7" aria-hidden="true" tabindex="-1"></a><span class="st">    fb =~ a*y1 + b*y2 + c*y3 + d*y4</span></span>
-<span id="cb892-8"><a href="lavaan-lab-19-multilevel-sem.html#cb892-8" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span>
-<span id="cb892-9"><a href="lavaan-lab-19-multilevel-sem.html#cb892-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb892-10"><a href="lavaan-lab-19-multilevel-sem.html#cb892-10" aria-hidden="true" tabindex="-1"></a>model4wCovAfit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(model4wCovA, <span class="at">data =</span> Data, </span>
-<span id="cb892-11"><a href="lavaan-lab-19-multilevel-sem.html#cb892-11" aria-hidden="true" tabindex="-1"></a>                              <span class="at">cluster =</span> <span class="st">&quot;clus&quot;</span>, </span>
-<span id="cb892-12"><a href="lavaan-lab-19-multilevel-sem.html#cb892-12" aria-hidden="true" tabindex="-1"></a>                              <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>,</span>
-<span id="cb892-13"><a href="lavaan-lab-19-multilevel-sem.html#cb892-13" aria-hidden="true" tabindex="-1"></a>                              <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb894"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb894-1"><a href="lavaan-lab-19-multilevel-sem.html#cb894-1" aria-hidden="true" tabindex="-1"></a>model4wCovA <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
+<span id="cb894-2"><a href="lavaan-lab-19-multilevel-sem.html#cb894-2" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 1</span></span>
+<span id="cb894-3"><a href="lavaan-lab-19-multilevel-sem.html#cb894-3" aria-hidden="true" tabindex="-1"></a><span class="st">    fw =~ a*y1 + b*y2 + c*y3 + d*y4</span></span>
+<span id="cb894-4"><a href="lavaan-lab-19-multilevel-sem.html#cb894-4" aria-hidden="true" tabindex="-1"></a><span class="st">    fw ~ x1</span></span>
+<span id="cb894-5"><a href="lavaan-lab-19-multilevel-sem.html#cb894-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb894-6"><a href="lavaan-lab-19-multilevel-sem.html#cb894-6" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 2</span></span>
+<span id="cb894-7"><a href="lavaan-lab-19-multilevel-sem.html#cb894-7" aria-hidden="true" tabindex="-1"></a><span class="st">    fb =~ a*y1 + b*y2 + c*y3 + d*y4</span></span>
+<span id="cb894-8"><a href="lavaan-lab-19-multilevel-sem.html#cb894-8" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span>
+<span id="cb894-9"><a href="lavaan-lab-19-multilevel-sem.html#cb894-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb894-10"><a href="lavaan-lab-19-multilevel-sem.html#cb894-10" aria-hidden="true" tabindex="-1"></a>model4wCovAfit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(model4wCovA, <span class="at">data =</span> Data, </span>
+<span id="cb894-11"><a href="lavaan-lab-19-multilevel-sem.html#cb894-11" aria-hidden="true" tabindex="-1"></a>                              <span class="at">cluster =</span> <span class="st">&quot;clus&quot;</span>, </span>
+<span id="cb894-12"><a href="lavaan-lab-19-multilevel-sem.html#cb894-12" aria-hidden="true" tabindex="-1"></a>                              <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>,</span>
+<span id="cb894-13"><a href="lavaan-lab-19-multilevel-sem.html#cb894-13" aria-hidden="true" tabindex="-1"></a>                              <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <pre><code>## Warning in lav_object_post_check(object): lavaan WARNING: some estimated ov variances are negative</code></pre>
-<div class="sourceCode" id="cb894"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb894-1"><a href="lavaan-lab-19-multilevel-sem.html#cb894-1" aria-hidden="true" tabindex="-1"></a>lavaan<span class="sc">::</span><span class="fu">summary</span>(model4wCovAfit, <span class="at">fit.measures =</span> T, <span class="at">standardized =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb896"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb896-1"><a href="lavaan-lab-19-multilevel-sem.html#cb896-1" aria-hidden="true" tabindex="-1"></a>lavaan<span class="sc">::</span><span class="fu">summary</span>(model4wCovAfit, <span class="at">fit.measures =</span> T, <span class="at">standardized =</span> T)</span></code></pre></div>
 <pre><code>## lavaan 0.6-12 ended normally after 54 iterations
 ## 
 ##   Estimator                                         ML
@@ -1585,21 +1585,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="model-b-adding-a-between-only-covariate" class="section level3 hasAnchor" number="22.7.2">
 <h3><span class="header-section-number">22.7.2</span> Model B: Adding a between-only covariate<a href="lavaan-lab-19-multilevel-sem.html#model-b-adding-a-between-only-covariate" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb896"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb896-1"><a href="lavaan-lab-19-multilevel-sem.html#cb896-1" aria-hidden="true" tabindex="-1"></a>model4wCovB <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
-<span id="cb896-2"><a href="lavaan-lab-19-multilevel-sem.html#cb896-2" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 1</span></span>
-<span id="cb896-3"><a href="lavaan-lab-19-multilevel-sem.html#cb896-3" aria-hidden="true" tabindex="-1"></a><span class="st">    fw =~ a*y1 + b*y2 + c*y3 + d*y4</span></span>
-<span id="cb896-4"><a href="lavaan-lab-19-multilevel-sem.html#cb896-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb896-5"><a href="lavaan-lab-19-multilevel-sem.html#cb896-5" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 2</span></span>
-<span id="cb896-6"><a href="lavaan-lab-19-multilevel-sem.html#cb896-6" aria-hidden="true" tabindex="-1"></a><span class="st">    fb =~ a*y1 + b*y2 + c*y3 + d*y4</span></span>
-<span id="cb896-7"><a href="lavaan-lab-19-multilevel-sem.html#cb896-7" aria-hidden="true" tabindex="-1"></a><span class="st">    fb ~ w</span></span>
-<span id="cb896-8"><a href="lavaan-lab-19-multilevel-sem.html#cb896-8" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span>
-<span id="cb896-9"><a href="lavaan-lab-19-multilevel-sem.html#cb896-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb896-10"><a href="lavaan-lab-19-multilevel-sem.html#cb896-10" aria-hidden="true" tabindex="-1"></a>model4wCovBfit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(model4wCovB, <span class="at">data =</span> Data, </span>
-<span id="cb896-11"><a href="lavaan-lab-19-multilevel-sem.html#cb896-11" aria-hidden="true" tabindex="-1"></a>                              <span class="at">cluster =</span> <span class="st">&quot;clus&quot;</span>, </span>
-<span id="cb896-12"><a href="lavaan-lab-19-multilevel-sem.html#cb896-12" aria-hidden="true" tabindex="-1"></a>                              <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>,</span>
-<span id="cb896-13"><a href="lavaan-lab-19-multilevel-sem.html#cb896-13" aria-hidden="true" tabindex="-1"></a>                              <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb898"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb898-1"><a href="lavaan-lab-19-multilevel-sem.html#cb898-1" aria-hidden="true" tabindex="-1"></a>model4wCovB <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
+<span id="cb898-2"><a href="lavaan-lab-19-multilevel-sem.html#cb898-2" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 1</span></span>
+<span id="cb898-3"><a href="lavaan-lab-19-multilevel-sem.html#cb898-3" aria-hidden="true" tabindex="-1"></a><span class="st">    fw =~ a*y1 + b*y2 + c*y3 + d*y4</span></span>
+<span id="cb898-4"><a href="lavaan-lab-19-multilevel-sem.html#cb898-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb898-5"><a href="lavaan-lab-19-multilevel-sem.html#cb898-5" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 2</span></span>
+<span id="cb898-6"><a href="lavaan-lab-19-multilevel-sem.html#cb898-6" aria-hidden="true" tabindex="-1"></a><span class="st">    fb =~ a*y1 + b*y2 + c*y3 + d*y4</span></span>
+<span id="cb898-7"><a href="lavaan-lab-19-multilevel-sem.html#cb898-7" aria-hidden="true" tabindex="-1"></a><span class="st">    fb ~ w</span></span>
+<span id="cb898-8"><a href="lavaan-lab-19-multilevel-sem.html#cb898-8" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span>
+<span id="cb898-9"><a href="lavaan-lab-19-multilevel-sem.html#cb898-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb898-10"><a href="lavaan-lab-19-multilevel-sem.html#cb898-10" aria-hidden="true" tabindex="-1"></a>model4wCovBfit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(model4wCovB, <span class="at">data =</span> Data, </span>
+<span id="cb898-11"><a href="lavaan-lab-19-multilevel-sem.html#cb898-11" aria-hidden="true" tabindex="-1"></a>                              <span class="at">cluster =</span> <span class="st">&quot;clus&quot;</span>, </span>
+<span id="cb898-12"><a href="lavaan-lab-19-multilevel-sem.html#cb898-12" aria-hidden="true" tabindex="-1"></a>                              <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>,</span>
+<span id="cb898-13"><a href="lavaan-lab-19-multilevel-sem.html#cb898-13" aria-hidden="true" tabindex="-1"></a>                              <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <pre><code>## Warning in lav_object_post_check(object): lavaan WARNING: some estimated ov variances are negative</code></pre>
-<div class="sourceCode" id="cb898"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb898-1"><a href="lavaan-lab-19-multilevel-sem.html#cb898-1" aria-hidden="true" tabindex="-1"></a>lavaan<span class="sc">::</span><span class="fu">summary</span>(model4wCovBfit, <span class="at">fit.measures =</span> T, <span class="at">standardized =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb900"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb900-1"><a href="lavaan-lab-19-multilevel-sem.html#cb900-1" aria-hidden="true" tabindex="-1"></a>lavaan<span class="sc">::</span><span class="fu">summary</span>(model4wCovBfit, <span class="at">fit.measures =</span> T, <span class="at">standardized =</span> T)</span></code></pre></div>
 <pre><code>## lavaan 0.6-12 ended normally after 35 iterations
 ## 
 ##   Estimator                                         ML
@@ -1731,22 +1731,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="model-c-adding-a-covariate-at-both-levels" class="section level3 hasAnchor" number="22.7.3">
 <h3><span class="header-section-number">22.7.3</span> Model C: Adding a covariate at both levels<a href="lavaan-lab-19-multilevel-sem.html#model-c-adding-a-covariate-at-both-levels" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb900"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb900-1"><a href="lavaan-lab-19-multilevel-sem.html#cb900-1" aria-hidden="true" tabindex="-1"></a>model4wCovC <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
-<span id="cb900-2"><a href="lavaan-lab-19-multilevel-sem.html#cb900-2" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 1</span></span>
-<span id="cb900-3"><a href="lavaan-lab-19-multilevel-sem.html#cb900-3" aria-hidden="true" tabindex="-1"></a><span class="st">    fw =~ a*y1 + b*y2 + c*y3 + d*y4</span></span>
-<span id="cb900-4"><a href="lavaan-lab-19-multilevel-sem.html#cb900-4" aria-hidden="true" tabindex="-1"></a><span class="st">    fw ~ x1</span></span>
-<span id="cb900-5"><a href="lavaan-lab-19-multilevel-sem.html#cb900-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb900-6"><a href="lavaan-lab-19-multilevel-sem.html#cb900-6" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 2</span></span>
-<span id="cb900-7"><a href="lavaan-lab-19-multilevel-sem.html#cb900-7" aria-hidden="true" tabindex="-1"></a><span class="st">    fb =~ a*y1 + b*y2 + c*y3 + d*y4</span></span>
-<span id="cb900-8"><a href="lavaan-lab-19-multilevel-sem.html#cb900-8" aria-hidden="true" tabindex="-1"></a><span class="st">    fb ~ x1</span></span>
-<span id="cb900-9"><a href="lavaan-lab-19-multilevel-sem.html#cb900-9" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span>
-<span id="cb900-10"><a href="lavaan-lab-19-multilevel-sem.html#cb900-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb900-11"><a href="lavaan-lab-19-multilevel-sem.html#cb900-11" aria-hidden="true" tabindex="-1"></a>model4wCovCfit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(model4wCovC, <span class="at">data =</span> Data, </span>
-<span id="cb900-12"><a href="lavaan-lab-19-multilevel-sem.html#cb900-12" aria-hidden="true" tabindex="-1"></a>                              <span class="at">cluster =</span> <span class="st">&quot;clus&quot;</span>, </span>
-<span id="cb900-13"><a href="lavaan-lab-19-multilevel-sem.html#cb900-13" aria-hidden="true" tabindex="-1"></a>                              <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>,</span>
-<span id="cb900-14"><a href="lavaan-lab-19-multilevel-sem.html#cb900-14" aria-hidden="true" tabindex="-1"></a>                              <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb902"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb902-1"><a href="lavaan-lab-19-multilevel-sem.html#cb902-1" aria-hidden="true" tabindex="-1"></a>model4wCovC <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
+<span id="cb902-2"><a href="lavaan-lab-19-multilevel-sem.html#cb902-2" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 1</span></span>
+<span id="cb902-3"><a href="lavaan-lab-19-multilevel-sem.html#cb902-3" aria-hidden="true" tabindex="-1"></a><span class="st">    fw =~ a*y1 + b*y2 + c*y3 + d*y4</span></span>
+<span id="cb902-4"><a href="lavaan-lab-19-multilevel-sem.html#cb902-4" aria-hidden="true" tabindex="-1"></a><span class="st">    fw ~ x1</span></span>
+<span id="cb902-5"><a href="lavaan-lab-19-multilevel-sem.html#cb902-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb902-6"><a href="lavaan-lab-19-multilevel-sem.html#cb902-6" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 2</span></span>
+<span id="cb902-7"><a href="lavaan-lab-19-multilevel-sem.html#cb902-7" aria-hidden="true" tabindex="-1"></a><span class="st">    fb =~ a*y1 + b*y2 + c*y3 + d*y4</span></span>
+<span id="cb902-8"><a href="lavaan-lab-19-multilevel-sem.html#cb902-8" aria-hidden="true" tabindex="-1"></a><span class="st">    fb ~ x1</span></span>
+<span id="cb902-9"><a href="lavaan-lab-19-multilevel-sem.html#cb902-9" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span>
+<span id="cb902-10"><a href="lavaan-lab-19-multilevel-sem.html#cb902-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb902-11"><a href="lavaan-lab-19-multilevel-sem.html#cb902-11" aria-hidden="true" tabindex="-1"></a>model4wCovCfit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(model4wCovC, <span class="at">data =</span> Data, </span>
+<span id="cb902-12"><a href="lavaan-lab-19-multilevel-sem.html#cb902-12" aria-hidden="true" tabindex="-1"></a>                              <span class="at">cluster =</span> <span class="st">&quot;clus&quot;</span>, </span>
+<span id="cb902-13"><a href="lavaan-lab-19-multilevel-sem.html#cb902-13" aria-hidden="true" tabindex="-1"></a>                              <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>,</span>
+<span id="cb902-14"><a href="lavaan-lab-19-multilevel-sem.html#cb902-14" aria-hidden="true" tabindex="-1"></a>                              <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <pre><code>## Warning in lav_object_post_check(object): lavaan WARNING: some estimated ov variances are negative</code></pre>
-<div class="sourceCode" id="cb902"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb902-1"><a href="lavaan-lab-19-multilevel-sem.html#cb902-1" aria-hidden="true" tabindex="-1"></a>lavaan<span class="sc">::</span><span class="fu">summary</span>(model4wCovCfit, <span class="at">fit.measures =</span> T, <span class="at">standardized =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb904"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb904-1"><a href="lavaan-lab-19-multilevel-sem.html#cb904-1" aria-hidden="true" tabindex="-1"></a>lavaan<span class="sc">::</span><span class="fu">summary</span>(model4wCovCfit, <span class="at">fit.measures =</span> T, <span class="at">standardized =</span> T)</span></code></pre></div>
 <pre><code>## lavaan 0.6-12 ended normally after 83 iterations
 ## 
 ##   Estimator                                         ML
@@ -1888,22 +1888,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="part-vii-final-model" class="section level2 hasAnchor" number="22.8">
 <h2><span class="header-section-number">22.8</span> PART VII: Final Model<a href="lavaan-lab-19-multilevel-sem.html#part-vii-final-model" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!------------------------------>
-<div class="sourceCode" id="cb904"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb904-1"><a href="lavaan-lab-19-multilevel-sem.html#cb904-1" aria-hidden="true" tabindex="-1"></a>modelFinal <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
-<span id="cb904-2"><a href="lavaan-lab-19-multilevel-sem.html#cb904-2" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 1</span></span>
-<span id="cb904-3"><a href="lavaan-lab-19-multilevel-sem.html#cb904-3" aria-hidden="true" tabindex="-1"></a><span class="st">    fw =~ a*y1 + b*y2 + c*y3 + d*y4</span></span>
-<span id="cb904-4"><a href="lavaan-lab-19-multilevel-sem.html#cb904-4" aria-hidden="true" tabindex="-1"></a><span class="st">    fw ~ x1 + x2</span></span>
-<span id="cb904-5"><a href="lavaan-lab-19-multilevel-sem.html#cb904-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb904-6"><a href="lavaan-lab-19-multilevel-sem.html#cb904-6" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 2</span></span>
-<span id="cb904-7"><a href="lavaan-lab-19-multilevel-sem.html#cb904-7" aria-hidden="true" tabindex="-1"></a><span class="st">    fb =~ a*y1 + b*y2 + c*y3 + d*y4</span></span>
-<span id="cb904-8"><a href="lavaan-lab-19-multilevel-sem.html#cb904-8" aria-hidden="true" tabindex="-1"></a><span class="st">    fb ~ w</span></span>
-<span id="cb904-9"><a href="lavaan-lab-19-multilevel-sem.html#cb904-9" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span>
-<span id="cb904-10"><a href="lavaan-lab-19-multilevel-sem.html#cb904-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb904-11"><a href="lavaan-lab-19-multilevel-sem.html#cb904-11" aria-hidden="true" tabindex="-1"></a>modelFinalfit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(modelFinal, <span class="at">data =</span> Data, </span>
-<span id="cb904-12"><a href="lavaan-lab-19-multilevel-sem.html#cb904-12" aria-hidden="true" tabindex="-1"></a>                              <span class="at">cluster =</span> <span class="st">&quot;clus&quot;</span>, </span>
-<span id="cb904-13"><a href="lavaan-lab-19-multilevel-sem.html#cb904-13" aria-hidden="true" tabindex="-1"></a>                              <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>,</span>
-<span id="cb904-14"><a href="lavaan-lab-19-multilevel-sem.html#cb904-14" aria-hidden="true" tabindex="-1"></a>                              <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb906"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb906-1"><a href="lavaan-lab-19-multilevel-sem.html#cb906-1" aria-hidden="true" tabindex="-1"></a>modelFinal <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
+<span id="cb906-2"><a href="lavaan-lab-19-multilevel-sem.html#cb906-2" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 1</span></span>
+<span id="cb906-3"><a href="lavaan-lab-19-multilevel-sem.html#cb906-3" aria-hidden="true" tabindex="-1"></a><span class="st">    fw =~ a*y1 + b*y2 + c*y3 + d*y4</span></span>
+<span id="cb906-4"><a href="lavaan-lab-19-multilevel-sem.html#cb906-4" aria-hidden="true" tabindex="-1"></a><span class="st">    fw ~ x1 + x2</span></span>
+<span id="cb906-5"><a href="lavaan-lab-19-multilevel-sem.html#cb906-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb906-6"><a href="lavaan-lab-19-multilevel-sem.html#cb906-6" aria-hidden="true" tabindex="-1"></a><span class="st">  level: 2</span></span>
+<span id="cb906-7"><a href="lavaan-lab-19-multilevel-sem.html#cb906-7" aria-hidden="true" tabindex="-1"></a><span class="st">    fb =~ a*y1 + b*y2 + c*y3 + d*y4</span></span>
+<span id="cb906-8"><a href="lavaan-lab-19-multilevel-sem.html#cb906-8" aria-hidden="true" tabindex="-1"></a><span class="st">    fb ~ w</span></span>
+<span id="cb906-9"><a href="lavaan-lab-19-multilevel-sem.html#cb906-9" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;</span></span>
+<span id="cb906-10"><a href="lavaan-lab-19-multilevel-sem.html#cb906-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb906-11"><a href="lavaan-lab-19-multilevel-sem.html#cb906-11" aria-hidden="true" tabindex="-1"></a>modelFinalfit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(modelFinal, <span class="at">data =</span> Data, </span>
+<span id="cb906-12"><a href="lavaan-lab-19-multilevel-sem.html#cb906-12" aria-hidden="true" tabindex="-1"></a>                              <span class="at">cluster =</span> <span class="st">&quot;clus&quot;</span>, </span>
+<span id="cb906-13"><a href="lavaan-lab-19-multilevel-sem.html#cb906-13" aria-hidden="true" tabindex="-1"></a>                              <span class="at">estimator =</span> <span class="st">&#39;MLR&#39;</span>,</span>
+<span id="cb906-14"><a href="lavaan-lab-19-multilevel-sem.html#cb906-14" aria-hidden="true" tabindex="-1"></a>                              <span class="at">fixed.x =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <pre><code>## Warning in lav_object_post_check(object): lavaan WARNING: some estimated ov variances are negative</code></pre>
-<div class="sourceCode" id="cb906"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb906-1"><a href="lavaan-lab-19-multilevel-sem.html#cb906-1" aria-hidden="true" tabindex="-1"></a>lavaan<span class="sc">::</span><span class="fu">summary</span>(modelFinalfit, <span class="at">fit.measures =</span> T, <span class="at">standardized =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb908"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb908-1"><a href="lavaan-lab-19-multilevel-sem.html#cb908-1" aria-hidden="true" tabindex="-1"></a>lavaan<span class="sc">::</span><span class="fu">summary</span>(modelFinalfit, <span class="at">fit.measures =</span> T, <span class="at">standardized =</span> T)</span></code></pre></div>
 <pre><code>## lavaan 0.6-12 ended normally after 48 iterations
 ## 
 ##   Estimator                                         ML

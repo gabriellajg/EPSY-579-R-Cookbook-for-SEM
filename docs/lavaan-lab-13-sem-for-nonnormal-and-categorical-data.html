@@ -562,7 +562,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Write out syntax for a one-factor CFA model:</p>
 <div class="sourceCode" id="cb617"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb617-1"><a href="lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb617-1" aria-hidden="true" tabindex="-1"></a>cfaSyn <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
 <span id="cb617-2"><a href="lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb617-2" aria-hidden="true" tabindex="-1"></a><span class="st">    odd =~ odd1 + odd2 + odd3 + odd4 + odd5 + odd6 + odd7 + odd8</span></span>
-<span id="cb617-3"><a href="lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb617-3" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
+<span id="cb617-3"><a href="lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb617-3" aria-hidden="true" tabindex="-1"></a><span class="st">    &quot;</span></span></code></pre></div>
 <p>Fit the one-factor model:</p>
 <div class="sourceCode" id="cb618"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb618-1"><a href="lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb618-1" aria-hidden="true" tabindex="-1"></a>mlrFit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(cfaSyn, </span>
 <span id="cb618-2"><a href="lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb618-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">data =</span> nnorm_dat, </span>
@@ -686,11 +686,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb623"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb623-1"><a href="lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb623-1" aria-hidden="true" tabindex="-1"></a>oneFacFit <span class="ot">&lt;-</span> lavaan<span class="sc">::</span><span class="fu">sem</span>(oddOneFac, </span>
 <span id="cb623-2"><a href="lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb623-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> odd,</span>
 <span id="cb623-3"><a href="lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb623-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">ordered=</span><span class="fu">c</span>(<span class="st">&#39;odd1&#39;</span>,<span class="st">&#39;odd2&#39;</span>,<span class="st">&#39;odd3&#39;</span>,<span class="st">&#39;odd4&#39;</span>,<span class="st">&#39;odd5&#39;</span>,<span class="st">&#39;odd6&#39;</span>,<span class="st">&#39;odd7&#39;</span>,<span class="st">&#39;odd8&#39;</span>), </span>
-<span id="cb623-4"><a href="lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb623-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">fixed.x =</span> <span class="cn">FALSE</span>) </span>
-<span id="cb623-5"><a href="lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb623-5" aria-hidden="true" tabindex="-1"></a><span class="co">#declare these as ordered variable</span></span>
-<span id="cb623-6"><a href="lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb623-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb623-7"><a href="lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb623-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(oneFacFit, <span class="at">fit.measures =</span> T)</span></code></pre></div>
-<pre><code>## lavaan 0.6-12 ended normally after 16 iterations
+<span id="cb623-4"><a href="lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb623-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">fixed.x =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb623-5"><a href="lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb623-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">parameterization =</span> <span class="st">&#39;theta&#39;</span>)  <span class="co"># or delta </span></span>
+<span id="cb623-6"><a href="lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb623-6" aria-hidden="true" tabindex="-1"></a><span class="co">#declare these as ordered variable</span></span>
+<span id="cb623-7"><a href="lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb623-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb623-8"><a href="lavaan-lab-13-sem-for-nonnormal-and-categorical-data.html#cb623-8" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(oneFacFit, <span class="at">fit.measures =</span> T)</span></code></pre></div>
+<pre><code>## lavaan 0.6-12 ended normally after 34 iterations
 ## 
 ##   Estimator                                       DWLS
 ##   Optimization method                           NLMINB
@@ -747,13 +748,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##                    Estimate  Std.Err  z-value  P(&gt;|z|)
 ##   odd =~                                              
 ##     odd1              1.000                           
-##     odd2              0.927    0.092   10.027    0.000
-##     odd3              0.872    0.089    9.795    0.000
-##     odd4              0.755    0.102    7.388    0.000
-##     odd5              0.559    0.098    5.698    0.000
-##     odd6              0.759    0.093    8.135    0.000
-##     odd7              0.925    0.100    9.268    0.000
-##     odd8              0.938    0.094    9.961    0.000
+##     odd2              0.850    0.180    4.725    0.000
+##     odd3              0.759    0.152    4.981    0.000
+##     odd4              0.602    0.138    4.373    0.000
+##     odd5              0.404    0.099    4.079    0.000
+##     odd6              0.607    0.128    4.735    0.000
+##     odd7              0.848    0.190    4.456    0.000
+##     odd8              0.871    0.186    4.694    0.000
 ## 
 ## Intercepts:
 ##                    Estimate  Std.Err  z-value  P(&gt;|z|)
@@ -769,45 +770,45 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 
 ## Thresholds:
 ##                    Estimate  Std.Err  z-value  P(&gt;|z|)
-##     odd1|t1          -1.234    0.113  -10.960    0.000
-##     odd1|t2           0.402    0.087    4.618    0.000
-##     odd2|t1          -0.692    0.092   -7.503    0.000
-##     odd2|t2           0.813    0.095    8.514    0.000
-##     odd3|t1          -1.020    0.103   -9.943    0.000
-##     odd3|t2           0.766    0.094    8.139    0.000
-##     odd4|t1           0.062    0.085    0.738    0.460
-##     odd4|t2           1.395    0.122   11.403    0.000
-##     odd5|t1           0.028    0.085    0.336    0.737
-##     odd5|t2           1.284    0.115   11.128    0.000
-##     odd6|t1          -0.142    0.085   -1.677    0.093
-##     odd6|t2           1.284    0.115   11.128    0.000
-##     odd7|t1           0.452    0.088    5.149    0.000
-##     odd7|t2           1.924    0.175   10.998    0.000
-##     odd8|t1           0.692    0.092    7.503    0.000
-##     odd8|t2           1.797    0.159   11.332    0.000
+##     odd1|t1          -1.884    0.203   -9.262    0.000
+##     odd1|t2           0.613    0.136    4.500    0.000
+##     odd2|t1          -0.970    0.136   -7.122    0.000
+##     odd2|t2           1.138    0.147    7.721    0.000
+##     odd3|t1          -1.355    0.153   -8.869    0.000
+##     odd3|t2           1.018    0.134    7.587    0.000
+##     odd4|t1           0.076    0.103    0.737    0.461
+##     odd4|t2           1.699    0.167   10.168    0.000
+##     odd5|t1           0.031    0.093    0.335    0.737
+##     odd5|t2           1.417    0.129   10.962    0.000
+##     odd6|t1          -0.174    0.103   -1.680    0.093
+##     odd6|t2           1.568    0.153   10.276    0.000
+##     odd7|t1           0.632    0.134    4.711    0.000
+##     odd7|t2           2.692    0.325    8.287    0.000
+##     odd8|t1           0.981    0.151    6.510    0.000
+##     odd8|t2           2.547    0.283    9.003    0.000
 ## 
 ## Variances:
 ##                    Estimate  Std.Err  z-value  P(&gt;|z|)
-##    .odd1              0.429                           
-##    .odd2              0.510                           
-##    .odd3              0.566                           
-##    .odd4              0.675                           
-##    .odd5              0.822                           
-##    .odd6              0.671                           
-##    .odd7              0.511                           
-##    .odd8              0.498                           
-##     odd               0.571    0.070    8.113    0.000
+##    .odd1              1.000                           
+##    .odd2              1.000                           
+##    .odd3              1.000                           
+##    .odd4              1.000                           
+##    .odd5              1.000                           
+##    .odd6              1.000                           
+##    .odd7              1.000                           
+##    .odd8              1.000                           
+##     odd               1.330    0.382    3.483    0.000
 ## 
 ## Scales y*:
 ##                    Estimate  Std.Err  z-value  P(&gt;|z|)
-##     odd1              1.000                           
-##     odd2              1.000                           
-##     odd3              1.000                           
-##     odd4              1.000                           
-##     odd5              1.000                           
-##     odd6              1.000                           
-##     odd7              1.000                           
-##     odd8              1.000</code></pre>
+##     odd1              0.655                           
+##     odd2              0.714                           
+##     odd3              0.753                           
+##     odd4              0.822                           
+##     odd5              0.906                           
+##     odd6              0.819                           
+##     odd7              0.715                           
+##     odd8              0.705</code></pre>
 <!------------------------------>
 </div>
 <div id="part-iv-what-if-you-have-it-all" class="section level2 hasAnchor" number="16.4">
